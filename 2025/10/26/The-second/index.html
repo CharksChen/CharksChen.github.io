@@ -4,14 +4,20 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>C语言中qsort函数 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="#include&lt;stdlib.h&gt; qsort ( 数组第一个元素的地址，数数组中的元素个数，每个元素的大小，比较函数 ) 1、地址的话，像数组 a[10] ,直接写a就行。2、元素个数也是直接写。3、元素大小一般用 sizeof ( int ) 或者其他类型。4、比较函数，int compare ( const void * a ,const void * b){  return">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言中qsort函数">
+<meta property="og:url" content="http://example.com/2025/10/26/The-second/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="#include&lt;stdlib.h&gt; qsort ( 数组第一个元素的地址，数数组中的元素个数，每个元素的大小，比较函数 ) 1、地址的话，像数组 a[10] ,直接写a就行。2、元素个数也是直接写。3、元素大小一般用 sizeof ( int ) 或者其他类型。4、比较函数，int compare ( const void * a ,const void * b){  return">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-26T13:34:07.000Z">
+<meta property="article:modified_time" content="2025-10-26T13:45:09.147Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="快速排序">
+<meta property="article:tag" content="结构体排序">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -69,9 +75,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-The-second" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-The-second" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/10/26/The-second/" class="article-date">
   <time class="dt-published" datetime="2025-10-26T13:34:07.000Z" itemprop="datePublished">2025-10-26</time>
@@ -88,8 +92,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/10/26/The-second/">C语言中qsort函数</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      C语言中qsort函数
     </h1>
   
 
@@ -150,107 +154,19 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-My-New-Post" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/10/26/My-New-Post/" class="article-date">
-  <time class="dt-published" datetime="2025-10-26T13:03:16.000Z" itemprop="datePublished">2025-10-26</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/10/26/My-New-Post/">快速幂的代码</a>
-    </h1>
+    <a href="/2025/10/26/My-New-Post/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">快速幂的代码</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>#include&lt;stdio.h&gt;<br>int power(int a,int b,int p)<br>{<br>   int r&#x3D;1;<br>   while(b)<br>   {<br>      if(b&amp;1) r&#x3D;(r<em>a%p);<br>      a&#x3D;a</em>a%p;<br>      b&gt;&gt;&#x3D;1;<br>   }<br>   return r;<br>}<br>int main()<br>{<br>   int a,b,s,p;<br>   scanf(“%d %d %d”,&amp;a,&amp;b,&amp;p);<br>   s&#x3D;power(a,b,p);<br>   printf(“%d^%d mod %d&#x3D;%d”,a,b,p,s);<br>   return 0;<br>}</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/10/26/My-New-Post/" data-id="cuidVbI_ofmU8_j1DifrzxG-G" data-title="快速幂的代码" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80/" rel="tag">C语言</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/10/26/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2025-10-26T05:25:17.715Z" itemprop="datePublished">2025-10-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/10/26/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/10/26/hello-world/" data-id="cuidSUkO_w9NO3QAI4p9naytf" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
 </section>
