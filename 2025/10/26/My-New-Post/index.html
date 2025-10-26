@@ -6,15 +6,15 @@
   
   <title>快速幂的代码 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="#include&lt;stdio.h&gt;int power(int a,int b,int p){   int r&#x3D;1;   while(b)   {      if(b&amp;1) r&#x3D;(ra%p);      a&#x3D;aa%p;      b&gt;&gt;&#x3D;1;   }   return r;}int main(){   int a,b,s,p;">
+  <meta name="description" content="1234567891011121314151617181920#include&lt;stdio.h&gt;int power(int a,int b,int p)&#123;   int r&#x3D;1;   while(b)   &#123;      if(b&amp;1) r&#x3D;(r*a%p);      a&#x3D;a*a%p;      b&gt;&gt;&#x3D;1;   &#125;   return r;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="快速幂的代码">
 <meta property="og:url" content="http://example.com/2025/10/26/My-New-Post/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="#include&lt;stdio.h&gt;int power(int a,int b,int p){   int r&#x3D;1;   while(b)   {      if(b&amp;1) r&#x3D;(ra%p);      a&#x3D;aa%p;      b&gt;&gt;&#x3D;1;   }   return r;}int main(){   int a,b,s,p;">
+<meta property="og:description" content="1234567891011121314151617181920#include&lt;stdio.h&gt;int power(int a,int b,int p)&#123;   int r&#x3D;1;   while(b)   &#123;      if(b&amp;1) r&#x3D;(r*a%p);      a&#x3D;a*a%p;      b&gt;&gt;&#x3D;1;   &#125;   return r;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-10-26T13:03:16.000Z">
-<meta property="article:modified_time" content="2025-10-26T13:13:13.875Z">
+<meta property="article:modified_time" content="2025-10-26T14:14:35.187Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="C语言">
 <meta property="article:tag" content="算法">
@@ -101,8 +101,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>#include&lt;stdio.h&gt;<br>int power(int a,int b,int p)<br>{<br>   int r&#x3D;1;<br>   while(b)<br>   {<br>      if(b&amp;1) r&#x3D;(r<em>a%p);<br>      a&#x3D;a</em>a%p;<br>      b&gt;&gt;&#x3D;1;<br>   }<br>   return r;<br>}<br>int main()<br>{<br>   int a,b,s,p;<br>   scanf(“%d %d %d”,&amp;a,&amp;b,&amp;p);<br>   s&#x3D;power(a,b,p);<br>   printf(“%d^%d mod %d&#x3D;%d”,a,b,p,s);<br>   return 0;<br>}</p>
-
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int power(int a,int b,int p)</span><br><span class="line">&#123;</span><br><span class="line">   int r=1;</span><br><span class="line">   while(b)</span><br><span class="line">   &#123;</span><br><span class="line">      if(b&amp;1) r=(r*a%p);</span><br><span class="line">      a=a*a%p;</span><br><span class="line">      b&gt;&gt;=1;</span><br><span class="line">   &#125;</span><br><span class="line">   return r;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">   int a,b,s,p;</span><br><span class="line">   scanf(&quot;%d %d %d&quot;,&amp;a,&amp;b,&amp;p);</span><br><span class="line">   s=power(a,b,p);</span><br><span class="line">   printf(&quot;%d^%d mod %d=%d&quot;,a,b,p,s);</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
