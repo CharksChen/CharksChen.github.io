@@ -26,6 +26,10 @@
     <link rel="shortcut icon" href="/favicon.png">
   
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
   
 <link rel="stylesheet" href="/css/style.css">
 
@@ -108,20 +112,20 @@
         <p><code>#include&lt;string.h&gt;</code></p>
 <p><code>memset( void*s, char ch, unsigned n);</code></p>
 <p><code>void*s </code>是要求的第一个地址，<code>char ch</code>是初始化的值（也可以为数字），<code>n</code>为sizeof( a ) **前N个字节</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> arr[<span class="hljs-number">10</span>];<br><span class="hljs-built_in">memset</span>(arr, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(arr)); <br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> arr[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">memset</span>(arr, <span class="number">0</span>, <span class="keyword">sizeof</span>(arr)); </span><br></pre></td></tr></table></figure>
 
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> str[<span class="hljs-number">100</span>];<br>　 <span class="hljs-built_in">memset</span>(str,<span class="hljs-number">0</span>,<span class="hljs-number">100</span>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> str[<span class="number">100</span>];</span><br><span class="line">　 <span class="built_in">memset</span>(str,<span class="number">0</span>,<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
 
 <p>更重要的是，memset在结构体初始化方面的运用</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sample_struct</span></span><br><span class="hljs-class">　 &#123;</span><br>　　     <span class="hljs-type">char</span> csName[<span class="hljs-number">16</span>];<br>　　     <span class="hljs-type">int</span> iSeq;<br>　　     <span class="hljs-type">int</span> iType;<br>　 &#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sample_strcut</span> <span class="hljs-title">stTest</span>;</span><br><span class="hljs-built_in">memset</span>(&amp;stTest,<span class="hljs-number">0</span>,<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> sample_struct));<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sample_struct</span></span></span><br><span class="line"><span class="class">　 &#123;</span></span><br><span class="line">　　     <span class="type">char</span> csName[<span class="number">16</span>];</span><br><span class="line">　　     <span class="type">int</span> iSeq;</span><br><span class="line">　　     <span class="type">int</span> iType;</span><br><span class="line">　 &#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sample_strcut</span> <span class="title">stTest</span>;</span></span><br><span class="line"><span class="built_in">memset</span>(&amp;stTest,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">struct</span> sample_struct));</span><br></pre></td></tr></table></figure>
 
 <p>如果是数组的话</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-built_in">memset</span>(TEST,<span class="hljs-number">0</span>,<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> sample_struct)*<span class="hljs-number">10</span>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">memset</span>(TEST,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">struct</span> sample_struct)*<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://charkschen.github.io/2025/10/27/The-third-blog/" data-id="cuid6MGcnHMBkoWrTWVhiYOm4" data-title="Memset初始化的运用" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://charkschen.github.io/2025/10/27/The-third-blog/" data-id="cuidZ6cSYv2U4Ns7jWcKnTQHe" data-title="Memset初始化的运用" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
