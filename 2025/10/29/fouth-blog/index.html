@@ -13,14 +13,14 @@
 <meta property="og:site_name" content="Welcome to Charks&#39;s Blog">
 <meta property="og:description" content="原本在思考逆序对的简单方法，发现冒泡排序的求法还是太慢了">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://ucc.alicdn.com/pic/developer-ecology/2gokkzj6w5mx6_92257e9f5aff4913b8e19dd3b9062179.png">
+<meta property="og:image" content="http://charkschen.github.io/images/Pasted%20image%2020251103203446.png">
 <meta property="article:published_time" content="2025-10-29T13:28:17.000Z">
-<meta property="article:modified_time" content="2025-11-03T12:20:06.421Z">
+<meta property="article:modified_time" content="2025-11-03T12:34:59.264Z">
 <meta property="article:author" content="Charks">
 <meta property="article:tag" content="归并排序">
 <meta property="article:tag" content="逆序对">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ucc.alicdn.com/pic/developer-ecology/2gokkzj6w5mx6_92257e9f5aff4913b8e19dd3b9062179.png">
+<meta name="twitter:image" content="http://charkschen.github.io/images/Pasted%20image%2020251103203446.png">
   
     <link rel="alternate" href="/atom.xml" title="Welcome to Charks's Blog" type="application/atom+xml">
   
@@ -112,9 +112,8 @@
 
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="type">int</span> a[<span class="number">50005</span>],t[<span class="number">50005</span>];</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> ans;</span><br><span class="line"><span class="type">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> a[], <span class="type">int</span> head, <span class="type">int</span> tail)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> a[], <span class="type">int</span> head, <span class="type">int</span> tail)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (head == tail)  <span class="keyword">return</span>;</span><br><span class="line">	<span class="type">int</span> mid = (head + tail) / <span class="number">2</span>;</span><br><span class="line">	merge(a, head, mid);</span><br><span class="line">	merge(a, mid + <span class="number">1</span>, tail);</span><br><span class="line">	<span class="type">int</span> i, j, k;<span class="comment">//i用于临时数组t的索引，j是左半区间的起始索引，k是右半区间的起始索引</span></span><br><span class="line">	<span class="keyword">for</span> (i = head, j = head, k = mid + <span class="number">1</span>;i &lt;= tail;i++)  <span class="comment">//i从1遍历到tail,j是左半区间的起点，k是右半区间的起点</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (j == mid + <span class="number">1</span>) <span class="comment">//如果左半区间全部处理</span></span><br><span class="line">			t[i] = a[k++];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (k == tail + <span class="number">1</span>) <span class="comment">//如果右半区间全部处理</span></span><br><span class="line">			t[i] = a[j++], ans += k - mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (a[j] &lt;= a[k]) <span class="comment">//左空间元素小于右空间元素，放左边的</span></span><br><span class="line">			t[i] = a[j++], ans += k - mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> t[i] = a[k++];<span class="comment">//否则放右边的</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (i = head;i &lt;= tail;i++) a[i] = t[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//归并排序</span></span><br><span class="line">	<span class="type">int</span> n,i;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>;i &lt;= n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">	merge(a, <span class="number">1</span>, n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>, ans);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<img title="" src="https://ucc.alicdn.com/pic/developer-ecology/2gokkzj6w5mx6_92257e9f5aff4913b8e19dd3b9062179.png" alt="" data-align="inline" width="963">
 
-
+<p><img src="/../images/Pasted%20image%2020251103203446.png"></p>
 <p>这是具体模拟整个过程</p>
 <p>当然，这个过程已经实现了排序功能，t [ ] 是排序后的数组，元素从小到大排列。如果想从大到小排列，也可以将 ’ &lt;&#x3D; ‘ 改为 ’ &gt;&#x3D; ‘  。</p>
 <p>这题也可以用树状数组、线段树 、Trie树（字典树）</p>
@@ -122,7 +121,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://charkschen.github.io/2025/10/29/fouth-blog/" data-id="cuidyavlywLcF1h9xwofTPzho" data-title="从逆序对到归并排序" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://charkschen.github.io/2025/10/29/fouth-blog/" data-id="cuidjePTqgkDe5agnP7QgzcIi" data-title="从逆序对到归并排序" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
