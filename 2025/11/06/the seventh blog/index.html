@@ -4,14 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Tag: 模拟流程 | Welcome to Charks&#39;s Blog</title>
+  <title>关于输入输出不得不说的…… | Welcome to Charks&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Welcome to Charks&#39;s Blog">
-<meta property="og:url" content="http://charkschen.github.io/tags/%E6%A8%A1%E6%8B%9F%E6%B5%81%E7%A8%8B/index.html">
+  <meta name="description" content="整理期中考试的第一题，有关字符串输入输出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于输入输出不得不说的……">
+<meta property="og:url" content="http://charkschen.github.io/2025/11/06/the%20seventh%20blog/index.html">
 <meta property="og:site_name" content="Welcome to Charks&#39;s Blog">
+<meta property="og:description" content="整理期中考试的第一题，有关字符串输入输出">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-06T09:20:08.000Z">
+<meta property="article:modified_time" content="2025-11-06T10:00:45.199Z">
 <meta property="article:author" content="Charks">
+<meta property="article:tag" content="输入输出">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Welcome to Charks's Blog" type="application/atom+xml">
@@ -77,39 +82,63 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2025" class="archive-year">2025</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2025/11/04/the%20fiveth%20blog/" class="archive-article-date">
-  <time class="dt-published" datetime="2025-11-04T08:50:45.000Z" itemprop="datePublished">Nov 4</time>
+        <section id="main"><article id="post-the seventh blog" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/11/06/the%20seventh%20blog/" class="article-date">
+  <time class="dt-published" datetime="2025-11-06T09:20:08.000Z" itemprop="datePublished">2025-11-06</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2025/11/04/the%20fiveth%20blog/">一道时间线管理的模拟题</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      关于输入输出不得不说的……
     </h1>
   
 
-    </header>
+      </header>
+    
+ <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="整理期中考试的第一题，有关字符串输入输出"><a href="#整理期中考试的第一题，有关字符串输入输出" class="headerlink" title="整理期中考试的第一题，有关字符串输入输出"></a>整理期中考试的第一题，有关字符串输入输出<span id="more"></span></h2><h1 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h1><h2 id="输入一串字符，输出这串字符。hhhhh"><a href="#输入一串字符，输出这串字符。hhhhh" class="headerlink" title="输入一串字符，输出这串字符。hhhhh"></a>输入一串字符，输出这串字符。hhhhh</h2><p>看到的标准答案版本是<br>1.<code>scanf/getchar</code>+<code>EOF</code><br>2.<code>fgets</code>（读不了换行的）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">方法一</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> x;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;x)!=EOF)   条件也可以写成 ~<span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;x) \ <span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;x)==<span class="number">1</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>,x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">方法二</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> x;</span><br><span class="line">    <span class="keyword">while</span>((x=getchar())!=EOF)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>,x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> a[<span class="number">1026</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    fgets(a, <span class="number">1026</span>, <span class="built_in">stdin</span>);  只能读一行</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, a);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://charkschen.github.io/2025/11/06/the%20seventh%20blog/" data-id="cuidH6EjKBrMUV8MvwIFBg9s4" data-title="关于输入输出不得不说的……" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" rel="tag">输入输出</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2025/11/05/the%20sixth%20blog/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">程序设计期中知识汇总</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>
