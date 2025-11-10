@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Welcome to Charks&#39;s Blog</title>
+  <icon>http://charkschen.github.io/img/avatar.png</icon>
+  <subtitle>That&#39;s about learning and thinking</subtitle>
+  <link href="http://charkschen.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://charkschen.github.io/"/>
+  <updated>2025-11-06T10:01:27.739Z</updated>
+  <id>http://charkschen.github.io/</id>
+  
+  <author>
+    <name>Charks</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于输入输出不得不说的……</title>
+    <link href="http://charkschen.github.io/2025/11/06/the%20seventh%20blog/"/>
+    <id>http://charkschen.github.io/2025/11/06/the%20seventh%20blog/</id>
+    <published>2025-11-06T09:20:08.000Z</published>
+    <updated>2025-11-06T10:01:27.739Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;整理期中考试的第一题，有关字符串输入输出&quot;&gt;&lt;a href=&quot;#整理期中考试的第一题，有关字符串输入输出&quot; class=&quot;headerlink&quot; title=&quot;整理期中考试的第一题，有关字符串输入输出&quot;&gt;&lt;/a&gt;整理期中考试的第一题，有关字符串输入输出</summary>
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="输入输出" scheme="http://charkschen.github.io/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>程序设计期中知识汇总</title>
+    <link href="http://charkschen.github.io/2025/11/05/the%20sixth%20blog/"/>
+    <id>http://charkschen.github.io/2025/11/05/the%20sixth%20blog/</id>
+    <published>2025-11-05T06:46:41.000Z</published>
+    <updated>2025-11-06T14:29:54.379Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习&quot;&gt;&lt;a href=&quot;#根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习&quot; class=&quot;headerlink&quot; title=&quot;根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习&quot;&gt;&lt;/a&gt;根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习</summary>
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="知识复习" scheme="http://charkschen.github.io/tags/%E7%9F%A5%E8%AF%86%E5%A4%8D%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一道时间线管理的模拟题</title>
+    <link href="http://charkschen.github.io/2025/11/04/the%20fiveth%20blog/"/>
+    <id>http://charkschen.github.io/2025/11/04/the%20fiveth%20blog/</id>
+    <published>2025-11-04T08:50:45.000Z</published>
+    <updated>2025-11-06T09:07:17.190Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;题目来自2024年学院期中，是一道关于时间管理的模拟题&quot;&gt;&lt;a href=&quot;#题目来自2024年学院期中，是一道关于时间管理的模拟题&quot; class=&quot;headerlink&quot; title=&quot;题目来自2024年学院期中，是一道关于时间管理的模拟题&quot;&gt;&lt;/a&gt;题目来自2024年学院期中，是一道关于时间管理的模拟题</summary>
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="模拟流程" scheme="http://charkschen.github.io/tags/%E6%A8%A1%E6%8B%9F%E6%B5%81%E7%A8%8B/"/>
+    
+    <category term="多资源任务分配" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E8%B5%84%E6%BA%90%E4%BB%BB%E5%8A%A1%E5%88%86%E9%85%8D/"/>
+    
+    <category term="时间线优化管理" scheme="http://charkschen.github.io/tags/%E6%97%B6%E9%97%B4%E7%BA%BF%E4%BC%98%E5%8C%96%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从逆序对到归并排序</title>
+    <link href="http://charkschen.github.io/2025/10/29/fouth-blog/"/>
+    <id>http://charkschen.github.io/2025/10/29/fouth-blog/</id>
+    <published>2025-10-29T13:28:17.000Z</published>
+    <updated>2025-11-03T12:34:59.264Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;原本在思考逆序对的简单方法，发现冒泡排序的求法还是太慢了&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="逆序对" scheme="http://charkschen.github.io/tags/%E9%80%86%E5%BA%8F%E5%AF%B9/"/>
+    
+    <category term="归并排序" scheme="http://charkschen.github.io/tags/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Memset初始化的运用</title>
+    <link href="http://charkschen.github.io/2025/10/27/The-third-blog/"/>
+    <id>http://charkschen.github.io/2025/10/27/The-third-blog/</id>
+    <published>2025-10-27T13:44:58.000Z</published>
+    <updated>2025-10-28T13:51:33.561Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;code&gt;#include&amp;lt;string.h&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;memset( void*s, char ch, unsigned n);&lt;/code&gt;</summary>
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="数组初始化" scheme="http://charkschen.github.io/tags/%E6%95%B0%E7%BB%84%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
+    
+    <category term="结构体初始化" scheme="http://charkschen.github.io/tags/%E7%BB%93%E6%9E%84%E4%BD%93%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C语言中qsort函数</title>
+    <link href="http://charkschen.github.io/2025/10/26/The-second/"/>
+    <id>http://charkschen.github.io/2025/10/26/The-second/</id>
+    <published>2025-10-26T13:34:07.000Z</published>
+    <updated>2025-10-28T13:50:58.931Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;code&gt;#include&amp;lt;stdlib.h&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;qsort ( 数组第一个元素的地址，数数组中的元素个数，每个元素的大小，比较函数 )</summary>
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="快速排序" scheme="http://charkschen.github.io/tags/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/"/>
+    
+    <category term="结构体排序" scheme="http://charkschen.github.io/tags/%E7%BB%93%E6%9E%84%E4%BD%93%E6%8E%92%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>快速幂的代码</title>
+    <link href="http://charkschen.github.io/2025/10/26/My-New-Post/"/>
+    <id>http://charkschen.github.io/2025/10/26/My-New-Post/</id>
+    <published>2025-10-26T13:03:16.000Z</published>
+    <updated>2025-10-28T13:50:31.054Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;对一个数的极大幂求余数的优化时间复杂度后的解法</summary>
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="二分算法" scheme="http://charkschen.github.io/tags/%E4%BA%8C%E5%88%86%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://charkschen.github.io/2025/10/26/hello-world/"/>
+    <id>http://charkschen.github.io/2025/10/26/hello-world/</id>
+    <published>2025-10-26T05:25:17.715Z</published>
+    <updated>2025-11-03T04:50:08.845Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;!</summary>
+    
+    
+    
+    
+  </entry>
+  
+</feed>
