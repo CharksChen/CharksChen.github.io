@@ -82,12 +82,14 @@
     <link href="http://charkschen.github.io/2025/10/29/fouth-blog/"/>
     <id>http://charkschen.github.io/2025/10/29/fouth-blog/</id>
     <published>2025-10-29T13:28:17.000Z</published>
-    <updated>2025-11-03T12:34:59.264Z</updated>
+    <updated>2025-11-11T03:27:47.953Z</updated>
     
     
     <summary type="html">&lt;p&gt;原本在思考逆序对的简单方法，发现冒泡排序的求法还是太慢了&lt;/p&gt;</summary>
     
     
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
     
     
     <category term="逆序对" scheme="http://charkschen.github.io/tags/%E9%80%86%E5%BA%8F%E5%AF%B9/"/>
