@@ -6,7 +6,7 @@
   <link href="http://charkschen.github.io/atom.xml" rel="self"/>
   
   <link href="http://charkschen.github.io/"/>
-  <updated>2025-11-19T12:59:04.855Z</updated>
+  <updated>2025-11-20T14:24:23.983Z</updated>
   <id>http://charkschen.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>高精度加减乘除及比较大小</title>
+    <link href="http://charkschen.github.io/posts/9409.html"/>
+    <id>http://charkschen.github.io/posts/9409.html</id>
+    <published>2025-11-20T13:22:05.000Z</published>
+    <updated>2025-11-20T14:24:23.983Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;课后练习里的一道高精度乘法题，进而思考起高精度的其他内容。&lt;/p&gt;
+&lt;h2 id=&quot;什么样的题要用到高精度&quot;&gt;&lt;a href=&quot;#什么样的题要用到高精度&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="高精度" scheme="http://charkschen.github.io/tags/%E9%AB%98%E7%B2%BE%E5%BA%A6/"/>
+    
+  </entry>
   
   <entry>
     <title>二分算法及模板</title>
