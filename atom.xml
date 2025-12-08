@@ -6,7 +6,7 @@
   <link href="http://charkschen.github.io/atom.xml" rel="self"/>
   
   <link href="http://charkschen.github.io/"/>
-  <updated>2025-12-06T04:03:02.024Z</updated>
+  <updated>2025-12-08T11:06:37.616Z</updated>
   <id>http://charkschen.github.io/</id>
   
   <author>
@@ -17,11 +17,40 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>从sprintf到snprintf字符输出</title>
+    <link href="http://charkschen.github.io/posts/adec.html"/>
+    <id>http://charkschen.github.io/posts/adec.html</id>
+    <published>2025-12-08T04:45:56.000Z</published>
+    <updated>2025-12-08T11:06:37.616Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;sprintf() 是 C 标准库中的一个函数，用于将格式化的字符串输出到一个字符数组中。它有类似于 printf()</summary>
+        
+      
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="sprintf" scheme="http://charkschen.github.io/tags/sprintf/"/>
+    
+    <category term="snprintf" scheme="http://charkschen.github.io/tags/snprintf/"/>
+    
+    <category term="输出" scheme="http://charkschen.github.io/tags/%E8%BE%93%E5%87%BA/"/>
+    
+  </entry>
+  
+  <entry>
     <title>LCS最长公共子序列问题</title>
     <link href="http://charkschen.github.io/posts/6d90.html"/>
     <id>http://charkschen.github.io/posts/6d90.html</id>
     <published>2025-12-04T14:49:05.000Z</published>
-    <updated>2025-12-06T04:03:02.024Z</updated>
+    <updated>2025-12-06T04:08:33.809Z</updated>
     
     
       
@@ -50,7 +79,7 @@
     <link href="http://charkschen.github.io/posts/5ec6.html"/>
     <id>http://charkschen.github.io/posts/5ec6.html</id>
     <published>2025-12-01T11:59:38.000Z</published>
-    <updated>2025-12-01T12:18:37.453Z</updated>
+    <updated>2025-12-06T04:08:33.825Z</updated>
     
     
       
