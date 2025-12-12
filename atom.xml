@@ -6,7 +6,7 @@
   <link href="http://charkschen.github.io/atom.xml" rel="self"/>
   
   <link href="http://charkschen.github.io/"/>
-  <updated>2025-12-08T11:09:47.881Z</updated>
+  <updated>2025-12-12T03:54:33.840Z</updated>
   <id>http://charkschen.github.io/</id>
   
   <author>
@@ -15,6 +15,57 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>线性代数复习详细版</title>
+    <link href="http://charkschen.github.io/posts/acb4.html"/>
+    <id>http://charkschen.github.io/posts/acb4.html</id>
+    <published>2025-12-12T03:49:52.000Z</published>
+    <updated>2025-12-12T03:54:33.840Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;注：参考资料来自课上PPT, Made By AI&lt;/p&gt;
+&lt;h2 id=&quot;Lecture-1：线性方程组&quot;&gt;&lt;a href=&quot;#Lecture-1：线性方程组&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="线性代数" scheme="http://charkschen.github.io/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
+    
+    
+    <category term="线性代数复习" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>线性代数复习简略版</title>
+    <link href="http://charkschen.github.io/posts/d090.html"/>
+    <id>http://charkschen.github.io/posts/d090.html</id>
+    <published>2025-12-12T03:47:23.000Z</published>
+    <updated>2025-12-12T03:51:25.431Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;线性代数课程讲义知识点全梳理-Made-By-AI&quot;&gt;&lt;a href=&quot;#线性代数课程讲义知识点全梳理-Made-By-AI&quot; class=&quot;headerlink&quot; title=&quot;线性代数课程讲义知识点全梳理(Made By</summary>
+        
+      
+    
+    
+    
+    <category term="线性代数" scheme="http://charkschen.github.io/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
+    
+    
+    <category term="线性代数复习" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>从sprintf到snprintf字符输出</title>
