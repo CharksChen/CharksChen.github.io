@@ -6,7 +6,7 @@
   <link href="http://charkschen.github.io/atom.xml" rel="self"/>
   
   <link href="http://charkschen.github.io/"/>
-  <updated>2025-12-12T03:54:56.064Z</updated>
+  <updated>2025-12-30T09:52:52.546Z</updated>
   <id>http://charkschen.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>线性代数的本质（整理自3Blue1Brown）</title>
+    <link href="http://charkschen.github.io/posts/8b25.html"/>
+    <id>http://charkschen.github.io/posts/8b25.html</id>
+    <published>2025-12-30T09:09:49.000Z</published>
+    <updated>2025-12-30T09:52:52.546Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;向量&quot;&gt;&lt;a href=&quot;#向量&quot; class=&quot;headerlink&quot; title=&quot;向量&quot;&gt;&lt;/a&gt;向量&lt;/h1&gt;&lt;h3 id=&quot;1-向量的三种视角&quot;&gt;&lt;a href=&quot;#1-向量的三种视角&quot; class=&quot;headerlink&quot; title=&quot;1.</summary>
+        
+      
+    
+    
+    
+    <category term="线性代数" scheme="http://charkschen.github.io/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
+    
+    
+    <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
+    
+    <category term="3Blue1Brown" scheme="http://charkschen.github.io/tags/3Blue1Brown/"/>
+    
+  </entry>
   
   <entry>
     <title>线性代数复习简略版</title>
