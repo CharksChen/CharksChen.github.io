@@ -6,7 +6,7 @@
   <link href="http://charkschen.github.io/atom.xml" rel="self"/>
   
   <link href="http://charkschen.github.io/"/>
-  <updated>2025-12-30T14:27:29.860Z</updated>
+  <updated>2026-04-15T10:07:40.363Z</updated>
   <id>http://charkschen.github.io/</id>
   
   <author>
@@ -15,6 +15,85 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C++之STL（from ChrisKim_ZHT)</title>
+    <link href="http://charkschen.github.io/posts/3c.html"/>
+    <id>http://charkschen.github.io/posts/3c.html</id>
+    <published>2026-04-15T10:02:43.000Z</published>
+    <updated>2026-04-15T10:07:40.363Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;C++ 标准模板库 (STL, Standard Template Library)&lt;/strong&gt;：包含一些常用数据结构与算法的模板的 C++ 软件库。其包含四个组件——算法 (Algorithms)、容器 (Containers)、仿函数</summary>
+        
+      
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="STL" scheme="http://charkschen.github.io/tags/STL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>中值定理深入</title>
+    <link href="http://charkschen.github.io/posts/d0da.html"/>
+    <id>http://charkschen.github.io/posts/d0da.html</id>
+    <published>2026-01-02T11:24:05.000Z</published>
+    <updated>2026-04-01T02:58:42.969Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;1&lt;/p&gt;
+&lt;p&gt;1111111111·&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;     真实的
+     
+     
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+     
+     
+     
+     # 中值定理 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="数学分析" scheme="http://charkschen.github.io/categories/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/"/>
+    
+    
+    <category term="中值定理" scheme="http://charkschen.github.io/tags/%E4%B8%AD%E5%80%BC%E5%AE%9A%E7%90%86/"/>
+    
+  </entry>
   
   <entry>
     <title>线性代数的本质（整理自3Blue1Brown）</title>
