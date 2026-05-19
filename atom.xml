@@ -31,9 +31,9 @@
     <category term="数学分析" scheme="http://charkschen.github.io/categories/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/"/>
     
     
-    <category term="多元函数" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/"/>
-    
     <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
+    
+    <category term="多元函数" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/"/>
     
     <category term="微分" scheme="http://charkschen.github.io/tags/%E5%BE%AE%E5%88%86/"/>
     
@@ -52,7 +52,7 @@
     <link href="http://charkschen.github.io/posts/d0da.html"/>
     <id>http://charkschen.github.io/posts/d0da.html</id>
     <published>2026-04-24T16:00:00.000Z</published>
-    <updated>2026-05-19T08:50:54.751Z</updated>
+    <updated>2026-05-19T08:52:19.394Z</updated>
     
     
     <summary type="html">深入探究多元函数微积分（梯度、方向导数、雅可比矩阵、Hessian矩阵）与线性代数（向量空间、特征值、正交投影）的内在联系。</summary>
@@ -61,6 +61,10 @@
     
     <category term="数学分析" scheme="http://charkschen.github.io/categories/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/"/>
     
+    
+    <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
+    
+    <category term="多元函数" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/"/>
     
   </entry>
   
