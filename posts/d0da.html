@@ -1,0 +1,590 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>高等数学多元函数章节与线性代数内在联系探究 | Welcome to Charks's Blog</title><meta name="author" content="Charks"><meta name="copyright" content="Charks"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="深入探究多元函数微积分（梯度、方向导数、雅可比矩阵、Hessian矩阵）与线性代数（向量空间、特征值、正交投影）的内在联系。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高等数学多元函数章节与线性代数内在联系探究">
+<meta property="og:url" content="http://charkschen.github.io/posts/d0da.html">
+<meta property="og:site_name" content="Welcome to Charks&#39;s Blog">
+<meta property="og:description" content="深入探究多元函数微积分（梯度、方向导数、雅可比矩阵、Hessian矩阵）与线性代数（向量空间、特征值、正交投影）的内在联系。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://charkschen.github.io/img/top-img/img0.png">
+<meta property="article:published_time" content="2026-04-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-19T08:52:19.394Z">
+<meta property="article:author" content="Charks">
+<meta property="article:tag" content="多元函数">
+<meta property="article:tag" content="线性代数">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://charkschen.github.io/img/top-img/img0.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "高等数学多元函数章节与线性代数内在联系探究",
+  "url": "http://charkschen.github.io/posts/d0da.html",
+  "image": "http://charkschen.github.io/img/top-img/img0.png",
+  "datePublished": "2026-04-24T16:00:00.000Z",
+  "dateModified": "2026-05-19T08:52:19.394Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Charks",
+      "url": "http://charkschen.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://charkschen.github.io/posts/d0da.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":true,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '高等数学多元函数章节与线性代数内在联系探究',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="baidu-site-verification" content="codeva-6hTlRFZJTl" /><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Welcome to Charks's Blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/top-img/img0.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/top-img/img1.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Welcome to Charks's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">高等数学多元函数章节与线性代数内在联系探究</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">高等数学多元函数章节与线性代数内在联系探究</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-24T16:00:00.000Z" title="发表于 2026-04-25 00:00:00">2026-04-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-05-19T08:52:19.394Z" title="更新于 2026-05-19 16:52:19">2026-05-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/">数学分析</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>下面给出 <strong>《高等数学——多元函数章节与线性代数内在联系探究》</strong> 的完整笔记草稿。<br>
+该笔记围绕 <strong>多元函数的中值定理、梯度、方向导数、雅可比矩阵、Hessian 矩阵</strong> 等内容展开，并系统阐述它们与 <strong>线性代数（向量空间、线性映射、特征值/特征向量、正交投影）</strong> 的内在联系。</p>
+<hr>
+<h2 id="1-多元函数的基本概念">1. 多元函数的基本概念</h2>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>记号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>定义域</strong></td>
+<td>$D\subset\mathbb{R}^n$</td>
+<td>$f:\;D\to\mathbb{R}$（标量函数）或 $f:\;D\to\mathbb{R}^m$（向量值函数）</td>
+</tr>
+<tr>
+<td><strong>连续</strong></td>
+<td>$\displaystyle\lim_{\mathbf{x}\to\mathbf{x}_0}f(\mathbf{x})=f(\mathbf{x}_0)$</td>
+<td>与一元情形完全相同，只是 $\mathbf{x}=(x_1,\dots,x_n)$</td>
+</tr>
+<tr>
+<td><strong>可微</strong></td>
+<td>$f$ 在 $\mathbf{x}_0$ 可微 ⇔ 存在线性映射 $L$ 使 $$\lim_{\mathbf{h}\to0}\frac{\|f(\mathbf{x}_0+\mathbf{h})-f(\mathbf{x}_0)-L(\mathbf{h})\|}{\|\mathbf{h}\|}=0.$$</td>
+<td>线性映射 $L$ 正是 <strong>雅可比矩阵</strong> $J_f(\mathbf{x}_0)$ 的作用。</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-梯度、方向导数与线性代数">2. 梯度、方向导数与线性代数</h2>
+<h3 id="2-1-偏导数与梯度">2.1 偏导数与梯度</h3>
+<ul>
+<li>
+<p><strong>偏导数</strong><br>
+$$\frac{\partial f}{\partial x_i}(\mathbf{x})=\lim_{h\to0}\frac{f(x_1,\dots,x_i+h,\dots,x_n)-f(\mathbf{x})}{h}.$$</p>
+</li>
+<li>
+<p><strong>梯度向量</strong>（Gradient）<br>
+$$\nabla f(\mathbf{x})=\left(\frac{\partial f}{\partial x_1},\dots,\frac{\partial f}{\partial x_n}\right)^{\!\top}.$$</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>线性代数视角</strong>：梯度是 <strong>函数的最速上升方向</strong>，它本身是 <strong>列向量</strong>，在欧氏空间中可视为 <strong>线性映射</strong> $L_{\nabla f}(\mathbf{h})=\nabla f^{\!\top}\mathbf{h}$。</p>
+</blockquote>
+<h3 id="2-2-方向导数">2.2 方向导数</h3>
+<p>给定单位向量 $\mathbf{u}\in\mathbb{R}^n$，方向导数定义为<br>
+$$D_{\mathbf{u}}f(\mathbf{x})=\lim_{h\to0}\frac{f(\mathbf{x}+h\mathbf{u})-f(\mathbf{x})}{h}.$$</p>
+<p>若 $f$ 在 $\mathbf{x}$ 可微，则<br>
+$$D_{\mathbf{u}}f(\mathbf{x})=\nabla f(\mathbf{x})^{\!\top}\mathbf{u}.$$</p>
+<blockquote>
+<p>这正是 <strong>向量内积</strong> 的形式，说明方向导数是梯度向量与方向向量的 <strong>线性映射</strong>（点积）。</p>
+</blockquote>
+<h3 id="2-3-梯度的几何意义">2.3 梯度的几何意义</h3>
+<ul>
+<li>$\nabla f(\mathbf{x})$ 与等值面（等高面）<strong>正交</strong>。</li>
+<li>在欧氏空间中，梯度的 <strong>长度</strong> $ \|\nabla f(\mathbf{x})\| $ 表示 <strong>最速上升率</strong>。</li>
+</ul>
+<hr>
+<h2 id="3-多元函数的中值定理">3. 多元函数的中值定理</h2>
+<h3 id="3-1-多元介值定理（Brouwer-不动点定理的简化版）">3.1 多元介值定理（Brouwer 不动点定理的简化版）</h3>
+<blockquote>
+<p><strong>定理</strong>（多元介值定理的直观形式）：若 $f:\;[a_1,b_1]\times\cdots\times[a_n,b_n]\to\mathbb{R}^n$ 连续且对每个坐标 $i$ 有<br>
+$$f_i(a_1,\dots,a_n)\le a_i\le f_i(b_1,\dots,b_n),$$<br>
+则存在 $\mathbf{x}^\ast$ 使得 $f(\mathbf{x}^\ast)=\mathbf{x}^\ast$（即不动点）。</p>
+</blockquote>
+<blockquote>
+<p>该定理的证明依赖 <strong>Brouwer 不动点定理</strong>，而 Brouwer 定理本身是 <strong>拓扑</strong> 与 <strong>线性代数</strong>（紧致性、连续映射）相结合的结果。</p>
+</blockquote>
+<h3 id="3-2-多元拉格朗日中值定理（Mean-Value-Theorem-for-Vector‑Valued-Functions）">3.2 多元拉格朗日中值定理（Mean Value Theorem for Vector‑Valued Functions）</h3>
+<p>设 $F:\;U\subset\mathbb{R}^n\to\mathbb{R}^m$ 在开凸集 $U$ 上 <strong>连续可微</strong>，取两点 $\mathbf{a},\mathbf{b}\in U$，则存在 $\mathbf{\xi}= \mathbf{a}+t(\mathbf{b}-\mathbf{a})$（$t\in(0,1)$）使得</p>
+<p>$$
+F(\mathbf{b})-F(\mathbf{a}) = J_F(\mathbf{\xi})\,(\mathbf{b}-\mathbf{a}),
+$$</p>
+<p>其中 $J_F(\mathbf{\xi})$ 为 <strong>雅可比矩阵</strong>（$m\times n$），即 $[J_F]_{ij}= \displaystyle\frac{\partial F_i}{\partial x_j}$。</p>
+<blockquote>
+<p><strong>线性代数联系</strong>：该等式正是 <strong>线性映射</strong>（雅可比矩阵）在向量 $\mathbf{b}-\mathbf{a}$ 上的作用，体现了 <strong>微分</strong> 本质上是 <strong>局部线性化</strong>。</p>
+</blockquote>
+<h3 id="3-3-多元柯西中值定理（Cauchy-Mean-Value-Theorem）">3.3 多元柯西中值定理（Cauchy Mean Value Theorem）</h3>
+<p>若 $f,g:U\to\mathbb{R}$ 在开凸集 $U$ 上连续可微且 $g'$ 在 $U$ 上不为零，则对任意 $\mathbf{a},\mathbf{b}\in U$，存在 $\mathbf{\xi}$ 使得</p>
+<p>$$
+\frac{\nabla f(\mathbf{\xi})^{\!\top}(\mathbf{b}-\mathbf{a})}{\nabla g(\mathbf{\xi})^{\!\top}(\mathbf{b}-\mathbf{a})}
+= \frac{f(\mathbf{b})-f(\mathbf{a})}{g(\mathbf{b})-g(\mathbf{a})}.
+$$</p>
+<blockquote>
+<p>这里的 <strong>点积</strong> 再次把梯度（列向量）转化为 <strong>标量</strong>，与一元情形的分子分母结构保持一致。</p>
+</blockquote>
+<hr>
+<h2 id="4-多元泰勒展开与-Hessian-矩阵">4. 多元泰勒展开与 Hessian 矩阵</h2>
+<h3 id="4-1-二阶泰勒公式（带余项）">4.1 二阶泰勒公式（带余项）</h3>
+<p>设 $f:\;U\subset\mathbb{R}^n\to\mathbb{R}$ 在点 $\mathbf{x}_0$ 的邻域内二阶连续可微，则对任意 $\mathbf{x}\in U$，有</p>
+<p>$$
+\begin{aligned}
+f(\mathbf{x}) &= f(\mathbf{x}_0)
++ \nabla f(\mathbf{x}_0)^{\!\top}(\mathbf{x}-\mathbf{x}_0) \\
+&\quad + \frac12(\mathbf{x}-\mathbf{x}_0)^{\!\top} H_f(\mathbf{\xi}) (\mathbf{x}-\mathbf{x}_0),
+\end{aligned}
+$$</p>
+<p>其中 $H_f(\mathbf{\xi})$ 为 <strong>Hessian 矩阵</strong>（二阶偏导数组成的对称矩阵），$\mathbf{\xi}$ 位于 $\mathbf{x}_0$ 与 $\mathbf{x}$ 连线的某点。</p>
+<blockquote>
+<p><strong>线性代数视角</strong>：</p>
+<ul>
+<li>$\nabla f(\mathbf{x}_0)^{\!\top}(\mathbf{x}-\mathbf{x}_0)$ 是 <strong>一次线性映射</strong>（梯度点乘）。</li>
+<li>$(\mathbf{x}-\mathbf{x}_0)^{\!\top} H_f(\mathbf{\xi}) (\mathbf{x}-\mathbf{x}_0)$ 是 <strong>二次型</strong>，可通过 <strong>特征分解</strong> 分析正定性，从而判断极值性质。</li>
+</ul>
+</blockquote>
+<h3 id="4-2-极值判别（二阶充分条件）">4.2 极值判别（二阶充分条件）</h3>
+<ul>
+<li>若 $H_f(\mathbf{x}_0)$ <strong>正定</strong>（所有特征值 $>0$），则 $\mathbf{x}_0$ 为 <strong>严格局部最小点</strong>。</li>
+<li>若 $H_f(\mathbf{x}_0)$ <strong>负定</strong>（所有特征值 $<0$），则 $\mathbf{x}_0$ 为 <strong>严格局部最大点</strong>。</li>
+<li>若 $H_f(\mathbf{x}_0)$ <strong>不定</strong>，则 $\mathbf{x}_0$ 为 <strong>鞍点</strong>。</li>
+</ul>
+<blockquote>
+<p>这里的 <strong>正定/负定</strong> 完全是 <strong>矩阵特征值</strong> 的概念，直接把 <strong>线性代数</strong> 的工具用于 <strong>多元微积分</strong> 的极值判别。</p>
+</blockquote>
+<hr>
+<h2 id="5-多元函数与线性映射的等价关系">5. 多元函数与线性映射的等价关系</h2>
+<table>
+<thead>
+<tr>
+<th>多元分析概念</th>
+<th>对应的线性代数对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>梯度 $\nabla f$</strong></td>
+<td>列向量（线性函数的系数）</td>
+</tr>
+<tr>
+<td><strong>雅可比矩阵 $J_F$</strong></td>
+<td><strong>线性映射</strong> $DF_{\mathbf{x}}:\mathbb{R}^n\to\mathbb{R}^m$ 的矩阵表示</td>
+</tr>
+<tr>
+<td><strong>Hessian 矩阵 $H_f$</strong></td>
+<td>对称二次型对应的 <strong>自伴线性算子</strong></td>
+</tr>
+<tr>
+<td><strong>方向导数 $D_{\mathbf{u}}f$</strong></td>
+<td>向量 $\mathbf{u}$ 与梯度的 <strong>内积</strong>（线性映射的作用）</td>
+</tr>
+<tr>
+<td><strong>多元中值定理</strong></td>
+<td>雅可比矩阵在两点之间的 <strong>平均线性映射</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>通过上述对应关系，可把 <strong>求极值、最速上升、曲面切平面</strong> 等几何问题转化为 <strong>矩阵运算</strong>（求特征值、正交化、求逆）的问题，从而实现 <strong>微积分与线性代数的统一</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="6-示例与应用">6. 示例与应用</h2>
+<h3 id="示例-1：求函数-MATH-INLINE-72-的极值">示例 1：求函数 $f(x,y)=x^2+2xy+y^2$ 的极值</h3>
+<ol>
+<li>
+<p><strong>梯度</strong><br>
+$$\nabla f = \begin{pmatrix}2x+2y\\2x+2y\end{pmatrix}=2\begin{pmatrix}x+y\\x+y\end{pmatrix}.$$<br>
+令 $\nabla f=0$ 得 $x+y=0\;\Rightarrow\;y=-x$。</p>
+</li>
+<li>
+<p><strong>Hessian</strong><br>
+$$H_f=\begin{pmatrix}2&2\\2&2\end{pmatrix}.$$<br>
+特征值 $\lambda_1=4,\;\lambda_2=0$（半正定），因此在直线 $y=-x$ 上每一点都是 <strong>极小值</strong>（但不是严格极小，因为 $H_f$ 仅半正定）。</p>
+</li>
+</ol>
+<h3 id="示例-2：线性映射的局部线性化">示例 2：线性映射的局部线性化</h3>
+<p>设 $F(x,y)=\bigl(xe^{y},\;y\sin x\bigr)$，求在点 $\mathbf{a}=(0,0)$ 附近的线性近似。</p>
+<ul>
+<li><strong>雅可比矩阵</strong><br>
+$$
+  J_F(\mathbf{x})=
+  \begin{pmatrix}
+  e^{y} & xe^{y}\\
+  y\cos x & \sin x
+  \end{pmatrix},
+  \qquad
+  J_F(\mathbf{0})=
+  \begin{pmatrix}
+  1 & 0\\
+  0 & 0
+  \end{pmatrix}.
+  $$</li>
+<li><strong>线性化</strong><br>
+$$F(\mathbf{x})\approx F(\mathbf{0})+J_F(\mathbf{0})(\mathbf{x}-\mathbf{0})
+  =\begin{pmatrix}0\\0\end{pmatrix}+\begin{pmatrix}1&0\\0&0\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}
+  =\begin{pmatrix}x\\0\end{pmatrix}.$$</li>
+</ul>
+<blockquote>
+<p>这说明在原点附近，$F$ 的行为相当于把向量 $(x,y)$ <strong>投影</strong> 到 $x$ 轴上——典型的 <strong>线性代数投影</strong> 操作。</p>
+</blockquote>
+<hr>
+<h2 id="7-参考文献">7. 参考文献</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>文献</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[1]</td>
+<td>Stewart, <em>Calculus: Early Transcendentals</em>, 8th ed., Cengage, 2015.（多元微积分章节）</td>
+</tr>
+<tr>
+<td>[2]</td>
+<td>Strang, <em>Linear Algebra and Its Applications</em>, 5th ed., Cengage, 2016.（矩阵、特征值）</td>
+</tr>
+<tr>
+<td>[3]</td>
+<td>Apostol, <em>Mathematical Analysis</em>, 2nd ed., Addison‑Wesley, 1974.（中值定理的严谨证明）</td>
+</tr>
+<tr>
+<td>[4]</td>
+<td>Rudin, <em>Principles of Mathematical Analysis</em>, 3rd ed., McGraw‑Hill, 1976.（Brouwer 不动点定理）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8-练习题（供自测）">8. 练习题（供自测）</h2>
+<ol>
+<li>设 $f(x,y)=\sin x\cos y$，求其梯度并验证在点 $(\pi/4,\pi/4)$ 处的方向导数沿单位向量 $\mathbf{u}=(1/\sqrt2,1/\sqrt2)$ 的值。</li>
+<li>对向量值函数 $F(x,y)=(x^2-y,\,xy)$，计算雅可比矩阵并在点 $(1,2)$ 给出线性化近似。</li>
+<li>证明：若 $f$ 在开凸集 $U$ 上二次可微且 Hessian 矩阵在 $U$ 为正定，则 $f$ 在 $U$ 上为 <strong>严格凸函数</strong>。</li>
+<li>用 <strong>拉格朗日中值定理</strong> 推导一元函数的 <strong>均值不等式</strong>：若 $f$ 在 $[a,b]$ 连续可微，则<br>
+$$\min_{x\in[a,b]}f'(x)\le\frac{f(b)-f(a)}{b-a}\le\max_{x\in[a,b]}f'(x).$$</li>
+</ol>
+<hr>
+<blockquote>
+<p><strong>小结</strong>：多元函数的微分本质上是 <strong>线性映射</strong>（雅可比矩阵），而二阶微分则对应 <strong>二次型</strong>（Hessian）。通过矩阵的特征分解、正定性判别等线性代数工具，我们可以更系统、更几何地理解极值、最速上升方向以及局部线性化等概念。希望本笔记能帮助你在 <strong>高等数学</strong> 与 <strong>线性代数</strong> 之间搭建起坚实的桥梁。祝学习愉快！</p>
+</blockquote>
+<h2 id="16-多元中值定理的几何含义">16. 多元中值定理的几何含义</h2>
+<p>摘要：多元柯西和向量值函数的中值定理提供了在局部线性化附近对函数增量的近似控制。本节通过直观几何与矩阵表示，讲解在高维空间中中值定理的意义及其与雅可比矩阵的联系。<br>
+关键词：中值定理、柯西、雅可比、局部线性化<br>
+结构：</p>
+<ul>
+<li>H2: 定理陈述与直观</li>
+<li>H2: 与雅可比的关系</li>
+<li>H3: 示例</li>
+</ul>
+<p>开头示例：设 F: R^n -&gt; R^m 在某开集内连续可微，取点 a,b，利用雅可比在某点的线性近似可把 F(b)-F(a) 近似为 JF(ξ)(b-a)，从而获得增量的线性界限。</p>
+<h2 id="17-多元泰勒展开与-Hessian-的应用">17. 多元泰勒展开与 Hessian 的应用</h2>
+<p>摘要：二阶泰勒展开将非线性映射按局部线性与二阶项展开，Hessian 的正定性提供极值的判别信息。本节给出展开公式和在优化中的几何解读。<br>
+关键词：泰勒展开、Hessian、极值、局部近似<br>
+结构：</p>
+<ul>
+<li>H2: 展开公式</li>
+<li>H2: 极值与二阶信息</li>
+<li>H3: 应用示例</li>
+</ul>
+<p>开头示例：对 f(x,y) 的点 (a,b) 进行二阶泰勒展开，得到 f(a+h) ≈ f(a) + ∇f(a)·h + 1/2 h^T Hf(a) h，这里的二阶项揭示了曲面的局部曲率。</p>
+<h2 id="18-线性代数工具在最优化中的应用">18. 线性代数工具在最优化中的应用</h2>
+<p>摘要：通过特征值、特征向量、对角化等线性代数工具来分析凸性、曲率和局部极值，帮助快速判断最优解的存在性与性质。<br>
+关键词：特征值、特征向量、对角化、最优化<br>
+结构：</p>
+<ul>
+<li>H2: 特征分解与正定性</li>
+<li>H2: 最优化中的应用场景</li>
+<li>H3: 练习要点</li>
+</ul>
+<p>开头示例：若 Hessian 在一点正定，则该点是严格局部极小点；若不定，则需结合梯度的一阶项来判断极值的存在性。</p>
+<h2 id="19-梯度与最速下降路径的几何解读">19. 梯度与最速下降路径的几何解读</h2>
+<p>摘要：从几何角度理解梯度方向，即为下降法的反方向，最速下降路径近似沿梯度方向的路径。通过可视化图像帮助理解迭代收敛的路径特征。<br>
+关键词：梯度下降、最速路径、迭代<br>
+结构：</p>
+<ul>
+<li>H2: 梯度与路径关系</li>
+<li>H2: 迭代几何直觉</li>
+<li>H3: 收敛性要点</li>
+</ul>
+<p>开头示例：在二维平面上，若选取初始点并按负梯度方向更新，则路径将逐步贴近函数的等高线向内收敛。</p>
+<h2 id="20-正交投影与最小二乘问题的联系">20. 正交投影与最小二乘问题的联系</h2>
+<p>摘要：正交投影在高维空间中的直观解释，是最小二乘解的几何本质。通过投影误差最小化来理解最优拟合。<br>
+关键词：正交投影、最小二乘、拟合<br>
+结构：</p>
+<ul>
+<li>H2: 正交投影定义</li>
+<li>H2: 最小二乘解的几何interpretation</li>
+<li>H3: 例题</li>
+</ul>
+<p>开头示例：在列向量 b 上寻找一个尽量接近 ax 的向量 x，使得误差 ||b - Ax|| 最小，这等价于将 b 投影到列空间 Span{A} 的正交补上。</p>
+<h2 id="21-局部线性化在微分方程中的作用">21. 局部线性化在微分方程中的作用</h2>
+<p>摘要：微分方程系统经常需要局部线性化来分析局部稳定性与近似解，本节结合一阶近似与线性系统理论，给出常见分支点的分析方法。<br>
+关键词：局部线性化、微分方程、稳定性<br>
+结构：</p>
+<ul>
+<li>H2: 线性化原理</li>
+<li>H2: 稳定性分析要点</li>
+<li>H3: 示例</li>
+</ul>
+<p>开头示例：考虑非线性系统 x’ = f(x)，在平衡点 x* 处可用线性化 x’ ≈ Df(x*) (x - x*) 来分析局部行为。</p>
+<h2 id="22-特征分解在几何中的直观应用">22. 特征分解在几何中的直观应用</h2>
+<p>摘要：特征分解提供了在坐标变换下对称矩阵的简单描述，帮助理解曲率、投影和坐标系统的选择对问题简化的影响。<br>
+关键词：特征分解、对角化、坐标变换<br>
+结构：</p>
+<ul>
+<li>H2: 定义与直观</li>
+<li>H2: 对称矩阵的对角化意义</li>
+<li>H3: 应用示例</li>
+</ul>
+<p>开头示例：对称 Hessian 可以通过正交特征向量组成的基底对角化，使得二阶形式易于判断符号和大小。</p>
+<h2 id="23-从微分到线性代数的整合视角">23. 从微分到线性代数的整合视角</h2>
+<p>摘要：总结本系列中微分与线性代数的主线索，强调两者在极值、投影和线性近似中的互补性。<br>
+关键词：微分、线性代数、整合<br>
+结构：</p>
+<ul>
+<li>H2: 核心桥梁</li>
+<li>H2: 常见题型与解法</li>
+<li>H3: 练习要点</li>
+</ul>
+<p>开头示例：从梯度、雅可比与 Hessian 的角度出发，我们可以统一地将微分与线性代数工具用于分析曲面、拟合与优化问题。</p>
+<h2 id="24-综述：从微分到几何的统一视角">24. 综述：从微分到几何的统一视角</h2>
+<p>摘要：回顾本系列的核心思想，强调以线性映射和二阶性质为主线来理解多元微积分的几何图景。<br>
+关键词：统一视角、几何、微分<br>
+结构：</p>
+<ul>
+<li>H2: 核心观点回顾</li>
+<li>H2: 进一步阅读</li>
+<li>H3: 练习与延伸</li>
+</ul>
+<p>开头示例：通过把微分转化为局部线性映射，以及把二阶信息视作二次型，我们在多元微积分和线性代数之间建立起清晰的桥梁。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://charkschen.github.io">Charks</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://charkschen.github.io/posts/d0da.html">http://charkschen.github.io/posts/d0da.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://charkschen.github.io" target="_blank">Welcome to Charks's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">线性代数</a><a class="post-meta__tags" href="/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/">多元函数</a></div><div class="post-share"><div class="social-share" data-image="/img/top-img/img0.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/top-img/img0.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Charks</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CharksChen"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">1. 多元函数的基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A2%AF%E5%BA%A6%E3%80%81%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">2. 梯度、方向导数与线性代数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%81%8F%E5%AF%BC%E6%95%B0%E4%B8%8E%E6%A2%AF%E5%BA%A6"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 偏导数与梯度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 方向导数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%A2%AF%E5%BA%A6%E7%9A%84%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 梯度的几何意义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%AD%E5%80%BC%E5%AE%9A%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">3. 多元函数的中值定理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%A4%9A%E5%85%83%E4%BB%8B%E5%80%BC%E5%AE%9A%E7%90%86%EF%BC%88Brouwer-%E4%B8%8D%E5%8A%A8%E7%82%B9%E5%AE%9A%E7%90%86%E7%9A%84%E7%AE%80%E5%8C%96%E7%89%88%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 多元介值定理（Brouwer 不动点定理的简化版）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%A4%9A%E5%85%83%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B8%AD%E5%80%BC%E5%AE%9A%E7%90%86%EF%BC%88Mean-Value-Theorem-for-Vector%E2%80%91Valued-Functions%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 多元拉格朗日中值定理（Mean Value Theorem for Vector‑Valued Functions）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%A4%9A%E5%85%83%E6%9F%AF%E8%A5%BF%E4%B8%AD%E5%80%BC%E5%AE%9A%E7%90%86%EF%BC%88Cauchy-Mean-Value-Theorem%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 多元柯西中值定理（Cauchy Mean Value Theorem）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%A4%9A%E5%85%83%E6%B3%B0%E5%8B%92%E5%B1%95%E5%BC%80%E4%B8%8E-Hessian-%E7%9F%A9%E9%98%B5"><span class="toc-number">4.</span> <span class="toc-text">4. 多元泰勒展开与 Hessian 矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E4%BA%8C%E9%98%B6%E6%B3%B0%E5%8B%92%E5%85%AC%E5%BC%8F%EF%BC%88%E5%B8%A6%E4%BD%99%E9%A1%B9%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 二阶泰勒公式（带余项）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%9E%81%E5%80%BC%E5%88%A4%E5%88%AB%EF%BC%88%E4%BA%8C%E9%98%B6%E5%85%85%E5%88%86%E6%9D%A1%E4%BB%B6%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 极值判别（二阶充分条件）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E4%B8%8E%E7%BA%BF%E6%80%A7%E6%98%A0%E5%B0%84%E7%9A%84%E7%AD%89%E4%BB%B7%E5%85%B3%E7%B3%BB"><span class="toc-number">5.</span> <span class="toc-text">5. 多元函数与线性映射的等价关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E7%A4%BA%E4%BE%8B%E4%B8%8E%E5%BA%94%E7%94%A8"><span class="toc-number">6.</span> <span class="toc-text">6. 示例与应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A%E6%B1%82%E5%87%BD%E6%95%B0-MATH-INLINE-72-%E7%9A%84%E6%9E%81%E5%80%BC"><span class="toc-number">6.1.</span> <span class="toc-text">示例 1：求函数 $f(x,y)&#x3D;x^2+2xy+y^2$ 的极值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A%E7%BA%BF%E6%80%A7%E6%98%A0%E5%B0%84%E7%9A%84%E5%B1%80%E9%83%A8%E7%BA%BF%E6%80%A7%E5%8C%96"><span class="toc-number">6.2.</span> <span class="toc-text">示例 2：线性映射的局部线性化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">7.</span> <span class="toc-text">7. 参考文献</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E7%BB%83%E4%B9%A0%E9%A2%98%EF%BC%88%E4%BE%9B%E8%87%AA%E6%B5%8B%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">8. 练习题（供自测）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-%E5%A4%9A%E5%85%83%E4%B8%AD%E5%80%BC%E5%AE%9A%E7%90%86%E7%9A%84%E5%87%A0%E4%BD%95%E5%90%AB%E4%B9%89"><span class="toc-number">9.</span> <span class="toc-text">16. 多元中值定理的几何含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-%E5%A4%9A%E5%85%83%E6%B3%B0%E5%8B%92%E5%B1%95%E5%BC%80%E4%B8%8E-Hessian-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">10.</span> <span class="toc-text">17. 多元泰勒展开与 Hessian 的应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%B7%A5%E5%85%B7%E5%9C%A8%E6%9C%80%E4%BC%98%E5%8C%96%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">11.</span> <span class="toc-text">18. 线性代数工具在最优化中的应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#19-%E6%A2%AF%E5%BA%A6%E4%B8%8E%E6%9C%80%E9%80%9F%E4%B8%8B%E9%99%8D%E8%B7%AF%E5%BE%84%E7%9A%84%E5%87%A0%E4%BD%95%E8%A7%A3%E8%AF%BB"><span class="toc-number">12.</span> <span class="toc-text">19. 梯度与最速下降路径的几何解读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#20-%E6%AD%A3%E4%BA%A4%E6%8A%95%E5%BD%B1%E4%B8%8E%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E9%97%AE%E9%A2%98%E7%9A%84%E8%81%94%E7%B3%BB"><span class="toc-number">13.</span> <span class="toc-text">20. 正交投影与最小二乘问题的联系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#21-%E5%B1%80%E9%83%A8%E7%BA%BF%E6%80%A7%E5%8C%96%E5%9C%A8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">14.</span> <span class="toc-text">21. 局部线性化在微分方程中的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-%E7%89%B9%E5%BE%81%E5%88%86%E8%A7%A3%E5%9C%A8%E5%87%A0%E4%BD%95%E4%B8%AD%E7%9A%84%E7%9B%B4%E8%A7%82%E5%BA%94%E7%94%A8"><span class="toc-number">15.</span> <span class="toc-text">22. 特征分解在几何中的直观应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#23-%E4%BB%8E%E5%BE%AE%E5%88%86%E5%88%B0%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%9A%84%E6%95%B4%E5%90%88%E8%A7%86%E8%A7%92"><span class="toc-number">16.</span> <span class="toc-text">23. 从微分到线性代数的整合视角</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#24-%E7%BB%BC%E8%BF%B0%EF%BC%9A%E4%BB%8E%E5%BE%AE%E5%88%86%E5%88%B0%E5%87%A0%E4%BD%95%E7%9A%84%E7%BB%9F%E4%B8%80%E8%A7%86%E8%A7%92"><span class="toc-number">17.</span> <span class="toc-text">24. 综述：从微分到几何的统一视角</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/series-complete.html" title="高等数学多元函数章节与线性代数内在联系探究（完整系列）">高等数学多元函数章节与线性代数内在联系探究（完整系列）</a><time datetime="2026-04-30T16:00:00.000Z" title="发表于 2026-05-01 00:00:00">2026-05-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/d0da.html" title="高等数学多元函数章节与线性代数内在联系探究">高等数学多元函数章节与线性代数内在联系探究</a><time datetime="2026-04-24T16:00:00.000Z" title="发表于 2026-04-25 00:00:00">2026-04-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/3c.html" title="C++之STL（from ChrisKim_ZHT)">C++之STL（from ChrisKim_ZHT)</a><time datetime="2026-04-15T10:02:43.000Z" title="发表于 2026-04-15 18:02:43">2026-04-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/8b25.html" title="线性代数的本质（整理自3Blue1Brown）">线性代数的本质（整理自3Blue1Brown）</a><time datetime="2025-12-30T09:09:49.000Z" title="发表于 2025-12-30 17:09:49">2025-12-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/d090.html" title="线性代数复习简略版">线性代数复习简略版</a><time datetime="2025-12-12T03:47:23.000Z" title="发表于 2025-12-12 11:47:23">2025-12-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/top-img/img1.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Charks</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.0.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.0.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.2"></script></div></div></body></html>
