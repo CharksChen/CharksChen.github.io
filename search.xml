@@ -22,6 +22,77 @@
       </tags>
   </entry>
   <entry>
+    <title>快速幂的代码</title>
+    <url>/posts/bd0e.html</url>
+    <content><![CDATA[<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 快速幂的代码</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">  -</span> 计算机</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">  -</span> 二分算法</span><br><span class="line">abbrlink: bd0e</span><br><span class="line"><span class="section">date: 2025-10-26 21:03:16</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">对一个数的极大幂求余数的优化时间复杂度后的解法&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line"><span class="code">```c</span></span><br><span class="line"><span class="code">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">/* 迭代版（原有） */</span></span><br><span class="line"><span class="code">int power_iter(int a, int b, int p)</span></span><br><span class="line"><span class="code">&#123;</span></span><br><span class="line"><span class="code">    int r = 1;</span></span><br><span class="line"><span class="code">    while (b)</span></span><br><span class="line"><span class="code">    &#123;</span></span><br><span class="line"><span class="code">        if (b &amp; 1) r = (r * a) % p;</span></span><br><span class="line"><span class="code">        a = a * a % p;</span></span><br><span class="line"><span class="code">        b &gt;&gt;= 1;</span></span><br><span class="line"><span class="code">    &#125;</span></span><br><span class="line"><span class="code">    return r;</span></span><br><span class="line"><span class="code">&#125;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">/* 递归版 */</span></span><br><span class="line"><span class="code">int power_rec(int a, int b, int p)</span></span><br><span class="line"><span class="code">&#123;</span></span><br><span class="line"><span class="code">    if (b == 0)               // a^0 ≡ 1 (mod p)</span></span><br><span class="line"><span class="code">        return 1;</span></span><br><span class="line"><span class="code">    long long half = power_rec(a, b / 2, p);   // 计算 a^&#123;b/2&#125;</span></span><br><span class="line"><span class="code">    long long res = (half * half) % p;         // (a^&#123;b/2&#125;)^2</span></span><br><span class="line"><span class="code">    if (b &amp; 1)                // 若 b 为奇数，再乘一次 a</span></span><br><span class="line"><span class="code">        res = (res * a) % p;</span></span><br><span class="line"><span class="code">    return (int)res;</span></span><br><span class="line"><span class="code">&#125;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">int main()</span></span><br><span class="line"><span class="code">&#123;</span></span><br><span class="line"><span class="code">    int a, b, p, s_iter, s_rec;</span></span><br><span class="line"><span class="code">    scanf(&quot;%d %d %d&quot;, &amp;a, &amp;b, &amp;p);</span></span><br><span class="line"><span class="code">    s_iter = power_iter(a, b, p);</span></span><br><span class="line"><span class="code">    s_rec  = power_rec(a, b, p);</span></span><br><span class="line"><span class="code">    printf(&quot;%d^%d mod %d (iter) = %d\n&quot;, a, b, p, s_iter);</span></span><br><span class="line"><span class="code">    printf(&quot;%d^%d mod %d (rec)  = %d\n&quot;, a, b, p, s_rec);</span></span><br><span class="line"><span class="code">    return 0;</span></span><br><span class="line"><span class="code">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="说明">说明</h3>
+<ul>
+<li><strong>递归思路</strong>：把指数 <code>b</code> 按二进制拆分，递归求 <code>a^{b/2}</code>，再利用 <code>(a^{b/2})^2</code> 合并。若 <code>b</code> 为奇数，需要再乘一次 <code>a</code>。</li>
+<li><strong>时间复杂度</strong>：<code>O(log b)</code>，与迭代版相同，只是实现方式不同。</li>
+<li><strong>空间复杂度</strong>：递归调用栈深度为 <code>O(log b)</code>。</li>
+</ul>
+<p>这样，笔记中既保留了原来的迭代实现，又提供了递归实现，方便读者对比学习。<br>
+对一个数的极大幂求余数的优化时间复杂度后的解法</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>二分算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从逆序对到归并排序</title>
+    <url>/posts/9a56.html</url>
+    <content><![CDATA[<p>原本在思考逆序对的简单方法，发现冒泡排序的求法还是太慢了</p>
+<span id="more"></span>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="type">int</span> a[<span class="number">50005</span>],t[<span class="number">50005</span>];</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> ans;</span><br><span class="line"><span class="type">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> a[], <span class="type">int</span> head, <span class="type">int</span> tail)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> a[], <span class="type">int</span> head, <span class="type">int</span> tail)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (head == tail)  <span class="keyword">return</span>;</span><br><span class="line">	<span class="type">int</span> mid = (head + tail) / <span class="number">2</span>;</span><br><span class="line">	merge(a, head, mid);</span><br><span class="line">	merge(a, mid + <span class="number">1</span>, tail);</span><br><span class="line">	<span class="type">int</span> i, j, k;<span class="comment">//i用于临时数组t的索引，j是左半区间的起始索引，k是右半区间的起始索引</span></span><br><span class="line">	<span class="keyword">for</span> (i = head, j = head, k = mid + <span class="number">1</span>;i &lt;= tail;i++)  <span class="comment">//i从1遍历到tail,j是左半区间的起点，k是右半区间的起点</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (j == mid + <span class="number">1</span>) <span class="comment">//如果左半区间全部处理</span></span><br><span class="line">			t[i] = a[k++];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (k == tail + <span class="number">1</span>) <span class="comment">//如果右半区间全部处理</span></span><br><span class="line">			t[i] = a[j++], ans += k - mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (a[j] &lt;= a[k]) <span class="comment">//左空间元素小于右空间元素，放左边的</span></span><br><span class="line">			t[i] = a[j++], ans += k - mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> t[i] = a[k++];<span class="comment">//否则放右边的</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (i = head;i &lt;= tail;i++) a[i] = t[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//归并排序</span></span><br><span class="line">	<span class="type">int</span> n,i;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>;i &lt;= n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">	merge(a, <span class="number">1</span>, n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>, ans);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="../images/Pasted%20image%2020251103203446.png" alt=""></p>
+<p>这是具体模拟整个过程</p>
+<p>当然，这个过程已经实现了排序功能，t [ ] 是排序后的数组，元素从小到大排列。如果想从大到小排列，也可以将 ’ &lt;= ‘ 改为 ’ &gt;= ‘  。</p>
+<p>这题也可以用树状数组、线段树 、Trie树（字典树）</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>逆序对</tag>
+        <tag>归并排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LCS最长公共子序列问题</title>
+    <url>/posts/6d90.html</url>
+    <content><![CDATA[<h1>LIS最长上升子序列引入</h1>
+<p>有关此题，要先介绍LIS最长上升子序列，比如 1，6，2，3，7，5  -&gt; 1，2，3，5 .最长上升子序列长度是4，那这是如何求出的？其实这里就涉及到动态规划算法，具体过程为：设$d(i)$是以 i 结尾的最长公共子序列的长度，则 d(1)=1 d(6)=2 d(2)=2 ,规律就是以 i 结尾的 d(i) 等于前面所有比 i 小的数里 d(i) 最大的那个接上这个 i ,当然要考虑前面可能没有比 i 小的，此时 i 就是第一个。总结成数学表达（状态转移方程）：$d(i)=max(0,d(j))+1$    $j<i,n_j<n_i$ .如果这些数可以相等，改成等号即可。</p>
+<h1>LCS最长公共子序列思考</h1>
+<p>由上面的引入可以发现后面的每一个数的匹配都是由前面所有数共同决定的，即下一个数结尾的最长长度，只由前面的所有长度决定，后面序列不影响。所以这个过程比较像是递推，由前面推出后面来，同样用数字举例子：1，5，2，6，8，7 和 2，3，5，6，9，8，4 这两个序列的最长公共子序列该怎么求？记 $d(i,j)$ 表示第一个序列前面 i 个元素和第二个序列前面 j 个元素的最长公共子序列的长度，很明显有 d(1,1)=0 d(1,2)=0 d(2,2)=0 d(2,3)=1 d(3,3)=1……容易发现越往后会越大，呈现递增趋势，每次可能+1或者不变，非常满足递推的要求。那要怎么从前面推后面呢？记第 i 个元素为$A_i$ ，如果我们已经算好了d(i , j)并且有$A_{i+1}=A_{j+1}$的话，直接将这个相同的数加到前面已经求好的公共子序列后面，长度+1，即d(i+1 , j+1)=d(i , j)+1.如果这两个数不相等呢，并且已知前面所有的 d ，这时候考虑从前面那些d值里面挖掘有用的信息来决定d(i+1 , j+1), 这时候发现d(i+1 , j+1)只会被两个数影响，因为新的两个数不相同，故d(i+1 , j+1)一定会等于d(i+1 , j) 或者 d(i , j+1),并且要求最长，故一定会有$d(i+1,j+1)=max(d(i+1,j),d(i,j+1))$。至此所有数均可推理出来了，最终结论 d(i , j)与$A_i、A_j、d(i-1,j-1)、d(i-1,j)、d(i,j-1)$有关联。$$d(i,j)=
+\begin{cases}
+d(i-1,j-1)+1,& \text{当}A_i=A_j\\
+\max(d(i-1,j),d(i,j-1)), & \text{当}A_i\neq A_j
+\end{cases} $$</p>
+<h1>细节推理</h1>
+<p>但是还有一个细节是：前面不是只推到d(i , j)了，那又不知道d(i+1 , j)和d(i , j+1)，怎么能推出d(i+1 , j+1).就算d(i+1 , j)可以由 d(i , j-1)、d(i , j)、d(i+1 , j-1)推出，那d(i+1 , j-1)是不是依旧不知道,并且不管向前推多少次一定还会要求i+1。其实这个问题纯属多虑，从正向推理的情况下，最后一定能化成d(i+1 , 0),那这个数就会等于0，逻辑上还是可以推得通。</p>
+<h1>程序实现</h1>
+<p>前面都是数学上的推导，那如果要用程序来实现要怎么办呢？正常情况下会考虑使用递归，也就是逆向推理，还有就是正向计算（图形标数法）。</p>
+<h2 id="1-递归思路">1.递归思路</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">d(<span class="type">int</span> i,<span class="type">int</span> j)</span><br><span class="line">&#123; </span><br><span class="line">   <span class="keyword">if</span>(i==<span class="number">0</span>||j==<span class="number">0</span>)</span><br><span class="line">	    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">if</span>(a[i<span class="number">-1</span>]==b[j<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">return</span> d(i<span class="number">-1</span>,j<span class="number">-1</span>)+<span class="number">1</span>;</span><br><span class="line">   <span class="keyword">else</span> </span><br><span class="line">        <span class="keyword">return</span> max(d(i,j<span class="number">-1</span>),d(i<span class="number">-1</span>,j));     	    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过这个代码会存在大量的重复计算，效率非常低。</p>
+<h2 id="2-图形标数">2.图形标数</h2>
+<p>前者是递归，从后往前推，效率太低。换种递推的思路，从前往后推<img src="../images/LCS%E5%9B%BE%E8%A7%A3.png" alt=""></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;n;i++)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;m;j++)</span><br><span class="line">      &#123;</span><br><span class="line">          <span class="keyword">if</span>(a[i]==b[j])</span><br><span class="line">             dp[i][j]=dp[i<span class="number">-1</span>][j<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">             dp[i][j]=max(dp[i][j<span class="number">-1</span>],dp[i<span class="number">-1</span>][j<span class="number">-1</span>]);   </span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>还可以优化一下空间</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">       <span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;m;j++)</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="keyword">if</span>(a[i]==b[j])</span><br><span class="line">              dp[t][j]=dp[t^<span class="number">1</span>][j<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">           <span class="keyword">else</span></span><br><span class="line">              dp[i][j]=max(dp[t^<span class="number">1</span>][j<span class="number">-1</span>],dp[t^<span class="number">1</span>][j<span class="number">-1</span>]);   </span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;m;j++)</span><br><span class="line">       &#123;</span><br><span class="line">           dp[t^<span class="number">1</span>][j]=dp[t][j];</span><br><span class="line">           t^=<span class="number">1</span>;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>动态规划</tag>
+        <tag>LCS</tag>
+        <tag>LIS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C语言中qsort函数</title>
     <url>/posts/695b.html</url>
     <content><![CDATA[<p><code>#include&lt;stdlib.h&gt;</code></p>
@@ -58,58 +129,6 @@
       <tags>
         <tag>快速排序</tag>
         <tag>结构体排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LCS最长公共子序列问题</title>
-    <url>/posts/6d90.html</url>
-    <content><![CDATA[<h1>LIS最长上升子序列引入</h1>
-<p>有关此题，要先介绍LIS最长上升子序列，比如 1，6，2，3，7，5  -&gt; 1，2，3，5 .最长上升子序列长度是4，那这是如何求出的？其实这里就涉及到动态规划算法，具体过程为：设$d(i)$是以 i 结尾的最长公共子序列的长度，则 d(1)=1 d(6)=2 d(2)=2 ,规律就是以 i 结尾的 d(i) 等于前面所有比 i 小的数里 d(i) 最大的那个接上这个 i ,当然要考虑前面可能没有比 i 小的，此时 i 就是第一个。总结成数学表达（状态转移方程）：$d(i)=max(0,d(j))+1$    $j<i,n_j<n_i$ .如果这些数可以相等，改成等号即可。</p>
-<h1>LCS最长公共子序列思考</h1>
-<p>由上面的引入可以发现后面的每一个数的匹配都是由前面所有数共同决定的，即下一个数结尾的最长长度，只由前面的所有长度决定，后面序列不影响。所以这个过程比较像是递推，由前面推出后面来，同样用数字举例子：1，5，2，6，8，7 和 2，3，5，6，9，8，4 这两个序列的最长公共子序列该怎么求？记 $d(i,j)$ 表示第一个序列前面 i 个元素和第二个序列前面 j 个元素的最长公共子序列的长度，很明显有 d(1,1)=0 d(1,2)=0 d(2,2)=0 d(2,3)=1 d(3,3)=1……容易发现越往后会越大，呈现递增趋势，每次可能+1或者不变，非常满足递推的要求。那要怎么从前面推后面呢？记第 i 个元素为$A_i$ ，如果我们已经算好了d(i , j)并且有$A_{i+1}=A_{j+1}$的话，直接将这个相同的数加到前面已经求好的公共子序列后面，长度+1，即d(i+1 , j+1)=d(i , j)+1.如果这两个数不相等呢，并且已知前面所有的 d ，这时候考虑从前面那些d值里面挖掘有用的信息来决定d(i+1 , j+1), 这时候发现d(i+1 , j+1)只会被两个数影响，因为新的两个数不相同，故d(i+1 , j+1)一定会等于d(i+1 , j) 或者 d(i , j+1),并且要求最长，故一定会有$d(i+1,j+1)=max(d(i+1,j),d(i,j+1))$。至此所有数均可推理出来了，最终结论 d(i , j)与$A_i、A_j、d(i-1,j-1)、d(i-1,j)、d(i,j-1)$有关联。$$d(i,j)=
-\begin{cases}
-d(i-1,j-1)+1,& \text{当}A_i=A_j\\
-\max(d(i-1,j),d(i,j-1)), & \text{当}A_i\neq A_j
-\end{cases} $$</p>
-<h1>细节推理</h1>
-<p>但是还有一个细节是：前面不是只推到d(i , j)了，那又不知道d(i+1 , j)和d(i , j+1)，怎么能推出d(i+1 , j+1).就算d(i+1 , j)可以由 d(i , j-1)、d(i , j)、d(i+1 , j-1)推出，那d(i+1 , j-1)是不是依旧不知道,并且不管向前推多少次一定还会要求i+1。其实这个问题纯属多虑，从正向推理的情况下，最后一定能化成d(i+1 , 0),那这个数就会等于0，逻辑上还是可以推得通。</p>
-<h1>程序实现</h1>
-<p>前面都是数学上的推导，那如果要用程序来实现要怎么办呢？正常情况下会考虑使用递归，也就是逆向推理，还有就是正向计算（图形标数法）。</p>
-<h2 id="1-递归思路">1.递归思路</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">d(<span class="type">int</span> i,<span class="type">int</span> j)</span><br><span class="line">&#123; </span><br><span class="line">   <span class="keyword">if</span>(i==<span class="number">0</span>||j==<span class="number">0</span>)</span><br><span class="line">	    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">if</span>(a[i<span class="number">-1</span>]==b[j<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">return</span> d(i<span class="number">-1</span>,j<span class="number">-1</span>)+<span class="number">1</span>;</span><br><span class="line">   <span class="keyword">else</span> </span><br><span class="line">        <span class="keyword">return</span> max(d(i,j<span class="number">-1</span>),d(i<span class="number">-1</span>,j));     	    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>不过这个代码会存在大量的重复计算，效率非常低。</p>
-<h2 id="2-图形标数">2.图形标数</h2>
-<p>前者是递归，从后往前推，效率太低。换种递推的思路，从前往后推<img src="../images/LCS%E5%9B%BE%E8%A7%A3.png" alt=""></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;n;i++)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;m;j++)</span><br><span class="line">      &#123;</span><br><span class="line">          <span class="keyword">if</span>(a[i]==b[j])</span><br><span class="line">             dp[i][j]=dp[i<span class="number">-1</span>][j<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">             dp[i][j]=max(dp[i][j<span class="number">-1</span>],dp[i<span class="number">-1</span>][j<span class="number">-1</span>]);   </span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>还可以优化一下空间</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">       <span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;m;j++)</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="keyword">if</span>(a[i]==b[j])</span><br><span class="line">              dp[t][j]=dp[t^<span class="number">1</span>][j<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">           <span class="keyword">else</span></span><br><span class="line">              dp[i][j]=max(dp[t^<span class="number">1</span>][j<span class="number">-1</span>],dp[t^<span class="number">1</span>][j<span class="number">-1</span>]);   </span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;m;j++)</span><br><span class="line">       &#123;</span><br><span class="line">           dp[t^<span class="number">1</span>][j]=dp[t][j];</span><br><span class="line">           t^=<span class="number">1</span>;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>动态规划</tag>
-        <tag>LCS</tag>
-        <tag>LIS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>快速幂的代码</title>
-    <url>/posts/bd0e.html</url>
-    <content><![CDATA[<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 快速幂的代码</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">  -</span> 计算机</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">  -</span> 二分算法</span><br><span class="line">abbrlink: bd0e</span><br><span class="line"><span class="section">date: 2025-10-26 21:03:16</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">对一个数的极大幂求余数的优化时间复杂度后的解法&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line"><span class="code">```c</span></span><br><span class="line"><span class="code">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">/* 迭代版（原有） */</span></span><br><span class="line"><span class="code">int power_iter(int a, int b, int p)</span></span><br><span class="line"><span class="code">&#123;</span></span><br><span class="line"><span class="code">    int r = 1;</span></span><br><span class="line"><span class="code">    while (b)</span></span><br><span class="line"><span class="code">    &#123;</span></span><br><span class="line"><span class="code">        if (b &amp; 1) r = (r * a) % p;</span></span><br><span class="line"><span class="code">        a = a * a % p;</span></span><br><span class="line"><span class="code">        b &gt;&gt;= 1;</span></span><br><span class="line"><span class="code">    &#125;</span></span><br><span class="line"><span class="code">    return r;</span></span><br><span class="line"><span class="code">&#125;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">/* 递归版 */</span></span><br><span class="line"><span class="code">int power_rec(int a, int b, int p)</span></span><br><span class="line"><span class="code">&#123;</span></span><br><span class="line"><span class="code">    if (b == 0)               // a^0 ≡ 1 (mod p)</span></span><br><span class="line"><span class="code">        return 1;</span></span><br><span class="line"><span class="code">    long long half = power_rec(a, b / 2, p);   // 计算 a^&#123;b/2&#125;</span></span><br><span class="line"><span class="code">    long long res = (half * half) % p;         // (a^&#123;b/2&#125;)^2</span></span><br><span class="line"><span class="code">    if (b &amp; 1)                // 若 b 为奇数，再乘一次 a</span></span><br><span class="line"><span class="code">        res = (res * a) % p;</span></span><br><span class="line"><span class="code">    return (int)res;</span></span><br><span class="line"><span class="code">&#125;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">int main()</span></span><br><span class="line"><span class="code">&#123;</span></span><br><span class="line"><span class="code">    int a, b, p, s_iter, s_rec;</span></span><br><span class="line"><span class="code">    scanf(&quot;%d %d %d&quot;, &amp;a, &amp;b, &amp;p);</span></span><br><span class="line"><span class="code">    s_iter = power_iter(a, b, p);</span></span><br><span class="line"><span class="code">    s_rec  = power_rec(a, b, p);</span></span><br><span class="line"><span class="code">    printf(&quot;%d^%d mod %d (iter) = %d\n&quot;, a, b, p, s_iter);</span></span><br><span class="line"><span class="code">    printf(&quot;%d^%d mod %d (rec)  = %d\n&quot;, a, b, p, s_rec);</span></span><br><span class="line"><span class="code">    return 0;</span></span><br><span class="line"><span class="code">&#125;</span></span><br></pre></td></tr></table></figure>
-<h3 id="说明">说明</h3>
-<ul>
-<li><strong>递归思路</strong>：把指数 <code>b</code> 按二进制拆分，递归求 <code>a^{b/2}</code>，再利用 <code>(a^{b/2})^2</code> 合并。若 <code>b</code> 为奇数，需要再乘一次 <code>a</code>。</li>
-<li><strong>时间复杂度</strong>：<code>O(log b)</code>，与迭代版相同，只是实现方式不同。</li>
-<li><strong>空间复杂度</strong>：递归调用栈深度为 <code>O(log b)</code>。</li>
-</ul>
-<p>这样，笔记中既保留了原来的迭代实现，又提供了递归实现，方便读者对比学习。<br>
-对一个数的极大幂求余数的优化时间复杂度后的解法</p>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>二分算法</tag>
       </tags>
   </entry>
   <entry>
@@ -159,1310 +178,330 @@ d(i-1,j-1)+1,& \text{当}A_i=A_j\\
       </tags>
   </entry>
   <entry>
-    <title>大学生数学竞赛备考笔记</title>
-    <url>/posts/5ec6.html</url>
-    <content><![CDATA[<h1>定积分</h1>
-<p><img src="../images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20251201195739_51_138.jpg" alt=""><br>
-<img src="../images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20251201195740_52_138.jpg" alt=""></p>
-<h1>反常积分</h1>
-<p><img src="../images/11aaad4468ba0ebff928317cd0ae328d.jpg" alt=""><br>
-<img src="../images/ad9c198049bcd130cc06627b0514a6f2.jpg" alt=""></p>
-<h1>二重积分</h1>
-<p><img src="../images/a7d2b10b65825af01d1aaa3e24391ba5.jpg" alt=""><br>
-<img src="../images/2b64d7259f66f7f21f7aace47214a61e.jpg" alt=""></p>
-<h1>三重积分</h1>
-<p><img src="../images/3c20e3aae4c3f3754fc60f29d5bce301.jpg" alt=""><br>
-<img src="../images/5e920526911739fc6519fff2c84720ee.jpg" alt=""></p>
-<h1>曲线积分</h1>
-<p><img src="../images/47f67239ae9f56f09b32d09ac867c1b2.jpg" alt=""><br>
-<img src="../images/e07f19e68e8fb95f5ebca72a938457c8.jpg" alt=""></p>
-<h1>曲面积分</h1>
-<p><img src="../images/294a6c1ad32b67c46d698fb03267ebfd.jpg" alt=""><br>
-<img src="../images/d6b6e1574b07c043bdc53ca802fc8be2.jpg" alt=""></p>
-<h1>微分方程</h1>
-<p><img src="../images/b15c7293bffbbbdbbc88b05fb908e682.jpg" alt=""><br>
-<img src="../images/37b167c158bdcdbf0a44f94cdb6f5f27.jpg" alt=""></p>
-<h1>空间解析几何</h1>
-<p><img src="../images/ba641cac1dbb63e2fb628fa45ec261b3.jpg" alt=""><br>
-<img src="../images/26555934c2a1bd249ff05d5eabd5bc7f.jpg" alt=""></p>
-<h1>无穷级数</h1>
-<p><img src="../images/67cc1ce534d6c3599bcc7f20535dedd2.jpg" alt=""></p>
-<h1>中值定理</h1>
-<p><img src="../images/f535158f8c13b4f2fa227630e84d105f.jpg" alt=""></p>
-<h1>不等式</h1>
-<p><img src="../images/44a76330b9c189a039f2e8da148dfea3.jpg" alt=""></p>
-<h1>应试技巧</h1>
-<p><img src="../images/599277b5ec6ec0d0ea58c6056db9dccd.jpg" alt=""></p>
-]]></content>
-      <categories>
-        <category>数学分析</category>
-      </categories>
-      <tags>
-        <tag>微积分</tag>
-        <tag>微分方程</tag>
-        <tag>空间解析几何</tag>
-        <tag>级数</tag>
-        <tag>中值定理</tag>
-        <tag>不等式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>从逆序对到归并排序</title>
-    <url>/posts/9a56.html</url>
-    <content><![CDATA[<p>原本在思考逆序对的简单方法，发现冒泡排序的求法还是太慢了</p>
-<span id="more"></span>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="type">int</span> a[<span class="number">50005</span>],t[<span class="number">50005</span>];</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> ans;</span><br><span class="line"><span class="type">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> a[], <span class="type">int</span> head, <span class="type">int</span> tail)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> a[], <span class="type">int</span> head, <span class="type">int</span> tail)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (head == tail)  <span class="keyword">return</span>;</span><br><span class="line">	<span class="type">int</span> mid = (head + tail) / <span class="number">2</span>;</span><br><span class="line">	merge(a, head, mid);</span><br><span class="line">	merge(a, mid + <span class="number">1</span>, tail);</span><br><span class="line">	<span class="type">int</span> i, j, k;<span class="comment">//i用于临时数组t的索引，j是左半区间的起始索引，k是右半区间的起始索引</span></span><br><span class="line">	<span class="keyword">for</span> (i = head, j = head, k = mid + <span class="number">1</span>;i &lt;= tail;i++)  <span class="comment">//i从1遍历到tail,j是左半区间的起点，k是右半区间的起点</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (j == mid + <span class="number">1</span>) <span class="comment">//如果左半区间全部处理</span></span><br><span class="line">			t[i] = a[k++];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (k == tail + <span class="number">1</span>) <span class="comment">//如果右半区间全部处理</span></span><br><span class="line">			t[i] = a[j++], ans += k - mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (a[j] &lt;= a[k]) <span class="comment">//左空间元素小于右空间元素，放左边的</span></span><br><span class="line">			t[i] = a[j++], ans += k - mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> t[i] = a[k++];<span class="comment">//否则放右边的</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (i = head;i &lt;= tail;i++) a[i] = t[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//归并排序</span></span><br><span class="line">	<span class="type">int</span> n,i;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>;i &lt;= n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">	merge(a, <span class="number">1</span>, n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>, ans);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="../images/Pasted%20image%2020251103203446.png" alt=""></p>
-<p>这是具体模拟整个过程</p>
-<p>当然，这个过程已经实现了排序功能，t [ ] 是排序后的数组，元素从小到大排列。如果想从大到小排列，也可以将 ’ &lt;= ‘ 改为 ’ &gt;= ‘  。</p>
-<p>这题也可以用树状数组、线段树 、Trie树（字典树）</p>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>逆序对</tag>
-        <tag>归并排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>线性代数复习简略版</title>
-    <url>/posts/d090.html</url>
-    <content><![CDATA[<h1><strong>线性代数课程讲义知识点全梳理</strong>(Made By AI)</h1>
+    <title>高等数学多元函数章节与线性代数内在联系探究</title>
+    <url>/posts/d0da.html</url>
+    <content><![CDATA[<p>下面给出 <strong>《高等数学——多元函数章节与线性代数内在联系探究》</strong> 的完整笔记草稿。<br>
+该笔记围绕 <strong>多元函数的中值定理、梯度、方向导数、雅可比矩阵、Hessian 矩阵</strong> 等内容展开，并系统阐述它们与 <strong>线性代数（向量空间、线性映射、特征值/特征向量、正交投影）</strong> 的内在联系。</p>
 <hr>
-<h3 id="Lecture-1CN：课程介绍与线性方程组基础"><strong>Lecture-1CN：课程介绍与线性方程组基础</strong></h3>
+<h2 id="1-多元函数的基本概念">1. 多元函数的基本概念</h2>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>记号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>定义域</strong></td>
+<td>$D\subset\mathbb{R}^n$</td>
+<td>$f:\;D\to\mathbb{R}$（标量函数）或 $f:\;D\to\mathbb{R}^m$（向量值函数）</td>
+</tr>
+<tr>
+<td><strong>连续</strong></td>
+<td>$\displaystyle\lim_{\mathbf{x}\to\mathbf{x}_0}f(\mathbf{x})=f(\mathbf{x}_0)$</td>
+<td>与一元情形完全相同，只是 $\mathbf{x}=(x_1,\dots,x_n)$</td>
+</tr>
+<tr>
+<td><strong>可微</strong></td>
+<td>$f$ 在 $\mathbf{x}_0$ 可微 ⇔ 存在线性映射 $L$ 使 $$\lim_{\mathbf{h}\to0}\frac{\|f(\mathbf{x}_0+\mathbf{h})-f(\mathbf{x}_0)-L(\mathbf{h})\|}{\|\mathbf{h}\|}=0.$$</td>
+<td>线性映射 $L$ 正是 <strong>雅可比矩阵</strong> $J_f(\mathbf{x}_0)$ 的作用。</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-梯度、方向导数与线性代数">2. 梯度、方向导数与线性代数</h2>
+<h3 id="2-1-偏导数与梯度">2.1 偏导数与梯度</h3>
 <ul>
 <li>
-<p><strong>课程目标</strong>：掌握线性方程组、矩阵论、矩阵分解、向量空间、特征值、正交性、最小二乘法等核心内容。</p>
+<p><strong>偏导数</strong><br>
+$$\frac{\partial f}{\partial x_i}(\mathbf{x})=\lim_{h\to0}\frac{f(x_1,\dots,x_i+h,\dots,x_n)-f(\mathbf{x})}{h}.$$</p>
 </li>
 <li>
-<p><strong>线性方程 (Linear Equation)</strong>：变量为一次幂的方程。</p>
-</li>
-<li>
-<p><strong>线性方程组 (System of Linear Equations)</strong>：一组包含相同变量的线性方程。</p>
-</li>
-<li>
-<p><strong>解 (Solution)</strong>：使所有方程同时成立的变量值集合。</p>
-</li>
-<li>
-<p><strong>解集 (Solution Set)</strong>：所有解的集合。</p>
-</li>
-<li>
-<p><strong>等价系统 (Equivalent Systems)</strong>：拥有相同解集的线性方程组。</p>
-</li>
-<li>
-<p><strong>矩阵 (Matrix)</strong>：矩形的数表。用于表示线性方程组。</p>
-</li>
-<li>
-<p><strong>系数矩阵 (Coefficient Matrix)</strong>：仅包含方程系数的矩阵。</p>
-</li>
-<li>
-<p><strong>增广矩阵 (Augmented Matrix)</strong>：在系数矩阵右侧增加常数项列构成的矩阵。</p>
-</li>
-<li>
-<p><strong>初等行变换 (Elementary Row Operations)</strong>：</p>
+<p><strong>梯度向量</strong>（Gradient）<br>
+$$\nabla f(\mathbf{x})=\left(\frac{\partial f}{\partial x_1},\dots,\frac{\partial f}{\partial x_n}\right)^{\!\top}.$$</p>
 </li>
 </ul>
+<blockquote>
+<p><strong>线性代数视角</strong>：梯度是 <strong>函数的最速上升方向</strong>，它本身是 <strong>列向量</strong>，在欧氏空间中可视为 <strong>线性映射</strong> $L_{\nabla f}(\mathbf{h})=\nabla f^{\!\top}\mathbf{h}$。</p>
+</blockquote>
+<h3 id="2-2-方向导数">2.2 方向导数</h3>
+<p>给定单位向量 $\mathbf{u}\in\mathbb{R}^n$，方向导数定义为<br>
+$$D_{\mathbf{u}}f(\mathbf{x})=\lim_{h\to0}\frac{f(\mathbf{x}+h\mathbf{u})-f(\mathbf{x})}{h}.$$</p>
+<p>若 $f$ 在 $\mathbf{x}$ 可微，则<br>
+$$D_{\mathbf{u}}f(\mathbf{x})=\nabla f(\mathbf{x})^{\!\top}\mathbf{u}.$$</p>
+<blockquote>
+<p>这正是 <strong>向量内积</strong> 的形式，说明方向导数是梯度向量与方向向量的 <strong>线性映射</strong>（点积）。</p>
+</blockquote>
+<h3 id="2-3-梯度的几何意义">2.3 梯度的几何意义</h3>
+<ul>
+<li>$\nabla f(\mathbf{x})$ 与等值面（等高面）<strong>正交</strong>。</li>
+<li>在欧氏空间中，梯度的 <strong>长度</strong> $ \|\nabla f(\mathbf{x})\| $ 表示 <strong>最速上升率</strong>。</li>
+</ul>
+<hr>
+<h2 id="3-多元函数的中值定理">3. 多元函数的中值定理</h2>
+<h3 id="3-1-多元介值定理（Brouwer-不动点定理的简化版）">3.1 多元介值定理（Brouwer 不动点定理的简化版）</h3>
+<blockquote>
+<p><strong>定理</strong>（多元介值定理的直观形式）：若 $f:\;[a_1,b_1]\times\cdots\times[a_n,b_n]\to\mathbb{R}^n$ 连续且对每个坐标 $i$ 有<br>
+$$f_i(a_1,\dots,a_n)\le a_i\le f_i(b_1,\dots,b_n),$$<br>
+则存在 $\mathbf{x}^\ast$ 使得 $f(\mathbf{x}^\ast)=\mathbf{x}^\ast$（即不动点）。</p>
+</blockquote>
+<blockquote>
+<p>该定理的证明依赖 <strong>Brouwer 不动点定理</strong>，而 Brouwer 定理本身是 <strong>拓扑</strong> 与 <strong>线性代数</strong>（紧致性、连续映射）相结合的结果。</p>
+</blockquote>
+<h3 id="3-2-多元拉格朗日中值定理（Mean-Value-Theorem-for-Vector‑Valued-Functions）">3.2 多元拉格朗日中值定理（Mean Value Theorem for Vector‑Valued Functions）</h3>
+<p>设 $F:\;U\subset\mathbb{R}^n\to\mathbb{R}^m$ 在开凸集 $U$ 上 <strong>连续可微</strong>，取两点 $\mathbf{a},\mathbf{b}\in U$，则存在 $\mathbf{\xi}= \mathbf{a}+t(\mathbf{b}-\mathbf{a})$（$t\in(0,1)$）使得</p>
+<p>$$
+F(\mathbf{b})-F(\mathbf{a}) = J_F(\mathbf{\xi})\,(\mathbf{b}-\mathbf{a}),
+$$</p>
+<p>其中 $J_F(\mathbf{\xi})$ 为 <strong>雅可比矩阵</strong>（$m\times n$），即 $[J_F]_{ij}= \displaystyle\frac{\partial F_i}{\partial x_j}$。</p>
+<blockquote>
+<p><strong>线性代数联系</strong>：该等式正是 <strong>线性映射</strong>（雅可比矩阵）在向量 $\mathbf{b}-\mathbf{a}$ 上的作用，体现了 <strong>微分</strong> 本质上是 <strong>局部线性化</strong>。</p>
+</blockquote>
+<h3 id="3-3-多元柯西中值定理（Cauchy-Mean-Value-Theorem）">3.3 多元柯西中值定理（Cauchy Mean Value Theorem）</h3>
+<p>若 $f,g:U\to\mathbb{R}$ 在开凸集 $U$ 上连续可微且 $g'$ 在 $U$ 上不为零，则对任意 $\mathbf{a},\mathbf{b}\in U$，存在 $\mathbf{\xi}$ 使得</p>
+<p>$$
+\frac{\nabla f(\mathbf{\xi})^{\!\top}(\mathbf{b}-\mathbf{a})}{\nabla g(\mathbf{\xi})^{\!\top}(\mathbf{b}-\mathbf{a})}
+= \frac{f(\mathbf{b})-f(\mathbf{a})}{g(\mathbf{b})-g(\mathbf{a})}.
+$$</p>
+<blockquote>
+<p>这里的 <strong>点积</strong> 再次把梯度（列向量）转化为 <strong>标量</strong>，与一元情形的分子分母结构保持一致。</p>
+</blockquote>
+<hr>
+<h2 id="4-多元泰勒展开与-Hessian-矩阵">4. 多元泰勒展开与 Hessian 矩阵</h2>
+<h3 id="4-1-二阶泰勒公式（带余项）">4.1 二阶泰勒公式（带余项）</h3>
+<p>设 $f:\;U\subset\mathbb{R}^n\to\mathbb{R}$ 在点 $\mathbf{x}_0$ 的邻域内二阶连续可微，则对任意 $\mathbf{x}\in U$，有</p>
+<p>$$
+\begin{aligned}
+f(\mathbf{x}) &= f(\mathbf{x}_0)
++ \nabla f(\mathbf{x}_0)^{\!\top}(\mathbf{x}-\mathbf{x}_0) \\
+&\quad + \frac12(\mathbf{x}-\mathbf{x}_0)^{\!\top} H_f(\mathbf{\xi}) (\mathbf{x}-\mathbf{x}_0),
+\end{aligned}
+$$</p>
+<p>其中 $H_f(\mathbf{\xi})$ 为 <strong>Hessian 矩阵</strong>（二阶偏导数组成的对称矩阵），$\mathbf{\xi}$ 位于 $\mathbf{x}_0$ 与 $\mathbf{x}$ 连线的某点。</p>
+<blockquote>
+<p><strong>线性代数视角</strong>：</p>
+<ul>
+<li>$\nabla f(\mathbf{x}_0)^{\!\top}(\mathbf{x}-\mathbf{x}_0)$ 是 <strong>一次线性映射</strong>（梯度点乘）。</li>
+<li>$(\mathbf{x}-\mathbf{x}_0)^{\!\top} H_f(\mathbf{\xi}) (\mathbf{x}-\mathbf{x}_0)$ 是 <strong>二次型</strong>，可通过 <strong>特征分解</strong> 分析正定性，从而判断极值性质。</li>
+</ul>
+</blockquote>
+<h3 id="4-2-极值判别（二阶充分条件）">4.2 极值判别（二阶充分条件）</h3>
+<ul>
+<li>若 $H_f(\mathbf{x}_0)$ <strong>正定</strong>（所有特征值 $>0$），则 $\mathbf{x}_0$ 为 <strong>严格局部最小点</strong>。</li>
+<li>若 $H_f(\mathbf{x}_0)$ <strong>负定</strong>（所有特征值 $<0$），则 $\mathbf{x}_0$ 为 <strong>严格局部最大点</strong>。</li>
+<li>若 $H_f(\mathbf{x}_0)$ <strong>不定</strong>，则 $\mathbf{x}_0$ 为 <strong>鞍点</strong>。</li>
+</ul>
+<blockquote>
+<p>这里的 <strong>正定/负定</strong> 完全是 <strong>矩阵特征值</strong> 的概念，直接把 <strong>线性代数</strong> 的工具用于 <strong>多元微积分</strong> 的极值判别。</p>
+</blockquote>
+<hr>
+<h2 id="5-多元函数与线性映射的等价关系">5. 多元函数与线性映射的等价关系</h2>
+<table>
+<thead>
+<tr>
+<th>多元分析概念</th>
+<th>对应的线性代数对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>梯度 $\nabla f$</strong></td>
+<td>列向量（线性函数的系数）</td>
+</tr>
+<tr>
+<td><strong>雅可比矩阵 $J_F$</strong></td>
+<td><strong>线性映射</strong> $DF_{\mathbf{x}}:\mathbb{R}^n\to\mathbb{R}^m$ 的矩阵表示</td>
+</tr>
+<tr>
+<td><strong>Hessian 矩阵 $H_f$</strong></td>
+<td>对称二次型对应的 <strong>自伴线性算子</strong></td>
+</tr>
+<tr>
+<td><strong>方向导数 $D_{\mathbf{u}}f$</strong></td>
+<td>向量 $\mathbf{u}$ 与梯度的 <strong>内积</strong>（线性映射的作用）</td>
+</tr>
+<tr>
+<td><strong>多元中值定理</strong></td>
+<td>雅可比矩阵在两点之间的 <strong>平均线性映射</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>通过上述对应关系，可把 <strong>求极值、最速上升、曲面切平面</strong> 等几何问题转化为 <strong>矩阵运算</strong>（求特征值、正交化、求逆）的问题，从而实现 <strong>微积分与线性代数的统一</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="6-示例与应用">6. 示例与应用</h2>
+<h3 id="示例-1：求函数-MATH-INLINE-72-的极值">示例 1：求函数 $f(x,y)=x^2+2xy+y^2$ 的极值</h3>
 <ol>
 <li>
-<p>倍加变换：把某一行换成它本身与另一行的倍数之和。</p>
+<p><strong>梯度</strong><br>
+$$\nabla f = \begin{pmatrix}2x+2y\\2x+2y\end{pmatrix}=2\begin{pmatrix}x+y\\x+y\end{pmatrix}.$$<br>
+令 $\nabla f=0$ 得 $x+y=0\;\Rightarrow\;y=-x$。</p>
 </li>
 <li>
-<p>对换变换：交换两行。</p>
-</li>
-<li>
-<p>倍乘变换：把某一行的所有元素乘以同一个非零数。</p>
+<p><strong>Hessian</strong><br>
+$$H_f=\begin{pmatrix}2&2\\2&2\end{pmatrix}.$$<br>
+特征值 $\lambda_1=4,\;\lambda_2=0$（半正定），因此在直线 $y=-x$ 上每一点都是 <strong>极小值</strong>（但不是严格极小，因为 $H_f$ 仅半正定）。</p>
 </li>
 </ol>
+<h3 id="示例-2：线性映射的局部线性化">示例 2：线性映射的局部线性化</h3>
+<p>设 $F(x,y)=\bigl(xe^{y},\;y\sin x\bigr)$，求在点 $\mathbf{a}=(0,0)$ 附近的线性近似。</p>
 <ul>
-<li>
-<p><strong>行等价 (Row Equivalent)</strong>：一个矩阵可以经过一系列初等行变换变成另一个矩阵。</p>
-</li>
-<li>
-<p><strong>求解线性方程组的基本思想</strong>：对增广矩阵进行初等行变换，将其化为更简单的“阶梯形”，从而易于求解。</p>
-</li>
+<li><strong>雅可比矩阵</strong><br>
+$$
+  J_F(\mathbf{x})=
+  \begin{pmatrix}
+  e^{y} & xe^{y}\\
+  y\cos x & \sin x
+  \end{pmatrix},
+  \qquad
+  J_F(\mathbf{0})=
+  \begin{pmatrix}
+  1 & 0\\
+  0 & 0
+  \end{pmatrix}.
+  $$</li>
+<li><strong>线性化</strong><br>
+$$F(\mathbf{x})\approx F(\mathbf{0})+J_F(\mathbf{0})(\mathbf{x}-\mathbf{0})
+  =\begin{pmatrix}0\\0\end{pmatrix}+\begin{pmatrix}1&0\\0&0\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}
+  =\begin{pmatrix}x\\0\end{pmatrix}.$$</li>
 </ul>
+<blockquote>
+<p>这说明在原点附近，$F$ 的行为相当于把向量 $(x,y)$ <strong>投影</strong> 到 $x$ 轴上——典型的 <strong>线性代数投影</strong> 操作。</p>
+</blockquote>
 <hr>
-<h3 id="Lecture-2CN：阶梯形、行化简算法与线性方程组的解"><strong>Lecture-2CN：阶梯形、行化简算法与线性方程组的解</strong></h3>
-<ul>
-<li><strong>阶梯形 (Echelon Form)</strong>：矩阵满足：</li>
-</ul>
+<h2 id="7-参考文献">7. 参考文献</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>文献</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[1]</td>
+<td>Stewart, <em>Calculus: Early Transcendentals</em>, 8th ed., Cengage, 2015.（多元微积分章节）</td>
+</tr>
+<tr>
+<td>[2]</td>
+<td>Strang, <em>Linear Algebra and Its Applications</em>, 5th ed., Cengage, 2016.（矩阵、特征值）</td>
+</tr>
+<tr>
+<td>[3]</td>
+<td>Apostol, <em>Mathematical Analysis</em>, 2nd ed., Addison‑Wesley, 1974.（中值定理的严谨证明）</td>
+</tr>
+<tr>
+<td>[4]</td>
+<td>Rudin, <em>Principles of Mathematical Analysis</em>, 3rd ed., McGraw‑Hill, 1976.（Brouwer 不动点定理）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8-练习题（供自测）">8. 练习题（供自测）</h2>
 <ol>
-<li>
-<p>所有非零行在零行之上。</p>
-</li>
-<li>
-<p>非零行的先导元素（该行最左的非零元）的列标严格递增。</p>
-</li>
-<li>
-<p>先导元素所在列下方的元素均为零。</p>
-</li>
-</ol>
-<ul>
-<li><strong>简化阶梯形 (Reduced Echelon Form)</strong>：在阶梯形基础上，还满足：</li>
-</ul>
-<ol start="4">
-<li>
-<p>每个先导元素均为1。</p>
-</li>
-<li>
-<p>每个先导1是该列中唯一的非零元。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>定理5</strong>：每个矩阵都行等价于一个<strong>唯一</strong>的简化阶梯形矩阵。</p>
-</li>
-<li>
-<p><strong>主元位置 (Pivot Position)</strong>：矩阵A行等价于某个阶梯形矩阵B时，B中先导元素的位置。这些位置在A的行等价变换中保持不变。</p>
-</li>
-<li>
-<p><strong>主元列 (Pivot Column)</strong>：包含主元位置的列。</p>
-</li>
-<li>
-<p><strong>行化简算法 (Row Reduction Algorithm)</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p><strong>向前步骤</strong>：化为阶梯形。</p>
-</li>
-<li>
-<p>从左到右找到第一非零列作为主元列。</p>
-</li>
-<li>
-<p>选定一个非零元作为主元，必要时交换行使其位于顶部。</p>
-</li>
-<li>
-<p>用行倍加变换将主元下方元素消为零。</p>
-</li>
-<li>
-<p>对余下的子矩阵重复上述步骤。</p>
-</li>
-<li>
-<p><strong>向后步骤</strong>：化为简化阶梯形。</p>
-</li>
-<li>
-<p>从最右下的主元开始，向上进行。</p>
-</li>
-<li>
-<p>用行倍加变换将主元上方元素消为零。</p>
-</li>
-<li>
-<p>用行倍乘变换将每个主元化为1。</p>
-</li>
-</ol>
-<ul>
-<li><strong>线性方程组的解</strong>：</li>
-</ul>
-<ol>
-<li>
-<p><strong>无解 (Inconsistent)</strong>：增广矩阵的简化阶梯形中，出现形如    [0 … 0 | b] (b≠0)  的行。方程组<strong>不相容</strong>。</p>
-</li>
-<li>
-<p><strong>唯一解</strong>：每个变量都是基本变量（对应主元列），没有自由变量。</p>
-</li>
-<li>
-<p><strong>无穷多解</strong>：存在至少一个自由变量（对应非主元列）。解集需用自由变量<strong>参数化</strong>表示。</p>
-</li>
+<li>设 $f(x,y)=\sin x\cos y$，求其梯度并验证在点 $(\pi/4,\pi/4)$ 处的方向导数沿单位向量 $\mathbf{u}=(1/\sqrt2,1/\sqrt2)$ 的值。</li>
+<li>对向量值函数 $F(x,y)=(x^2-y,\,xy)$，计算雅可比矩阵并在点 $(1,2)$ 给出线性化近似。</li>
+<li>证明：若 $f$ 在开凸集 $U$ 上二次可微且 Hessian 矩阵在 $U$ 为正定，则 $f$ 在 $U$ 上为 <strong>严格凸函数</strong>。</li>
+<li>用 <strong>拉格朗日中值定理</strong> 推导一元函数的 <strong>均值不等式</strong>：若 $f$ 在 $[a,b]$ 连续可微，则<br>
+$$\min_{x\in[a,b]}f'(x)\le\frac{f(b)-f(a)}{b-a}\le\max_{x\in[a,b]}f'(x).$$</li>
 </ol>
 <hr>
-<h3 id="Lecture-3CN：向量与线性组合"><strong>Lecture-3CN：向量与线性组合</strong></h3>
-<ul>
-<li>
-<p><strong>向量 (Vector)</strong>：   ℝ²  和    ℝⁿ  中的元素，表示为列。</p>
-</li>
-<li>
-<p><strong>向量运算</strong>：加法、标量乘法。</p>
-</li>
-<li>
-<p><strong>向量运算的性质 (定理2)</strong>：加法结合/交换律、加法单位元(零向量)、加法逆元(负向量)；标量乘法的分配律、结合律等。构成<strong>阿贝尔群 (Abelian Group)</strong>。</p>
-</li>
-<li>
-<p><strong>线性组合 (Linear Combination)</strong>：给定向量    v₁, …, vₙ  和标量    c₁, …, cₙ ，向量    v = c₁v₁ + … + cₙvₙ  称为前者的一个线性组合，   cᵢ  称为<strong>系数</strong>或<strong>权重</strong>。</p>
-</li>
-<li>
-<p><strong>向量方程 (Vector Equation)</strong>：   x₁a₁ + x₂a₂ + … + xₙaₙ = b 。</p>
-</li>
-<li>
-<p><strong>重要等价关系</strong>：线性方程组、向量方程、矩阵方程    Ax = b  三者<strong>同解</strong>。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-4CN：矩阵方程、矩阵-向量积与解的存在性"><strong>Lecture-4CN：矩阵方程、矩阵-向量积与解的存在性</strong></h3>
-<ul>
-<li>
-<p><strong>矩阵-向量乘积 (Matrix-vector Product)</strong>：   A = [a₁ … aₙ] ,    x = [x₁ … xₙ]ᵀ ，则    Ax = x₁a₁ + … + xₙaₙ 。</p>
-</li>
-<li>
-<p><strong>矩阵方程 (Matrix Equation)</strong>：   Ax = b 。</p>
-</li>
-<li>
-<p><strong>解 (Solution)</strong>：满足    As = b  的向量    s 。</p>
-</li>
-<li>
-<p><strong>矩阵-向量积的性质 (定理1)</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p>A(u+v) = Au + Av  （分配律）。</p>
-</li>
-<li>
-<p>A(λu) = λ(Au)  （齐次性/数乘性质）。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p>共同定义了<strong>线性变换</strong>的核心性质。</p>
-</li>
-<li>
-<p><strong>解的存在性定理 (定理2)</strong>：对于    m×n  矩阵    A ，下列陈述等价：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p>对任意    b ∈ ℝᵐ ，方程    Ax = b  有解（<strong>相容</strong>）。</p>
-</li>
-<li>
-<p>ℝᵐ  中任意    b  都是    A  的列向量的线性组合。</p>
-</li>
-<li>
-<p>A  的列向量张成    ℝᵐ ，即    Span{a₁, …, aₙ} = ℝᵐ 。</p>
-</li>
-<li>
-<p>A  的每一行都有一个主元位置。</p>
-</li>
-</ol>
-<hr>
-<h3 id="Lecture-5CN：线性无关"><strong>Lecture-5CN：线性无关</strong></h3>
-<ul>
-<li>
-<p><strong>线性无关 (Linear Independence)</strong>：向量集    {v₁, …, vₚ}  称为线性无关，若向量方程    x₁v₁ + … + xₚvₚ = 0  <strong>仅有平凡解</strong>    x₁ = … = xₚ = 0 。</p>
-</li>
-<li>
-<p><strong>线性相关 (Linear Dependence)</strong>：若非线性无关，则称为线性相关。即存在不全为零的标量使向量方程成立。</p>
-</li>
-<li>
-<p><strong>定理1</strong>：一个向量集线性相关 <strong>当且仅当</strong> 集合中至少有一个向量是其余向量的线性组合。</p>
-</li>
-<li>
-<p><strong>定理2</strong>：矩阵    A  的列线性无关 <strong>当且仅当</strong> 方程    Ax = 0  仅有平凡解。</p>
-</li>
-<li>
-<p><strong>定理3</strong>：若一个向量集包含的向量个数超过每个向量的维数 (   p &gt; n )，则该集合必线性相关。</p>
-</li>
-<li>
-<p><strong>定理4</strong>：若向量集    S = {v₁, …, vₚ}  包含零向量，则它线性相关。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-6CN：齐次与非齐次矩阵方程"><strong>Lecture-6CN：齐次与非齐次矩阵方程</strong></h3>
-<ul>
-<li>
-<p><strong>齐次方程 (Homogeneous Equation)</strong>：   Ax = 0 。总是有解（零解/平凡解）。</p>
-</li>
-<li>
-<p><strong>平凡解 (Trivial Solution)</strong>：   x = 0 。</p>
-</li>
-<li>
-<p><strong>非平凡解 (Nontrivial Solution)</strong>：   Ax = 0  的非零解。存在非平凡解 <strong>当且仅当</strong> 方程有自由变量。</p>
-</li>
-<li>
-<p><strong>参数向量形式 (Parametric Vector Form)</strong>：   Ax = 0  的解集表示为自由变量的线性组合。</p>
-</li>
-<li>
-<p><strong>非齐次方程 (Nonhomogeneous Equation)</strong>：   Ax = b ，其中    b ≠ 0 。</p>
-</li>
-<li>
-<p><strong>解的结构定理 (定理3)</strong>：若    Ax = b  有特解    p ，则其全部解集为：   {p} + Nul A  =    {p + v: v ∈ Nul A} 。</p>
-</li>
-<li>
-<p><strong>结论</strong>：</p>
-</li>
-<li>
-<p>若    Ax = 0  仅有平凡解，则    Ax = b  有唯一解。</p>
-</li>
-<li>
-<p>若    Ax = 0  有非平凡解（自由变量），则    Ax = b  要么无解，要么有无穷多解。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-7CN：线性变换及其矩阵表示"><strong>Lecture-7CN：线性变换及其矩阵表示</strong></h3>
-<p><em>(注：此讲文档概要提及，但具体内容未在提供片段中详细展开。根据线性代数常规内容补充如下)</em></p>
-<ul>
-<li>
-<p><strong>线性变换 (Linear Transformation) T: ℝⁿ → ℝᵐ</strong>：满足    T(u+v) = T(u) + T(v)  和    T(cu) = cT(u) 。</p>
-</li>
-<li>
-<p><strong>标准矩阵 (Standard Matrix)</strong>：对于线性变换    T ，其标准矩阵    A = [T(e₁) T(e₂) … T(eₙ)] ，其中    eⱼ  是单位矩阵的第    j  列。有    T(x) = Ax 。</p>
-</li>
-<li>
-<p><strong>满射 (Onto/Surjective)</strong>：值域    Range(T) = ℝᵐ 。等价于    A  的列张成    ℝᵐ 。</p>
-</li>
-<li>
-<p><strong>单射 (One-to-one/Injective)</strong>：若    T(u)=T(v)  则必有    u=v 。等价于    Ax=0  仅有平凡解，即    A  的列线性无关。</p>
-</li>
-<li>
-<p><strong>线性变换与矩阵方程</strong>：研究    T(x)=b  的解集等同于研究    Ax=b  的解集。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-8CN：矩阵运算与逆"><strong>Lecture-8CN：矩阵运算与逆</strong></h3>
-<ul>
-<li>
-<p><strong>矩阵基本术语</strong>：</p>
-</li>
-<li>
-<p>(i, j) -元素 / 条目。</p>
-</li>
-<li>
-<p>主对角线 (Main Diagonal)。</p>
-</li>
-<li>
-<p>零矩阵    0 。</p>
-</li>
-<li>
-<p><strong>矩阵运算</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p><strong>加法</strong>：对应元素相加。</p>
-</li>
-<li>
-<p><strong>标量乘法</strong>：每个元素乘以标量。</p>
-</li>
-<li>
-<p><strong>乘法</strong>：   A (m×n)  与    B (n×p)  的乘积    AB (m×p) ，其中    (AB)<em>{ij} = Σ a</em>{ik}b_{kj} （行-列法则）。<strong>注意</strong>：乘法不满足交换律。</p>
-</li>
-<li>
-<p><strong>转置 (Transpose) Aᵀ</strong>：行变列。</p>
-</li>
-<li>
-<p><strong>方阵的逆 (Inverse)</strong>：对于    n×n  矩阵    A ，若存在    B  使    AB = BA = Iₙ ，则    A  <strong>可逆</strong>，   B  记作    A⁻¹ 。逆是唯一的。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>运算定理</strong>：</p>
-</li>
-<li>
-<p><strong>定理1</strong>：加法运算的性质（类似向量）。</p>
-</li>
-<li>
-<p><strong>定理2</strong>：乘法运算的性质（结合律、单位元、分配律）。</p>
-</li>
-<li>
-<p><strong>定理4</strong>：转置运算的性质：   (Aᵀ)ᵀ=A ,    (A+B)ᵀ=Aᵀ+Bᵀ ,    (rA)ᵀ=rAᵀ ,    (AB)ᵀ=BᵀAᵀ 。</p>
-</li>
-<li>
-<p><strong>定理5</strong>：逆运算的性质：   (A⁻¹)⁻¹=A ,    (AB)⁻¹=B⁻¹A⁻¹ ,    (Aᵀ)⁻¹=(A⁻¹)ᵀ 。</p>
-</li>
-<li>
-<p><strong>可逆矩阵定理 (关键！定理7/10)</strong>：设    A  为    n×n  矩阵，以下陈述等价：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p>A  是可逆矩阵。</p>
-</li>
-<li>
-<p>A  行等价于    n×n  单位矩阵    I 。</p>
-</li>
-<li>
-<p>A  有    n  个主元位置。</p>
-</li>
-<li>
-<p>方程    Ax=0  仅有平凡解。</p>
-</li>
-<li>
-<p>A  的列线性无关。</p>
-</li>
-<li>
-<p>A  的列张成    ℝⁿ 。</p>
-</li>
-<li>
-<p>Ax=b  对任意    b∈ℝⁿ  至少有一个解。</p>
-</li>
-<li>
-<p>A  的列构成    ℝⁿ  的基。</p>
-</li>
-<li>
-<p>Aᵀ  是可逆矩阵。</p>
-</li>
-<li>
-<p>存在矩阵    C  使得    CA=I ，或存在矩阵    D  使得    AD=I （此时    C=D=A⁻¹ ）。</p>
-</li>
-</ol>
-<ul>
-<li><strong>求逆方法</strong>：行化简增广矩阵    | I]  →    [I | A⁻¹] 。若左侧不能化为    I ，则    A  不可逆。</li>
-</ul>
-<hr>
-<h3 id="Lecture-9CN：矩阵分块"><strong>Lecture-9CN：矩阵分块</strong></h3>
-<p><em>(注：此讲内容概要提及，但具体细节未在提供片段中展示。常规要点如下)</em></p>
-<ul>
-<li>
-<p><strong>分块矩阵 (Partitioned Matrix)</strong>：用水平线和垂直线将矩阵划分为更小的子矩阵（块）。</p>
-</li>
-<li>
-<p><strong>分块矩阵的运算</strong>：</p>
-</li>
-<li>
-<p>加法、标量乘法：对应块进行。</p>
-</li>
-<li>
-<p><strong>乘法</strong>：   A  的列分块方式须与    B  的行分块方式一致，计算如同普通矩阵乘法，但元素是子矩阵。</p>
-</li>
-<li>
-<p><strong>分块对角矩阵</strong>：非零块仅出现在主对角线上。其逆矩阵等于各对角块逆矩阵组成的分块对角矩阵。</p>
-</li>
-<li>
-<p><strong>应用</strong>：简化大规模矩阵运算和理论推导。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-10CN：三角矩阵与LU分解"><strong>Lecture-10CN：三角矩阵与LU分解</strong></h3>
-<p><em>(注：此讲内容概要提及，但具体细节未展示。常规要点如下)</em></p>
-<ul>
-<li>
-<p><strong>上/下三角矩阵</strong>：主对角线下方/上方的元素全为零。</p>
-</li>
-<li>
-<p><strong>定理</strong>：三角矩阵可逆 <strong>当且仅当</strong> 其主对角线元素均不为零。</p>
-</li>
-<li>
-<p><strong>LU分解</strong>：将矩阵    A  分解为一个下三角矩阵    L  和一个上三角矩阵    U  的乘积，即    A = LU 。</p>
-</li>
-<li>
-<p><strong>作用</strong>：高效求解    Ax=b 。先解    Ly=b （前向代入），再解    Ux=y （后向代入）。</p>
-</li>
-<li>
-<p><strong>算法</strong>：通过高斯消元法（不使用行交换）得到    U ，消元过程中使用的乘数构成    L 。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-11CN-12CN：行列式"><strong>Lecture-11CN &amp; 12CN：行列式</strong></h3>
-<ul>
-<li>
-<p><strong>行列式 (Determinant)</strong> 的定义与性质：</p>
-</li>
-<li>
-<p>det(I) = 1 。</p>
-</li>
-<li>
-<p>行交换 → 行列式变号。</p>
-</li>
-<li>
-<p>行倍乘    k  → 行列式乘    k 。</p>
-</li>
-<li>
-<p>行倍加 → 行列式不变。</p>
-</li>
-<li>
-<p>det(Aᵀ) = det(A) 。</p>
-</li>
-<li>
-<p>det(AB) = det(A)det(B) 。</p>
-</li>
-<li>
-<p>A  可逆 <strong>当且仅当</strong>    det(A) ≠ 0 。</p>
-</li>
-<li>
-<p>det(A⁻¹) = 1/det(A) 。</p>
-</li>
-<li>
-<p><strong>计算方法</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p>余子式展开 (Cofactor Expansion)：对某行/列，   det(A)=Σ a_{ij}C_{ij} 。</p>
-</li>
-<li>
-<p>化为三角矩阵：行列式等于主对角线元素乘积。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>伴随矩阵 (Adjugate Matrix) adj(A)</strong>：由余子式    C_{ij}  构成的矩阵的转置。</p>
-</li>
-<li>
-<p><strong>求逆公式 (当 det(A)≠0)</strong>：   A⁻¹ = (1/det(A)) * adj(A) 。</p>
-</li>
-<li>
-<p><strong>克莱姆法则 (Cramer‘s Rule)</strong>：对于可逆矩阵    A ，方程组    Ax=b  的解为    x_i = det(A_i(b)) / det(A) ，其中    A_i(b)  是将    A  的第    i  列换为    b  得到的矩阵。</p>
-</li>
-<li>
-<p><strong>几何解释</strong>：</p>
-</li>
-<li>
-<p>2×2  矩阵行列式的绝对值等于其列向量张成的<strong>平行四边形的面积</strong>。</p>
-</li>
-<li>
-<p>3×3  矩阵行列式的绝对值等于其列向量张成的<strong>平行六面体的体积</strong>。</p>
-</li>
-<li>
-<p>线性变换    T(x)=Ax  将区域的面积/体积放大    |det(A)|  倍。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-13CN：向量空间与子空间"><strong>Lecture-13CN：向量空间与子空间</strong></h3>
-<ul>
-<li>
-<p><strong>向量空间 (Vector Space) V</strong>：定义了加法和标量乘法运算的集合，并满足10条公理（封闭性、结合律、交换律、零元、负元、分配律、单位标量乘法）。</p>
-</li>
-<li>
-<p><strong>子空间 (Subspace) H</strong>：向量空间    V  的一个子集，且    H  本身关于    V  的运算也构成向量空间。</p>
-</li>
-<li>
-<p><strong>判定定理1</strong>：   H  是子空间 <strong>当且仅当</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p>V  中的零向量属于    H 。</p>
-</li>
-<li>
-<p>对    H  中任意    u, v ，有    u+v ∈ H （对加法封闭）。</p>
-</li>
-<li>
-<p>对    H  中任意    u  和任意标量    c ，有    cu ∈ H （对标量乘法封闭）。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>重要的子空间实例</strong>：</p>
-</li>
-<li>
-<p><strong>零空间 (Null Space) Nul A</strong>：   {x ∈ ℝⁿ: Ax = 0} 。<strong>定理3</strong>：   Nul A  是    ℝⁿ  的子空间。</p>
-</li>
-<li>
-<p><strong>列空间 (Column Space) Col A</strong>：   {b ∈ ℝᵐ: b = Ax for some x ∈ ℝⁿ} 。<strong>定理4</strong>：   Col A  是    ℝᵐ  的子空间。</p>
-</li>
-<li>
-<p><strong>行空间 (Row Space)</strong>：   A  的行向量的所有线性组合的集合，是    ℝⁿ  的子空间。</p>
-</li>
-<li>
-<p><strong>基 (Basis) for a subspace H</strong>：   H  中一个线性无关的集合，且能张成    H 。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-14CN：基、坐标与基变换"><strong>Lecture-14CN：基、坐标与基变换</strong></h3>
-<ul>
-<li>
-<p><strong>基 (Basis) for V</strong>：   V  中线性无关且能张成    V  的向量集。</p>
-</li>
-<li>
-<p><strong>坐标 (Coordinate)</strong>：对于基    B={b₁,…,bₙ}  和向量    x=c₁b₁+…+cₙbₙ ，向量    [x]_B = [c₁ … cₙ]ᵀ  称为    x  的 <strong>B-坐标向量</strong>。</p>
-</li>
-<li>
-<p><strong>坐标映射 (Coordinate Mapping) x → [x]_B</strong>：<strong>定理9</strong>：若    B  是    V  的基，则坐标映射是从    V  到    ℝⁿ  的<strong>线性、单射</strong>的变换，建立了    V  与    ℝⁿ  的一一对应。</p>
-</li>
-<li>
-<p><strong>基的变换 (Change of Basis)</strong>：</p>
-</li>
-<li>
-<p>设    B  和    C  是向量空间    V  的两个基。</p>
-</li>
-<li>
-<p><strong>坐标变换矩阵 (Change-of-coordinates Matrix)</strong>：从    C  到    B  的矩阵    _BP_C ，满足    [x]_B = _BP_C [x]_C 。</p>
-</li>
-<li>
-<p>_BP_C  的求法：其第    j  列是    C  中第    j  个基向量关于    B  的坐标向量，即    [cⱼ]_B 。</p>
-</li>
-<li>
-<p>_BP_C  是可逆的，且    (_BP_C)⁻¹ = _CP_B 。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-15CN：维数、秩与四大子空间"><strong>Lecture-15CN：维数、秩与四大子空间</strong></h3>
-<ul>
-<li>
-<p><strong>维数 (Dimension)</strong>：向量空间    V  的任意一个基中所含向量的个数，记作    dim V 。</p>
-</li>
-<li>
-<p><strong>定理1</strong>：若    dim V = n ，则    V  中任何超过    n  个向量的集合必线性相关。</p>
-</li>
-<li>
-<p><strong>定理4 &amp; 5</strong>：</p>
-</li>
-<li>
-<p>子空间    H  的维数满足    dim H ≤ dim V 。</p>
-</li>
-<li>
-<p>在    p  维空间    V  中，任何恰好含    p  个向量的线性无关集自动成为基；任何恰好含    p  个向量且能张成    V  的集合也自动成为基。</p>
-</li>
-<li>
-<p><strong>秩 (Rank)</strong>：矩阵    A  的列空间（或行空间）的维数，记作    rank A 。</p>
-</li>
-<li>
-<p><strong>零度 (Nullity)</strong>：零空间    Nul A  的维数，记作    dim(Nul A) 。</p>
-</li>
-<li>
-<p><strong>秩定理 (Rank Theorem)</strong>：   rank A + dim(Nul A) = n ，其中    A  是    m×n  矩阵。</p>
-</li>
-<li>
-<p><strong>定理6</strong>：   dim(Col A) = rank A = A  中主元列的个数。   dim(Nul A) =  自由变量的个数。</p>
-</li>
-<li>
-<p><strong>四大基本子空间及其关系</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p><strong>列空间 Col A</strong>：子空间 of    ℝᵐ ，维数 =    rank A 。</p>
-</li>
-<li>
-<p><strong>零空间 Nul A</strong>：子空间 of    ℝⁿ ，维数 =    n - rank A 。</p>
-</li>
-<li>
-<p><strong>行空间 Row A</strong>：子空间 of    ℝⁿ ，维数 =    rank A 。(   Col Aᵀ )</p>
-</li>
-<li>
-<p><strong>左零空间 Nul Aᵀ</strong>：子空间 of    ℝᵐ ，维数 =    m - rank A 。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>子空间的基的求法</strong>：</p>
-</li>
-<li>
-<p>Col A ：取    A  的<strong>主元列</strong>（原始列）。</p>
-</li>
-<li>
-<p>Row A ：取    A  的<strong>行最简形 RREF(A)</strong> 的<strong>非零行</strong>。</p>
-</li>
-<li>
-<p>Nul A ：解    Ax=0 ，将自由变量参数化得到的<strong>解向量</strong>构成基。</p>
-</li>
-<li>
-<p>Nul Aᵀ ：解    Aᵀy=0 。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-16CN：特征值与特征向量"><strong>Lecture-16CN：特征值与特征向量</strong></h3>
-<ul>
-<li>
-<p><strong>特征值 (Eigenvalue) λ</strong> 与 <strong>特征向量 (Eigenvector) v</strong>：对于方阵    A ，满足    Av = λv  (   v ≠ 0 ) 的标量    λ  和向量    v 。</p>
-</li>
-<li>
-<p><strong>特征方程 (Characteristic Equation)</strong>：   det(A - λI) = 0 。</p>
-</li>
-<li>
-<p><strong>特征多项式 (Characteristic Polynomial)</strong>：   det(A - λI) 。</p>
-</li>
-<li>
-<p><strong>特征空间 (Eigenspace)</strong>：对应于特征值    λ  的所有特征向量加上零向量构成的集合，即    Nul(A - λI) 。</p>
-</li>
-<li>
-<p><strong>定理2</strong>：对应于<strong>不同特征值</strong>的特征向量是<strong>线性无关</strong>的。</p>
-</li>
-<li>
-<p><strong>相似 (Similar)</strong>：若存在可逆矩阵    P  使    B = P⁻¹AP ，则    A  与    B  相似。相似矩阵有相同的特征多项式、特征值和行列式。</p>
-</li>
-<li>
-<p><strong>对角化 (Diagonalization)</strong>：</p>
-</li>
-<li>
-<p>若    A  有    n  个线性无关的特征向量    v₁, …, vₙ ，对应特征值    λ₁, …, λₙ 。</p>
-</li>
-<li>
-<p>令    P = [v₁ v₂ … vₙ] ,    D = diag(λ₁, …, λₙ) ，则有    A = PDP⁻¹  且    D = P⁻¹AP 。</p>
-</li>
-<li>
-<p><strong>定理5（可对角化定理）</strong>：   n×n  矩阵    A  可对角化 <strong>当且仅当</strong>    A  有    n  个线性无关的特征向量（即所有特征值的几何重数之和等于    n ）。</p>
-</li>
-<li>
-<p><strong>特征值的代数重数与几何重数</strong>：</p>
-</li>
-<li>
-<p><strong>代数重数</strong>：特征值作为特征根的重数。</p>
-</li>
-<li>
-<p><strong>几何重数</strong>：对应特征空间的维数    dim Nul(A - λI) 。</p>
-</li>
-<li>
-<p>几何重数 ≤ 代数重数。</p>
-</li>
-<li>
-<p>矩阵可对角化 <strong>当且仅当</strong> 对于每个特征值，其几何重数等于代数重数。</p>
-</li>
-</ul>
-<hr>
-<h3 id="总结与备考建议"><strong>总结与备考建议</strong></h3>
-<ol>
-<li>
-<p><strong>概念理解</strong>：清晰区分相关但不同的概念，如“线性无关”与“张成”、“列空间”与“零空间”、“特征值”与“特征向量”。</p>
-</li>
-<li>
-<p><strong>定理网络</strong>：将“可逆矩阵定理”、“秩定理”、“对角化定理”等核心定理及其等价条件串联成网。</p>
-</li>
-<li>
-<p><strong>计算熟练度</strong>：重点练习行化简、求逆、求行列式、求特征值/向量、求子空间的基、坐标变换。</p>
-</li>
-<li>
-<p><strong>证明思路</strong>：掌握子空间验证、线性无关证明、利用已知定理推导等典型证明方法。</p>
-</li>
-<li>
-<p><strong>真题演练</strong>：结合往届习题、课堂练习和作业，模拟判断题、填空题、计算题和证明题的答题过程。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>线性代数</category>
-      </categories>
-      <tags>
-        <tag>线性代数复习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>高等数学多元函数章节与线性代数内在联系探究（完整系列）</title>
-    <url>/posts/series-complete.html</url>
-    <content><![CDATA[<h1>系列总览</h1>
-<p>本系列共15篇文章，系统探讨多元函数微积分与线性代数的内在联系。从极值、梯度、方向导数出发，通过雅可比矩阵、Hessian矩阵的线性代数工具，构建从微分到几何的统一视角。</p>
-<h2 id="15篇提纲">15篇提纲</h2>
-<ol>
-<li>多元函数极值与凸性</li>
-<li>梯度与方向导数的几何解读</li>
-<li>雅可比矩阵在局部线性化中的作用</li>
-<li>Hessian 矩阵与极值性质解析</li>
-<li>线性映射视角下的微分与最速上升</li>
-<li>方向导数与内积的联系</li>
-<li>多元中值定理的几何含义</li>
-<li>多元泰勒展开与 Hessian 的应用</li>
-<li>线性代数工具在最优化中的应用</li>
-<li>梯度与最速下降路径的几何解读</li>
-<li>正交投影与最小二乘问题的联系</li>
-<li>局部线性化在微分方程中的作用</li>
-<li>特征分解在几何中的直观应用</li>
-<li>从微分到线性代数的整合视角</li>
-<li>综述：从微分到几何的统一视角</li>
-</ol>
-<hr>
-<h1>1. 多元函数极值与凸性</h1>
-<p>下面给出 <strong>《多元函数极值与凸性》</strong> 的完整笔记草稿。本博文从极值的必要与充分条件出发，结合线性代数工具（矩阵正定性、特征值等）来判断局部极值和全局凸性。</p>
-<h2 id="摘要">摘要</h2>
-<p>在多元函数的极值问题中，二阶信息（$H_f$ 矩阵）提供了比梯度更丰富的局部判据。若 $H_f(x_0)$ 在点 $x_0$ 正定，该点是严格局部极小点；若负定，则为严格局部极大点；若不定则有可能是鞍点。通过将 Hessian 的特征值问题与二次型的正定性联系起来，可将极值判定转化为线性代数运算，进而与凸性理论相连。</p>
-<h2 id="关键词">关键词</h2>
-<p>极值、凸性、$H_f$、特征值、二阶判别、局部极值</p>
-<h2 id="结构">结构</h2>
-<ul>
-<li>H2: 定义与背景</li>
-<li>H2: 二阶充分条件</li>
-<li>H3: 例题与应用</li>
-</ul>
-<h2 id="开头示例">开头示例</h2>
-<p>设 $f(x,y)=x^2+y^2$。显然在原点有局部极小性，$H_f(0,0)=\begin{pmatrix}2&0\\0&2\end{pmatrix}$，特征值均为 2，正定，故原点为严格局部极小点。反过来，若 $f(x,y)=x^2-y^2$，则 $H_f(0,0)=\begin{pmatrix}2&0\\0&-2\end{pmatrix}$，特征值符号混合，存在鞍点。</p>
-<h2 id="正文">正文</h2>
-<h3 id="10-1-二阶导数与-Hessian">10.1 二阶导数与 Hessian</h3>
-<ul>
-<li>定义：$H_f(x)=\left[\frac{\partial^2 f}{\partial x_i \partial x_j}(x)\right]$</li>
-<li>二阶形式：$h^T H_f(x) h$</li>
-</ul>
-<h3 id="10-2-判别规则">10.2 判别规则</h3>
-<ul>
-<li>若 $H_f(x_0)$ 正定，则 $x_0$ 为严格局部最小点</li>
-<li>若 $H_f(x_0)$ 负定，则 $x_0$ 为严格局部最大点</li>
-<li>若 $H_f(x_0)$ 不定，则需结合梯度信息或进一步分析</li>
-</ul>
-<h3 id="10-3-例题">10.3 例题</h3>
-<ul>
-<li>例1：$f(x,y)=x^2+y^2$ 在 $(0,0)$ 处的 Hessian 为 $\begin{pmatrix}2&0\\0&2\end{pmatrix}$ → 严格局部最小</li>
-<li>例2：$f(x,y)=x^4+y^2$ 在 $(0,0)$ 处的 Hessian 为 $\begin{pmatrix}0&0\\0&2\end{pmatrix}$，Hessian 半正定但不严格，需进一步分析</li>
-</ul>
-<h2 id="练习题">练习题</h2>
-<ol>
-<li>求 $f(x,y)=x^2+2xy+y^2$ 的 Hessian，并在点 $(1,-1)$ 判断极值性质。</li>
-<li>给定 $f(x,y)=x^3+y^3$，写出 Hessian 并讨论 $(0,0)$ 的极值性质。</li>
-<li>证明：若 $f$ 在某区域内二阶连续可微且 Hessian 在该区域正定，则 $f$ 在该区域凸。</li>
-</ol>
-<hr>
-<h1>2. 梯度与方向导数的几何解读</h1>
-<p>下面给出 <strong>《梯度与方向导数的几何解读》</strong> 的完整笔记草稿。本博文从几何角度揭示梯度的意义，以及方向导数如何通过梯度内积体现空间方向上的变化率。</p>
-<h2 id="摘要-2">摘要</h2>
-<p>梯度被视为等值面法向量，方向导数则是沿任意单位向量的切线方向的导数。二者通过内积联系起来，形成了一个统一的线性代数框架来描述函数在各个方向的变化率。本文通过公式推导、几何直观和简单实例，帮助读者建立从微分到线性代数的直观联系。</p>
-<h2 id="关键词-2">关键词</h2>
-<p>梯度、方向导数、内积、线性代数、几何解释</p>
-<h2 id="结构-2">结构</h2>
-<ul>
-<li>H2: 梯度概念</li>
-<li>H2: 方向导数的内积形式</li>
-<li>H2: 几何意义与例子</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-2">开头示例</h2>
-<p>设 $f(x,y)=x^2+y^2$。则<br>
-$$\nabla f(x,y)=(2x,2y)^{\top}.$$<br>
-在点 $(1,2)$ 处，梯度为 $(2,4)$，方向导数在单位向量 $u=(1/\sqrt{2},1/\sqrt{2})$ 的值为<br>
-$$D_u f(1,2)=\nabla f(1,2)^{\top} u = (2,4)\cdot(1/\sqrt{2},1/\sqrt{2})=\frac{6}{\sqrt{2}}.$$<br>
-这体现了方向导数等于梯度与方向向量的内积。</p>
-<h2 id="正文-2">正文</h2>
-<h3 id="11-1-梯度的定义与性质">11.1 梯度的定义与性质</h3>
-<ul>
-<li>设 $f: \mathbb{R}^n \to \mathbb{R}$，梯度 $\nabla f(x)$ 由各分量偏导数组成：<br>
-$$\nabla f(x)=\left(\frac{\partial f}{\partial x_1},\dots,\frac{\partial f}{\partial x_n}\right)^{\top}.$$</li>
-<li>梯度在某点的方向反映该点沿各方向的最大速率变化方向。</li>
-</ul>
-<h3 id="11-2-方向导数的内积表达">11.2 方向导数的内积表达</h3>
-<ul>
-<li>对任意单位向量 $u$，方向导数：<br>
-$$D_u f(x)=\nabla f(x)^{\top} u.$$</li>
-<li>当 $u = \nabla f(x)/\|\nabla f(x)\|$ 时，方向导数达到最大，等于 $\|\nabla f(x)\|$。</li>
-</ul>
-<h3 id="11-3-几何意义与练习">11.3 几何意义与练习</h3>
-<ul>
-<li>例子与图示：等高线/等值面在法向方向上的跳跃与梯度大小的关系。</li>
-<li>练习：给定 f(x,y)=x^2+3y^2，计算 (a,b) 处的梯度、单位方向 u，以及在 u 的方向导数。</li>
-</ul>
-<h2 id="练习题-2">练习题</h2>
-<ol>
-<li>对 f(x,y)=x^2-2xy+y^2，计算在点 (1,1) 处的梯度及方向导数沿单位向量 u=(1/√2,-1/√2)。</li>
-<li>对向量值函数 F(x,y)=(x^2, y^2)，写出梯度与每分量的方向导数。</li>
-</ol>
-<hr>
-<h1>3. 雅可比矩阵在局部线性化中的作用</h1>
-<p>下面给出 <strong>《雅可比矩阵在局部线性化中的作用》</strong> 的完整笔记草稿。本文解释如何用雅可比矩阵近似描述在一个点附近的非线性向量值函数的行为，以及这对理解微分的本质有何帮助。</p>
-<h2 id="摘要-3">摘要</h2>
-<p>在开集 $U=\mathbb{R}^n$的增量近似可以用一阶导数（雅可比矩阵）来描述：<br>
-$$F(x+h) \approx F(x) + J_F(x) h.$$<br>
-这就是局部线性化的核心思想。通过一个简单例子，我们可以看出如何用雅可比矩阵把非线性映射转化为线性映射的作用。</p>
-<h2 id="关键词-3">关键词</h2>
-<p>雅可比矩阵、局部线性化、线性近似、导数</p>
-<h2 id="结构-3">结构</h2>
-<ul>
-<li>H2: 定义与直观</li>
-<li>H2: 局部线性化公式</li>
-<li>H2: 举例与应用</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-3">开头示例</h2>
-<p>设 $F(x,y)=\bigl(xe^{y},\, y\sin x\bigr)$，在点 $(0,0)$ 附近的线性近似。</p>
-<ul>
-<li>雅可比矩阵：<br>
-$$J_F(x,y)=\begin{pmatrix} e^{y} & xe^{y} \\ y\cos x & \sin x \end{pmatrix}, \quad J_F(0,0)=\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}.$$</li>
-<li>线性化：<br>
-$$F(x,y) \approx F(0,0) + J_F(0,0) \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} + \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix}.$$<br>
-这表明在原点附近，映射的第一分量沿 x 方向线性变化，第二分量保持近似不变。</li>
-</ul>
-<h2 id="正文-3">正文</h2>
-<h3 id="12-1-定义与直观">12.1 定义与直观</h3>
-<ul>
-<li>对 $F: \mathbb{R}^n → \mathbb{R}^m$，雅可比矩阵 J_F(x) 是 m×n 矩阵，其元素为 \partial F_i/\partial x_j。</li>
-<li>当 h → 0 时，F(x+h) 的增量可以由 J_F(x) 乘以 h 表示：,F(x+h) \approx F(x) + J_F(x) h。</li>
-</ul>
-<h3 id="12-2-局部线性化的意义">12.2 局部线性化的意义</h3>
-<ul>
-<li>微分本质上就是在一个点的局部把非线性映射近似为线性映射，从而可以用线性代数工具分析局部行为。</li>
-<li>这也是数值分析中线性近似求解的基础。</li>
-</ul>
-<h3 id="12-3-示例">12.3 示例</h3>
-<p>例：对 F(x,y)=(x^2, y^2) 在点 (1,2) 处的局部线性化：<br>
-$J_F(x,y)=\begin{pmatrix}2x & 0\\0 & 2y\end{pmatrix},\ J_F(1,2)=\begin{pmatrix}2 & 0\\0 & 4\end{pmatrix}$.<br>
-因此 F(x,y) ≈ F(1,2) + J_F(1,2) ( [x-1, y-2]^T ).</p>
-<h2 id="练习">练习</h2>
-<ol>
-<li>求 F(x,y)= (\sin x, e^y) 在点 (0,0) 的雅可比矩阵及线性近似。</li>
-<li>给定向量值函数 $F: \mathbb{R}^2 → \mathbb{R}^2，F(x,y)=(x^2+y, x-y^3)$，在点 (1,1) 计算 J_F、线性近似和误差级别。</li>
-</ol>
-<hr>
-<h1>4. Hessian 矩阵与极值性质解析</h1>
-<p>下面给出 <strong>《Hessian 矩阵与极值性质解析》</strong> 的完整笔记草稿。本博文聚焦 Hessian 的定义、二阶充分条件以及在凸分析中的作用。</p>
-<h2 id="摘要-4">摘要</h2>
-<p>Hessian 矩阵描述了二阶偏导数信息，给出曲面的局部曲率。若在某点 $x_0$，$H_f(x_0)$ 为正定/负定，则该点分别是严格局部极小点/极大点。若 Hessian 不定，需要结合一阶梯度信息与更高阶信息进行判断。通过几个典型例子，可以看到平方和型函数的简单极值，以及更复杂的非线性函数在局部的极值性质。</p>
-<h2 id="关键词-4">关键词</h2>
-<p>Hessian、二阶微分、正定、极值、局部极值</p>
-<h2 id="结构-4">结构</h2>
-<ul>
-<li>H2: 定义与几何含义</li>
-<li>H2: 二阶判别法</li>
-<li>H2: 例题</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-4">开头示例</h2>
-<p>对 $f(x,y)=x^2+y^2$，在原点，其 Hessian 为 $\operatorname{diag}(2,2)$，特征值均为正，故原点严格局部极小。对 $f(x,y)=x^2-y^2$，$H_f(0,0)=\operatorname{diag}(2,-2)$，特征值符号混合，存在鞍点。</p>
-<h2 id="正文-4">正文</h2>
-<h3 id="13-1-Hessian-的定义">13.1 Hessian 的定义</h3>
-<ul>
-<li>$H_f(x) = \left[\frac{\partial^2 f}{\partial x_i \partial x_j}(x)\right]$, 对称矩阵。</li>
-<li>二阶微分形式：$h^T H_f(x) h$。</li>
-</ul>
-<h3 id="13-2-二阶判别法">13.2 二阶判别法</h3>
-<ul>
-<li>如果 $H_f(x_0)$ 正定，则 $x_0$ 为严格局部最小点</li>
-<li>如果 $H_f(x_0)$ 负定，则 $x_0$ 为严格局部最大点</li>
-<li>如果 $H_f(x_0)$ 不定，则需要进一步分析</li>
-</ul>
-<h3 id="13-3-例题">13.3 例题</h3>
-<ul>
-<li>例1：$f(x,y)=x^2+y^2$，$H_f(0,0)=\begin{pmatrix}2&0\\0&2\end{pmatrix}$ -&gt; 极小</li>
-<li>例2：$f(x,y)=x^4+y^2$，$H_f(0,0)=\begin{pmatrix}0&0\\0&2\end{pmatrix}$ 半正定，需结合梯度做进一步分析</li>
-</ul>
-<h2 id="练习-2">练习</h2>
-<ol>
-<li>对 $f(x,y)= x^3 + y^4$，在 $(0,0)$ 处计算 Hessian，判断极值性质并解释结论。</li>
-<li>给定 $f(x,y)= x^2 + 3xy + y^2$，计算 Hessian，并判断 $(0,0)$ 的极值性质。</li>
-</ol>
-<hr>
-<h1>5. 线性映射视角下的微分与最速上升</h1>
-<p>下面给出 <strong>《线性映射视角下的微分与最速上升》</strong> 的完整笔记草稿。本文将微分理解为局部线性映射，并将梯度与最速上升方向的关系从矩阵角度表达清楚。</p>
-<h2 id="摘要-5">摘要</h2>
-<p>微分在向量值函数的情形下可以看作一个线性映射，记作 $df_x: R^n → R^m$。若对标量函数 f，则 $df_x(h) = ∇f(x)^T h$。梯度的模 length ∥∇f(x)∥ 决定了在单位方向上的最大变化率，且该方向即为最速上升方向。</p>
-<h2 id="关键词-5">关键词</h2>
-<p>线性映射、微分、梯度、最速上升</p>
-<h2 id="结构-5">结构</h2>
-<ul>
-<li>H2: 微分的线性本质</li>
-<li>H2: 梯度与最速上升方向</li>
-<li>H2: 例题与直观</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-5">开头示例</h2>
-<p>设 $f(x,y)=x^2+y^2$。对点 $(a,b)$，梯度为 $\nabla f=(2a,2b)$，单位向量 $u = \nabla f/\|\nabla f\|$ 指向最速上升方向，方向导数最大值为 $\|\nabla f\|$。对任意 $h$，线性近似给出：$f(a+h) \approx f(a) + \nabla f(a)^T h$。</p>
-<h2 id="正文-5">正文</h2>
-<h3 id="14-1-微分的线性本质">14.1 微分的线性本质</h3>
-<ul>
-<li>对标量函数 $f: \mathbb{R}^n → \mathbb{R}$，微分 $df_x$ 是一个线性映射，使得 $f(x+h) \approx f(x) + df_x(h)$。</li>
-<li>其中 $df_x(h) = \nabla f(x)^T h$。</li>
-</ul>
-<h3 id="14-2-最速上升方向">14.2 最速上升方向</h3>
-<ul>
-<li>方向导数 $D_u f(x) = \nabla f(x)^T u$，最大值在 $u = \nabla f/\|\nabla f\|$ 处，等于 $\|\nabla f\|$。</li>
-<li>通过 Cauchy–Schwarz 不等式可得：$|D_u f(x)| \le \|\nabla f(x)\|\|u\|$，等号在 $u$ 与 $\nabla f$ 同向时成立。</li>
-</ul>
-<h3 id="14-3-练习">14.3 练习</h3>
-<ol>
-<li>对 f(x,y)=x^2+2xy+y^2，在点 (1, -1) 计算 ∇f，并给出其在单位向量 u=(cos θ, sin θ) 上的方向导数表达式。</li>
-<li>对 F(x,y)=(x^2, y^2) 的分量，写出每个分量的微分及对应的线性近似。</li>
-</ol>
-<hr>
-<h1>6. 方向导数与内积的联系</h1>
-<p>下面给出 <strong>《方向导数与内积的联系》</strong> 的完整笔记草稿。本博文将方向导数的内积表述、几何直观和在多变量优化中的应用系统化。</p>
-<h2 id="摘要-6">摘要</h2>
-<p>方向导数 $D_u f(x) = \nabla f(x)^T u$ 将方向导数转化为梯度与方向向量的内积。该表达揭示了方向导数在单位方向上的响应等价于梯度的投影，最大值发生在梯度方向上。通过几个直观例子，展示内积如何把方向信息编码到微分中。</p>
-<h2 id="关键词-6">关键词</h2>
-<p>方向导数、内积、梯度、投影、几何解释</p>
-<h2 id="结构-6">结构</h2>
-<ul>
-<li>H2: 方向导数的定义</li>
-<li>H2: 内积形式与几何意义</li>
-<li>H2: 例题</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-6">开头示例</h2>
-<p>设 $f(x,y)=x^2+y^2$，则 $\nabla f=(2x,2y)$。在点 $(1,2)$ 处，单位向量 $u=(1/\sqrt{2},1/\sqrt{2})$ 的方向导数为<br>
-$$D_u f(1,2)=\nabla f(1,2)^T u = (2,4)\cdot(1/\sqrt{2},1/\sqrt{2})=\frac{6}{\sqrt{2}}.$$<br>
-这表明方向导数等于梯度与方向向量的内积。</p>
-<h2 id="正文-6">正文</h2>
-<h3 id="11-1-方向导数的定义与性质">11.1 方向导数的定义与性质</h3>
-<ul>
-<li>设 $f: \mathbb{R}^n \to \mathbb{R}$，方向导数在单位向量 $u$ 的定义：<br>
-$$D_u f(x)=\lim_{h\to0}\frac{f(x+hu)-f(x)}{h}.$$</li>
-<li>若 $f$ 在 $x$ 可微，则<br>
-$$D_u f(x)=\nabla f(x)^T u.$$</li>
-</ul>
-<h3 id="11-2-内积形式与几何意义">11.2 内积形式与几何意义</h3>
-<ul>
-<li>$D_u f(x) = \nabla f(x)^T u$。</li>
-<li>当 $u=\nabla f(x)/\|\nabla f(x)\|$ 时，$D_u f(x)=\|\nabla f(x)\|$。</li>
-</ul>
-<h3 id="11-3-练习">11.3 练习</h3>
-<ul>
-<li>
-<ol>
-<li>对 $f(x,y)=x^2+3y^2$，在点 $(a,b)$ 计算梯度、单位方向 $u$，以及在该方向的方向导数。</li>
-</ol>
-</li>
-<li>
-<ol start="2">
-<li>对函数 $F(x,y)=(x^2,y^2)$，写出每个分量的梯度与方向导数。</li>
-</ol>
-</li>
-</ul>
-<hr>
-<h1>7. 多元中值定理的几何含义</h1>
-<p>下面给出 <strong>《多元中值定理的几何含义》</strong> 的完整笔记草稿。本博文探讨多元柯西中值定理及向量值函数的中值定理在几何中的直观理解。</p>
-<h2 id="摘要-7">摘要</h2>
-<p>多元中值定理将函数在两点之间的增量与其在中间点的导数信息联系起来。通过雅可比矩阵，我们可以将增量的差分近似看作线性映射作用的结果，从而获得对变化范围的几何估计。</p>
-<h2 id="关键词-7">关键词</h2>
-<p>中值定理、雅可比、局部线性化、线性映射</p>
-<h2 id="结构-7">结构</h2>
+<blockquote>
+<p><strong>小结</strong>：多元函数的微分本质上是 <strong>线性映射</strong>（雅可比矩阵），而二阶微分则对应 <strong>二次型</strong>（Hessian）。通过矩阵的特征分解、正定性判别等线性代数工具，我们可以更系统、更几何地理解极值、最速上升方向以及局部线性化等概念。希望本笔记能帮助你在 <strong>高等数学</strong> 与 <strong>线性代数</strong> 之间搭建起坚实的桥梁。祝学习愉快！</p>
+</blockquote>
+<h2 id="16-多元中值定理的几何含义">16. 多元中值定理的几何含义</h2>
+<p>摘要：多元柯西和向量值函数的中值定理提供了在局部线性化附近对函数增量的近似控制。本节通过直观几何与矩阵表示，讲解在高维空间中中值定理的意义及其与雅可比矩阵的联系。<br>
+关键词：中值定理、柯西、雅可比、局部线性化<br>
+结构：</p>
 <ul>
 <li>H2: 定理陈述与直观</li>
 <li>H2: 与雅可比的关系</li>
 <li>H3: 示例</li>
-<li>H3: 练习</li>
 </ul>
-<h2 id="开头示例-7">开头示例</h2>
-<p>设 F: R^n → R^m，在开集内连续可微。对 a,b ∈ R^n，存在 ξ 使得 F(b)−F(a) = J_F(ξ)(b−a) 的表示近似于线性映射的作用。这个公式将多元增量以单一线性运算表达，呈现出线性代数在非线性函数中的核心作用。</p>
-<h2 id="正文-7">正文</h2>
+<p>开头示例：设 F: R^n -&gt; R^m 在某开集内连续可微，取点 a,b，利用雅可比在某点的线性近似可把 F(b)-F(a) 近似为 JF(ξ)(b-a)，从而获得增量的线性界限。</p>
+<h2 id="17-多元泰勒展开与-Hessian-的应用">17. 多元泰勒展开与 Hessian 的应用</h2>
+<p>摘要：二阶泰勒展开将非线性映射按局部线性与二阶项展开，Hessian 的正定性提供极值的判别信息。本节给出展开公式和在优化中的几何解读。<br>
+关键词：泰勒展开、Hessian、极值、局部近似<br>
+结构：</p>
 <ul>
-<li>多元牛顿-莱布尼茨式的中值形式：$F(b)-F(a) \approx J_F(\xi)(b-a)$。
+<li>H2: 展开公式</li>
+<li>H2: 极值与二阶信息</li>
+<li>H3: 应用示例</li>
+</ul>
+<p>开头示例：对 f(x,y) 的点 (a,b) 进行二阶泰勒展开，得到 f(a+h) ≈ f(a) + ∇f(a)·h + 1/2 h^T Hf(a) h，这里的二阶项揭示了曲面的局部曲率。</p>
+<h2 id="18-线性代数工具在最优化中的应用">18. 线性代数工具在最优化中的应用</h2>
+<p>摘要：通过特征值、特征向量、对角化等线性代数工具来分析凸性、曲率和局部极值，帮助快速判断最优解的存在性与性质。<br>
+关键词：特征值、特征向量、对角化、最优化<br>
+结构：</p>
 <ul>
-<li>若 F 为标量函数，等式退化为一元的中值定理的向量化版本。</li>
+<li>H2: 特征分解与正定性</li>
+<li>H2: 最优化中的应用场景</li>
+<li>H3: 练习要点</li>
 </ul>
-</li>
-</ul>
-<h3 id="16-2-与雅可比的关系">16.2 与雅可比的关系</h3>
+<p>开头示例：若 Hessian 在一点正定，则该点是严格局部极小点；若不定，则需结合梯度的一阶项来判断极值的存在性。</p>
+<h2 id="19-梯度与最速下降路径的几何解读">19. 梯度与最速下降路径的几何解读</h2>
+<p>摘要：从几何角度理解梯度方向，即为下降法的反方向，最速下降路径近似沿梯度方向的路径。通过可视化图像帮助理解迭代收敛的路径特征。<br>
+关键词：梯度下降、最速路径、迭代<br>
+结构：</p>
 <ul>
-<li>增量近似 F(b)-F(a) ≈ J_F(ξ)(b-a)，其中 J_F(ξ) 为在 ξ 点的雅可比矩阵。`</li>
-<li>这揭示了微分的线性本质：在局部区域内，非线性映射可由线性映射近似。</li>
+<li>H2: 梯度与路径关系</li>
+<li>H2: 迭代几何直觉</li>
+<li>H3: 收敛性要点</li>
 </ul>
-<h3 id="16-3-练习">16.3 练习</h3>
+<p>开头示例：在二维平面上，若选取初始点并按负梯度方向更新，则路径将逐步贴近函数的等高线向内收敛。</p>
+<h2 id="20-正交投影与最小二乘问题的联系">20. 正交投影与最小二乘问题的联系</h2>
+<p>摘要：正交投影在高维空间中的直观解释，是最小二乘解的几何本质。通过投影误差最小化来理解最优拟合。<br>
+关键词：正交投影、最小二乘、拟合<br>
+结构：</p>
 <ul>
-<li>给定 F(x,y)=(x^2, y^2)，在点 a=(1,2), b=(2,3) 的增量近似中，计算是否存在 ξ 使得 F(b)-F(a) ≈ J_F(ξ)(b-a) 并给出近似误差界。</li>
+<li>H2: 正交投影定义</li>
+<li>H2: 最小二乘解的几何interpretation</li>
+<li>H3: 例题</li>
 </ul>
-<hr>
-<h1>8. 多元泰勒展开与 Hessian 的应用</h1>
-<p>下面给出 <strong>《多元泰勒展开与 Hessian 的应用》</strong> 的完整笔记草稿。本博文聚焦二阶及以上的泰勒展开在多元优化中的作用。</p>
-<h2 id="摘要-8">摘要</h2>
-<p>二阶及以上的泰勒展开将非线性映射在某点的行为拆解为线性项和高阶项的组合。二阶项由 Hessian 决定其曲率信息，正定性决定局部极值性质。通过公式推导与实例演示，展示在无约束最优化、拟合与误差分析中的应用。</p>
-<h2 id="关键词-8">关键词</h2>
-<p>泰勒展开、Hessian、极值、局部近似</p>
-<h2 id="结构-8">结构</h2>
-<ul>
-<li>H2: 二阶泰勒展开公式</li>
-<li>H2: Hessian 的角色</li>
-<li>H2: 应用示例</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-8">开头示例</h2>
-<p>对 $f(x,y)=x^2+2xy+y^2$，在点 $x_0=(1,1)$ 处，二阶泰勒展开近似为：<br>
-$$f(x,y) \approx f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_0).$$<br>
-其中 $\nabla f(1,1)=(4,4)$，$H_f(1,1)=\begin{pmatrix}2 & 2 \\ 2 & 2\end{pmatrix}$。</p>
-<h2 id="正文-8">正文</h2>
-<h3 id="17-1-二阶泰勒展开">17.1 二阶泰勒展开</h3>
-<ul>
-<li>给定 $f: \mathbb{R}^n → \mathbb{R}$，在点 $x_0$ 附近有：<br>
-$$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_0) + o(\|x-x_0\|^2).$$</li>
-</ul>
-<h3 id="17-2-Hessian-的作用">17.2 Hessian 的作用</h3>
-<ul>
-<li>Hessian 提供关于曲率的对称二次型信息。$\nabla f$ 的线性项决定增量方向的线性近似，二阶项决定曲率方向。</li>
-</ul>
-<h3 id="17-3-应用示例">17.3 应用示例</h3>
-<ul>
-<li>例：对 $f(x,y)=x^2+2xy+y^2$ 进行二阶展开，验证极值分析结论。</li>
-</ul>
-<h2 id="练习-3">练习</h2>
-<ol>
-<li>求 $f(x,y)=\exp(x) + y^2$ 在点 $(0,0)$ 的二阶泰勒展开及 Hessian，判断该点的局部极值性。</li>
-<li>给定 $f(x,y)=x^3+y^3$，讨论在原点的二阶展开及局部性质。</li>
-</ol>
-<hr>
-<h1>9. 线性代数工具在最优化中的应用</h1>
-<p>下面给出 <strong>《线性代数工具在最优化中的应用》</strong> 的完整笔记草稿。本博文把线性代数中的工具引入到无约束最优化、凸性分析等场景中。</p>
-<h2 id="摘要-9">摘要</h2>
-<p>最优化中的核心难题通常来自非线性关系。通过将问题转化为对称矩阵的特征分解、坐标变换、正交化等线性代数过程，可以简化极值判断与收敛性分析，提升数值稳定性与理论可解释性。本文给出若干典型情形的解决思路。</p>
-<h2 id="关键词-9">关键词</h2>
-<p>特征值、对角化、正交化、最优化</p>
-<h2 id="结构-9">结构</h2>
-<ul>
-<li>H2: 特征分解与曲率分析</li>
-<li>H2: 坐标变换与对角化的意义</li>
-<li>H2: 正交化在最优化中的应用</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-9">开头示例</h2>
-<p>考虑函数 f(x) = x^T A x，其中 A 为对称矩阵。若对称矩阵 A 可以正交对角化为 Q^T Λ Q，则 f 可以写成最简单的坐标系下的二次型：f(x) = ∑ λ_i y_i^2，极大/极小的性质取决于 λ_i 的符号。</p>
-<h2 id="正文-9">正文</h2>
-<h3 id="18-1-特征分解在曲率分析中的作用">18.1 特征分解在曲率分析中的作用</h3>
-<ul>
-<li>对二阶最优化问题，Hessian 的特征值分布决定了局部曲率。通过对 Hessian 进行特征分解，可以将局部模型转化为若干独立的一维二次型。</li>
-</ul>
-<h3 id="18-2-坐标变换与对角化">18.2 坐标变换与对角化</h3>
-<ul>
-<li>通过坐标变换使 Hessian 或目标函数近似对角化，简化最优化路径与约束分析。</li>
-</ul>
-<h3 id="18-3-练习">18.3 练习</h3>
-<ol>
-<li>设 $f(x) = x^T A x$，$A = \begin{pmatrix}4 & 1\\ 1 & 3\end{pmatrix}$，给出在原点附近的最速下降方向及收敛性分析。</li>
-<li>对 f(x,y)=3x^2+4xy+2y^2，计算 Hessian 的特征值并判断局部极值性质。</li>
-</ol>
-<hr>
-<h1>10. 梯度与最速下降路径的几何解读</h1>
-<p>下面给出 <strong>《梯度与最速下降路径的几何解读》</strong> 的完整笔记草稿。本文从几何视角解释梯度为何指引最速下降/上升的路径，以及优化迭代中路径的几何特征。</p>
-<h2 id="摘要-10">摘要</h2>
-<p>梯度给出方向导数的最大变化方向。对无约束优化问题，沿负梯度逐步迭代的路径在局部看起来是一条逐步向等高线内靠近的曲线。通过例题和直觉图解，展示最速下降路径与曲面切平面的关系。</p>
-<h2 id="关键词-10">关键词</h2>
-<p>梯度下降、最速下降路径、几何直观</p>
-<h2 id="结构-10">结构</h2>
-<ul>
-<li>H2: 负梯度方向与局部极值</li>
-<li>H2: 路径的几何描述</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-10">开头示例</h2>
-<p>对 f(x,y)=x^2+y^2，初始点 (2,0) 采用负梯度方向更新：x_{k+1} = x_k - α ∇f(x_k)。由于 ∇f(x)=(2x,2y)，在起点梯度方向为 (4,0)，若选取步长 α=0.25，则下一步点为 (1,0)，路径逐步靠近原点。</p>
-<h2 id="正文-10">正文</h2>
-<h3 id="19-1-梯度与路径关系">19.1 梯度与路径关系</h3>
-<ul>
-<li>沿负梯度方向的更新可视化为在等高线之间的下滑路径。</li>
-<li>局部线性化帮助理解每一步的前进方向与距离。</li>
-</ul>
-<h3 id="19-2-路径性质">19.2 路径性质</h3>
-<ul>
-<li>路径趋向于在极小点处停止。</li>
-<li>当目标函数是凸的，梯度下降通常具有全局收敛性。</li>
-</ul>
-<h3 id="19-3-练习">19.3 练习</h3>
-<ol>
-<li>对 f(x,y)=x^2+4y^2，初始点 (1,2) 使用梯度下降法，给出第一步的更新与路径直观分析。</li>
-<li>对 f(x,y)=x^3+y^2，讨论在 (0,0) 附近的最速下降路径的特征。</li>
-</ol>
-<hr>
-<h1>11. 正交投影与最小二乘问题的联系</h1>
-<p>下面给出 <strong>《正交投影与最小二乘问题的联系》</strong> 的完整笔记草稿。本文解释正交投影在高维空间中的几何意义，以及最小二乘问题的解可以看作把数据投影到列空间的正交子空间上。</p>
-<h2 id="摘要-11">摘要</h2>
-<p>最小二乘解通常等价于将观测向量投影到列空间的最佳近似。通过正交性原理可以直观理解解的几何含义及其稳定性。</p>
-<h2 id="关键词-11">关键词</h2>
-<p>正交投影、最小二乘、拟合、投影</p>
-<h2 id="结构-11">结构</h2>
-<ul>
-<li>H2: 正交投影的定义</li>
-<li>H2: 最小二乘与投影的关系</li>
-<li>H2: 练习</li>
-</ul>
-<h2 id="开头示例-11">开头示例</h2>
-<p>设 $A \in \mathbb{R}^{m\times n}$，观测向量 $b \in \mathbb{R}^m$，最小二乘解 $x^*$ 满足 $Ax^*$ 收敛到 $b$ 的最小距离。若列空间 $\mathrm{Col}(A)$ 的正交补为 $\mathrm{Col}(A)^{\perp}$，则 $b$ 的最佳逼近在 $\mathrm{Col}(A)$ 上的正交投影为 $Ax^*$，因此 $x^*$ 是投影系数。</p>
-<h2 id="正文-11">正文</h2>
-<h3 id="20-1-正交投影定义">20.1 正交投影定义</h3>
-<ul>
-<li>对任意向量 $v$，存在唯一的向量 $p$ 使得 $v-p \perp W$，其中 $W$ 为某子空间，$p$ 属于 $W$，$p$ 即 $v$ 的在 $W$ 上的正交投影。</li>
-</ul>
-<h3 id="20-2-最小二乘解的几何解释">20.2 最小二乘解的几何解释</h3>
-<ul>
-<li>给定线性系统 $Ax=b$，若 $A$ 的列向量张成的空间为 $\,\mathrm{Col}(A)$，最小二乘解等价于寻找在 $\,\mathrm{Col}(A)$ 上的近似 $Ax$，使得误差 $b-Ax$ 垂直于 $\,\mathrm{Col}(A)$。</li>
-</ul>
-<h2 id="练习-4">练习</h2>
-<ol>
-<li>设 $A=\begin{bmatrix}1&2\\3&4\end{bmatrix}$，$b=\begin{bmatrix}5\\7\end{bmatrix}$，求最小二乘解 $x^*$ 并给出几何解释。</li>
-<li>解释为什么正交投影在高斯-乔丹消元前后仍然等价于最小二乘解。</li>
-</ol>
-<hr>
-<h1>12. 局部线性化在微分方程中的作用</h1>
-<p>下面给出 <strong>《局部线性化在微分方程中的作用》</strong> 的完整笔记草稿。本博文展示如何通过局部线性化将非线性微分方程近似为线性系统，以分析局部行为与稳定性。</p>
-<h2 id="摘要-12">摘要</h2>
-<p>非线性微分方程在分析与数值求解上常常困难。局部线性化通过在平衡点处用雅可比矩阵近似非线性项，将系统转化为线性系统，从而利用线性系统稳定性理论判断局部行为。</p>
-<h2 id="关键词-12">关键词</h2>
-<p>局部线性化、非线性系统、稳定性、雅可比</p>
-<h2 id="结构-12">结构</h2>
+<p>开头示例：在列向量 b 上寻找一个尽量接近 ax 的向量 x，使得误差 ||b - Ax|| 最小，这等价于将 b 投影到列空间 Span{A} 的正交补上。</p>
+<h2 id="21-局部线性化在微分方程中的作用">21. 局部线性化在微分方程中的作用</h2>
+<p>摘要：微分方程系统经常需要局部线性化来分析局部稳定性与近似解，本节结合一阶近似与线性系统理论，给出常见分支点的分析方法。<br>
+关键词：局部线性化、微分方程、稳定性<br>
+结构：</p>
 <ul>
 <li>H2: 线性化原理</li>
-<li>H2: 稳定性判据</li>
-<li>H2: 简单实例</li>
-<li>H3: 练习</li>
+<li>H2: 稳定性分析要点</li>
+<li>H3: 示例</li>
 </ul>
-<h2 id="开头示例-12">开头示例</h2>
-<p>考虑二阶系统 x’ = f(x)，若 x* 是平衡点且 Df(x*) 存在，则在 x 近似小扰动时，系统近似为线性：ξ’ = Df(x*) ξ，ξ = x-x*。</p>
-<h2 id="正文-12">正文</h2>
-<h3 id="21-1-线性化原理">21.1 线性化原理</h3>
-<ul>
-<li>将非线性项在平衡点处的泰勒展开截断到一阶，得到局部线性系统。</li>
-</ul>
-<h3 id="21-2-稳定性分析">21.2 稳定性分析</h3>
-<ul>
-<li>线性化的特征值决定了局部稳定性：若所有特征值的实部都小于 0，平衡点局部渐近稳定；若存在实部大于 0 的特征值，局部失稳。</li>
-</ul>
-<h3 id="21-3-练习">21.3 练习</h3>
-<ol>
-<li>对系统 x’ = y, y’ = -x + x^2，找出平衡点并用线性化判断局部稳定性。</li>
-<li>对 x’ = x - x^3，分析在原点的局部稳定性。</li>
-</ol>
-<hr>
-<h1>13. 特征分解在几何中的直观应用</h1>
-<p>下面给出 <strong>《特征分解在几何中的直观应用》</strong> 的完整笔记草稿。本博文介绍如何利用特征分解将几何对象在更易处理的坐标系中表示与分析。</p>
-<h2 id="摘要-13">摘要</h2>
-<p>对称矩阵可以被正交变换对角化，这使得二次形式在新坐标系中成为简单的和的形式。通过几何投影、曲率分析和坐标变换的案例，说明特征分解在高维几何中的作用。</p>
-<h2 id="关键词-13">关键词</h2>
-<p>特征分解、对角化、坐标变换、正交基</p>
-<h2 id="结构-13">结构</h2>
+<p>开头示例：考虑非线性系统 x’ = f(x)，在平衡点 x* 处可用线性化 x’ ≈ Df(x*) (x - x*) 来分析局部行为。</p>
+<h2 id="22-特征分解在几何中的直观应用">22. 特征分解在几何中的直观应用</h2>
+<p>摘要：特征分解提供了在坐标变换下对称矩阵的简单描述，帮助理解曲率、投影和坐标系统的选择对问题简化的影响。<br>
+关键词：特征分解、对角化、坐标变换<br>
+结构：</p>
 <ul>
 <li>H2: 定义与直观</li>
-<li>H2: 对角化与几何意义</li>
-<li>H2: 应用示例</li>
-<li>H3: 练习</li>
+<li>H2: 对称矩阵的对角化意义</li>
+<li>H3: 应用示例</li>
 </ul>
-<h2 id="开头示例-13">开头示例</h2>
-<p>对对称矩阵 $A$，可以写成 $A = Q \Lambda Q^T$，其中 $Q$ 为正交矩阵，$\Lambda$ 为对角矩阵。若考虑二次型 $x^T A x$，则在坐标变换 $y = Q^T x$ 下，$x^T A x = y^T \Lambda y = \sum_i \lambda_i y_i^2$，极值性质由 $\lambda_i$ 的符号决定。</p>
-<h2 id="正文-13">正文</h2>
-<h3 id="22-1-特征分解与二次型">22.1 特征分解与二次型</h3>
+<p>开头示例：对称 Hessian 可以通过正交特征向量组成的基底对角化，使得二阶形式易于判断符号和大小。</p>
+<h2 id="23-从微分到线性代数的整合视角">23. 从微分到线性代数的整合视角</h2>
+<p>摘要：总结本系列中微分与线性代数的主线索，强调两者在极值、投影和线性近似中的互补性。<br>
+关键词：微分、线性代数、整合<br>
+结构：</p>
 <ul>
-<li>通过特征分解将二次型分解成独立的一维二次型，便于分析符号、极值与稳定性。</li>
+<li>H2: 核心桥梁</li>
+<li>H2: 常见题型与解法</li>
+<li>H3: 练习要点</li>
 </ul>
-<h3 id="22-2-坐标变换的几何含义">22.2 坐标变换的几何含义</h3>
+<p>开头示例：从梯度、雅可比与 Hessian 的角度出发，我们可以统一地将微分与线性代数工具用于分析曲面、拟合与优化问题。</p>
+<h2 id="24-综述：从微分到几何的统一视角">24. 综述：从微分到几何的统一视角</h2>
+<p>摘要：回顾本系列的核心思想，强调以线性映射和二阶性质为主线来理解多元微积分的几何图景。<br>
+关键词：统一视角、几何、微分<br>
+结构：</p>
 <ul>
-<li>坐标变换改变了观察角度，使得问题在新坐标系中更易理解和求解。</li>
+<li>H2: 核心观点回顾</li>
+<li>H2: 进一步阅读</li>
+<li>H3: 练习与延伸</li>
 </ul>
-<h3 id="22-3-练习">22.3 练习</h3>
-<ol>
-<li>对 f(x)=x^T A x，A= [ [2,1], [1,3] ]，给出在原点处的特征值并解释几何意义。</li>
-<li>对向量值函数 F(x) = Ax 的线性变换，在单位球上讨论投影方向。</li>
-</ol>
-<hr>
-<h1>14. 从微分到线性代数的整合视角</h1>
-<p>下面给出 <strong>《从微分到线性代数的整合视角》</strong> 的完整笔记草稿。本博文总结微分（一阶、二阶）如何通过线性代数语言呈现，并讨论两者在解决实际问题时相互促进的方式。</p>
-<h2 id="摘要-14">摘要</h2>
-<p>微分将局部性质用线性算子来刻画，线性代数提供了工具来处理这些算子（矩阵、特征值、对角化、正交化）。通过将差分、线性近似和二阶形式统一在矩阵语言下，学习者可以在解题时快速建立统一框架。</p>
-<h2 id="关键词-14">关键词</h2>
-<p>微分、线性代数、桥梁、矩阵</p>
-<h2 id="结构-14">结构</h2>
-<ul>
-<li>H2: 一阶与雅可比</li>
-<li>H2: 二阶与 Hessian</li>
-<li>H2: 桥梁与应用</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-14">开头示例</h2>
-<p>设 $f: \mathbb{R}^n \to \mathbb{R}$，在点 $x_0$ 的局部近似由一阶导数给出：$f(x) \approx f(x_0) + \nabla f(x_0)^T (x- x_0)$。若引入正交基底，使得梯度在新坐标系中仅有一个分量，这样的简化使得高维问题可以分成为若干一维问题处理。</p>
-<h2 id="正文-14">正文</h2>
-<h3 id="23-1-一阶微分与雅可比">23.1 一阶微分与雅可比</h3>
-<ul>
-<li>$df_x(h) = \nabla f(x)^T h$，即线性映射在方向 $h$ 的作用。</li>
-</ul>
-<h3 id="23-2-二阶微分与-Hessian">23.2 二阶微分与 Hessian</h3>
-<ul>
-<li>$H_f(x)$ 描述二阶信息，提供曲率信息。</li>
-</ul>
-<h3 id="23-3-桥梁概述">23.3 桥梁概述</h3>
-<ul>
-<li>将微分与线性代数的工具结合，提升问题建模与求解的效率。</li>
-</ul>
-<h2 id="练习-5">练习</h2>
-<ol>
-<li>给定 $f(x,y) = x^2 y + y^3$，计算在点 $(1,1)$ 的梯度、$H_f$，并讨论极值的潜在性质。</li>
-<li>对向量值函数 $F(x) = Ax + b$，给出局部线性化及其在优化中的应用场景。</li>
-</ol>
-<hr>
-<h1>15. 综述：从微分到几何的统一视角</h1>
-<p>下面给出 <strong>《综述：从微分到几何的统一视角》</strong> 的完整笔记草稿。本博文回顾前述 10–23 篇的核心思想，强调微分的线性本质、二阶信息的几何解释，以及线性代数工具在多元微积分中的统一作用。</p>
-<h2 id="摘要-15">摘要</h2>
-<p>通过回顾与对比，本文揭示：多元微积分的核心问题都可转化为线性代数问题，关键在于选择合适的投影、坐标系和近似策略（如雅可比、Hessian、特征分解等）。这种统一视角有助于简化推导、提升直觉和减少错误。</p>
-<h2 id="关键词-15">关键词</h2>
-<p>统一视角、线性代数、微分、几何</p>
-<h2 id="结构-15">结构</h2>
-<ul>
-<li>H2: 核心思想回顾</li>
-<li>H2: 常见题型的解题框架</li>
-<li>H2: 进一步阅读与扩展</li>
-</ul>
-<h2 id="开头示例-15">开头示例</h2>
-<p>回顾本系列的核心结论：在高维空间中，局部行为可以通过一阶线性近似（雅可比）与二阶信息 ($\mathrm{Hessian}$) 来描述，通过适当的坐标变换（对角化、正交化）可以将复杂问题拆解为更易处理的子问题。</p>
-<h2 id="练习-6">练习</h2>
-<ol>
-<li>设 f(x) = x^T A x，其中 A 对称，给出在原点处的二阶近似并讨论极值性质。</li>
-<li>选择一个非凸函数，说明在某些点靠近该点时的局部行为如何通过矩阵工具分析。</li>
-</ol>
-<hr>
-<h2 id="总结">总结</h2>
-<p>本系列从多元函数的基本概念出发，系统性地构建了微分与线性代数之间的桥梁：</p>
-<ol>
-<li><strong>一阶工具</strong>：梯度、方向导数、雅可比矩阵提供了局部线性化的基础</li>
-<li><strong>二阶工具</strong>：Hessian 矩阵揭示了曲率与极值性质</li>
-<li><strong>线性代数桥梁</strong>：特征分解、正交投影、坐标变换将微积分问题转化为矩阵运算</li>
-<li><strong>应用场景</strong>：最优化、微分方程、最小二乘等问题都可以通过这一统一框架进行分析</li>
-</ol>
-<p>通过这一系统性视角，读者可以更深入地理解多元微积分的本质，并在解决实际问题时快速选择合适的方法和工具。</p>
+<p>开头示例：通过把微分转化为局部线性映射，以及把二阶信息视作二次型，我们在多元微积分和线性代数之间建立起清晰的桥梁。</p>
 ]]></content>
       <categories>
         <category>数学分析</category>
@@ -1470,11 +509,70 @@ $$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_
       <tags>
         <tag>多元函数</tag>
         <tag>线性代数</tag>
-        <tag>微分</tag>
-        <tag>Hessian</tag>
-        <tag>梯度</tag>
-        <tag>雅可比</tag>
-        <tag>最优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二分算法及模板</title>
+    <url>/posts/5166.html</url>
+    <content><![CDATA[<p>最近在做二分的题目，看到有些题解提供的二分模板，特此记录。</p>
+<h1>什么样的题目能用二分算法</h1>
+<p>问题满足二段性的性质，即数组的一半满足给定的问题的解，另一半不满足给定问题的解。</p>
+<p>当然还有另一种简单的判断：有界、单调。二分的答案在单调闭区间上，最后是一个确定的值。如果题目规定了“最大值最小”或者“最小值最大”，那么此题满足二分的有界性和单调性。</p>
+<h1>二分的模板</h1>
+<p>之所以用模板是为了避免进入死循环，或者输出时出现偏差</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(left&lt;right)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        mid=(left+right+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(check(mid))</span><br><span class="line"></span><br><span class="line">           left=mid;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">           right=mid<span class="number">-1</span>;  </span><br><span class="line">     &#125; </span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,left);</span><br><span class="line">     </span><br><span class="line">还有一种类似的模板</span><br><span class="line"><span class="keyword">while</span>(left&lt;=right)</span><br><span class="line">    &#123;</span><br><span class="line">        mid=(left+right)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">		<span class="keyword">if</span>(check(mid))</span><br><span class="line">		</span><br><span class="line">		     left=mid+<span class="number">1</span>;</span><br><span class="line">		     </span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">            </span><br><span class="line">		     right=mid<span class="number">-1</span>;</span><br><span class="line">		</span><br><span class="line">	 &#125; </span><br><span class="line">	 <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,right);</span><br></pre></td></tr></table></figure>
+<hr>
+  <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">check</span><span class="params">(<span class="type">int</span> x)</span></span><br><span class="line">&#123;</span><br><span class="line">   ...</span><br><span class="line">   <span class="keyword">if</span> its ans in x or x<span class="string">&#x27;s right</span></span><br><span class="line"><span class="string">       return 1;</span></span><br><span class="line"><span class="string">   else</span></span><br><span class="line"><span class="string">       return 0;    </span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="特别注意（以下例子是最简单的二分查找某一个数）">特别注意（以下例子是最简单的二分查找某一个数）</h2>
+<h3 id="1-关于开区间和闭区间">1.关于开区间和闭区间</h3>
+<p><img src="../images/Pasted%20image%2020251118222123.png" alt=""></p>
+<h3 id="2-关于查找后的返回值">2.关于查找后的返回值</h3>
+<p><img src="../images/Pasted%20image%2020251118222211.png" alt=""></p>
+<h1>参考例题洛谷P2678</h1>
+<h2 id="题目描述">题目描述</h2>
+<p>一年一度的“跳石头”比赛又要开始了！</p>
+<p>这项比赛将在一条笔直的河道中进行，河道中分布着一些巨大岩石。组委会已经选择好了两块岩石作为比赛起点和终点。在起点和终点之间，有 $N$ 块岩石（不含起点和终点的岩石）。在比赛过程中，选手们将从起点出发，每一步跳向相邻的岩石，直至到达终点。</p>
+<p>为了提高比赛难度，组委会计划移走一些岩石，使得选手们在比赛过程中的最短跳跃距离尽可能长。由于预算限制，组委会至多从起点和终点之间移走 $M$ 块岩石（不能移走起点和终点的岩石）。</p>
+<h2 id="输入格式">输入格式</h2>
+<p>第一行包含三个整数 $L,N,M$，分别表示起点到终点的距离，起点和终点之间的岩石数，以及组委会至多移走的岩石数。保证 $L \geq 1$ 且 $N \geq M \geq 0$。</p>
+<p>接下来 $N$ 行，每行一个整数，第 $i$ 行的整数 $D_i\,( 0 < D_i < L)$， 表示第 $i$ 块岩石与起点的距离。这些岩石按与起点距离从小到大的顺序给出，且不会有两个岩石出现在同一个位置。</p>
+<h2 id="输出格式">输出格式</h2>
+<p>一个整数，即最短跳跃距离的最大值。</p>
+<h2 id="代码">代码</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">check</span><span class="params">(<span class="type">int</span> x)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> l,n,m,i,stone[<span class="number">50001</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>,&amp;l,&amp;n,&amp;m);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line"></span><br><span class="line">         <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;stone[i]);  </span><br><span class="line"></span><br><span class="line">    stone[n+<span class="number">1</span>]=l;    </span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> left=<span class="number">0</span>,right=l,mid;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(left&lt;right)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        mid=(left+right+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(check(mid))</span><br><span class="line"></span><br><span class="line">           left=mid;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">           right=mid<span class="number">-1</span>;  </span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,left);</span><br><span class="line">     </span><br><span class="line">或者是这种模板</span><br><span class="line">	<span class="keyword">while</span>(left&lt;=right)</span><br><span class="line">	&#123;</span><br><span class="line">		mid=(left+right)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(check(mid))</span><br><span class="line">		     left=mid+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">            </span><br><span class="line">		     right=mid<span class="number">-1</span>;</span><br><span class="line">		</span><br><span class="line">	 &#125; </span><br><span class="line">	 <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,right);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">check</span><span class="params">(<span class="type">int</span> x)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> p=<span class="number">0</span>,t=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n+<span class="number">1</span>;i++)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(stone[i]-p&lt;x) t++;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span> p=stone[i];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(t&lt;=m) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>二分算法</tag>
+        <tag>边界条件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一道时间线管理的模拟题</title>
+    <url>/posts/7a8e.html</url>
+    <content><![CDATA[<h2 id="题目来自2024年学院期中，是一道关于时间管理的模拟题-more">题目来自2024年学院期中，是一道关于时间管理的模拟题<span id="more"></span></h2>
+<h2 id="题目描述">题目描述</h2>
+<p><code>饭堂有个窗口,一个阿姨在卖肠粉。阿姨不会提前制作肠粉,只有在同学点餐后才会开始为该同学制作肠粉。阿姨制作肠粉的流程是,先花费t1时间处理原材料,然后放进肠粉机里蒸煮t2时间,煮好便可以立刻交付给同学。阿姨一次只能处理1份原材料,而阿姨有2台肠粉机,每台肠粉机一次只可以蒸煮一份肠粉。注意,阿姨处理原材料是独立于肠粉机的,也就是说当2台肠粉机各自蒸煮着肠粉时,阿姨也可以同时执行其他份肠粉的原材料处理。一共会来几个同学,其中第i个同学会在t=i^2时刻到达窗口排队并点一份肠粉。问:n个同学的等待时间总和是多少? (每个同学的等待时间是【拿到肠粉时刻】-【到达窗口时刻】)</code><br>
+<code>输入格式 </code>仅一行,3个正整数,依次是t1,t2, n<br>
+<code>输出格式 </code>输出一个正整数 tot,表示所有同学的等待时间总和。<br>
+<code>输入样例1 </code>3 7 10<br>
+<code>输出样例1 </code>100<br>
+<code>输入样例2 </code>10 1 10<br>
+<code>输出样例2 </code>194<br>
+<code>数据范围 </code>t1, t2, n∈ [1,105]</p>
+<hr>
+<p>这题比较像<code>午餐问题</code>、<code>餐厅排队叫号问题</code>、<code>任务调度</code>问题，做法是将 <em><strong>阿姨处理每份原材料的开始时间</strong></em>、<em><strong>第一台肠粉机的处理每份肠粉开始时间</strong></em>、<em><strong>第二台肠粉机的处理每份肠粉开始时间</strong></em> 看作三个数组，记为<code>a[n]</code> <code>b1[n]</code> <code>b2[n]</code>，这题就转化成求这三个量之间的关系，有点像数学里的数列题，去找这三个量的递推关系即可。具体代码如下：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">max</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> x&gt;=y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">         1 4 9 16 25 36 49 64 81 100</span></span><br><span class="line"><span class="comment">             1             4        9</span></span><br><span class="line"><span class="comment">            1   1+t1       max(1+t1,4) </span></span><br><span class="line"><span class="comment">         存开始做的时间</span></span><br><span class="line"><span class="comment">              a[i]= max(a[i-1]+t1 , i*i)</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">                    &#123; max(a[i]+t1,b1[i-1]+t2)</span></span><br><span class="line"><span class="comment">               b=min&#123; max(a[i]+t1,b2[i-1]+t2)            </span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line">    <span class="type">int</span> t1, t2, n,i;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>, &amp;t1, &amp;t2, &amp;n);</span><br><span class="line">    <span class="type">int</span>* a = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="type">int</span>* b1 = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="type">int</span>* b2 = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">    	a[i]=<span class="number">0</span>;</span><br><span class="line">    	b1[i]=<span class="number">0</span>;</span><br><span class="line">    	b2[i]=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    a[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    b1[<span class="number">0</span>] = <span class="number">1</span> + t1;</span><br><span class="line">    <span class="type">int</span> t = t1 + t2;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>;i &lt; n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i] = max(a[i - <span class="number">1</span>] + t1, (i+<span class="number">1</span>)*(i+<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">if</span> (max(a[i] + t1, b1[i - <span class="number">1</span>] + t2) &gt;= max(a[i] + t1, b2[i - <span class="number">1</span>] + t2))</span><br><span class="line">            b2[i] = max(a[i] + t1, b2[i - <span class="number">1</span>] + t2),b1[i]=b1[i<span class="number">-1</span>]; </span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            b1[i] = max(a[i] + t1, b1[i - <span class="number">1</span>] + t2),b2[i]=b2[i<span class="number">-1</span>];</span><br><span class="line">        t += max(b1[i], b2[i]) + t2 - (i+<span class="number">1</span>)*(i+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, t);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>模拟流程</tag>
+        <tag>多资源任务分配</tag>
+        <tag>时间线优化管理</tag>
       </tags>
   </entry>
   <entry>
@@ -2091,6 +1189,615 @@ $$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_
       <tags>
         <tag>线性代数</tag>
         <tag>3Blue1Brown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>大学生数学竞赛备考笔记</title>
+    <url>/posts/5ec6.html</url>
+    <content><![CDATA[<h1>定积分</h1>
+<p><img src="../images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20251201195739_51_138.jpg" alt=""><br>
+<img src="../images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20251201195740_52_138.jpg" alt=""></p>
+<h1>反常积分</h1>
+<p><img src="../images/11aaad4468ba0ebff928317cd0ae328d.jpg" alt=""><br>
+<img src="../images/ad9c198049bcd130cc06627b0514a6f2.jpg" alt=""></p>
+<h1>二重积分</h1>
+<p><img src="../images/a7d2b10b65825af01d1aaa3e24391ba5.jpg" alt=""><br>
+<img src="../images/2b64d7259f66f7f21f7aace47214a61e.jpg" alt=""></p>
+<h1>三重积分</h1>
+<p><img src="../images/3c20e3aae4c3f3754fc60f29d5bce301.jpg" alt=""><br>
+<img src="../images/5e920526911739fc6519fff2c84720ee.jpg" alt=""></p>
+<h1>曲线积分</h1>
+<p><img src="../images/47f67239ae9f56f09b32d09ac867c1b2.jpg" alt=""><br>
+<img src="../images/e07f19e68e8fb95f5ebca72a938457c8.jpg" alt=""></p>
+<h1>曲面积分</h1>
+<p><img src="../images/294a6c1ad32b67c46d698fb03267ebfd.jpg" alt=""><br>
+<img src="../images/d6b6e1574b07c043bdc53ca802fc8be2.jpg" alt=""></p>
+<h1>微分方程</h1>
+<p><img src="../images/b15c7293bffbbbdbbc88b05fb908e682.jpg" alt=""><br>
+<img src="../images/37b167c158bdcdbf0a44f94cdb6f5f27.jpg" alt=""></p>
+<h1>空间解析几何</h1>
+<p><img src="../images/ba641cac1dbb63e2fb628fa45ec261b3.jpg" alt=""><br>
+<img src="../images/26555934c2a1bd249ff05d5eabd5bc7f.jpg" alt=""></p>
+<h1>无穷级数</h1>
+<p><img src="../images/67cc1ce534d6c3599bcc7f20535dedd2.jpg" alt=""></p>
+<h1>中值定理</h1>
+<p><img src="../images/f535158f8c13b4f2fa227630e84d105f.jpg" alt=""></p>
+<h1>不等式</h1>
+<p><img src="../images/44a76330b9c189a039f2e8da148dfea3.jpg" alt=""></p>
+<h1>应试技巧</h1>
+<p><img src="../images/599277b5ec6ec0d0ea58c6056db9dccd.jpg" alt=""></p>
+]]></content>
+      <categories>
+        <category>数学分析</category>
+      </categories>
+      <tags>
+        <tag>微积分</tag>
+        <tag>微分方程</tag>
+        <tag>空间解析几何</tag>
+        <tag>级数</tag>
+        <tag>中值定理</tag>
+        <tag>不等式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>高等数学多元函数章节与线性代数内在联系探究（完整系列）</title>
+    <url>/posts/series-complete.html</url>
+    <content><![CDATA[<h1>系列总览</h1>
+<p>本系列共15篇文章，系统探讨多元函数微积分与线性代数的内在联系。从极值、梯度、方向导数出发，通过雅可比矩阵、Hessian矩阵的线性代数工具，构建从微分到几何的统一视角。</p>
+<h2 id="15篇提纲">15篇提纲</h2>
+<ol>
+<li>多元函数极值与凸性</li>
+<li>梯度与方向导数的几何解读</li>
+<li>雅可比矩阵在局部线性化中的作用</li>
+<li>Hessian 矩阵与极值性质解析</li>
+<li>线性映射视角下的微分与最速上升</li>
+<li>方向导数与内积的联系</li>
+<li>多元中值定理的几何含义</li>
+<li>多元泰勒展开与 Hessian 的应用</li>
+<li>线性代数工具在最优化中的应用</li>
+<li>梯度与最速下降路径的几何解读</li>
+<li>正交投影与最小二乘问题的联系</li>
+<li>局部线性化在微分方程中的作用</li>
+<li>特征分解在几何中的直观应用</li>
+<li>从微分到线性代数的整合视角</li>
+<li>综述：从微分到几何的统一视角</li>
+</ol>
+<hr>
+<h1>1. 多元函数极值与凸性</h1>
+<p>下面给出 <strong>《多元函数极值与凸性》</strong> 的完整笔记草稿。本博文从极值的必要与充分条件出发，结合线性代数工具（矩阵正定性、特征值等）来判断局部极值和全局凸性。</p>
+<h2 id="摘要">摘要</h2>
+<p>在多元函数的极值问题中，二阶信息（$H_f$ 矩阵）提供了比梯度更丰富的局部判据。若 $H_f(x_0)$ 在点 $x_0$ 正定，该点是严格局部极小点；若负定，则为严格局部极大点；若不定则有可能是鞍点。通过将 Hessian 的特征值问题与二次型的正定性联系起来，可将极值判定转化为线性代数运算，进而与凸性理论相连。</p>
+<h2 id="关键词">关键词</h2>
+<p>极值、凸性、$H_f$、特征值、二阶判别、局部极值</p>
+<h2 id="结构">结构</h2>
+<ul>
+<li>H2: 定义与背景</li>
+<li>H2: 二阶充分条件</li>
+<li>H3: 例题与应用</li>
+</ul>
+<h2 id="开头示例">开头示例</h2>
+<p>设 $f(x,y)=x^2+y^2$。显然在原点有局部极小性，$H_f(0,0)=\begin{pmatrix}2&0\\0&2\end{pmatrix}$，特征值均为 2，正定，故原点为严格局部极小点。反过来，若 $f(x,y)=x^2-y^2$，则 $H_f(0,0)=\begin{pmatrix}2&0\\0&-2\end{pmatrix}$，特征值符号混合，存在鞍点。</p>
+<h2 id="正文">正文</h2>
+<h3 id="10-1-二阶导数与-Hessian">10.1 二阶导数与 Hessian</h3>
+<ul>
+<li>定义：$H_f(x)=\left[\frac{\partial^2 f}{\partial x_i \partial x_j}(x)\right]$</li>
+<li>二阶形式：$h^T H_f(x) h$</li>
+</ul>
+<h3 id="10-2-判别规则">10.2 判别规则</h3>
+<ul>
+<li>若 $H_f(x_0)$ 正定，则 $x_0$ 为严格局部最小点</li>
+<li>若 $H_f(x_0)$ 负定，则 $x_0$ 为严格局部最大点</li>
+<li>若 $H_f(x_0)$ 不定，则需结合梯度信息或进一步分析</li>
+</ul>
+<h3 id="10-3-例题">10.3 例题</h3>
+<ul>
+<li>例1：$f(x,y)=x^2+y^2$ 在 $(0,0)$ 处的 Hessian 为 $\begin{pmatrix}2&0\\0&2\end{pmatrix}$ → 严格局部最小</li>
+<li>例2：$f(x,y)=x^4+y^2$ 在 $(0,0)$ 处的 Hessian 为 $\begin{pmatrix}0&0\\0&2\end{pmatrix}$，Hessian 半正定但不严格，需进一步分析</li>
+</ul>
+<h2 id="练习题">练习题</h2>
+<ol>
+<li>求 $f(x,y)=x^2+2xy+y^2$ 的 Hessian，并在点 $(1,-1)$ 判断极值性质。</li>
+<li>给定 $f(x,y)=x^3+y^3$，写出 Hessian 并讨论 $(0,0)$ 的极值性质。</li>
+<li>证明：若 $f$ 在某区域内二阶连续可微且 Hessian 在该区域正定，则 $f$ 在该区域凸。</li>
+</ol>
+<hr>
+<h1>2. 梯度与方向导数的几何解读</h1>
+<p>下面给出 <strong>《梯度与方向导数的几何解读》</strong> 的完整笔记草稿。本博文从几何角度揭示梯度的意义，以及方向导数如何通过梯度内积体现空间方向上的变化率。</p>
+<h2 id="摘要-2">摘要</h2>
+<p>梯度被视为等值面法向量，方向导数则是沿任意单位向量的切线方向的导数。二者通过内积联系起来，形成了一个统一的线性代数框架来描述函数在各个方向的变化率。本文通过公式推导、几何直观和简单实例，帮助读者建立从微分到线性代数的直观联系。</p>
+<h2 id="关键词-2">关键词</h2>
+<p>梯度、方向导数、内积、线性代数、几何解释</p>
+<h2 id="结构-2">结构</h2>
+<ul>
+<li>H2: 梯度概念</li>
+<li>H2: 方向导数的内积形式</li>
+<li>H2: 几何意义与例子</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-2">开头示例</h2>
+<p>设 $f(x,y)=x^2+y^2$。则<br>
+$$\nabla f(x,y)=(2x,2y)^{\top}.$$<br>
+在点 $(1,2)$ 处，梯度为 $(2,4)$，方向导数在单位向量 $u=(1/\sqrt{2},1/\sqrt{2})$ 的值为<br>
+$$D_u f(1,2)=\nabla f(1,2)^{\top} u = (2,4)\cdot(1/\sqrt{2},1/\sqrt{2})=\frac{6}{\sqrt{2}}.$$<br>
+这体现了方向导数等于梯度与方向向量的内积。</p>
+<h2 id="正文-2">正文</h2>
+<h3 id="11-1-梯度的定义与性质">11.1 梯度的定义与性质</h3>
+<ul>
+<li>设 $f: \mathbb{R}^n \to \mathbb{R}$，梯度 $\nabla f(x)$ 由各分量偏导数组成：<br>
+$$\nabla f(x)=\left(\frac{\partial f}{\partial x_1},\dots,\frac{\partial f}{\partial x_n}\right)^{\top}.$$</li>
+<li>梯度在某点的方向反映该点沿各方向的最大速率变化方向。</li>
+</ul>
+<h3 id="11-2-方向导数的内积表达">11.2 方向导数的内积表达</h3>
+<ul>
+<li>对任意单位向量 $u$，方向导数：<br>
+$$D_u f(x)=\nabla f(x)^{\top} u.$$</li>
+<li>当 $u = \nabla f(x)/\|\nabla f(x)\|$ 时，方向导数达到最大，等于 $\|\nabla f(x)\|$。</li>
+</ul>
+<h3 id="11-3-几何意义与练习">11.3 几何意义与练习</h3>
+<ul>
+<li>例子与图示：等高线/等值面在法向方向上的跳跃与梯度大小的关系。</li>
+<li>练习：给定 f(x,y)=x^2+3y^2，计算 (a,b) 处的梯度、单位方向 u，以及在 u 的方向导数。</li>
+</ul>
+<h2 id="练习题-2">练习题</h2>
+<ol>
+<li>对 f(x,y)=x^2-2xy+y^2，计算在点 (1,1) 处的梯度及方向导数沿单位向量 u=(1/√2,-1/√2)。</li>
+<li>对向量值函数 F(x,y)=(x^2, y^2)，写出梯度与每分量的方向导数。</li>
+</ol>
+<hr>
+<h1>3. 雅可比矩阵在局部线性化中的作用</h1>
+<p>下面给出 <strong>《雅可比矩阵在局部线性化中的作用》</strong> 的完整笔记草稿。本文解释如何用雅可比矩阵近似描述在一个点附近的非线性向量值函数的行为，以及这对理解微分的本质有何帮助。</p>
+<h2 id="摘要-3">摘要</h2>
+<p>在开集 $U=\mathbb{R}^n$的增量近似可以用一阶导数（雅可比矩阵）来描述：<br>
+$$F(x+h) \approx F(x) + J_F(x) h.$$<br>
+这就是局部线性化的核心思想。通过一个简单例子，我们可以看出如何用雅可比矩阵把非线性映射转化为线性映射的作用。</p>
+<h2 id="关键词-3">关键词</h2>
+<p>雅可比矩阵、局部线性化、线性近似、导数</p>
+<h2 id="结构-3">结构</h2>
+<ul>
+<li>H2: 定义与直观</li>
+<li>H2: 局部线性化公式</li>
+<li>H2: 举例与应用</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-3">开头示例</h2>
+<p>设 $F(x,y)=\bigl(xe^{y},\, y\sin x\bigr)$，在点 $(0,0)$ 附近的线性近似。</p>
+<ul>
+<li>雅可比矩阵：<br>
+$$J_F(x,y)=\begin{pmatrix} e^{y} & xe^{y} \\ y\cos x & \sin x \end{pmatrix}, \quad J_F(0,0)=\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}.$$</li>
+<li>线性化：<br>
+$$F(x,y) \approx F(0,0) + J_F(0,0) \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} + \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix}.$$<br>
+这表明在原点附近，映射的第一分量沿 x 方向线性变化，第二分量保持近似不变。</li>
+</ul>
+<h2 id="正文-3">正文</h2>
+<h3 id="12-1-定义与直观">12.1 定义与直观</h3>
+<ul>
+<li>对 $F: \mathbb{R}^n → \mathbb{R}^m$，雅可比矩阵 J_F(x) 是 m×n 矩阵，其元素为 \partial F_i/\partial x_j。</li>
+<li>当 h → 0 时，F(x+h) 的增量可以由 J_F(x) 乘以 h 表示：,F(x+h) \approx F(x) + J_F(x) h。</li>
+</ul>
+<h3 id="12-2-局部线性化的意义">12.2 局部线性化的意义</h3>
+<ul>
+<li>微分本质上就是在一个点的局部把非线性映射近似为线性映射，从而可以用线性代数工具分析局部行为。</li>
+<li>这也是数值分析中线性近似求解的基础。</li>
+</ul>
+<h3 id="12-3-示例">12.3 示例</h3>
+<p>例：对 F(x,y)=(x^2, y^2) 在点 (1,2) 处的局部线性化：<br>
+$J_F(x,y)=\begin{pmatrix}2x & 0\\0 & 2y\end{pmatrix},\ J_F(1,2)=\begin{pmatrix}2 & 0\\0 & 4\end{pmatrix}$.<br>
+因此 F(x,y) ≈ F(1,2) + J_F(1,2) ( [x-1, y-2]^T ).</p>
+<h2 id="练习">练习</h2>
+<ol>
+<li>求 F(x,y)= (\sin x, e^y) 在点 (0,0) 的雅可比矩阵及线性近似。</li>
+<li>给定向量值函数 $F: \mathbb{R}^2 → \mathbb{R}^2，F(x,y)=(x^2+y, x-y^3)$，在点 (1,1) 计算 J_F、线性近似和误差级别。</li>
+</ol>
+<hr>
+<h1>4. Hessian 矩阵与极值性质解析</h1>
+<p>下面给出 <strong>《Hessian 矩阵与极值性质解析》</strong> 的完整笔记草稿。本博文聚焦 Hessian 的定义、二阶充分条件以及在凸分析中的作用。</p>
+<h2 id="摘要-4">摘要</h2>
+<p>Hessian 矩阵描述了二阶偏导数信息，给出曲面的局部曲率。若在某点 $x_0$，$H_f(x_0)$ 为正定/负定，则该点分别是严格局部极小点/极大点。若 Hessian 不定，需要结合一阶梯度信息与更高阶信息进行判断。通过几个典型例子，可以看到平方和型函数的简单极值，以及更复杂的非线性函数在局部的极值性质。</p>
+<h2 id="关键词-4">关键词</h2>
+<p>Hessian、二阶微分、正定、极值、局部极值</p>
+<h2 id="结构-4">结构</h2>
+<ul>
+<li>H2: 定义与几何含义</li>
+<li>H2: 二阶判别法</li>
+<li>H2: 例题</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-4">开头示例</h2>
+<p>对 $f(x,y)=x^2+y^2$，在原点，其 Hessian 为 $\operatorname{diag}(2,2)$，特征值均为正，故原点严格局部极小。对 $f(x,y)=x^2-y^2$，$H_f(0,0)=\operatorname{diag}(2,-2)$，特征值符号混合，存在鞍点。</p>
+<h2 id="正文-4">正文</h2>
+<h3 id="13-1-Hessian-的定义">13.1 Hessian 的定义</h3>
+<ul>
+<li>$H_f(x) = \left[\frac{\partial^2 f}{\partial x_i \partial x_j}(x)\right]$, 对称矩阵。</li>
+<li>二阶微分形式：$h^T H_f(x) h$。</li>
+</ul>
+<h3 id="13-2-二阶判别法">13.2 二阶判别法</h3>
+<ul>
+<li>如果 $H_f(x_0)$ 正定，则 $x_0$ 为严格局部最小点</li>
+<li>如果 $H_f(x_0)$ 负定，则 $x_0$ 为严格局部最大点</li>
+<li>如果 $H_f(x_0)$ 不定，则需要进一步分析</li>
+</ul>
+<h3 id="13-3-例题">13.3 例题</h3>
+<ul>
+<li>例1：$f(x,y)=x^2+y^2$，$H_f(0,0)=\begin{pmatrix}2&0\\0&2\end{pmatrix}$ -&gt; 极小</li>
+<li>例2：$f(x,y)=x^4+y^2$，$H_f(0,0)=\begin{pmatrix}0&0\\0&2\end{pmatrix}$ 半正定，需结合梯度做进一步分析</li>
+</ul>
+<h2 id="练习-2">练习</h2>
+<ol>
+<li>对 $f(x,y)= x^3 + y^4$，在 $(0,0)$ 处计算 Hessian，判断极值性质并解释结论。</li>
+<li>给定 $f(x,y)= x^2 + 3xy + y^2$，计算 Hessian，并判断 $(0,0)$ 的极值性质。</li>
+</ol>
+<hr>
+<h1>5. 线性映射视角下的微分与最速上升</h1>
+<p>下面给出 <strong>《线性映射视角下的微分与最速上升》</strong> 的完整笔记草稿。本文将微分理解为局部线性映射，并将梯度与最速上升方向的关系从矩阵角度表达清楚。</p>
+<h2 id="摘要-5">摘要</h2>
+<p>微分在向量值函数的情形下可以看作一个线性映射，记作 $df_x: R^n → R^m$。若对标量函数 f，则 $df_x(h) = ∇f(x)^T h$。梯度的模 length ∥∇f(x)∥ 决定了在单位方向上的最大变化率，且该方向即为最速上升方向。</p>
+<h2 id="关键词-5">关键词</h2>
+<p>线性映射、微分、梯度、最速上升</p>
+<h2 id="结构-5">结构</h2>
+<ul>
+<li>H2: 微分的线性本质</li>
+<li>H2: 梯度与最速上升方向</li>
+<li>H2: 例题与直观</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-5">开头示例</h2>
+<p>设 $f(x,y)=x^2+y^2$。对点 $(a,b)$，梯度为 $\nabla f=(2a,2b)$，单位向量 $u = \nabla f/\|\nabla f\|$ 指向最速上升方向，方向导数最大值为 $\|\nabla f\|$。对任意 $h$，线性近似给出：$f(a+h) \approx f(a) + \nabla f(a)^T h$。</p>
+<h2 id="正文-5">正文</h2>
+<h3 id="14-1-微分的线性本质">14.1 微分的线性本质</h3>
+<ul>
+<li>对标量函数 $f: \mathbb{R}^n → \mathbb{R}$，微分 $df_x$ 是一个线性映射，使得 $f(x+h) \approx f(x) + df_x(h)$。</li>
+<li>其中 $df_x(h) = \nabla f(x)^T h$。</li>
+</ul>
+<h3 id="14-2-最速上升方向">14.2 最速上升方向</h3>
+<ul>
+<li>方向导数 $D_u f(x) = \nabla f(x)^T u$，最大值在 $u = \nabla f/\|\nabla f\|$ 处，等于 $\|\nabla f\|$。</li>
+<li>通过 Cauchy–Schwarz 不等式可得：$|D_u f(x)| \le \|\nabla f(x)\|\|u\|$，等号在 $u$ 与 $\nabla f$ 同向时成立。</li>
+</ul>
+<h3 id="14-3-练习">14.3 练习</h3>
+<ol>
+<li>对 f(x,y)=x^2+2xy+y^2，在点 (1, -1) 计算 ∇f，并给出其在单位向量 u=(cos θ, sin θ) 上的方向导数表达式。</li>
+<li>对 F(x,y)=(x^2, y^2) 的分量，写出每个分量的微分及对应的线性近似。</li>
+</ol>
+<hr>
+<h1>6. 方向导数与内积的联系</h1>
+<p>下面给出 <strong>《方向导数与内积的联系》</strong> 的完整笔记草稿。本博文将方向导数的内积表述、几何直观和在多变量优化中的应用系统化。</p>
+<h2 id="摘要-6">摘要</h2>
+<p>方向导数 $D_u f(x) = \nabla f(x)^T u$ 将方向导数转化为梯度与方向向量的内积。该表达揭示了方向导数在单位方向上的响应等价于梯度的投影，最大值发生在梯度方向上。通过几个直观例子，展示内积如何把方向信息编码到微分中。</p>
+<h2 id="关键词-6">关键词</h2>
+<p>方向导数、内积、梯度、投影、几何解释</p>
+<h2 id="结构-6">结构</h2>
+<ul>
+<li>H2: 方向导数的定义</li>
+<li>H2: 内积形式与几何意义</li>
+<li>H2: 例题</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-6">开头示例</h2>
+<p>设 $f(x,y)=x^2+y^2$，则 $\nabla f=(2x,2y)$。在点 $(1,2)$ 处，单位向量 $u=(1/\sqrt{2},1/\sqrt{2})$ 的方向导数为<br>
+$$D_u f(1,2)=\nabla f(1,2)^T u = (2,4)\cdot(1/\sqrt{2},1/\sqrt{2})=\frac{6}{\sqrt{2}}.$$<br>
+这表明方向导数等于梯度与方向向量的内积。</p>
+<h2 id="正文-6">正文</h2>
+<h3 id="11-1-方向导数的定义与性质">11.1 方向导数的定义与性质</h3>
+<ul>
+<li>设 $f: \mathbb{R}^n \to \mathbb{R}$，方向导数在单位向量 $u$ 的定义：<br>
+$$D_u f(x)=\lim_{h\to0}\frac{f(x+hu)-f(x)}{h}.$$</li>
+<li>若 $f$ 在 $x$ 可微，则<br>
+$$D_u f(x)=\nabla f(x)^T u.$$</li>
+</ul>
+<h3 id="11-2-内积形式与几何意义">11.2 内积形式与几何意义</h3>
+<ul>
+<li>$D_u f(x) = \nabla f(x)^T u$。</li>
+<li>当 $u=\nabla f(x)/\|\nabla f(x)\|$ 时，$D_u f(x)=\|\nabla f(x)\|$。</li>
+</ul>
+<h3 id="11-3-练习">11.3 练习</h3>
+<ul>
+<li>
+<ol>
+<li>对 $f(x,y)=x^2+3y^2$，在点 $(a,b)$ 计算梯度、单位方向 $u$，以及在该方向的方向导数。</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>对函数 $F(x,y)=(x^2,y^2)$，写出每个分量的梯度与方向导数。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h1>7. 多元中值定理的几何含义</h1>
+<p>下面给出 <strong>《多元中值定理的几何含义》</strong> 的完整笔记草稿。本博文探讨多元柯西中值定理及向量值函数的中值定理在几何中的直观理解。</p>
+<h2 id="摘要-7">摘要</h2>
+<p>多元中值定理将函数在两点之间的增量与其在中间点的导数信息联系起来。通过雅可比矩阵，我们可以将增量的差分近似看作线性映射作用的结果，从而获得对变化范围的几何估计。</p>
+<h2 id="关键词-7">关键词</h2>
+<p>中值定理、雅可比、局部线性化、线性映射</p>
+<h2 id="结构-7">结构</h2>
+<ul>
+<li>H2: 定理陈述与直观</li>
+<li>H2: 与雅可比的关系</li>
+<li>H3: 示例</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-7">开头示例</h2>
+<p>设 F: R^n → R^m，在开集内连续可微。对 a,b ∈ R^n，存在 ξ 使得 F(b)−F(a) = J_F(ξ)(b−a) 的表示近似于线性映射的作用。这个公式将多元增量以单一线性运算表达，呈现出线性代数在非线性函数中的核心作用。</p>
+<h2 id="正文-7">正文</h2>
+<ul>
+<li>多元牛顿-莱布尼茨式的中值形式：$F(b)-F(a) \approx J_F(\xi)(b-a)$。
+<ul>
+<li>若 F 为标量函数，等式退化为一元的中值定理的向量化版本。</li>
+</ul>
+</li>
+</ul>
+<h3 id="16-2-与雅可比的关系">16.2 与雅可比的关系</h3>
+<ul>
+<li>增量近似 F(b)-F(a) ≈ J_F(ξ)(b-a)，其中 J_F(ξ) 为在 ξ 点的雅可比矩阵。`</li>
+<li>这揭示了微分的线性本质：在局部区域内，非线性映射可由线性映射近似。</li>
+</ul>
+<h3 id="16-3-练习">16.3 练习</h3>
+<ul>
+<li>给定 F(x,y)=(x^2, y^2)，在点 a=(1,2), b=(2,3) 的增量近似中，计算是否存在 ξ 使得 F(b)-F(a) ≈ J_F(ξ)(b-a) 并给出近似误差界。</li>
+</ul>
+<hr>
+<h1>8. 多元泰勒展开与 Hessian 的应用</h1>
+<p>下面给出 <strong>《多元泰勒展开与 Hessian 的应用》</strong> 的完整笔记草稿。本博文聚焦二阶及以上的泰勒展开在多元优化中的作用。</p>
+<h2 id="摘要-8">摘要</h2>
+<p>二阶及以上的泰勒展开将非线性映射在某点的行为拆解为线性项和高阶项的组合。二阶项由 Hessian 决定其曲率信息，正定性决定局部极值性质。通过公式推导与实例演示，展示在无约束最优化、拟合与误差分析中的应用。</p>
+<h2 id="关键词-8">关键词</h2>
+<p>泰勒展开、Hessian、极值、局部近似</p>
+<h2 id="结构-8">结构</h2>
+<ul>
+<li>H2: 二阶泰勒展开公式</li>
+<li>H2: Hessian 的角色</li>
+<li>H2: 应用示例</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-8">开头示例</h2>
+<p>对 $f(x,y)=x^2+2xy+y^2$，在点 $x_0=(1,1)$ 处，二阶泰勒展开近似为：<br>
+$$f(x,y) \approx f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_0).$$<br>
+其中 $\nabla f(1,1)=(4,4)$，$H_f(1,1)=\begin{pmatrix}2 & 2 \\ 2 & 2\end{pmatrix}$。</p>
+<h2 id="正文-8">正文</h2>
+<h3 id="17-1-二阶泰勒展开">17.1 二阶泰勒展开</h3>
+<ul>
+<li>给定 $f: \mathbb{R}^n → \mathbb{R}$，在点 $x_0$ 附近有：<br>
+$$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_0) + o(\|x-x_0\|^2).$$</li>
+</ul>
+<h3 id="17-2-Hessian-的作用">17.2 Hessian 的作用</h3>
+<ul>
+<li>Hessian 提供关于曲率的对称二次型信息。$\nabla f$ 的线性项决定增量方向的线性近似，二阶项决定曲率方向。</li>
+</ul>
+<h3 id="17-3-应用示例">17.3 应用示例</h3>
+<ul>
+<li>例：对 $f(x,y)=x^2+2xy+y^2$ 进行二阶展开，验证极值分析结论。</li>
+</ul>
+<h2 id="练习-3">练习</h2>
+<ol>
+<li>求 $f(x,y)=\exp(x) + y^2$ 在点 $(0,0)$ 的二阶泰勒展开及 Hessian，判断该点的局部极值性。</li>
+<li>给定 $f(x,y)=x^3+y^3$，讨论在原点的二阶展开及局部性质。</li>
+</ol>
+<hr>
+<h1>9. 线性代数工具在最优化中的应用</h1>
+<p>下面给出 <strong>《线性代数工具在最优化中的应用》</strong> 的完整笔记草稿。本博文把线性代数中的工具引入到无约束最优化、凸性分析等场景中。</p>
+<h2 id="摘要-9">摘要</h2>
+<p>最优化中的核心难题通常来自非线性关系。通过将问题转化为对称矩阵的特征分解、坐标变换、正交化等线性代数过程，可以简化极值判断与收敛性分析，提升数值稳定性与理论可解释性。本文给出若干典型情形的解决思路。</p>
+<h2 id="关键词-9">关键词</h2>
+<p>特征值、对角化、正交化、最优化</p>
+<h2 id="结构-9">结构</h2>
+<ul>
+<li>H2: 特征分解与曲率分析</li>
+<li>H2: 坐标变换与对角化的意义</li>
+<li>H2: 正交化在最优化中的应用</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-9">开头示例</h2>
+<p>考虑函数 f(x) = x^T A x，其中 A 为对称矩阵。若对称矩阵 A 可以正交对角化为 Q^T Λ Q，则 f 可以写成最简单的坐标系下的二次型：f(x) = ∑ λ_i y_i^2，极大/极小的性质取决于 λ_i 的符号。</p>
+<h2 id="正文-9">正文</h2>
+<h3 id="18-1-特征分解在曲率分析中的作用">18.1 特征分解在曲率分析中的作用</h3>
+<ul>
+<li>对二阶最优化问题，Hessian 的特征值分布决定了局部曲率。通过对 Hessian 进行特征分解，可以将局部模型转化为若干独立的一维二次型。</li>
+</ul>
+<h3 id="18-2-坐标变换与对角化">18.2 坐标变换与对角化</h3>
+<ul>
+<li>通过坐标变换使 Hessian 或目标函数近似对角化，简化最优化路径与约束分析。</li>
+</ul>
+<h3 id="18-3-练习">18.3 练习</h3>
+<ol>
+<li>设 $f(x) = x^T A x$，$A = \begin{pmatrix}4 & 1\\ 1 & 3\end{pmatrix}$，给出在原点附近的最速下降方向及收敛性分析。</li>
+<li>对 f(x,y)=3x^2+4xy+2y^2，计算 Hessian 的特征值并判断局部极值性质。</li>
+</ol>
+<hr>
+<h1>10. 梯度与最速下降路径的几何解读</h1>
+<p>下面给出 <strong>《梯度与最速下降路径的几何解读》</strong> 的完整笔记草稿。本文从几何视角解释梯度为何指引最速下降/上升的路径，以及优化迭代中路径的几何特征。</p>
+<h2 id="摘要-10">摘要</h2>
+<p>梯度给出方向导数的最大变化方向。对无约束优化问题，沿负梯度逐步迭代的路径在局部看起来是一条逐步向等高线内靠近的曲线。通过例题和直觉图解，展示最速下降路径与曲面切平面的关系。</p>
+<h2 id="关键词-10">关键词</h2>
+<p>梯度下降、最速下降路径、几何直观</p>
+<h2 id="结构-10">结构</h2>
+<ul>
+<li>H2: 负梯度方向与局部极值</li>
+<li>H2: 路径的几何描述</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-10">开头示例</h2>
+<p>对 f(x,y)=x^2+y^2，初始点 (2,0) 采用负梯度方向更新：x_{k+1} = x_k - α ∇f(x_k)。由于 ∇f(x)=(2x,2y)，在起点梯度方向为 (4,0)，若选取步长 α=0.25，则下一步点为 (1,0)，路径逐步靠近原点。</p>
+<h2 id="正文-10">正文</h2>
+<h3 id="19-1-梯度与路径关系">19.1 梯度与路径关系</h3>
+<ul>
+<li>沿负梯度方向的更新可视化为在等高线之间的下滑路径。</li>
+<li>局部线性化帮助理解每一步的前进方向与距离。</li>
+</ul>
+<h3 id="19-2-路径性质">19.2 路径性质</h3>
+<ul>
+<li>路径趋向于在极小点处停止。</li>
+<li>当目标函数是凸的，梯度下降通常具有全局收敛性。</li>
+</ul>
+<h3 id="19-3-练习">19.3 练习</h3>
+<ol>
+<li>对 f(x,y)=x^2+4y^2，初始点 (1,2) 使用梯度下降法，给出第一步的更新与路径直观分析。</li>
+<li>对 f(x,y)=x^3+y^2，讨论在 (0,0) 附近的最速下降路径的特征。</li>
+</ol>
+<hr>
+<h1>11. 正交投影与最小二乘问题的联系</h1>
+<p>下面给出 <strong>《正交投影与最小二乘问题的联系》</strong> 的完整笔记草稿。本文解释正交投影在高维空间中的几何意义，以及最小二乘问题的解可以看作把数据投影到列空间的正交子空间上。</p>
+<h2 id="摘要-11">摘要</h2>
+<p>最小二乘解通常等价于将观测向量投影到列空间的最佳近似。通过正交性原理可以直观理解解的几何含义及其稳定性。</p>
+<h2 id="关键词-11">关键词</h2>
+<p>正交投影、最小二乘、拟合、投影</p>
+<h2 id="结构-11">结构</h2>
+<ul>
+<li>H2: 正交投影的定义</li>
+<li>H2: 最小二乘与投影的关系</li>
+<li>H2: 练习</li>
+</ul>
+<h2 id="开头示例-11">开头示例</h2>
+<p>设 $A \in \mathbb{R}^{m\times n}$，观测向量 $b \in \mathbb{R}^m$，最小二乘解 $x^*$ 满足 $Ax^*$ 收敛到 $b$ 的最小距离。若列空间 $\mathrm{Col}(A)$ 的正交补为 $\mathrm{Col}(A)^{\perp}$，则 $b$ 的最佳逼近在 $\mathrm{Col}(A)$ 上的正交投影为 $Ax^*$，因此 $x^*$ 是投影系数。</p>
+<h2 id="正文-11">正文</h2>
+<h3 id="20-1-正交投影定义">20.1 正交投影定义</h3>
+<ul>
+<li>对任意向量 $v$，存在唯一的向量 $p$ 使得 $v-p \perp W$，其中 $W$ 为某子空间，$p$ 属于 $W$，$p$ 即 $v$ 的在 $W$ 上的正交投影。</li>
+</ul>
+<h3 id="20-2-最小二乘解的几何解释">20.2 最小二乘解的几何解释</h3>
+<ul>
+<li>给定线性系统 $Ax=b$，若 $A$ 的列向量张成的空间为 $\,\mathrm{Col}(A)$，最小二乘解等价于寻找在 $\,\mathrm{Col}(A)$ 上的近似 $Ax$，使得误差 $b-Ax$ 垂直于 $\,\mathrm{Col}(A)$。</li>
+</ul>
+<h2 id="练习-4">练习</h2>
+<ol>
+<li>设 $A=\begin{bmatrix}1&2\\3&4\end{bmatrix}$，$b=\begin{bmatrix}5\\7\end{bmatrix}$，求最小二乘解 $x^*$ 并给出几何解释。</li>
+<li>解释为什么正交投影在高斯-乔丹消元前后仍然等价于最小二乘解。</li>
+</ol>
+<hr>
+<h1>12. 局部线性化在微分方程中的作用</h1>
+<p>下面给出 <strong>《局部线性化在微分方程中的作用》</strong> 的完整笔记草稿。本博文展示如何通过局部线性化将非线性微分方程近似为线性系统，以分析局部行为与稳定性。</p>
+<h2 id="摘要-12">摘要</h2>
+<p>非线性微分方程在分析与数值求解上常常困难。局部线性化通过在平衡点处用雅可比矩阵近似非线性项，将系统转化为线性系统，从而利用线性系统稳定性理论判断局部行为。</p>
+<h2 id="关键词-12">关键词</h2>
+<p>局部线性化、非线性系统、稳定性、雅可比</p>
+<h2 id="结构-12">结构</h2>
+<ul>
+<li>H2: 线性化原理</li>
+<li>H2: 稳定性判据</li>
+<li>H2: 简单实例</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-12">开头示例</h2>
+<p>考虑二阶系统 x’ = f(x)，若 x* 是平衡点且 Df(x*) 存在，则在 x 近似小扰动时，系统近似为线性：ξ’ = Df(x*) ξ，ξ = x-x*。</p>
+<h2 id="正文-12">正文</h2>
+<h3 id="21-1-线性化原理">21.1 线性化原理</h3>
+<ul>
+<li>将非线性项在平衡点处的泰勒展开截断到一阶，得到局部线性系统。</li>
+</ul>
+<h3 id="21-2-稳定性分析">21.2 稳定性分析</h3>
+<ul>
+<li>线性化的特征值决定了局部稳定性：若所有特征值的实部都小于 0，平衡点局部渐近稳定；若存在实部大于 0 的特征值，局部失稳。</li>
+</ul>
+<h3 id="21-3-练习">21.3 练习</h3>
+<ol>
+<li>对系统 x’ = y, y’ = -x + x^2，找出平衡点并用线性化判断局部稳定性。</li>
+<li>对 x’ = x - x^3，分析在原点的局部稳定性。</li>
+</ol>
+<hr>
+<h1>13. 特征分解在几何中的直观应用</h1>
+<p>下面给出 <strong>《特征分解在几何中的直观应用》</strong> 的完整笔记草稿。本博文介绍如何利用特征分解将几何对象在更易处理的坐标系中表示与分析。</p>
+<h2 id="摘要-13">摘要</h2>
+<p>对称矩阵可以被正交变换对角化，这使得二次形式在新坐标系中成为简单的和的形式。通过几何投影、曲率分析和坐标变换的案例，说明特征分解在高维几何中的作用。</p>
+<h2 id="关键词-13">关键词</h2>
+<p>特征分解、对角化、坐标变换、正交基</p>
+<h2 id="结构-13">结构</h2>
+<ul>
+<li>H2: 定义与直观</li>
+<li>H2: 对角化与几何意义</li>
+<li>H2: 应用示例</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-13">开头示例</h2>
+<p>对对称矩阵 $A$，可以写成 $A = Q \Lambda Q^T$，其中 $Q$ 为正交矩阵，$\Lambda$ 为对角矩阵。若考虑二次型 $x^T A x$，则在坐标变换 $y = Q^T x$ 下，$x^T A x = y^T \Lambda y = \sum_i \lambda_i y_i^2$，极值性质由 $\lambda_i$ 的符号决定。</p>
+<h2 id="正文-13">正文</h2>
+<h3 id="22-1-特征分解与二次型">22.1 特征分解与二次型</h3>
+<ul>
+<li>通过特征分解将二次型分解成独立的一维二次型，便于分析符号、极值与稳定性。</li>
+</ul>
+<h3 id="22-2-坐标变换的几何含义">22.2 坐标变换的几何含义</h3>
+<ul>
+<li>坐标变换改变了观察角度，使得问题在新坐标系中更易理解和求解。</li>
+</ul>
+<h3 id="22-3-练习">22.3 练习</h3>
+<ol>
+<li>对 f(x)=x^T A x，A= [ [2,1], [1,3] ]，给出在原点处的特征值并解释几何意义。</li>
+<li>对向量值函数 F(x) = Ax 的线性变换，在单位球上讨论投影方向。</li>
+</ol>
+<hr>
+<h1>14. 从微分到线性代数的整合视角</h1>
+<p>下面给出 <strong>《从微分到线性代数的整合视角》</strong> 的完整笔记草稿。本博文总结微分（一阶、二阶）如何通过线性代数语言呈现，并讨论两者在解决实际问题时相互促进的方式。</p>
+<h2 id="摘要-14">摘要</h2>
+<p>微分将局部性质用线性算子来刻画，线性代数提供了工具来处理这些算子（矩阵、特征值、对角化、正交化）。通过将差分、线性近似和二阶形式统一在矩阵语言下，学习者可以在解题时快速建立统一框架。</p>
+<h2 id="关键词-14">关键词</h2>
+<p>微分、线性代数、桥梁、矩阵</p>
+<h2 id="结构-14">结构</h2>
+<ul>
+<li>H2: 一阶与雅可比</li>
+<li>H2: 二阶与 Hessian</li>
+<li>H2: 桥梁与应用</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-14">开头示例</h2>
+<p>设 $f: \mathbb{R}^n \to \mathbb{R}$，在点 $x_0$ 的局部近似由一阶导数给出：$f(x) \approx f(x_0) + \nabla f(x_0)^T (x- x_0)$。若引入正交基底，使得梯度在新坐标系中仅有一个分量，这样的简化使得高维问题可以分成为若干一维问题处理。</p>
+<h2 id="正文-14">正文</h2>
+<h3 id="23-1-一阶微分与雅可比">23.1 一阶微分与雅可比</h3>
+<ul>
+<li>$df_x(h) = \nabla f(x)^T h$，即线性映射在方向 $h$ 的作用。</li>
+</ul>
+<h3 id="23-2-二阶微分与-Hessian">23.2 二阶微分与 Hessian</h3>
+<ul>
+<li>$H_f(x)$ 描述二阶信息，提供曲率信息。</li>
+</ul>
+<h3 id="23-3-桥梁概述">23.3 桥梁概述</h3>
+<ul>
+<li>将微分与线性代数的工具结合，提升问题建模与求解的效率。</li>
+</ul>
+<h2 id="练习-5">练习</h2>
+<ol>
+<li>给定 $f(x,y) = x^2 y + y^3$，计算在点 $(1,1)$ 的梯度、$H_f$，并讨论极值的潜在性质。</li>
+<li>对向量值函数 $F(x) = Ax + b$，给出局部线性化及其在优化中的应用场景。</li>
+</ol>
+<hr>
+<h1>15. 综述：从微分到几何的统一视角</h1>
+<p>下面给出 <strong>《综述：从微分到几何的统一视角》</strong> 的完整笔记草稿。本博文回顾前述 10–23 篇的核心思想，强调微分的线性本质、二阶信息的几何解释，以及线性代数工具在多元微积分中的统一作用。</p>
+<h2 id="摘要-15">摘要</h2>
+<p>通过回顾与对比，本文揭示：多元微积分的核心问题都可转化为线性代数问题，关键在于选择合适的投影、坐标系和近似策略（如雅可比、Hessian、特征分解等）。这种统一视角有助于简化推导、提升直觉和减少错误。</p>
+<h2 id="关键词-15">关键词</h2>
+<p>统一视角、线性代数、微分、几何</p>
+<h2 id="结构-15">结构</h2>
+<ul>
+<li>H2: 核心思想回顾</li>
+<li>H2: 常见题型的解题框架</li>
+<li>H2: 进一步阅读与扩展</li>
+</ul>
+<h2 id="开头示例-15">开头示例</h2>
+<p>回顾本系列的核心结论：在高维空间中，局部行为可以通过一阶线性近似（雅可比）与二阶信息 ($\mathrm{Hessian}$) 来描述，通过适当的坐标变换（对角化、正交化）可以将复杂问题拆解为更易处理的子问题。</p>
+<h2 id="练习-6">练习</h2>
+<ol>
+<li>设 f(x) = x^T A x，其中 A 对称，给出在原点处的二阶近似并讨论极值性质。</li>
+<li>选择一个非凸函数，说明在某些点靠近该点时的局部行为如何通过矩阵工具分析。</li>
+</ol>
+<hr>
+<h2 id="总结">总结</h2>
+<p>本系列从多元函数的基本概念出发，系统性地构建了微分与线性代数之间的桥梁：</p>
+<ol>
+<li><strong>一阶工具</strong>：梯度、方向导数、雅可比矩阵提供了局部线性化的基础</li>
+<li><strong>二阶工具</strong>：Hessian 矩阵揭示了曲率与极值性质</li>
+<li><strong>线性代数桥梁</strong>：特征分解、正交投影、坐标变换将微积分问题转化为矩阵运算</li>
+<li><strong>应用场景</strong>：最优化、微分方程、最小二乘等问题都可以通过这一统一框架进行分析</li>
+</ol>
+<p>通过这一系统性视角，读者可以更深入地理解多元微积分的本质，并在解决实际问题时快速选择合适的方法和工具。</p>
+]]></content>
+      <categories>
+        <category>数学分析</category>
+      </categories>
+      <tags>
+        <tag>多元函数</tag>
+        <tag>线性代数</tag>
+        <tag>微分</tag>
+        <tag>Hessian</tag>
+        <tag>梯度</tag>
+        <tag>雅可比</tag>
+        <tag>最优化</tag>
       </tags>
   </entry>
   <entry>
@@ -2998,337 +2705,694 @@ $$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_
       </tags>
   </entry>
   <entry>
-    <title>高等数学多元函数章节与线性代数内在联系探究</title>
-    <url>/posts/d0da.html</url>
-    <content><![CDATA[<p>下面给出 <strong>《高等数学——多元函数章节与线性代数内在联系探究》</strong> 的完整笔记草稿。<br>
-该笔记围绕 <strong>多元函数的中值定理、梯度、方向导数、雅可比矩阵、Hessian 矩阵</strong> 等内容展开，并系统阐述它们与 <strong>线性代数（向量空间、线性映射、特征值/特征向量、正交投影）</strong> 的内在联系。</p>
+    <title>线性代数复习简略版</title>
+    <url>/posts/d090.html</url>
+    <content><![CDATA[<h1><strong>线性代数课程讲义知识点全梳理</strong>(Made By AI)</h1>
 <hr>
-<h2 id="1-多元函数的基本概念">1. 多元函数的基本概念</h2>
-<table>
-<thead>
-<tr>
-<th>概念</th>
-<th>记号</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>定义域</strong></td>
-<td>$D\subset\mathbb{R}^n$</td>
-<td>$f:\;D\to\mathbb{R}$（标量函数）或 $f:\;D\to\mathbb{R}^m$（向量值函数）</td>
-</tr>
-<tr>
-<td><strong>连续</strong></td>
-<td>$\displaystyle\lim_{\mathbf{x}\to\mathbf{x}_0}f(\mathbf{x})=f(\mathbf{x}_0)$</td>
-<td>与一元情形完全相同，只是 $\mathbf{x}=(x_1,\dots,x_n)$</td>
-</tr>
-<tr>
-<td><strong>可微</strong></td>
-<td>$f$ 在 $\mathbf{x}_0$ 可微 ⇔ 存在线性映射 $L$ 使 $$\lim_{\mathbf{h}\to0}\frac{\|f(\mathbf{x}_0+\mathbf{h})-f(\mathbf{x}_0)-L(\mathbf{h})\|}{\|\mathbf{h}\|}=0.$$</td>
-<td>线性映射 $L$ 正是 <strong>雅可比矩阵</strong> $J_f(\mathbf{x}_0)$ 的作用。</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="2-梯度、方向导数与线性代数">2. 梯度、方向导数与线性代数</h2>
-<h3 id="2-1-偏导数与梯度">2.1 偏导数与梯度</h3>
+<h3 id="Lecture-1CN：课程介绍与线性方程组基础"><strong>Lecture-1CN：课程介绍与线性方程组基础</strong></h3>
 <ul>
 <li>
-<p><strong>偏导数</strong><br>
-$$\frac{\partial f}{\partial x_i}(\mathbf{x})=\lim_{h\to0}\frac{f(x_1,\dots,x_i+h,\dots,x_n)-f(\mathbf{x})}{h}.$$</p>
+<p><strong>课程目标</strong>：掌握线性方程组、矩阵论、矩阵分解、向量空间、特征值、正交性、最小二乘法等核心内容。</p>
 </li>
 <li>
-<p><strong>梯度向量</strong>（Gradient）<br>
-$$\nabla f(\mathbf{x})=\left(\frac{\partial f}{\partial x_1},\dots,\frac{\partial f}{\partial x_n}\right)^{\!\top}.$$</p>
+<p><strong>线性方程 (Linear Equation)</strong>：变量为一次幂的方程。</p>
+</li>
+<li>
+<p><strong>线性方程组 (System of Linear Equations)</strong>：一组包含相同变量的线性方程。</p>
+</li>
+<li>
+<p><strong>解 (Solution)</strong>：使所有方程同时成立的变量值集合。</p>
+</li>
+<li>
+<p><strong>解集 (Solution Set)</strong>：所有解的集合。</p>
+</li>
+<li>
+<p><strong>等价系统 (Equivalent Systems)</strong>：拥有相同解集的线性方程组。</p>
+</li>
+<li>
+<p><strong>矩阵 (Matrix)</strong>：矩形的数表。用于表示线性方程组。</p>
+</li>
+<li>
+<p><strong>系数矩阵 (Coefficient Matrix)</strong>：仅包含方程系数的矩阵。</p>
+</li>
+<li>
+<p><strong>增广矩阵 (Augmented Matrix)</strong>：在系数矩阵右侧增加常数项列构成的矩阵。</p>
+</li>
+<li>
+<p><strong>初等行变换 (Elementary Row Operations)</strong>：</p>
 </li>
 </ul>
-<blockquote>
-<p><strong>线性代数视角</strong>：梯度是 <strong>函数的最速上升方向</strong>，它本身是 <strong>列向量</strong>，在欧氏空间中可视为 <strong>线性映射</strong> $L_{\nabla f}(\mathbf{h})=\nabla f^{\!\top}\mathbf{h}$。</p>
-</blockquote>
-<h3 id="2-2-方向导数">2.2 方向导数</h3>
-<p>给定单位向量 $\mathbf{u}\in\mathbb{R}^n$，方向导数定义为<br>
-$$D_{\mathbf{u}}f(\mathbf{x})=\lim_{h\to0}\frac{f(\mathbf{x}+h\mathbf{u})-f(\mathbf{x})}{h}.$$</p>
-<p>若 $f$ 在 $\mathbf{x}$ 可微，则<br>
-$$D_{\mathbf{u}}f(\mathbf{x})=\nabla f(\mathbf{x})^{\!\top}\mathbf{u}.$$</p>
-<blockquote>
-<p>这正是 <strong>向量内积</strong> 的形式，说明方向导数是梯度向量与方向向量的 <strong>线性映射</strong>（点积）。</p>
-</blockquote>
-<h3 id="2-3-梯度的几何意义">2.3 梯度的几何意义</h3>
-<ul>
-<li>$\nabla f(\mathbf{x})$ 与等值面（等高面）<strong>正交</strong>。</li>
-<li>在欧氏空间中，梯度的 <strong>长度</strong> $ \|\nabla f(\mathbf{x})\| $ 表示 <strong>最速上升率</strong>。</li>
-</ul>
-<hr>
-<h2 id="3-多元函数的中值定理">3. 多元函数的中值定理</h2>
-<h3 id="3-1-多元介值定理（Brouwer-不动点定理的简化版）">3.1 多元介值定理（Brouwer 不动点定理的简化版）</h3>
-<blockquote>
-<p><strong>定理</strong>（多元介值定理的直观形式）：若 $f:\;[a_1,b_1]\times\cdots\times[a_n,b_n]\to\mathbb{R}^n$ 连续且对每个坐标 $i$ 有<br>
-$$f_i(a_1,\dots,a_n)\le a_i\le f_i(b_1,\dots,b_n),$$<br>
-则存在 $\mathbf{x}^\ast$ 使得 $f(\mathbf{x}^\ast)=\mathbf{x}^\ast$（即不动点）。</p>
-</blockquote>
-<blockquote>
-<p>该定理的证明依赖 <strong>Brouwer 不动点定理</strong>，而 Brouwer 定理本身是 <strong>拓扑</strong> 与 <strong>线性代数</strong>（紧致性、连续映射）相结合的结果。</p>
-</blockquote>
-<h3 id="3-2-多元拉格朗日中值定理（Mean-Value-Theorem-for-Vector‑Valued-Functions）">3.2 多元拉格朗日中值定理（Mean Value Theorem for Vector‑Valued Functions）</h3>
-<p>设 $F:\;U\subset\mathbb{R}^n\to\mathbb{R}^m$ 在开凸集 $U$ 上 <strong>连续可微</strong>，取两点 $\mathbf{a},\mathbf{b}\in U$，则存在 $\mathbf{\xi}= \mathbf{a}+t(\mathbf{b}-\mathbf{a})$（$t\in(0,1)$）使得</p>
-<p>$$
-F(\mathbf{b})-F(\mathbf{a}) = J_F(\mathbf{\xi})\,(\mathbf{b}-\mathbf{a}),
-$$</p>
-<p>其中 $J_F(\mathbf{\xi})$ 为 <strong>雅可比矩阵</strong>（$m\times n$），即 $[J_F]_{ij}= \displaystyle\frac{\partial F_i}{\partial x_j}$。</p>
-<blockquote>
-<p><strong>线性代数联系</strong>：该等式正是 <strong>线性映射</strong>（雅可比矩阵）在向量 $\mathbf{b}-\mathbf{a}$ 上的作用，体现了 <strong>微分</strong> 本质上是 <strong>局部线性化</strong>。</p>
-</blockquote>
-<h3 id="3-3-多元柯西中值定理（Cauchy-Mean-Value-Theorem）">3.3 多元柯西中值定理（Cauchy Mean Value Theorem）</h3>
-<p>若 $f,g:U\to\mathbb{R}$ 在开凸集 $U$ 上连续可微且 $g'$ 在 $U$ 上不为零，则对任意 $\mathbf{a},\mathbf{b}\in U$，存在 $\mathbf{\xi}$ 使得</p>
-<p>$$
-\frac{\nabla f(\mathbf{\xi})^{\!\top}(\mathbf{b}-\mathbf{a})}{\nabla g(\mathbf{\xi})^{\!\top}(\mathbf{b}-\mathbf{a})}
-= \frac{f(\mathbf{b})-f(\mathbf{a})}{g(\mathbf{b})-g(\mathbf{a})}.
-$$</p>
-<blockquote>
-<p>这里的 <strong>点积</strong> 再次把梯度（列向量）转化为 <strong>标量</strong>，与一元情形的分子分母结构保持一致。</p>
-</blockquote>
-<hr>
-<h2 id="4-多元泰勒展开与-Hessian-矩阵">4. 多元泰勒展开与 Hessian 矩阵</h2>
-<h3 id="4-1-二阶泰勒公式（带余项）">4.1 二阶泰勒公式（带余项）</h3>
-<p>设 $f:\;U\subset\mathbb{R}^n\to\mathbb{R}$ 在点 $\mathbf{x}_0$ 的邻域内二阶连续可微，则对任意 $\mathbf{x}\in U$，有</p>
-<p>$$
-\begin{aligned}
-f(\mathbf{x}) &= f(\mathbf{x}_0)
-+ \nabla f(\mathbf{x}_0)^{\!\top}(\mathbf{x}-\mathbf{x}_0) \\
-&\quad + \frac12(\mathbf{x}-\mathbf{x}_0)^{\!\top} H_f(\mathbf{\xi}) (\mathbf{x}-\mathbf{x}_0),
-\end{aligned}
-$$</p>
-<p>其中 $H_f(\mathbf{\xi})$ 为 <strong>Hessian 矩阵</strong>（二阶偏导数组成的对称矩阵），$\mathbf{\xi}$ 位于 $\mathbf{x}_0$ 与 $\mathbf{x}$ 连线的某点。</p>
-<blockquote>
-<p><strong>线性代数视角</strong>：</p>
-<ul>
-<li>$\nabla f(\mathbf{x}_0)^{\!\top}(\mathbf{x}-\mathbf{x}_0)$ 是 <strong>一次线性映射</strong>（梯度点乘）。</li>
-<li>$(\mathbf{x}-\mathbf{x}_0)^{\!\top} H_f(\mathbf{\xi}) (\mathbf{x}-\mathbf{x}_0)$ 是 <strong>二次型</strong>，可通过 <strong>特征分解</strong> 分析正定性，从而判断极值性质。</li>
-</ul>
-</blockquote>
-<h3 id="4-2-极值判别（二阶充分条件）">4.2 极值判别（二阶充分条件）</h3>
-<ul>
-<li>若 $H_f(\mathbf{x}_0)$ <strong>正定</strong>（所有特征值 $>0$），则 $\mathbf{x}_0$ 为 <strong>严格局部最小点</strong>。</li>
-<li>若 $H_f(\mathbf{x}_0)$ <strong>负定</strong>（所有特征值 $<0$），则 $\mathbf{x}_0$ 为 <strong>严格局部最大点</strong>。</li>
-<li>若 $H_f(\mathbf{x}_0)$ <strong>不定</strong>，则 $\mathbf{x}_0$ 为 <strong>鞍点</strong>。</li>
-</ul>
-<blockquote>
-<p>这里的 <strong>正定/负定</strong> 完全是 <strong>矩阵特征值</strong> 的概念，直接把 <strong>线性代数</strong> 的工具用于 <strong>多元微积分</strong> 的极值判别。</p>
-</blockquote>
-<hr>
-<h2 id="5-多元函数与线性映射的等价关系">5. 多元函数与线性映射的等价关系</h2>
-<table>
-<thead>
-<tr>
-<th>多元分析概念</th>
-<th>对应的线性代数对象</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>梯度 $\nabla f$</strong></td>
-<td>列向量（线性函数的系数）</td>
-</tr>
-<tr>
-<td><strong>雅可比矩阵 $J_F$</strong></td>
-<td><strong>线性映射</strong> $DF_{\mathbf{x}}:\mathbb{R}^n\to\mathbb{R}^m$ 的矩阵表示</td>
-</tr>
-<tr>
-<td><strong>Hessian 矩阵 $H_f$</strong></td>
-<td>对称二次型对应的 <strong>自伴线性算子</strong></td>
-</tr>
-<tr>
-<td><strong>方向导数 $D_{\mathbf{u}}f$</strong></td>
-<td>向量 $\mathbf{u}$ 与梯度的 <strong>内积</strong>（线性映射的作用）</td>
-</tr>
-<tr>
-<td><strong>多元中值定理</strong></td>
-<td>雅可比矩阵在两点之间的 <strong>平均线性映射</strong></td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>通过上述对应关系，可把 <strong>求极值、最速上升、曲面切平面</strong> 等几何问题转化为 <strong>矩阵运算</strong>（求特征值、正交化、求逆）的问题，从而实现 <strong>微积分与线性代数的统一</strong>。</p>
-</blockquote>
-<hr>
-<h2 id="6-示例与应用">6. 示例与应用</h2>
-<h3 id="示例-1：求函数-MATH-INLINE-72-的极值">示例 1：求函数 $f(x,y)=x^2+2xy+y^2$ 的极值</h3>
 <ol>
 <li>
-<p><strong>梯度</strong><br>
-$$\nabla f = \begin{pmatrix}2x+2y\\2x+2y\end{pmatrix}=2\begin{pmatrix}x+y\\x+y\end{pmatrix}.$$<br>
-令 $\nabla f=0$ 得 $x+y=0\;\Rightarrow\;y=-x$。</p>
+<p>倍加变换：把某一行换成它本身与另一行的倍数之和。</p>
 </li>
 <li>
-<p><strong>Hessian</strong><br>
-$$H_f=\begin{pmatrix}2&2\\2&2\end{pmatrix}.$$<br>
-特征值 $\lambda_1=4,\;\lambda_2=0$（半正定），因此在直线 $y=-x$ 上每一点都是 <strong>极小值</strong>（但不是严格极小，因为 $H_f$ 仅半正定）。</p>
+<p>对换变换：交换两行。</p>
+</li>
+<li>
+<p>倍乘变换：把某一行的所有元素乘以同一个非零数。</p>
 </li>
 </ol>
-<h3 id="示例-2：线性映射的局部线性化">示例 2：线性映射的局部线性化</h3>
-<p>设 $F(x,y)=\bigl(xe^{y},\;y\sin x\bigr)$，求在点 $\mathbf{a}=(0,0)$ 附近的线性近似。</p>
 <ul>
-<li><strong>雅可比矩阵</strong><br>
-$$
-  J_F(\mathbf{x})=
-  \begin{pmatrix}
-  e^{y} & xe^{y}\\
-  y\cos x & \sin x
-  \end{pmatrix},
-  \qquad
-  J_F(\mathbf{0})=
-  \begin{pmatrix}
-  1 & 0\\
-  0 & 0
-  \end{pmatrix}.
-  $$</li>
-<li><strong>线性化</strong><br>
-$$F(\mathbf{x})\approx F(\mathbf{0})+J_F(\mathbf{0})(\mathbf{x}-\mathbf{0})
-  =\begin{pmatrix}0\\0\end{pmatrix}+\begin{pmatrix}1&0\\0&0\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}
-  =\begin{pmatrix}x\\0\end{pmatrix}.$$</li>
+<li>
+<p><strong>行等价 (Row Equivalent)</strong>：一个矩阵可以经过一系列初等行变换变成另一个矩阵。</p>
+</li>
+<li>
+<p><strong>求解线性方程组的基本思想</strong>：对增广矩阵进行初等行变换，将其化为更简单的“阶梯形”，从而易于求解。</p>
+</li>
 </ul>
-<blockquote>
-<p>这说明在原点附近，$F$ 的行为相当于把向量 $(x,y)$ <strong>投影</strong> 到 $x$ 轴上——典型的 <strong>线性代数投影</strong> 操作。</p>
-</blockquote>
 <hr>
-<h2 id="7-参考文献">7. 参考文献</h2>
-<table>
-<thead>
-<tr>
-<th>编号</th>
-<th>文献</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>[1]</td>
-<td>Stewart, <em>Calculus: Early Transcendentals</em>, 8th ed., Cengage, 2015.（多元微积分章节）</td>
-</tr>
-<tr>
-<td>[2]</td>
-<td>Strang, <em>Linear Algebra and Its Applications</em>, 5th ed., Cengage, 2016.（矩阵、特征值）</td>
-</tr>
-<tr>
-<td>[3]</td>
-<td>Apostol, <em>Mathematical Analysis</em>, 2nd ed., Addison‑Wesley, 1974.（中值定理的严谨证明）</td>
-</tr>
-<tr>
-<td>[4]</td>
-<td>Rudin, <em>Principles of Mathematical Analysis</em>, 3rd ed., McGraw‑Hill, 1976.（Brouwer 不动点定理）</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="8-练习题（供自测）">8. 练习题（供自测）</h2>
+<h3 id="Lecture-2CN：阶梯形、行化简算法与线性方程组的解"><strong>Lecture-2CN：阶梯形、行化简算法与线性方程组的解</strong></h3>
+<ul>
+<li><strong>阶梯形 (Echelon Form)</strong>：矩阵满足：</li>
+</ul>
 <ol>
-<li>设 $f(x,y)=\sin x\cos y$，求其梯度并验证在点 $(\pi/4,\pi/4)$ 处的方向导数沿单位向量 $\mathbf{u}=(1/\sqrt2,1/\sqrt2)$ 的值。</li>
-<li>对向量值函数 $F(x,y)=(x^2-y,\,xy)$，计算雅可比矩阵并在点 $(1,2)$ 给出线性化近似。</li>
-<li>证明：若 $f$ 在开凸集 $U$ 上二次可微且 Hessian 矩阵在 $U$ 为正定，则 $f$ 在 $U$ 上为 <strong>严格凸函数</strong>。</li>
-<li>用 <strong>拉格朗日中值定理</strong> 推导一元函数的 <strong>均值不等式</strong>：若 $f$ 在 $[a,b]$ 连续可微，则<br>
-$$\min_{x\in[a,b]}f'(x)\le\frac{f(b)-f(a)}{b-a}\le\max_{x\in[a,b]}f'(x).$$</li>
+<li>
+<p>所有非零行在零行之上。</p>
+</li>
+<li>
+<p>非零行的先导元素（该行最左的非零元）的列标严格递增。</p>
+</li>
+<li>
+<p>先导元素所在列下方的元素均为零。</p>
+</li>
+</ol>
+<ul>
+<li><strong>简化阶梯形 (Reduced Echelon Form)</strong>：在阶梯形基础上，还满足：</li>
+</ul>
+<ol start="4">
+<li>
+<p>每个先导元素均为1。</p>
+</li>
+<li>
+<p>每个先导1是该列中唯一的非零元。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>定理5</strong>：每个矩阵都行等价于一个<strong>唯一</strong>的简化阶梯形矩阵。</p>
+</li>
+<li>
+<p><strong>主元位置 (Pivot Position)</strong>：矩阵A行等价于某个阶梯形矩阵B时，B中先导元素的位置。这些位置在A的行等价变换中保持不变。</p>
+</li>
+<li>
+<p><strong>主元列 (Pivot Column)</strong>：包含主元位置的列。</p>
+</li>
+<li>
+<p><strong>行化简算法 (Row Reduction Algorithm)</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p><strong>向前步骤</strong>：化为阶梯形。</p>
+</li>
+<li>
+<p>从左到右找到第一非零列作为主元列。</p>
+</li>
+<li>
+<p>选定一个非零元作为主元，必要时交换行使其位于顶部。</p>
+</li>
+<li>
+<p>用行倍加变换将主元下方元素消为零。</p>
+</li>
+<li>
+<p>对余下的子矩阵重复上述步骤。</p>
+</li>
+<li>
+<p><strong>向后步骤</strong>：化为简化阶梯形。</p>
+</li>
+<li>
+<p>从最右下的主元开始，向上进行。</p>
+</li>
+<li>
+<p>用行倍加变换将主元上方元素消为零。</p>
+</li>
+<li>
+<p>用行倍乘变换将每个主元化为1。</p>
+</li>
+</ol>
+<ul>
+<li><strong>线性方程组的解</strong>：</li>
+</ul>
+<ol>
+<li>
+<p><strong>无解 (Inconsistent)</strong>：增广矩阵的简化阶梯形中，出现形如    [0 … 0 | b] (b≠0)  的行。方程组<strong>不相容</strong>。</p>
+</li>
+<li>
+<p><strong>唯一解</strong>：每个变量都是基本变量（对应主元列），没有自由变量。</p>
+</li>
+<li>
+<p><strong>无穷多解</strong>：存在至少一个自由变量（对应非主元列）。解集需用自由变量<strong>参数化</strong>表示。</p>
+</li>
 </ol>
 <hr>
-<blockquote>
-<p><strong>小结</strong>：多元函数的微分本质上是 <strong>线性映射</strong>（雅可比矩阵），而二阶微分则对应 <strong>二次型</strong>（Hessian）。通过矩阵的特征分解、正定性判别等线性代数工具，我们可以更系统、更几何地理解极值、最速上升方向以及局部线性化等概念。希望本笔记能帮助你在 <strong>高等数学</strong> 与 <strong>线性代数</strong> 之间搭建起坚实的桥梁。祝学习愉快！</p>
-</blockquote>
-<h2 id="16-多元中值定理的几何含义">16. 多元中值定理的几何含义</h2>
-<p>摘要：多元柯西和向量值函数的中值定理提供了在局部线性化附近对函数增量的近似控制。本节通过直观几何与矩阵表示，讲解在高维空间中中值定理的意义及其与雅可比矩阵的联系。<br>
-关键词：中值定理、柯西、雅可比、局部线性化<br>
-结构：</p>
+<h3 id="Lecture-3CN：向量与线性组合"><strong>Lecture-3CN：向量与线性组合</strong></h3>
 <ul>
-<li>H2: 定理陈述与直观</li>
-<li>H2: 与雅可比的关系</li>
-<li>H3: 示例</li>
+<li>
+<p><strong>向量 (Vector)</strong>：   ℝ²  和    ℝⁿ  中的元素，表示为列。</p>
+</li>
+<li>
+<p><strong>向量运算</strong>：加法、标量乘法。</p>
+</li>
+<li>
+<p><strong>向量运算的性质 (定理2)</strong>：加法结合/交换律、加法单位元(零向量)、加法逆元(负向量)；标量乘法的分配律、结合律等。构成<strong>阿贝尔群 (Abelian Group)</strong>。</p>
+</li>
+<li>
+<p><strong>线性组合 (Linear Combination)</strong>：给定向量    v₁, …, vₙ  和标量    c₁, …, cₙ ，向量    v = c₁v₁ + … + cₙvₙ  称为前者的一个线性组合，   cᵢ  称为<strong>系数</strong>或<strong>权重</strong>。</p>
+</li>
+<li>
+<p><strong>向量方程 (Vector Equation)</strong>：   x₁a₁ + x₂a₂ + … + xₙaₙ = b 。</p>
+</li>
+<li>
+<p><strong>重要等价关系</strong>：线性方程组、向量方程、矩阵方程    Ax = b  三者<strong>同解</strong>。</p>
+</li>
 </ul>
-<p>开头示例：设 F: R^n -&gt; R^m 在某开集内连续可微，取点 a,b，利用雅可比在某点的线性近似可把 F(b)-F(a) 近似为 JF(ξ)(b-a)，从而获得增量的线性界限。</p>
-<h2 id="17-多元泰勒展开与-Hessian-的应用">17. 多元泰勒展开与 Hessian 的应用</h2>
-<p>摘要：二阶泰勒展开将非线性映射按局部线性与二阶项展开，Hessian 的正定性提供极值的判别信息。本节给出展开公式和在优化中的几何解读。<br>
-关键词：泰勒展开、Hessian、极值、局部近似<br>
-结构：</p>
+<hr>
+<h3 id="Lecture-4CN：矩阵方程、矩阵-向量积与解的存在性"><strong>Lecture-4CN：矩阵方程、矩阵-向量积与解的存在性</strong></h3>
 <ul>
-<li>H2: 展开公式</li>
-<li>H2: 极值与二阶信息</li>
-<li>H3: 应用示例</li>
+<li>
+<p><strong>矩阵-向量乘积 (Matrix-vector Product)</strong>：   A = [a₁ … aₙ] ,    x = [x₁ … xₙ]ᵀ ，则    Ax = x₁a₁ + … + xₙaₙ 。</p>
+</li>
+<li>
+<p><strong>矩阵方程 (Matrix Equation)</strong>：   Ax = b 。</p>
+</li>
+<li>
+<p><strong>解 (Solution)</strong>：满足    As = b  的向量    s 。</p>
+</li>
+<li>
+<p><strong>矩阵-向量积的性质 (定理1)</strong>：</p>
+</li>
 </ul>
-<p>开头示例：对 f(x,y) 的点 (a,b) 进行二阶泰勒展开，得到 f(a+h) ≈ f(a) + ∇f(a)·h + 1/2 h^T Hf(a) h，这里的二阶项揭示了曲面的局部曲率。</p>
-<h2 id="18-线性代数工具在最优化中的应用">18. 线性代数工具在最优化中的应用</h2>
-<p>摘要：通过特征值、特征向量、对角化等线性代数工具来分析凸性、曲率和局部极值，帮助快速判断最优解的存在性与性质。<br>
-关键词：特征值、特征向量、对角化、最优化<br>
-结构：</p>
+<ol>
+<li>
+<p>A(u+v) = Au + Av  （分配律）。</p>
+</li>
+<li>
+<p>A(λu) = λ(Au)  （齐次性/数乘性质）。</p>
+</li>
+</ol>
 <ul>
-<li>H2: 特征分解与正定性</li>
-<li>H2: 最优化中的应用场景</li>
-<li>H3: 练习要点</li>
+<li>
+<p>共同定义了<strong>线性变换</strong>的核心性质。</p>
+</li>
+<li>
+<p><strong>解的存在性定理 (定理2)</strong>：对于    m×n  矩阵    A ，下列陈述等价：</p>
+</li>
 </ul>
-<p>开头示例：若 Hessian 在一点正定，则该点是严格局部极小点；若不定，则需结合梯度的一阶项来判断极值的存在性。</p>
-<h2 id="19-梯度与最速下降路径的几何解读">19. 梯度与最速下降路径的几何解读</h2>
-<p>摘要：从几何角度理解梯度方向，即为下降法的反方向，最速下降路径近似沿梯度方向的路径。通过可视化图像帮助理解迭代收敛的路径特征。<br>
-关键词：梯度下降、最速路径、迭代<br>
-结构：</p>
+<ol>
+<li>
+<p>对任意    b ∈ ℝᵐ ，方程    Ax = b  有解（<strong>相容</strong>）。</p>
+</li>
+<li>
+<p>ℝᵐ  中任意    b  都是    A  的列向量的线性组合。</p>
+</li>
+<li>
+<p>A  的列向量张成    ℝᵐ ，即    Span{a₁, …, aₙ} = ℝᵐ 。</p>
+</li>
+<li>
+<p>A  的每一行都有一个主元位置。</p>
+</li>
+</ol>
+<hr>
+<h3 id="Lecture-5CN：线性无关"><strong>Lecture-5CN：线性无关</strong></h3>
 <ul>
-<li>H2: 梯度与路径关系</li>
-<li>H2: 迭代几何直觉</li>
-<li>H3: 收敛性要点</li>
+<li>
+<p><strong>线性无关 (Linear Independence)</strong>：向量集    {v₁, …, vₚ}  称为线性无关，若向量方程    x₁v₁ + … + xₚvₚ = 0  <strong>仅有平凡解</strong>    x₁ = … = xₚ = 0 。</p>
+</li>
+<li>
+<p><strong>线性相关 (Linear Dependence)</strong>：若非线性无关，则称为线性相关。即存在不全为零的标量使向量方程成立。</p>
+</li>
+<li>
+<p><strong>定理1</strong>：一个向量集线性相关 <strong>当且仅当</strong> 集合中至少有一个向量是其余向量的线性组合。</p>
+</li>
+<li>
+<p><strong>定理2</strong>：矩阵    A  的列线性无关 <strong>当且仅当</strong> 方程    Ax = 0  仅有平凡解。</p>
+</li>
+<li>
+<p><strong>定理3</strong>：若一个向量集包含的向量个数超过每个向量的维数 (   p &gt; n )，则该集合必线性相关。</p>
+</li>
+<li>
+<p><strong>定理4</strong>：若向量集    S = {v₁, …, vₚ}  包含零向量，则它线性相关。</p>
+</li>
 </ul>
-<p>开头示例：在二维平面上，若选取初始点并按负梯度方向更新，则路径将逐步贴近函数的等高线向内收敛。</p>
-<h2 id="20-正交投影与最小二乘问题的联系">20. 正交投影与最小二乘问题的联系</h2>
-<p>摘要：正交投影在高维空间中的直观解释，是最小二乘解的几何本质。通过投影误差最小化来理解最优拟合。<br>
-关键词：正交投影、最小二乘、拟合<br>
-结构：</p>
+<hr>
+<h3 id="Lecture-6CN：齐次与非齐次矩阵方程"><strong>Lecture-6CN：齐次与非齐次矩阵方程</strong></h3>
 <ul>
-<li>H2: 正交投影定义</li>
-<li>H2: 最小二乘解的几何interpretation</li>
-<li>H3: 例题</li>
+<li>
+<p><strong>齐次方程 (Homogeneous Equation)</strong>：   Ax = 0 。总是有解（零解/平凡解）。</p>
+</li>
+<li>
+<p><strong>平凡解 (Trivial Solution)</strong>：   x = 0 。</p>
+</li>
+<li>
+<p><strong>非平凡解 (Nontrivial Solution)</strong>：   Ax = 0  的非零解。存在非平凡解 <strong>当且仅当</strong> 方程有自由变量。</p>
+</li>
+<li>
+<p><strong>参数向量形式 (Parametric Vector Form)</strong>：   Ax = 0  的解集表示为自由变量的线性组合。</p>
+</li>
+<li>
+<p><strong>非齐次方程 (Nonhomogeneous Equation)</strong>：   Ax = b ，其中    b ≠ 0 。</p>
+</li>
+<li>
+<p><strong>解的结构定理 (定理3)</strong>：若    Ax = b  有特解    p ，则其全部解集为：   {p} + Nul A  =    {p + v: v ∈ Nul A} 。</p>
+</li>
+<li>
+<p><strong>结论</strong>：</p>
+</li>
+<li>
+<p>若    Ax = 0  仅有平凡解，则    Ax = b  有唯一解。</p>
+</li>
+<li>
+<p>若    Ax = 0  有非平凡解（自由变量），则    Ax = b  要么无解，要么有无穷多解。</p>
+</li>
 </ul>
-<p>开头示例：在列向量 b 上寻找一个尽量接近 ax 的向量 x，使得误差 ||b - Ax|| 最小，这等价于将 b 投影到列空间 Span{A} 的正交补上。</p>
-<h2 id="21-局部线性化在微分方程中的作用">21. 局部线性化在微分方程中的作用</h2>
-<p>摘要：微分方程系统经常需要局部线性化来分析局部稳定性与近似解，本节结合一阶近似与线性系统理论，给出常见分支点的分析方法。<br>
-关键词：局部线性化、微分方程、稳定性<br>
-结构：</p>
+<hr>
+<h3 id="Lecture-7CN：线性变换及其矩阵表示"><strong>Lecture-7CN：线性变换及其矩阵表示</strong></h3>
+<p><em>(注：此讲文档概要提及，但具体内容未在提供片段中详细展开。根据线性代数常规内容补充如下)</em></p>
 <ul>
-<li>H2: 线性化原理</li>
-<li>H2: 稳定性分析要点</li>
-<li>H3: 示例</li>
+<li>
+<p><strong>线性变换 (Linear Transformation) T: ℝⁿ → ℝᵐ</strong>：满足    T(u+v) = T(u) + T(v)  和    T(cu) = cT(u) 。</p>
+</li>
+<li>
+<p><strong>标准矩阵 (Standard Matrix)</strong>：对于线性变换    T ，其标准矩阵    A = [T(e₁) T(e₂) … T(eₙ)] ，其中    eⱼ  是单位矩阵的第    j  列。有    T(x) = Ax 。</p>
+</li>
+<li>
+<p><strong>满射 (Onto/Surjective)</strong>：值域    Range(T) = ℝᵐ 。等价于    A  的列张成    ℝᵐ 。</p>
+</li>
+<li>
+<p><strong>单射 (One-to-one/Injective)</strong>：若    T(u)=T(v)  则必有    u=v 。等价于    Ax=0  仅有平凡解，即    A  的列线性无关。</p>
+</li>
+<li>
+<p><strong>线性变换与矩阵方程</strong>：研究    T(x)=b  的解集等同于研究    Ax=b  的解集。</p>
+</li>
 </ul>
-<p>开头示例：考虑非线性系统 x’ = f(x)，在平衡点 x* 处可用线性化 x’ ≈ Df(x*) (x - x*) 来分析局部行为。</p>
-<h2 id="22-特征分解在几何中的直观应用">22. 特征分解在几何中的直观应用</h2>
-<p>摘要：特征分解提供了在坐标变换下对称矩阵的简单描述，帮助理解曲率、投影和坐标系统的选择对问题简化的影响。<br>
-关键词：特征分解、对角化、坐标变换<br>
-结构：</p>
+<hr>
+<h3 id="Lecture-8CN：矩阵运算与逆"><strong>Lecture-8CN：矩阵运算与逆</strong></h3>
 <ul>
-<li>H2: 定义与直观</li>
-<li>H2: 对称矩阵的对角化意义</li>
-<li>H3: 应用示例</li>
+<li>
+<p><strong>矩阵基本术语</strong>：</p>
+</li>
+<li>
+<p>(i, j) -元素 / 条目。</p>
+</li>
+<li>
+<p>主对角线 (Main Diagonal)。</p>
+</li>
+<li>
+<p>零矩阵    0 。</p>
+</li>
+<li>
+<p><strong>矩阵运算</strong>：</p>
+</li>
 </ul>
-<p>开头示例：对称 Hessian 可以通过正交特征向量组成的基底对角化，使得二阶形式易于判断符号和大小。</p>
-<h2 id="23-从微分到线性代数的整合视角">23. 从微分到线性代数的整合视角</h2>
-<p>摘要：总结本系列中微分与线性代数的主线索，强调两者在极值、投影和线性近似中的互补性。<br>
-关键词：微分、线性代数、整合<br>
-结构：</p>
+<ol>
+<li>
+<p><strong>加法</strong>：对应元素相加。</p>
+</li>
+<li>
+<p><strong>标量乘法</strong>：每个元素乘以标量。</p>
+</li>
+<li>
+<p><strong>乘法</strong>：   A (m×n)  与    B (n×p)  的乘积    AB (m×p) ，其中    (AB)<em>{ij} = Σ a</em>{ik}b_{kj} （行-列法则）。<strong>注意</strong>：乘法不满足交换律。</p>
+</li>
+<li>
+<p><strong>转置 (Transpose) Aᵀ</strong>：行变列。</p>
+</li>
+<li>
+<p><strong>方阵的逆 (Inverse)</strong>：对于    n×n  矩阵    A ，若存在    B  使    AB = BA = Iₙ ，则    A  <strong>可逆</strong>，   B  记作    A⁻¹ 。逆是唯一的。</p>
+</li>
+</ol>
 <ul>
-<li>H2: 核心桥梁</li>
-<li>H2: 常见题型与解法</li>
-<li>H3: 练习要点</li>
+<li>
+<p><strong>运算定理</strong>：</p>
+</li>
+<li>
+<p><strong>定理1</strong>：加法运算的性质（类似向量）。</p>
+</li>
+<li>
+<p><strong>定理2</strong>：乘法运算的性质（结合律、单位元、分配律）。</p>
+</li>
+<li>
+<p><strong>定理4</strong>：转置运算的性质：   (Aᵀ)ᵀ=A ,    (A+B)ᵀ=Aᵀ+Bᵀ ,    (rA)ᵀ=rAᵀ ,    (AB)ᵀ=BᵀAᵀ 。</p>
+</li>
+<li>
+<p><strong>定理5</strong>：逆运算的性质：   (A⁻¹)⁻¹=A ,    (AB)⁻¹=B⁻¹A⁻¹ ,    (Aᵀ)⁻¹=(A⁻¹)ᵀ 。</p>
+</li>
+<li>
+<p><strong>可逆矩阵定理 (关键！定理7/10)</strong>：设    A  为    n×n  矩阵，以下陈述等价：</p>
+</li>
 </ul>
-<p>开头示例：从梯度、雅可比与 Hessian 的角度出发，我们可以统一地将微分与线性代数工具用于分析曲面、拟合与优化问题。</p>
-<h2 id="24-综述：从微分到几何的统一视角">24. 综述：从微分到几何的统一视角</h2>
-<p>摘要：回顾本系列的核心思想，强调以线性映射和二阶性质为主线来理解多元微积分的几何图景。<br>
-关键词：统一视角、几何、微分<br>
-结构：</p>
+<ol>
+<li>
+<p>A  是可逆矩阵。</p>
+</li>
+<li>
+<p>A  行等价于    n×n  单位矩阵    I 。</p>
+</li>
+<li>
+<p>A  有    n  个主元位置。</p>
+</li>
+<li>
+<p>方程    Ax=0  仅有平凡解。</p>
+</li>
+<li>
+<p>A  的列线性无关。</p>
+</li>
+<li>
+<p>A  的列张成    ℝⁿ 。</p>
+</li>
+<li>
+<p>Ax=b  对任意    b∈ℝⁿ  至少有一个解。</p>
+</li>
+<li>
+<p>A  的列构成    ℝⁿ  的基。</p>
+</li>
+<li>
+<p>Aᵀ  是可逆矩阵。</p>
+</li>
+<li>
+<p>存在矩阵    C  使得    CA=I ，或存在矩阵    D  使得    AD=I （此时    C=D=A⁻¹ ）。</p>
+</li>
+</ol>
 <ul>
-<li>H2: 核心观点回顾</li>
-<li>H2: 进一步阅读</li>
-<li>H3: 练习与延伸</li>
+<li><strong>求逆方法</strong>：行化简增广矩阵    | I]  →    [I | A⁻¹] 。若左侧不能化为    I ，则    A  不可逆。</li>
 </ul>
-<p>开头示例：通过把微分转化为局部线性映射，以及把二阶信息视作二次型，我们在多元微积分和线性代数之间建立起清晰的桥梁。</p>
+<hr>
+<h3 id="Lecture-9CN：矩阵分块"><strong>Lecture-9CN：矩阵分块</strong></h3>
+<p><em>(注：此讲内容概要提及，但具体细节未在提供片段中展示。常规要点如下)</em></p>
+<ul>
+<li>
+<p><strong>分块矩阵 (Partitioned Matrix)</strong>：用水平线和垂直线将矩阵划分为更小的子矩阵（块）。</p>
+</li>
+<li>
+<p><strong>分块矩阵的运算</strong>：</p>
+</li>
+<li>
+<p>加法、标量乘法：对应块进行。</p>
+</li>
+<li>
+<p><strong>乘法</strong>：   A  的列分块方式须与    B  的行分块方式一致，计算如同普通矩阵乘法，但元素是子矩阵。</p>
+</li>
+<li>
+<p><strong>分块对角矩阵</strong>：非零块仅出现在主对角线上。其逆矩阵等于各对角块逆矩阵组成的分块对角矩阵。</p>
+</li>
+<li>
+<p><strong>应用</strong>：简化大规模矩阵运算和理论推导。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-10CN：三角矩阵与LU分解"><strong>Lecture-10CN：三角矩阵与LU分解</strong></h3>
+<p><em>(注：此讲内容概要提及，但具体细节未展示。常规要点如下)</em></p>
+<ul>
+<li>
+<p><strong>上/下三角矩阵</strong>：主对角线下方/上方的元素全为零。</p>
+</li>
+<li>
+<p><strong>定理</strong>：三角矩阵可逆 <strong>当且仅当</strong> 其主对角线元素均不为零。</p>
+</li>
+<li>
+<p><strong>LU分解</strong>：将矩阵    A  分解为一个下三角矩阵    L  和一个上三角矩阵    U  的乘积，即    A = LU 。</p>
+</li>
+<li>
+<p><strong>作用</strong>：高效求解    Ax=b 。先解    Ly=b （前向代入），再解    Ux=y （后向代入）。</p>
+</li>
+<li>
+<p><strong>算法</strong>：通过高斯消元法（不使用行交换）得到    U ，消元过程中使用的乘数构成    L 。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-11CN-12CN：行列式"><strong>Lecture-11CN &amp; 12CN：行列式</strong></h3>
+<ul>
+<li>
+<p><strong>行列式 (Determinant)</strong> 的定义与性质：</p>
+</li>
+<li>
+<p>det(I) = 1 。</p>
+</li>
+<li>
+<p>行交换 → 行列式变号。</p>
+</li>
+<li>
+<p>行倍乘    k  → 行列式乘    k 。</p>
+</li>
+<li>
+<p>行倍加 → 行列式不变。</p>
+</li>
+<li>
+<p>det(Aᵀ) = det(A) 。</p>
+</li>
+<li>
+<p>det(AB) = det(A)det(B) 。</p>
+</li>
+<li>
+<p>A  可逆 <strong>当且仅当</strong>    det(A) ≠ 0 。</p>
+</li>
+<li>
+<p>det(A⁻¹) = 1/det(A) 。</p>
+</li>
+<li>
+<p><strong>计算方法</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>余子式展开 (Cofactor Expansion)：对某行/列，   det(A)=Σ a_{ij}C_{ij} 。</p>
+</li>
+<li>
+<p>化为三角矩阵：行列式等于主对角线元素乘积。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>伴随矩阵 (Adjugate Matrix) adj(A)</strong>：由余子式    C_{ij}  构成的矩阵的转置。</p>
+</li>
+<li>
+<p><strong>求逆公式 (当 det(A)≠0)</strong>：   A⁻¹ = (1/det(A)) * adj(A) 。</p>
+</li>
+<li>
+<p><strong>克莱姆法则 (Cramer‘s Rule)</strong>：对于可逆矩阵    A ，方程组    Ax=b  的解为    x_i = det(A_i(b)) / det(A) ，其中    A_i(b)  是将    A  的第    i  列换为    b  得到的矩阵。</p>
+</li>
+<li>
+<p><strong>几何解释</strong>：</p>
+</li>
+<li>
+<p>2×2  矩阵行列式的绝对值等于其列向量张成的<strong>平行四边形的面积</strong>。</p>
+</li>
+<li>
+<p>3×3  矩阵行列式的绝对值等于其列向量张成的<strong>平行六面体的体积</strong>。</p>
+</li>
+<li>
+<p>线性变换    T(x)=Ax  将区域的面积/体积放大    |det(A)|  倍。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-13CN：向量空间与子空间"><strong>Lecture-13CN：向量空间与子空间</strong></h3>
+<ul>
+<li>
+<p><strong>向量空间 (Vector Space) V</strong>：定义了加法和标量乘法运算的集合，并满足10条公理（封闭性、结合律、交换律、零元、负元、分配律、单位标量乘法）。</p>
+</li>
+<li>
+<p><strong>子空间 (Subspace) H</strong>：向量空间    V  的一个子集，且    H  本身关于    V  的运算也构成向量空间。</p>
+</li>
+<li>
+<p><strong>判定定理1</strong>：   H  是子空间 <strong>当且仅当</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>V  中的零向量属于    H 。</p>
+</li>
+<li>
+<p>对    H  中任意    u, v ，有    u+v ∈ H （对加法封闭）。</p>
+</li>
+<li>
+<p>对    H  中任意    u  和任意标量    c ，有    cu ∈ H （对标量乘法封闭）。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>重要的子空间实例</strong>：</p>
+</li>
+<li>
+<p><strong>零空间 (Null Space) Nul A</strong>：   {x ∈ ℝⁿ: Ax = 0} 。<strong>定理3</strong>：   Nul A  是    ℝⁿ  的子空间。</p>
+</li>
+<li>
+<p><strong>列空间 (Column Space) Col A</strong>：   {b ∈ ℝᵐ: b = Ax for some x ∈ ℝⁿ} 。<strong>定理4</strong>：   Col A  是    ℝᵐ  的子空间。</p>
+</li>
+<li>
+<p><strong>行空间 (Row Space)</strong>：   A  的行向量的所有线性组合的集合，是    ℝⁿ  的子空间。</p>
+</li>
+<li>
+<p><strong>基 (Basis) for a subspace H</strong>：   H  中一个线性无关的集合，且能张成    H 。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-14CN：基、坐标与基变换"><strong>Lecture-14CN：基、坐标与基变换</strong></h3>
+<ul>
+<li>
+<p><strong>基 (Basis) for V</strong>：   V  中线性无关且能张成    V  的向量集。</p>
+</li>
+<li>
+<p><strong>坐标 (Coordinate)</strong>：对于基    B={b₁,…,bₙ}  和向量    x=c₁b₁+…+cₙbₙ ，向量    [x]_B = [c₁ … cₙ]ᵀ  称为    x  的 <strong>B-坐标向量</strong>。</p>
+</li>
+<li>
+<p><strong>坐标映射 (Coordinate Mapping) x → [x]_B</strong>：<strong>定理9</strong>：若    B  是    V  的基，则坐标映射是从    V  到    ℝⁿ  的<strong>线性、单射</strong>的变换，建立了    V  与    ℝⁿ  的一一对应。</p>
+</li>
+<li>
+<p><strong>基的变换 (Change of Basis)</strong>：</p>
+</li>
+<li>
+<p>设    B  和    C  是向量空间    V  的两个基。</p>
+</li>
+<li>
+<p><strong>坐标变换矩阵 (Change-of-coordinates Matrix)</strong>：从    C  到    B  的矩阵    _BP_C ，满足    [x]_B = _BP_C [x]_C 。</p>
+</li>
+<li>
+<p>_BP_C  的求法：其第    j  列是    C  中第    j  个基向量关于    B  的坐标向量，即    [cⱼ]_B 。</p>
+</li>
+<li>
+<p>_BP_C  是可逆的，且    (_BP_C)⁻¹ = _CP_B 。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-15CN：维数、秩与四大子空间"><strong>Lecture-15CN：维数、秩与四大子空间</strong></h3>
+<ul>
+<li>
+<p><strong>维数 (Dimension)</strong>：向量空间    V  的任意一个基中所含向量的个数，记作    dim V 。</p>
+</li>
+<li>
+<p><strong>定理1</strong>：若    dim V = n ，则    V  中任何超过    n  个向量的集合必线性相关。</p>
+</li>
+<li>
+<p><strong>定理4 &amp; 5</strong>：</p>
+</li>
+<li>
+<p>子空间    H  的维数满足    dim H ≤ dim V 。</p>
+</li>
+<li>
+<p>在    p  维空间    V  中，任何恰好含    p  个向量的线性无关集自动成为基；任何恰好含    p  个向量且能张成    V  的集合也自动成为基。</p>
+</li>
+<li>
+<p><strong>秩 (Rank)</strong>：矩阵    A  的列空间（或行空间）的维数，记作    rank A 。</p>
+</li>
+<li>
+<p><strong>零度 (Nullity)</strong>：零空间    Nul A  的维数，记作    dim(Nul A) 。</p>
+</li>
+<li>
+<p><strong>秩定理 (Rank Theorem)</strong>：   rank A + dim(Nul A) = n ，其中    A  是    m×n  矩阵。</p>
+</li>
+<li>
+<p><strong>定理6</strong>：   dim(Col A) = rank A = A  中主元列的个数。   dim(Nul A) =  自由变量的个数。</p>
+</li>
+<li>
+<p><strong>四大基本子空间及其关系</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p><strong>列空间 Col A</strong>：子空间 of    ℝᵐ ，维数 =    rank A 。</p>
+</li>
+<li>
+<p><strong>零空间 Nul A</strong>：子空间 of    ℝⁿ ，维数 =    n - rank A 。</p>
+</li>
+<li>
+<p><strong>行空间 Row A</strong>：子空间 of    ℝⁿ ，维数 =    rank A 。(   Col Aᵀ )</p>
+</li>
+<li>
+<p><strong>左零空间 Nul Aᵀ</strong>：子空间 of    ℝᵐ ，维数 =    m - rank A 。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>子空间的基的求法</strong>：</p>
+</li>
+<li>
+<p>Col A ：取    A  的<strong>主元列</strong>（原始列）。</p>
+</li>
+<li>
+<p>Row A ：取    A  的<strong>行最简形 RREF(A)</strong> 的<strong>非零行</strong>。</p>
+</li>
+<li>
+<p>Nul A ：解    Ax=0 ，将自由变量参数化得到的<strong>解向量</strong>构成基。</p>
+</li>
+<li>
+<p>Nul Aᵀ ：解    Aᵀy=0 。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-16CN：特征值与特征向量"><strong>Lecture-16CN：特征值与特征向量</strong></h3>
+<ul>
+<li>
+<p><strong>特征值 (Eigenvalue) λ</strong> 与 <strong>特征向量 (Eigenvector) v</strong>：对于方阵    A ，满足    Av = λv  (   v ≠ 0 ) 的标量    λ  和向量    v 。</p>
+</li>
+<li>
+<p><strong>特征方程 (Characteristic Equation)</strong>：   det(A - λI) = 0 。</p>
+</li>
+<li>
+<p><strong>特征多项式 (Characteristic Polynomial)</strong>：   det(A - λI) 。</p>
+</li>
+<li>
+<p><strong>特征空间 (Eigenspace)</strong>：对应于特征值    λ  的所有特征向量加上零向量构成的集合，即    Nul(A - λI) 。</p>
+</li>
+<li>
+<p><strong>定理2</strong>：对应于<strong>不同特征值</strong>的特征向量是<strong>线性无关</strong>的。</p>
+</li>
+<li>
+<p><strong>相似 (Similar)</strong>：若存在可逆矩阵    P  使    B = P⁻¹AP ，则    A  与    B  相似。相似矩阵有相同的特征多项式、特征值和行列式。</p>
+</li>
+<li>
+<p><strong>对角化 (Diagonalization)</strong>：</p>
+</li>
+<li>
+<p>若    A  有    n  个线性无关的特征向量    v₁, …, vₙ ，对应特征值    λ₁, …, λₙ 。</p>
+</li>
+<li>
+<p>令    P = [v₁ v₂ … vₙ] ,    D = diag(λ₁, …, λₙ) ，则有    A = PDP⁻¹  且    D = P⁻¹AP 。</p>
+</li>
+<li>
+<p><strong>定理5（可对角化定理）</strong>：   n×n  矩阵    A  可对角化 <strong>当且仅当</strong>    A  有    n  个线性无关的特征向量（即所有特征值的几何重数之和等于    n ）。</p>
+</li>
+<li>
+<p><strong>特征值的代数重数与几何重数</strong>：</p>
+</li>
+<li>
+<p><strong>代数重数</strong>：特征值作为特征根的重数。</p>
+</li>
+<li>
+<p><strong>几何重数</strong>：对应特征空间的维数    dim Nul(A - λI) 。</p>
+</li>
+<li>
+<p>几何重数 ≤ 代数重数。</p>
+</li>
+<li>
+<p>矩阵可对角化 <strong>当且仅当</strong> 对于每个特征值，其几何重数等于代数重数。</p>
+</li>
+</ul>
+<hr>
+<h3 id="总结与备考建议"><strong>总结与备考建议</strong></h3>
+<ol>
+<li>
+<p><strong>概念理解</strong>：清晰区分相关但不同的概念，如“线性无关”与“张成”、“列空间”与“零空间”、“特征值”与“特征向量”。</p>
+</li>
+<li>
+<p><strong>定理网络</strong>：将“可逆矩阵定理”、“秩定理”、“对角化定理”等核心定理及其等价条件串联成网。</p>
+</li>
+<li>
+<p><strong>计算熟练度</strong>：重点练习行化简、求逆、求行列式、求特征值/向量、求子空间的基、坐标变换。</p>
+</li>
+<li>
+<p><strong>证明思路</strong>：掌握子空间验证、线性无关证明、利用已知定理推导等典型证明方法。</p>
+</li>
+<li>
+<p><strong>真题演练</strong>：结合往届习题、课堂练习和作业，模拟判断题、填空题、计算题和证明题的答题过程。</p>
+</li>
+</ol>
 ]]></content>
       <categories>
-        <category>数学分析</category>
+        <category>线性代数</category>
       </categories>
       <tags>
-        <tag>多元函数</tag>
-        <tag>线性代数</tag>
+        <tag>线性代数复习</tag>
       </tags>
   </entry>
   <entry>
@@ -3361,89 +3425,6 @@ $$\min_{x\in[a,b]}f'(x)\le\frac{f(b)-f(a)}{b-a}\le\max_{x\in[a,b]}f'(x).$$</li>
       </categories>
       <tags>
         <tag>高精度</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>二分算法及模板</title>
-    <url>/posts/5166.html</url>
-    <content><![CDATA[<p>最近在做二分的题目，看到有些题解提供的二分模板，特此记录。</p>
-<h1>什么样的题目能用二分算法</h1>
-<p>问题满足二段性的性质，即数组的一半满足给定的问题的解，另一半不满足给定问题的解。</p>
-<p>当然还有另一种简单的判断：有界、单调。二分的答案在单调闭区间上，最后是一个确定的值。如果题目规定了“最大值最小”或者“最小值最大”，那么此题满足二分的有界性和单调性。</p>
-<h1>二分的模板</h1>
-<p>之所以用模板是为了避免进入死循环，或者输出时出现偏差</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(left&lt;right)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        mid=(left+right+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(check(mid))</span><br><span class="line"></span><br><span class="line">           left=mid;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">           right=mid<span class="number">-1</span>;  </span><br><span class="line">     &#125; </span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,left);</span><br><span class="line">     </span><br><span class="line">还有一种类似的模板</span><br><span class="line"><span class="keyword">while</span>(left&lt;=right)</span><br><span class="line">    &#123;</span><br><span class="line">        mid=(left+right)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">		<span class="keyword">if</span>(check(mid))</span><br><span class="line">		</span><br><span class="line">		     left=mid+<span class="number">1</span>;</span><br><span class="line">		     </span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">            </span><br><span class="line">		     right=mid<span class="number">-1</span>;</span><br><span class="line">		</span><br><span class="line">	 &#125; </span><br><span class="line">	 <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,right);</span><br></pre></td></tr></table></figure>
-<hr>
-  <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">check</span><span class="params">(<span class="type">int</span> x)</span></span><br><span class="line">&#123;</span><br><span class="line">   ...</span><br><span class="line">   <span class="keyword">if</span> its ans in x or x<span class="string">&#x27;s right</span></span><br><span class="line"><span class="string">       return 1;</span></span><br><span class="line"><span class="string">   else</span></span><br><span class="line"><span class="string">       return 0;    </span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="特别注意（以下例子是最简单的二分查找某一个数）">特别注意（以下例子是最简单的二分查找某一个数）</h2>
-<h3 id="1-关于开区间和闭区间">1.关于开区间和闭区间</h3>
-<p><img src="../images/Pasted%20image%2020251118222123.png" alt=""></p>
-<h3 id="2-关于查找后的返回值">2.关于查找后的返回值</h3>
-<p><img src="../images/Pasted%20image%2020251118222211.png" alt=""></p>
-<h1>参考例题洛谷P2678</h1>
-<h2 id="题目描述">题目描述</h2>
-<p>一年一度的“跳石头”比赛又要开始了！</p>
-<p>这项比赛将在一条笔直的河道中进行，河道中分布着一些巨大岩石。组委会已经选择好了两块岩石作为比赛起点和终点。在起点和终点之间，有 $N$ 块岩石（不含起点和终点的岩石）。在比赛过程中，选手们将从起点出发，每一步跳向相邻的岩石，直至到达终点。</p>
-<p>为了提高比赛难度，组委会计划移走一些岩石，使得选手们在比赛过程中的最短跳跃距离尽可能长。由于预算限制，组委会至多从起点和终点之间移走 $M$ 块岩石（不能移走起点和终点的岩石）。</p>
-<h2 id="输入格式">输入格式</h2>
-<p>第一行包含三个整数 $L,N,M$，分别表示起点到终点的距离，起点和终点之间的岩石数，以及组委会至多移走的岩石数。保证 $L \geq 1$ 且 $N \geq M \geq 0$。</p>
-<p>接下来 $N$ 行，每行一个整数，第 $i$ 行的整数 $D_i\,( 0 < D_i < L)$， 表示第 $i$ 块岩石与起点的距离。这些岩石按与起点距离从小到大的顺序给出，且不会有两个岩石出现在同一个位置。</p>
-<h2 id="输出格式">输出格式</h2>
-<p>一个整数，即最短跳跃距离的最大值。</p>
-<h2 id="代码">代码</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">check</span><span class="params">(<span class="type">int</span> x)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> l,n,m,i,stone[<span class="number">50001</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>,&amp;l,&amp;n,&amp;m);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line"></span><br><span class="line">         <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;stone[i]);  </span><br><span class="line"></span><br><span class="line">    stone[n+<span class="number">1</span>]=l;    </span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> left=<span class="number">0</span>,right=l,mid;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(left&lt;right)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        mid=(left+right+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(check(mid))</span><br><span class="line"></span><br><span class="line">           left=mid;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">           right=mid<span class="number">-1</span>;  </span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,left);</span><br><span class="line">     </span><br><span class="line">或者是这种模板</span><br><span class="line">	<span class="keyword">while</span>(left&lt;=right)</span><br><span class="line">	&#123;</span><br><span class="line">		mid=(left+right)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(check(mid))</span><br><span class="line">		     left=mid+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">            </span><br><span class="line">		     right=mid<span class="number">-1</span>;</span><br><span class="line">		</span><br><span class="line">	 &#125; </span><br><span class="line">	 <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,right);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">check</span><span class="params">(<span class="type">int</span> x)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> p=<span class="number">0</span>,t=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n+<span class="number">1</span>;i++)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(stone[i]-p&lt;x) t++;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span> p=stone[i];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(t&lt;=m) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>二分算法</tag>
-        <tag>边界条件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于输入输出不得不说的……</title>
-    <url>/posts/aeb5.html</url>
-    <content><![CDATA[<h2 id="整理期中考试的第一题，有关字符串输入输出-more">整理期中考试的第一题，有关字符串输入输出<span id="more"></span></h2>
-<h1>题目描述：</h1>
-<h2 id="输入一串字符，输出这串字符。hhhhh">输入一串字符，输出这串字符。hhhhh</h2>
-<p>看到的标准答案版本是<br>
-1.读取单个字符<code>scanf/getchar</code>+<code>EOF</code><br>
-2.读取字符串<code>fgets/gets_s/gets</code>（只能读到换行符）</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">方法一</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> x;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;x)!=EOF)   条件也可以写成 ~<span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;x) \ <span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;x)==<span class="number">1</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>,x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">方法二</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> x;</span><br><span class="line">    <span class="keyword">while</span>((x=getchar())!=EOF)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>,x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">方法三</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> a[<span class="number">1026</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    fgets(a, <span class="number">1026</span>, <span class="built_in">stdin</span>);  只能读一行</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, a);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>输入输出</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一道时间线管理的模拟题</title>
-    <url>/posts/7a8e.html</url>
-    <content><![CDATA[<h2 id="题目来自2024年学院期中，是一道关于时间管理的模拟题-more">题目来自2024年学院期中，是一道关于时间管理的模拟题<span id="more"></span></h2>
-<h2 id="题目描述">题目描述</h2>
-<p><code>饭堂有个窗口,一个阿姨在卖肠粉。阿姨不会提前制作肠粉,只有在同学点餐后才会开始为该同学制作肠粉。阿姨制作肠粉的流程是,先花费t1时间处理原材料,然后放进肠粉机里蒸煮t2时间,煮好便可以立刻交付给同学。阿姨一次只能处理1份原材料,而阿姨有2台肠粉机,每台肠粉机一次只可以蒸煮一份肠粉。注意,阿姨处理原材料是独立于肠粉机的,也就是说当2台肠粉机各自蒸煮着肠粉时,阿姨也可以同时执行其他份肠粉的原材料处理。一共会来几个同学,其中第i个同学会在t=i^2时刻到达窗口排队并点一份肠粉。问:n个同学的等待时间总和是多少? (每个同学的等待时间是【拿到肠粉时刻】-【到达窗口时刻】)</code><br>
-<code>输入格式 </code>仅一行,3个正整数,依次是t1,t2, n<br>
-<code>输出格式 </code>输出一个正整数 tot,表示所有同学的等待时间总和。<br>
-<code>输入样例1 </code>3 7 10<br>
-<code>输出样例1 </code>100<br>
-<code>输入样例2 </code>10 1 10<br>
-<code>输出样例2 </code>194<br>
-<code>数据范围 </code>t1, t2, n∈ [1,105]</p>
-<hr>
-<p>这题比较像<code>午餐问题</code>、<code>餐厅排队叫号问题</code>、<code>任务调度</code>问题，做法是将 <em><strong>阿姨处理每份原材料的开始时间</strong></em>、<em><strong>第一台肠粉机的处理每份肠粉开始时间</strong></em>、<em><strong>第二台肠粉机的处理每份肠粉开始时间</strong></em> 看作三个数组，记为<code>a[n]</code> <code>b1[n]</code> <code>b2[n]</code>，这题就转化成求这三个量之间的关系，有点像数学里的数列题，去找这三个量的递推关系即可。具体代码如下：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">max</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> x&gt;=y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">         1 4 9 16 25 36 49 64 81 100</span></span><br><span class="line"><span class="comment">             1             4        9</span></span><br><span class="line"><span class="comment">            1   1+t1       max(1+t1,4) </span></span><br><span class="line"><span class="comment">         存开始做的时间</span></span><br><span class="line"><span class="comment">              a[i]= max(a[i-1]+t1 , i*i)</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">                    &#123; max(a[i]+t1,b1[i-1]+t2)</span></span><br><span class="line"><span class="comment">               b=min&#123; max(a[i]+t1,b2[i-1]+t2)            </span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line">    <span class="type">int</span> t1, t2, n,i;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>, &amp;t1, &amp;t2, &amp;n);</span><br><span class="line">    <span class="type">int</span>* a = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="type">int</span>* b1 = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="type">int</span>* b2 = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">    	a[i]=<span class="number">0</span>;</span><br><span class="line">    	b1[i]=<span class="number">0</span>;</span><br><span class="line">    	b2[i]=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    a[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    b1[<span class="number">0</span>] = <span class="number">1</span> + t1;</span><br><span class="line">    <span class="type">int</span> t = t1 + t2;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>;i &lt; n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i] = max(a[i - <span class="number">1</span>] + t1, (i+<span class="number">1</span>)*(i+<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">if</span> (max(a[i] + t1, b1[i - <span class="number">1</span>] + t2) &gt;= max(a[i] + t1, b2[i - <span class="number">1</span>] + t2))</span><br><span class="line">            b2[i] = max(a[i] + t1, b2[i - <span class="number">1</span>] + t2),b1[i]=b1[i<span class="number">-1</span>]; </span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            b1[i] = max(a[i] + t1, b1[i - <span class="number">1</span>] + t2),b2[i]=b2[i<span class="number">-1</span>];</span><br><span class="line">        t += max(b1[i], b2[i]) + t2 - (i+<span class="number">1</span>)*(i+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, t);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>模拟流程</tag>
-        <tag>多资源任务分配</tag>
-        <tag>时间线优化管理</tag>
       </tags>
   </entry>
   <entry>
@@ -3601,6 +3582,25 @@ $$\min_{x\in[a,b]}f'(x)\le\frac{f(b)-f(a)}{b-a}\le\max_{x\in[a,b]}f'(x).$$</li>
       </categories>
       <tags>
         <tag>知识复习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于输入输出不得不说的……</title>
+    <url>/posts/aeb5.html</url>
+    <content><![CDATA[<h2 id="整理期中考试的第一题，有关字符串输入输出-more">整理期中考试的第一题，有关字符串输入输出<span id="more"></span></h2>
+<h1>题目描述：</h1>
+<h2 id="输入一串字符，输出这串字符。hhhhh">输入一串字符，输出这串字符。hhhhh</h2>
+<p>看到的标准答案版本是<br>
+1.读取单个字符<code>scanf/getchar</code>+<code>EOF</code><br>
+2.读取字符串<code>fgets/gets_s/gets</code>（只能读到换行符）</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">方法一</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> x;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;x)!=EOF)   条件也可以写成 ~<span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;x) \ <span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;x)==<span class="number">1</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>,x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">方法二</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> x;</span><br><span class="line">    <span class="keyword">while</span>((x=getchar())!=EOF)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>,x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">方法三</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> a[<span class="number">1026</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    fgets(a, <span class="number">1026</span>, <span class="built_in">stdin</span>);  只能读一行</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, a);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>输入输出</tag>
       </tags>
   </entry>
 </search>
