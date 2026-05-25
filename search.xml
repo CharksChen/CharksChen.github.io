@@ -21,6 +21,45 @@
       </tags>
   </entry>
   <entry>
+    <title>C语言中qsort函数</title>
+    <url>/posts/695b.html</url>
+    <content><![CDATA[<p><code>#include&lt;stdlib.h&gt;</code></p>
+<p>qsort ( 数组第一个元素的地址，数数组中的元素个数，每个元素的大小，比较函数 )<span id="more"></span></p>
+<p>1、地址的话，像数组 a[10] ,直接写a就行。<br>
+2、元素个数也是直接写。<br>
+3、元素大小一般用 sizeof ( int ) 或者其他类型。<br>
+4、比较函数，<code>int compare ( const void * a ,const void * b)</code><br>
+<code>{  return ( * ( int *) a -* (int *) b ) ;    }</code></p>
+<p>return的东西可以改变   a - b 时是升序，b - a 时是降序</p>
+<p>具体一点的用法如下：</p>
+<p>七种qsort排序方法</p>
+<p>&lt;排序都是采用的从小到大排序&gt;</p>
+<p>一、对int类型数组排序</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> num[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span> <span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">     <span class="keyword">return</span> *(<span class="type">int</span> *)a - *(<span class="type">int</span> *)b; </span><br><span class="line">&#125; </span><br><span class="line">qsort(num,<span class="number">100</span>,<span class="keyword">sizeof</span>(num[<span class="number">0</span>]),cmp);</span><br></pre></td></tr></table></figure>
+<p>二、对char类型数组排序（同int类型）</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> word[<span class="number">50</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">return</span> *(<span class="type">char</span> *)a - *(<span class="type">int</span> *)b; </span><br><span class="line">&#125; </span><br><span class="line">qsort(word,<span class="number">100</span>,<span class="keyword">sizeof</span>(word[<span class="number">0</span>]),cmp);</span><br></pre></td></tr></table></figure>
+<p>三、对double类型数组排序</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">double</span> in[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">     <span class="keyword">return</span> *(<span class="type">double</span> *)a &gt; *(<span class="type">double</span> *)b ? <span class="number">1</span> : <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(in,<span class="number">100</span>,<span class="keyword">sizeof</span>(in[<span class="number">0</span>]),cmp)； </span><br></pre></td></tr></table></figure>
+<p>四、对结构体一级排序</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">  <span class="type">double</span> data; </span><br><span class="line">  <span class="type">int</span> other; </span><br><span class="line">&#125;s[<span class="number">100</span>] </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照data的值从小到大将结构体排序,关于结构体内的排序关键数据data的类型可以很多种，参考上面的例子写 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a ,<span class="type">const</span> <span class="type">void</span> *b)</span> </span><br><span class="line">&#123; </span><br><span class="line">   <span class="keyword">return</span> (*(In *)a).data &gt; (*(In *)b).data ? <span class="number">1</span> : <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
+<p>五、对结构体二级排序</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">  <span class="type">int</span> x; </span><br><span class="line">  <span class="type">int</span> y; </span><br><span class="line">&#125;s[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照x从小到大排序，当x相等时按照y从大到小排序 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">In</span> *<span class="title">c</span> =</span> (In *)a; </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">In</span> *<span class="title">d</span> =</span> (In *)b; </span><br><span class="line">  <span class="keyword">if</span>(c-&gt;x != d-&gt;x) <span class="keyword">return</span> c-&gt;x - d-&gt;x; </span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> d-&gt;y - c-&gt;y; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
+<p>六、对结构体三级排序（都是从小到大）</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">item</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> num,length,width;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">comp</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *p1,<span class="type">const</span> <span class="type">void</span> *p2)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">item</span> *<span class="title">c</span>=</span>(item*)p1;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">item</span> *<span class="title">d</span>=</span>(item*)p2;</span><br><span class="line">    <span class="keyword">if</span>(c-&gt;num!=d-&gt;num)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> d-&gt;num&lt;c-&gt;num?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(c-&gt;length!=d-&gt;length&amp;&amp;c-&gt;num==d-&gt;num)</span><br><span class="line">    <span class="keyword">return</span> d-&gt;length&lt;c-&gt;length?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> d-&gt;width&lt;c-&gt;width?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line">item ss[<span class="number">1200</span>];</span><br><span class="line">qsort(ss,n,<span class="keyword">sizeof</span>(ss[<span class="number">0</span>]),comp);</span><br></pre></td></tr></table></figure>
+<p>七、对字符串进行排序</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line"><span class="type">int</span> data; </span><br><span class="line"><span class="type">char</span> str[<span class="number">100</span>]; </span><br><span class="line">&#125;s[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照结构体中字符串str的字典顺序排序 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span> <span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line"><span class="keyword">return</span> <span class="built_in">strcmp</span>( (*(In *)a)-&gt;str , (*(In *)b)-&gt;str ); </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
+<p>八、计算几何中求凸包的cmp</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *a,<span class="type">const</span> <span class="type">void</span> *b)</span> <span class="comment">//重点cmp函数，把除了1点外的所有点，旋转角度排序 </span></span><br><span class="line">&#123; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> *<span class="title">c</span>=</span>(point *)a; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> *<span class="title">d</span>=</span>(point *)b; </span><br><span class="line"><span class="keyword">if</span>( calc(*c,*d,p[<span class="number">1</span>]) &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>; </span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>( !calc(*c,*d,p[<span class="number">1</span>]) &amp;&amp; dis(c-&gt;x,c-&gt;y,p[<span class="number">1</span>].x,p[<span class="number">1</span>].y) &lt; dis(d-&gt;x,d-&gt;y,p[<span class="number">1</span>].x,p[<span class="number">1</span>].y)) <span class="comment">//如果在一条直线上，则把远的放在前面 </span></span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>; </span><br><span class="line"><span class="keyword">else</span> <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>快速排序</tag>
+        <tag>结构体排序</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>从逆序对到归并排序</title>
     <url>/posts/9a56.html</url>
     <content><![CDATA[<p>原本在思考逆序对的简单方法，发现冒泡排序的求法还是太慢了</p>
@@ -37,6 +76,75 @@
       <tags>
         <tag>逆序对</tag>
         <tag>归并排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Memset初始化的运用</title>
+    <url>/posts/54d4.html</url>
+    <content><![CDATA[<p><code>#include&lt;string.h&gt;</code></p>
+<p><code>memset( void*s, char ch, unsigned n);</code><span id="more"></span></p>
+<p><code>void*s </code>是要求的第一个地址，<code>char ch</code>是初始化的值（也可以为数字），<code>n</code>为sizeof( a ) **前N个字节</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> arr[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">memset</span>(arr, <span class="number">0</span>, <span class="keyword">sizeof</span>(arr)); </span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> str[<span class="number">100</span>];</span><br><span class="line">　 <span class="built_in">memset</span>(str,<span class="number">0</span>,<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+<p>更重要的是，memset在结构体初始化方面的运用</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sample_struct</span></span></span><br><span class="line"><span class="class">　 &#123;</span></span><br><span class="line">　　     <span class="type">char</span> csName[<span class="number">16</span>];</span><br><span class="line">　　     <span class="type">int</span> iSeq;</span><br><span class="line">　　     <span class="type">int</span> iType;</span><br><span class="line">　 &#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sample_strcut</span> <span class="title">stTest</span>;</span></span><br><span class="line"><span class="built_in">memset</span>(&amp;stTest,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">struct</span> sample_struct));</span><br></pre></td></tr></table></figure>
+<p>如果是数组的话</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">memset</span>(TEST,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">struct</span> sample_struct)*<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>数组初始化</tag>
+        <tag>结构体初始化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>大学生数学竞赛备考笔记</title>
+    <url>/posts/5ec6.html</url>
+    <content><![CDATA[<h1>定积分</h1>
+<p><img src="../images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20251201195739_51_138.jpg" alt=""><br>
+<img src="../images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20251201195740_52_138.jpg" alt=""></p>
+<h1>反常积分</h1>
+<p><img src="../images/11aaad4468ba0ebff928317cd0ae328d.jpg" alt=""><br>
+<img src="../images/ad9c198049bcd130cc06627b0514a6f2.jpg" alt=""></p>
+<h1>二重积分</h1>
+<p><img src="../images/a7d2b10b65825af01d1aaa3e24391ba5.jpg" alt=""><br>
+<img src="../images/2b64d7259f66f7f21f7aace47214a61e.jpg" alt=""></p>
+<h1>三重积分</h1>
+<p><img src="../images/3c20e3aae4c3f3754fc60f29d5bce301.jpg" alt=""><br>
+<img src="../images/5e920526911739fc6519fff2c84720ee.jpg" alt=""></p>
+<h1>曲线积分</h1>
+<p><img src="../images/47f67239ae9f56f09b32d09ac867c1b2.jpg" alt=""><br>
+<img src="../images/e07f19e68e8fb95f5ebca72a938457c8.jpg" alt=""></p>
+<h1>曲面积分</h1>
+<p><img src="../images/294a6c1ad32b67c46d698fb03267ebfd.jpg" alt=""><br>
+<img src="../images/d6b6e1574b07c043bdc53ca802fc8be2.jpg" alt=""></p>
+<h1>微分方程</h1>
+<p><img src="../images/b15c7293bffbbbdbbc88b05fb908e682.jpg" alt=""><br>
+<img src="../images/37b167c158bdcdbf0a44f94cdb6f5f27.jpg" alt=""></p>
+<h1>空间解析几何</h1>
+<p><img src="../images/ba641cac1dbb63e2fb628fa45ec261b3.jpg" alt=""><br>
+<img src="../images/26555934c2a1bd249ff05d5eabd5bc7f.jpg" alt=""></p>
+<h1>无穷级数</h1>
+<p><img src="../images/67cc1ce534d6c3599bcc7f20535dedd2.jpg" alt=""></p>
+<h1>中值定理</h1>
+<p><img src="../images/f535158f8c13b4f2fa227630e84d105f.jpg" alt=""></p>
+<h1>不等式</h1>
+<p><img src="../images/44a76330b9c189a039f2e8da148dfea3.jpg" alt=""></p>
+<h1>应试技巧</h1>
+<p><img src="../images/599277b5ec6ec0d0ea58c6056db9dccd.jpg" alt=""></p>
+]]></content>
+      <categories>
+        <category>数学分析</category>
+      </categories>
+      <tags>
+        <tag>微积分</tag>
+        <tag>微分方程</tag>
+        <tag>空间解析几何</tag>
+        <tag>级数</tag>
+        <tag>中值定理</tag>
+        <tag>不等式</tag>
       </tags>
   </entry>
   <entry>
@@ -69,6 +177,340 @@ d(i-1,j-1)+1,& \text{当}A_i=A_j\\
         <tag>动态规划</tag>
         <tag>LCS</tag>
         <tag>LIS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>高等数学多元函数章节与线性代数内在联系探究</title>
+    <url>/posts/d0da.html</url>
+    <content><![CDATA[<p>下面给出 <strong>《高等数学——多元函数章节与线性代数内在联系探究》</strong> 的完整笔记草稿。<br>
+该笔记围绕 <strong>多元函数的中值定理、梯度、方向导数、雅可比矩阵、Hessian 矩阵</strong> 等内容展开，并系统阐述它们与 <strong>线性代数（向量空间、线性映射、特征值/特征向量、正交投影）</strong> 的内在联系。</p>
+<hr>
+<h2 id="1-多元函数的基本概念">1. 多元函数的基本概念</h2>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>记号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>定义域</strong></td>
+<td>$D\subset\mathbb{R}^n$</td>
+<td>$f:\;D\to\mathbb{R}$（标量函数）或 $f:\;D\to\mathbb{R}^m$（向量值函数）</td>
+</tr>
+<tr>
+<td><strong>连续</strong></td>
+<td>$\displaystyle\lim_{\mathbf{x}\to\mathbf{x}_0}f(\mathbf{x})=f(\mathbf{x}_0)$</td>
+<td>与一元情形完全相同，只是 $\mathbf{x}=(x_1,\dots,x_n)$</td>
+</tr>
+<tr>
+<td><strong>可微</strong></td>
+<td>$f$ 在 $\mathbf{x}_0$ 可微 ⇔ 存在线性映射 $L$ 使 $$\lim_{\mathbf{h}\to0}\frac{\|f(\mathbf{x}_0+\mathbf{h})-f(\mathbf{x}_0)-L(\mathbf{h})\|}{\|\mathbf{h}\|}=0.$$</td>
+<td>线性映射 $L$ 正是 <strong>雅可比矩阵</strong> $J_f(\mathbf{x}_0)$ 的作用。</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-梯度、方向导数与线性代数">2. 梯度、方向导数与线性代数</h2>
+<h3 id="2-1-偏导数与梯度">2.1 偏导数与梯度</h3>
+<ul>
+<li>
+<p><strong>偏导数</strong><br>
+$$\frac{\partial f}{\partial x_i}(\mathbf{x})=\lim_{h\to0}\frac{f(x_1,\dots,x_i+h,\dots,x_n)-f(\mathbf{x})}{h}.$$</p>
+</li>
+<li>
+<p><strong>梯度向量</strong>（Gradient）<br>
+$$\nabla f(\mathbf{x})=\left(\frac{\partial f}{\partial x_1},\dots,\frac{\partial f}{\partial x_n}\right)^{\!\top}.$$</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>线性代数视角</strong>：梯度是 <strong>函数的最速上升方向</strong>，它本身是 <strong>列向量</strong>，在欧氏空间中可视为 <strong>线性映射</strong> $L_{\nabla f}(\mathbf{h})=\nabla f^{\!\top}\mathbf{h}$。</p>
+</blockquote>
+<h3 id="2-2-方向导数">2.2 方向导数</h3>
+<p>给定单位向量 $\mathbf{u}\in\mathbb{R}^n$，方向导数定义为<br>
+$$D_{\mathbf{u}}f(\mathbf{x})=\lim_{h\to0}\frac{f(\mathbf{x}+h\mathbf{u})-f(\mathbf{x})}{h}.$$</p>
+<p>若 $f$ 在 $\mathbf{x}$ 可微，则<br>
+$$D_{\mathbf{u}}f(\mathbf{x})=\nabla f(\mathbf{x})^{\!\top}\mathbf{u}.$$</p>
+<blockquote>
+<p>这正是 <strong>向量内积</strong> 的形式，说明方向导数是梯度向量与方向向量的 <strong>线性映射</strong>（点积）。</p>
+</blockquote>
+<h3 id="2-3-梯度的几何意义">2.3 梯度的几何意义</h3>
+<ul>
+<li>$\nabla f(\mathbf{x})$ 与等值面（等高面）<strong>正交</strong>。</li>
+<li>在欧氏空间中，梯度的 <strong>长度</strong> $ \|\nabla f(\mathbf{x})\| $ 表示 <strong>最速上升率</strong>。</li>
+</ul>
+<hr>
+<h2 id="3-多元函数的中值定理">3. 多元函数的中值定理</h2>
+<h3 id="3-1-多元介值定理（Brouwer-不动点定理的简化版）">3.1 多元介值定理（Brouwer 不动点定理的简化版）</h3>
+<blockquote>
+<p><strong>定理</strong>（多元介值定理的直观形式）：若 $f:\;[a_1,b_1]\times\cdots\times[a_n,b_n]\to\mathbb{R}^n$ 连续且对每个坐标 $i$ 有<br>
+$$f_i(a_1,\dots,a_n)\le a_i\le f_i(b_1,\dots,b_n),$$<br>
+则存在 $\mathbf{x}^\ast$ 使得 $f(\mathbf{x}^\ast)=\mathbf{x}^\ast$（即不动点）。</p>
+</blockquote>
+<blockquote>
+<p>该定理的证明依赖 <strong>Brouwer 不动点定理</strong>，而 Brouwer 定理本身是 <strong>拓扑</strong> 与 <strong>线性代数</strong>（紧致性、连续映射）相结合的结果。</p>
+</blockquote>
+<h3 id="3-2-多元拉格朗日中值定理（Mean-Value-Theorem-for-Vector‑Valued-Functions）">3.2 多元拉格朗日中值定理（Mean Value Theorem for Vector‑Valued Functions）</h3>
+<p>设 $F:\;U\subset\mathbb{R}^n\to\mathbb{R}^m$ 在开凸集 $U$ 上 <strong>连续可微</strong>，取两点 $\mathbf{a},\mathbf{b}\in U$，则存在 $\mathbf{\xi}= \mathbf{a}+t(\mathbf{b}-\mathbf{a})$（$t\in(0,1)$）使得</p>
+<p>$$
+F(\mathbf{b})-F(\mathbf{a}) = J_F(\mathbf{\xi})\,(\mathbf{b}-\mathbf{a}),
+$$</p>
+<p>其中 $J_F(\mathbf{\xi})$ 为 <strong>雅可比矩阵</strong>（$m\times n$），即 $[J_F]_{ij}= \displaystyle\frac{\partial F_i}{\partial x_j}$。</p>
+<blockquote>
+<p><strong>线性代数联系</strong>：该等式正是 <strong>线性映射</strong>（雅可比矩阵）在向量 $\mathbf{b}-\mathbf{a}$ 上的作用，体现了 <strong>微分</strong> 本质上是 <strong>局部线性化</strong>。</p>
+</blockquote>
+<h3 id="3-3-多元柯西中值定理（Cauchy-Mean-Value-Theorem）">3.3 多元柯西中值定理（Cauchy Mean Value Theorem）</h3>
+<p>若 $f,g:U\to\mathbb{R}$ 在开凸集 $U$ 上连续可微且 $g'$ 在 $U$ 上不为零，则对任意 $\mathbf{a},\mathbf{b}\in U$，存在 $\mathbf{\xi}$ 使得</p>
+<p>$$
+\frac{\nabla f(\mathbf{\xi})^{\!\top}(\mathbf{b}-\mathbf{a})}{\nabla g(\mathbf{\xi})^{\!\top}(\mathbf{b}-\mathbf{a})}
+= \frac{f(\mathbf{b})-f(\mathbf{a})}{g(\mathbf{b})-g(\mathbf{a})}.
+$$</p>
+<blockquote>
+<p>这里的 <strong>点积</strong> 再次把梯度（列向量）转化为 <strong>标量</strong>，与一元情形的分子分母结构保持一致。</p>
+</blockquote>
+<hr>
+<h2 id="4-多元泰勒展开与-Hessian-矩阵">4. 多元泰勒展开与 Hessian 矩阵</h2>
+<h3 id="4-1-二阶泰勒公式（带余项）">4.1 二阶泰勒公式（带余项）</h3>
+<p>设 $f:\;U\subset\mathbb{R}^n\to\mathbb{R}$ 在点 $\mathbf{x}_0$ 的邻域内二阶连续可微，则对任意 $\mathbf{x}\in U$，有</p>
+<p>$$
+\begin{aligned}
+f(\mathbf{x}) &= f(\mathbf{x}_0)
++ \nabla f(\mathbf{x}_0)^{\!\top}(\mathbf{x}-\mathbf{x}_0) \\
+&\quad + \frac12(\mathbf{x}-\mathbf{x}_0)^{\!\top} H_f(\mathbf{\xi}) (\mathbf{x}-\mathbf{x}_0),
+\end{aligned}
+$$</p>
+<p>其中 $H_f(\mathbf{\xi})$ 为 <strong>Hessian 矩阵</strong>（二阶偏导数组成的对称矩阵），$\mathbf{\xi}$ 位于 $\mathbf{x}_0$ 与 $\mathbf{x}$ 连线的某点。</p>
+<blockquote>
+<p><strong>线性代数视角</strong>：</p>
+<ul>
+<li>$\nabla f(\mathbf{x}_0)^{\!\top}(\mathbf{x}-\mathbf{x}_0)$ 是 <strong>一次线性映射</strong>（梯度点乘）。</li>
+<li>$(\mathbf{x}-\mathbf{x}_0)^{\!\top} H_f(\mathbf{\xi}) (\mathbf{x}-\mathbf{x}_0)$ 是 <strong>二次型</strong>，可通过 <strong>特征分解</strong> 分析正定性，从而判断极值性质。</li>
+</ul>
+</blockquote>
+<h3 id="4-2-极值判别（二阶充分条件）">4.2 极值判别（二阶充分条件）</h3>
+<ul>
+<li>若 $H_f(\mathbf{x}_0)$ <strong>正定</strong>（所有特征值 $>0$），则 $\mathbf{x}_0$ 为 <strong>严格局部最小点</strong>。</li>
+<li>若 $H_f(\mathbf{x}_0)$ <strong>负定</strong>（所有特征值 $<0$），则 $\mathbf{x}_0$ 为 <strong>严格局部最大点</strong>。</li>
+<li>若 $H_f(\mathbf{x}_0)$ <strong>不定</strong>，则 $\mathbf{x}_0$ 为 <strong>鞍点</strong>。</li>
+</ul>
+<blockquote>
+<p>这里的 <strong>正定/负定</strong> 完全是 <strong>矩阵特征值</strong> 的概念，直接把 <strong>线性代数</strong> 的工具用于 <strong>多元微积分</strong> 的极值判别。</p>
+</blockquote>
+<hr>
+<h2 id="5-多元函数与线性映射的等价关系">5. 多元函数与线性映射的等价关系</h2>
+<table>
+<thead>
+<tr>
+<th>多元分析概念</th>
+<th>对应的线性代数对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>梯度 $\nabla f$</strong></td>
+<td>列向量（线性函数的系数）</td>
+</tr>
+<tr>
+<td><strong>雅可比矩阵 $J_F$</strong></td>
+<td><strong>线性映射</strong> $DF_{\mathbf{x}}:\mathbb{R}^n\to\mathbb{R}^m$ 的矩阵表示</td>
+</tr>
+<tr>
+<td><strong>Hessian 矩阵 $H_f$</strong></td>
+<td>对称二次型对应的 <strong>自伴线性算子</strong></td>
+</tr>
+<tr>
+<td><strong>方向导数 $D_{\mathbf{u}}f$</strong></td>
+<td>向量 $\mathbf{u}$ 与梯度的 <strong>内积</strong>（线性映射的作用）</td>
+</tr>
+<tr>
+<td><strong>多元中值定理</strong></td>
+<td>雅可比矩阵在两点之间的 <strong>平均线性映射</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>通过上述对应关系，可把 <strong>求极值、最速上升、曲面切平面</strong> 等几何问题转化为 <strong>矩阵运算</strong>（求特征值、正交化、求逆）的问题，从而实现 <strong>微积分与线性代数的统一</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="6-示例与应用">6. 示例与应用</h2>
+<h3 id="示例-1：求函数-MATH-INLINE-72-的极值">示例 1：求函数 $f(x,y)=x^2+2xy+y^2$ 的极值</h3>
+<ol>
+<li>
+<p><strong>梯度</strong><br>
+$$\nabla f = \begin{pmatrix}2x+2y\\2x+2y\end{pmatrix}=2\begin{pmatrix}x+y\\x+y\end{pmatrix}.$$<br>
+令 $\nabla f=0$ 得 $x+y=0\;\Rightarrow\;y=-x$。</p>
+</li>
+<li>
+<p><strong>Hessian</strong><br>
+$$H_f=\begin{pmatrix}2&2\\2&2\end{pmatrix}.$$<br>
+特征值 $\lambda_1=4,\;\lambda_2=0$（半正定），因此在直线 $y=-x$ 上每一点都是 <strong>极小值</strong>（但不是严格极小，因为 $H_f$ 仅半正定）。</p>
+</li>
+</ol>
+<h3 id="示例-2：线性映射的局部线性化">示例 2：线性映射的局部线性化</h3>
+<p>设 $F(x,y)=\bigl(xe^{y},\;y\sin x\bigr)$，求在点 $\mathbf{a}=(0,0)$ 附近的线性近似。</p>
+<ul>
+<li><strong>雅可比矩阵</strong><br>
+$$
+  J_F(\mathbf{x})=
+  \begin{pmatrix}
+  e^{y} & xe^{y}\\
+  y\cos x & \sin x
+  \end{pmatrix},
+  \qquad
+  J_F(\mathbf{0})=
+  \begin{pmatrix}
+  1 & 0\\
+  0 & 0
+  \end{pmatrix}.
+  $$</li>
+<li><strong>线性化</strong><br>
+$$F(\mathbf{x})\approx F(\mathbf{0})+J_F(\mathbf{0})(\mathbf{x}-\mathbf{0})
+  =\begin{pmatrix}0\\0\end{pmatrix}+\begin{pmatrix}1&0\\0&0\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}
+  =\begin{pmatrix}x\\0\end{pmatrix}.$$</li>
+</ul>
+<blockquote>
+<p>这说明在原点附近，$F$ 的行为相当于把向量 $(x,y)$ <strong>投影</strong> 到 $x$ 轴上——典型的 <strong>线性代数投影</strong> 操作。</p>
+</blockquote>
+<hr>
+<h2 id="7-参考文献">7. 参考文献</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>文献</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[1]</td>
+<td>Stewart, <em>Calculus: Early Transcendentals</em>, 8th ed., Cengage, 2015.（多元微积分章节）</td>
+</tr>
+<tr>
+<td>[2]</td>
+<td>Strang, <em>Linear Algebra and Its Applications</em>, 5th ed., Cengage, 2016.（矩阵、特征值）</td>
+</tr>
+<tr>
+<td>[3]</td>
+<td>Apostol, <em>Mathematical Analysis</em>, 2nd ed., Addison‑Wesley, 1974.（中值定理的严谨证明）</td>
+</tr>
+<tr>
+<td>[4]</td>
+<td>Rudin, <em>Principles of Mathematical Analysis</em>, 3rd ed., McGraw‑Hill, 1976.（Brouwer 不动点定理）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8-练习题（供自测）">8. 练习题（供自测）</h2>
+<ol>
+<li>设 $f(x,y)=\sin x\cos y$，求其梯度并验证在点 $(\pi/4,\pi/4)$ 处的方向导数沿单位向量 $\mathbf{u}=(1/\sqrt2,1/\sqrt2)$ 的值。</li>
+<li>对向量值函数 $F(x,y)=(x^2-y,\,xy)$，计算雅可比矩阵并在点 $(1,2)$ 给出线性化近似。</li>
+<li>证明：若 $f$ 在开凸集 $U$ 上二次可微且 Hessian 矩阵在 $U$ 为正定，则 $f$ 在 $U$ 上为 <strong>严格凸函数</strong>。</li>
+<li>用 <strong>拉格朗日中值定理</strong> 推导一元函数的 <strong>均值不等式</strong>：若 $f$ 在 $[a,b]$ 连续可微，则<br>
+$$\min_{x\in[a,b]}f'(x)\le\frac{f(b)-f(a)}{b-a}\le\max_{x\in[a,b]}f'(x).$$</li>
+</ol>
+<hr>
+<blockquote>
+<p><strong>小结</strong>：多元函数的微分本质上是 <strong>线性映射</strong>（雅可比矩阵），而二阶微分则对应 <strong>二次型</strong>（Hessian）。通过矩阵的特征分解、正定性判别等线性代数工具，我们可以更系统、更几何地理解极值、最速上升方向以及局部线性化等概念。希望本笔记能帮助你在 <strong>高等数学</strong> 与 <strong>线性代数</strong> 之间搭建起坚实的桥梁。祝学习愉快！</p>
+</blockquote>
+<h2 id="16-多元中值定理的几何含义">16. 多元中值定理的几何含义</h2>
+<p>摘要：多元柯西和向量值函数的中值定理提供了在局部线性化附近对函数增量的近似控制。本节通过直观几何与矩阵表示，讲解在高维空间中中值定理的意义及其与雅可比矩阵的联系。<br>
+关键词：中值定理、柯西、雅可比、局部线性化<br>
+结构：</p>
+<ul>
+<li>H2: 定理陈述与直观</li>
+<li>H2: 与雅可比的关系</li>
+<li>H3: 示例</li>
+</ul>
+<p>开头示例：设 F: R^n -&gt; R^m 在某开集内连续可微，取点 a,b，利用雅可比在某点的线性近似可把 F(b)-F(a) 近似为 JF(ξ)(b-a)，从而获得增量的线性界限。</p>
+<h2 id="17-多元泰勒展开与-Hessian-的应用">17. 多元泰勒展开与 Hessian 的应用</h2>
+<p>摘要：二阶泰勒展开将非线性映射按局部线性与二阶项展开，Hessian 的正定性提供极值的判别信息。本节给出展开公式和在优化中的几何解读。<br>
+关键词：泰勒展开、Hessian、极值、局部近似<br>
+结构：</p>
+<ul>
+<li>H2: 展开公式</li>
+<li>H2: 极值与二阶信息</li>
+<li>H3: 应用示例</li>
+</ul>
+<p>开头示例：对 f(x,y) 的点 (a,b) 进行二阶泰勒展开，得到 f(a+h) ≈ f(a) + ∇f(a)·h + 1/2 h^T Hf(a) h，这里的二阶项揭示了曲面的局部曲率。</p>
+<h2 id="18-线性代数工具在最优化中的应用">18. 线性代数工具在最优化中的应用</h2>
+<p>摘要：通过特征值、特征向量、对角化等线性代数工具来分析凸性、曲率和局部极值，帮助快速判断最优解的存在性与性质。<br>
+关键词：特征值、特征向量、对角化、最优化<br>
+结构：</p>
+<ul>
+<li>H2: 特征分解与正定性</li>
+<li>H2: 最优化中的应用场景</li>
+<li>H3: 练习要点</li>
+</ul>
+<p>开头示例：若 Hessian 在一点正定，则该点是严格局部极小点；若不定，则需结合梯度的一阶项来判断极值的存在性。</p>
+<h2 id="19-梯度与最速下降路径的几何解读">19. 梯度与最速下降路径的几何解读</h2>
+<p>摘要：从几何角度理解梯度方向，即为下降法的反方向，最速下降路径近似沿梯度方向的路径。通过可视化图像帮助理解迭代收敛的路径特征。<br>
+关键词：梯度下降、最速路径、迭代<br>
+结构：</p>
+<ul>
+<li>H2: 梯度与路径关系</li>
+<li>H2: 迭代几何直觉</li>
+<li>H3: 收敛性要点</li>
+</ul>
+<p>开头示例：在二维平面上，若选取初始点并按负梯度方向更新，则路径将逐步贴近函数的等高线向内收敛。</p>
+<h2 id="20-正交投影与最小二乘问题的联系">20. 正交投影与最小二乘问题的联系</h2>
+<p>摘要：正交投影在高维空间中的直观解释，是最小二乘解的几何本质。通过投影误差最小化来理解最优拟合。<br>
+关键词：正交投影、最小二乘、拟合<br>
+结构：</p>
+<ul>
+<li>H2: 正交投影定义</li>
+<li>H2: 最小二乘解的几何interpretation</li>
+<li>H3: 例题</li>
+</ul>
+<p>开头示例：在列向量 b 上寻找一个尽量接近 ax 的向量 x，使得误差 ||b - Ax|| 最小，这等价于将 b 投影到列空间 Span{A} 的正交补上。</p>
+<h2 id="21-局部线性化在微分方程中的作用">21. 局部线性化在微分方程中的作用</h2>
+<p>摘要：微分方程系统经常需要局部线性化来分析局部稳定性与近似解，本节结合一阶近似与线性系统理论，给出常见分支点的分析方法。<br>
+关键词：局部线性化、微分方程、稳定性<br>
+结构：</p>
+<ul>
+<li>H2: 线性化原理</li>
+<li>H2: 稳定性分析要点</li>
+<li>H3: 示例</li>
+</ul>
+<p>开头示例：考虑非线性系统 x’ = f(x)，在平衡点 x* 处可用线性化 x’ ≈ Df(x*) (x - x*) 来分析局部行为。</p>
+<h2 id="22-特征分解在几何中的直观应用">22. 特征分解在几何中的直观应用</h2>
+<p>摘要：特征分解提供了在坐标变换下对称矩阵的简单描述，帮助理解曲率、投影和坐标系统的选择对问题简化的影响。<br>
+关键词：特征分解、对角化、坐标变换<br>
+结构：</p>
+<ul>
+<li>H2: 定义与直观</li>
+<li>H2: 对称矩阵的对角化意义</li>
+<li>H3: 应用示例</li>
+</ul>
+<p>开头示例：对称 Hessian 可以通过正交特征向量组成的基底对角化，使得二阶形式易于判断符号和大小。</p>
+<h2 id="23-从微分到线性代数的整合视角">23. 从微分到线性代数的整合视角</h2>
+<p>摘要：总结本系列中微分与线性代数的主线索，强调两者在极值、投影和线性近似中的互补性。<br>
+关键词：微分、线性代数、整合<br>
+结构：</p>
+<ul>
+<li>H2: 核心桥梁</li>
+<li>H2: 常见题型与解法</li>
+<li>H3: 练习要点</li>
+</ul>
+<p>开头示例：从梯度、雅可比与 Hessian 的角度出发，我们可以统一地将微分与线性代数工具用于分析曲面、拟合与优化问题。</p>
+<h2 id="24-综述：从微分到几何的统一视角">24. 综述：从微分到几何的统一视角</h2>
+<p>摘要：回顾本系列的核心思想，强调以线性映射和二阶性质为主线来理解多元微积分的几何图景。<br>
+关键词：统一视角、几何、微分<br>
+结构：</p>
+<ul>
+<li>H2: 核心观点回顾</li>
+<li>H2: 进一步阅读</li>
+<li>H3: 练习与延伸</li>
+</ul>
+<p>开头示例：通过把微分转化为局部线性映射，以及把二阶信息视作二次型，我们在多元微积分和线性代数之间建立起清晰的桥梁。</p>
+]]></content>
+      <categories>
+        <category>数学分析</category>
+      </categories>
+      <tags>
+        <tag>多元函数</tag>
+        <tag>线性代数</tag>
       </tags>
   </entry>
   <entry>
@@ -763,6 +1205,567 @@ d(i-1,j-1)+1,& \text{当}A_i=A_j\\
       </tags>
   </entry>
   <entry>
+    <title>高等数学多元函数章节与线性代数内在联系探究（完整系列）</title>
+    <url>/posts/series-complete.html</url>
+    <content><![CDATA[<h1>系列总览</h1>
+<p>本系列共15篇文章，系统探讨多元函数微积分与线性代数的内在联系。从极值、梯度、方向导数出发，通过雅可比矩阵、Hessian矩阵的线性代数工具，构建从微分到几何的统一视角。</p>
+<h2 id="15篇提纲">15篇提纲</h2>
+<ol>
+<li>多元函数极值与凸性</li>
+<li>梯度与方向导数的几何解读</li>
+<li>雅可比矩阵在局部线性化中的作用</li>
+<li>Hessian 矩阵与极值性质解析</li>
+<li>线性映射视角下的微分与最速上升</li>
+<li>方向导数与内积的联系</li>
+<li>多元中值定理的几何含义</li>
+<li>多元泰勒展开与 Hessian 的应用</li>
+<li>线性代数工具在最优化中的应用</li>
+<li>梯度与最速下降路径的几何解读</li>
+<li>正交投影与最小二乘问题的联系</li>
+<li>局部线性化在微分方程中的作用</li>
+<li>特征分解在几何中的直观应用</li>
+<li>从微分到线性代数的整合视角</li>
+<li>综述：从微分到几何的统一视角</li>
+</ol>
+<hr>
+<h1>1. 多元函数极值与凸性</h1>
+<p>下面给出 <strong>《多元函数极值与凸性》</strong> 的完整笔记草稿。本博文从极值的必要与充分条件出发，结合线性代数工具（矩阵正定性、特征值等）来判断局部极值和全局凸性。</p>
+<h2 id="摘要">摘要</h2>
+<p>在多元函数的极值问题中，二阶信息（$H_f$ 矩阵）提供了比梯度更丰富的局部判据。若 $H_f(x_0)$ 在点 $x_0$ 正定，该点是严格局部极小点；若负定，则为严格局部极大点；若不定则有可能是鞍点。通过将 Hessian 的特征值问题与二次型的正定性联系起来，可将极值判定转化为线性代数运算，进而与凸性理论相连。</p>
+<h2 id="关键词">关键词</h2>
+<p>极值、凸性、$H_f$、特征值、二阶判别、局部极值</p>
+<h2 id="结构">结构</h2>
+<ul>
+<li>H2: 定义与背景</li>
+<li>H2: 二阶充分条件</li>
+<li>H3: 例题与应用</li>
+</ul>
+<h2 id="开头示例">开头示例</h2>
+<p>设 $f(x,y)=x^2+y^2$。显然在原点有局部极小性，$H_f(0,0)=\begin{pmatrix}2&0\\0&2\end{pmatrix}$，特征值均为 2，正定，故原点为严格局部极小点。反过来，若 $f(x,y)=x^2-y^2$，则 $H_f(0,0)=\begin{pmatrix}2&0\\0&-2\end{pmatrix}$，特征值符号混合，存在鞍点。</p>
+<h2 id="正文">正文</h2>
+<h3 id="10-1-二阶导数与-Hessian">10.1 二阶导数与 Hessian</h3>
+<ul>
+<li>定义：$H_f(x)=\left[\frac{\partial^2 f}{\partial x_i \partial x_j}(x)\right]$</li>
+<li>二阶形式：$h^T H_f(x) h$</li>
+</ul>
+<h3 id="10-2-判别规则">10.2 判别规则</h3>
+<ul>
+<li>若 $H_f(x_0)$ 正定，则 $x_0$ 为严格局部最小点</li>
+<li>若 $H_f(x_0)$ 负定，则 $x_0$ 为严格局部最大点</li>
+<li>若 $H_f(x_0)$ 不定，则需结合梯度信息或进一步分析</li>
+</ul>
+<h3 id="10-3-例题">10.3 例题</h3>
+<ul>
+<li>例1：$f(x,y)=x^2+y^2$ 在 $(0,0)$ 处的 Hessian 为 $\begin{pmatrix}2&0\\0&2\end{pmatrix}$ → 严格局部最小</li>
+<li>例2：$f(x,y)=x^4+y^2$ 在 $(0,0)$ 处的 Hessian 为 $\begin{pmatrix}0&0\\0&2\end{pmatrix}$，Hessian 半正定但不严格，需进一步分析</li>
+</ul>
+<h2 id="练习题">练习题</h2>
+<ol>
+<li>求 $f(x,y)=x^2+2xy+y^2$ 的 Hessian，并在点 $(1,-1)$ 判断极值性质。</li>
+<li>给定 $f(x,y)=x^3+y^3$，写出 Hessian 并讨论 $(0,0)$ 的极值性质。</li>
+<li>证明：若 $f$ 在某区域内二阶连续可微且 Hessian 在该区域正定，则 $f$ 在该区域凸。</li>
+</ol>
+<hr>
+<h1>2. 梯度与方向导数的几何解读</h1>
+<p>下面给出 <strong>《梯度与方向导数的几何解读》</strong> 的完整笔记草稿。本博文从几何角度揭示梯度的意义，以及方向导数如何通过梯度内积体现空间方向上的变化率。</p>
+<h2 id="摘要-2">摘要</h2>
+<p>梯度被视为等值面法向量，方向导数则是沿任意单位向量的切线方向的导数。二者通过内积联系起来，形成了一个统一的线性代数框架来描述函数在各个方向的变化率。本文通过公式推导、几何直观和简单实例，帮助读者建立从微分到线性代数的直观联系。</p>
+<h2 id="关键词-2">关键词</h2>
+<p>梯度、方向导数、内积、线性代数、几何解释</p>
+<h2 id="结构-2">结构</h2>
+<ul>
+<li>H2: 梯度概念</li>
+<li>H2: 方向导数的内积形式</li>
+<li>H2: 几何意义与例子</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-2">开头示例</h2>
+<p>设 $f(x,y)=x^2+y^2$。则<br>
+$$\nabla f(x,y)=(2x,2y)^{\top}.$$<br>
+在点 $(1,2)$ 处，梯度为 $(2,4)$，方向导数在单位向量 $u=(1/\sqrt{2},1/\sqrt{2})$ 的值为<br>
+$$D_u f(1,2)=\nabla f(1,2)^{\top} u = (2,4)\cdot(1/\sqrt{2},1/\sqrt{2})=\frac{6}{\sqrt{2}}.$$<br>
+这体现了方向导数等于梯度与方向向量的内积。</p>
+<h2 id="正文-2">正文</h2>
+<h3 id="11-1-梯度的定义与性质">11.1 梯度的定义与性质</h3>
+<ul>
+<li>设 $f: \mathbb{R}^n \to \mathbb{R}$，梯度 $\nabla f(x)$ 由各分量偏导数组成：<br>
+$$\nabla f(x)=\left(\frac{\partial f}{\partial x_1},\dots,\frac{\partial f}{\partial x_n}\right)^{\top}.$$</li>
+<li>梯度在某点的方向反映该点沿各方向的最大速率变化方向。</li>
+</ul>
+<h3 id="11-2-方向导数的内积表达">11.2 方向导数的内积表达</h3>
+<ul>
+<li>对任意单位向量 $u$，方向导数：<br>
+$$D_u f(x)=\nabla f(x)^{\top} u.$$</li>
+<li>当 $u = \nabla f(x)/\|\nabla f(x)\|$ 时，方向导数达到最大，等于 $\|\nabla f(x)\|$。</li>
+</ul>
+<h3 id="11-3-几何意义与练习">11.3 几何意义与练习</h3>
+<ul>
+<li>例子与图示：等高线/等值面在法向方向上的跳跃与梯度大小的关系。</li>
+<li>练习：给定 f(x,y)=x^2+3y^2，计算 (a,b) 处的梯度、单位方向 u，以及在 u 的方向导数。</li>
+</ul>
+<h2 id="练习题-2">练习题</h2>
+<ol>
+<li>对 f(x,y)=x^2-2xy+y^2，计算在点 (1,1) 处的梯度及方向导数沿单位向量 u=(1/√2,-1/√2)。</li>
+<li>对向量值函数 F(x,y)=(x^2, y^2)，写出梯度与每分量的方向导数。</li>
+</ol>
+<hr>
+<h1>3. 雅可比矩阵在局部线性化中的作用</h1>
+<p>下面给出 <strong>《雅可比矩阵在局部线性化中的作用》</strong> 的完整笔记草稿。本文解释如何用雅可比矩阵近似描述在一个点附近的非线性向量值函数的行为，以及这对理解微分的本质有何帮助。</p>
+<h2 id="摘要-3">摘要</h2>
+<p>在开集 $U=\mathbb{R}^n$的增量近似可以用一阶导数（雅可比矩阵）来描述：<br>
+$$F(x+h) \approx F(x) + J_F(x) h.$$<br>
+这就是局部线性化的核心思想。通过一个简单例子，我们可以看出如何用雅可比矩阵把非线性映射转化为线性映射的作用。</p>
+<h2 id="关键词-3">关键词</h2>
+<p>雅可比矩阵、局部线性化、线性近似、导数</p>
+<h2 id="结构-3">结构</h2>
+<ul>
+<li>H2: 定义与直观</li>
+<li>H2: 局部线性化公式</li>
+<li>H2: 举例与应用</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-3">开头示例</h2>
+<p>设 $F(x,y)=\bigl(xe^{y},\, y\sin x\bigr)$，在点 $(0,0)$ 附近的线性近似。</p>
+<ul>
+<li>雅可比矩阵：<br>
+$$J_F(x,y)=\begin{pmatrix} e^{y} & xe^{y} \\ y\cos x & \sin x \end{pmatrix}, \quad J_F(0,0)=\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}.$$</li>
+<li>线性化：<br>
+$$F(x,y) \approx F(0,0) + J_F(0,0) \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} + \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix}.$$<br>
+这表明在原点附近，映射的第一分量沿 x 方向线性变化，第二分量保持近似不变。</li>
+</ul>
+<h2 id="正文-3">正文</h2>
+<h3 id="12-1-定义与直观">12.1 定义与直观</h3>
+<ul>
+<li>对 $F: \mathbb{R}^n → \mathbb{R}^m$，雅可比矩阵 J_F(x) 是 m×n 矩阵，其元素为 \partial F_i/\partial x_j。</li>
+<li>当 h → 0 时，F(x+h) 的增量可以由 J_F(x) 乘以 h 表示：,F(x+h) \approx F(x) + J_F(x) h。</li>
+</ul>
+<h3 id="12-2-局部线性化的意义">12.2 局部线性化的意义</h3>
+<ul>
+<li>微分本质上就是在一个点的局部把非线性映射近似为线性映射，从而可以用线性代数工具分析局部行为。</li>
+<li>这也是数值分析中线性近似求解的基础。</li>
+</ul>
+<h3 id="12-3-示例">12.3 示例</h3>
+<p>例：对 F(x,y)=(x^2, y^2) 在点 (1,2) 处的局部线性化：<br>
+$J_F(x,y)=\begin{pmatrix}2x & 0\\0 & 2y\end{pmatrix},\ J_F(1,2)=\begin{pmatrix}2 & 0\\0 & 4\end{pmatrix}$.<br>
+因此 F(x,y) ≈ F(1,2) + J_F(1,2) ( [x-1, y-2]^T ).</p>
+<h2 id="练习">练习</h2>
+<ol>
+<li>求 F(x,y)= (\sin x, e^y) 在点 (0,0) 的雅可比矩阵及线性近似。</li>
+<li>给定向量值函数 $F: \mathbb{R}^2 → \mathbb{R}^2，F(x,y)=(x^2+y, x-y^3)$，在点 (1,1) 计算 J_F、线性近似和误差级别。</li>
+</ol>
+<hr>
+<h1>4. Hessian 矩阵与极值性质解析</h1>
+<p>下面给出 <strong>《Hessian 矩阵与极值性质解析》</strong> 的完整笔记草稿。本博文聚焦 Hessian 的定义、二阶充分条件以及在凸分析中的作用。</p>
+<h2 id="摘要-4">摘要</h2>
+<p>Hessian 矩阵描述了二阶偏导数信息，给出曲面的局部曲率。若在某点 $x_0$，$H_f(x_0)$ 为正定/负定，则该点分别是严格局部极小点/极大点。若 Hessian 不定，需要结合一阶梯度信息与更高阶信息进行判断。通过几个典型例子，可以看到平方和型函数的简单极值，以及更复杂的非线性函数在局部的极值性质。</p>
+<h2 id="关键词-4">关键词</h2>
+<p>Hessian、二阶微分、正定、极值、局部极值</p>
+<h2 id="结构-4">结构</h2>
+<ul>
+<li>H2: 定义与几何含义</li>
+<li>H2: 二阶判别法</li>
+<li>H2: 例题</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-4">开头示例</h2>
+<p>对 $f(x,y)=x^2+y^2$，在原点，其 Hessian 为 $\operatorname{diag}(2,2)$，特征值均为正，故原点严格局部极小。对 $f(x,y)=x^2-y^2$，$H_f(0,0)=\operatorname{diag}(2,-2)$，特征值符号混合，存在鞍点。</p>
+<h2 id="正文-4">正文</h2>
+<h3 id="13-1-Hessian-的定义">13.1 Hessian 的定义</h3>
+<ul>
+<li>$H_f(x) = \left[\frac{\partial^2 f}{\partial x_i \partial x_j}(x)\right]$, 对称矩阵。</li>
+<li>二阶微分形式：$h^T H_f(x) h$。</li>
+</ul>
+<h3 id="13-2-二阶判别法">13.2 二阶判别法</h3>
+<ul>
+<li>如果 $H_f(x_0)$ 正定，则 $x_0$ 为严格局部最小点</li>
+<li>如果 $H_f(x_0)$ 负定，则 $x_0$ 为严格局部最大点</li>
+<li>如果 $H_f(x_0)$ 不定，则需要进一步分析</li>
+</ul>
+<h3 id="13-3-例题">13.3 例题</h3>
+<ul>
+<li>例1：$f(x,y)=x^2+y^2$，$H_f(0,0)=\begin{pmatrix}2&0\\0&2\end{pmatrix}$ -&gt; 极小</li>
+<li>例2：$f(x,y)=x^4+y^2$，$H_f(0,0)=\begin{pmatrix}0&0\\0&2\end{pmatrix}$ 半正定，需结合梯度做进一步分析</li>
+</ul>
+<h2 id="练习-2">练习</h2>
+<ol>
+<li>对 $f(x,y)= x^3 + y^4$，在 $(0,0)$ 处计算 Hessian，判断极值性质并解释结论。</li>
+<li>给定 $f(x,y)= x^2 + 3xy + y^2$，计算 Hessian，并判断 $(0,0)$ 的极值性质。</li>
+</ol>
+<hr>
+<h1>5. 线性映射视角下的微分与最速上升</h1>
+<p>下面给出 <strong>《线性映射视角下的微分与最速上升》</strong> 的完整笔记草稿。本文将微分理解为局部线性映射，并将梯度与最速上升方向的关系从矩阵角度表达清楚。</p>
+<h2 id="摘要-5">摘要</h2>
+<p>微分在向量值函数的情形下可以看作一个线性映射，记作 $df_x: R^n → R^m$。若对标量函数 f，则 $df_x(h) = ∇f(x)^T h$。梯度的模 length ∥∇f(x)∥ 决定了在单位方向上的最大变化率，且该方向即为最速上升方向。</p>
+<h2 id="关键词-5">关键词</h2>
+<p>线性映射、微分、梯度、最速上升</p>
+<h2 id="结构-5">结构</h2>
+<ul>
+<li>H2: 微分的线性本质</li>
+<li>H2: 梯度与最速上升方向</li>
+<li>H2: 例题与直观</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-5">开头示例</h2>
+<p>设 $f(x,y)=x^2+y^2$。对点 $(a,b)$，梯度为 $\nabla f=(2a,2b)$，单位向量 $u = \nabla f/\|\nabla f\|$ 指向最速上升方向，方向导数最大值为 $\|\nabla f\|$。对任意 $h$，线性近似给出：$f(a+h) \approx f(a) + \nabla f(a)^T h$。</p>
+<h2 id="正文-5">正文</h2>
+<h3 id="14-1-微分的线性本质">14.1 微分的线性本质</h3>
+<ul>
+<li>对标量函数 $f: \mathbb{R}^n → \mathbb{R}$，微分 $df_x$ 是一个线性映射，使得 $f(x+h) \approx f(x) + df_x(h)$。</li>
+<li>其中 $df_x(h) = \nabla f(x)^T h$。</li>
+</ul>
+<h3 id="14-2-最速上升方向">14.2 最速上升方向</h3>
+<ul>
+<li>方向导数 $D_u f(x) = \nabla f(x)^T u$，最大值在 $u = \nabla f/\|\nabla f\|$ 处，等于 $\|\nabla f\|$。</li>
+<li>通过 Cauchy–Schwarz 不等式可得：$|D_u f(x)| \le \|\nabla f(x)\|\|u\|$，等号在 $u$ 与 $\nabla f$ 同向时成立。</li>
+</ul>
+<h3 id="14-3-练习">14.3 练习</h3>
+<ol>
+<li>对 f(x,y)=x^2+2xy+y^2，在点 (1, -1) 计算 ∇f，并给出其在单位向量 u=(cos θ, sin θ) 上的方向导数表达式。</li>
+<li>对 F(x,y)=(x^2, y^2) 的分量，写出每个分量的微分及对应的线性近似。</li>
+</ol>
+<hr>
+<h1>6. 方向导数与内积的联系</h1>
+<p>下面给出 <strong>《方向导数与内积的联系》</strong> 的完整笔记草稿。本博文将方向导数的内积表述、几何直观和在多变量优化中的应用系统化。</p>
+<h2 id="摘要-6">摘要</h2>
+<p>方向导数 $D_u f(x) = \nabla f(x)^T u$ 将方向导数转化为梯度与方向向量的内积。该表达揭示了方向导数在单位方向上的响应等价于梯度的投影，最大值发生在梯度方向上。通过几个直观例子，展示内积如何把方向信息编码到微分中。</p>
+<h2 id="关键词-6">关键词</h2>
+<p>方向导数、内积、梯度、投影、几何解释</p>
+<h2 id="结构-6">结构</h2>
+<ul>
+<li>H2: 方向导数的定义</li>
+<li>H2: 内积形式与几何意义</li>
+<li>H2: 例题</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-6">开头示例</h2>
+<p>设 $f(x,y)=x^2+y^2$，则 $\nabla f=(2x,2y)$。在点 $(1,2)$ 处，单位向量 $u=(1/\sqrt{2},1/\sqrt{2})$ 的方向导数为<br>
+$$D_u f(1,2)=\nabla f(1,2)^T u = (2,4)\cdot(1/\sqrt{2},1/\sqrt{2})=\frac{6}{\sqrt{2}}.$$<br>
+这表明方向导数等于梯度与方向向量的内积。</p>
+<h2 id="正文-6">正文</h2>
+<h3 id="11-1-方向导数的定义与性质">11.1 方向导数的定义与性质</h3>
+<ul>
+<li>设 $f: \mathbb{R}^n \to \mathbb{R}$，方向导数在单位向量 $u$ 的定义：<br>
+$$D_u f(x)=\lim_{h\to0}\frac{f(x+hu)-f(x)}{h}.$$</li>
+<li>若 $f$ 在 $x$ 可微，则<br>
+$$D_u f(x)=\nabla f(x)^T u.$$</li>
+</ul>
+<h3 id="11-2-内积形式与几何意义">11.2 内积形式与几何意义</h3>
+<ul>
+<li>$D_u f(x) = \nabla f(x)^T u$。</li>
+<li>当 $u=\nabla f(x)/\|\nabla f(x)\|$ 时，$D_u f(x)=\|\nabla f(x)\|$。</li>
+</ul>
+<h3 id="11-3-练习">11.3 练习</h3>
+<ul>
+<li>
+<ol>
+<li>对 $f(x,y)=x^2+3y^2$，在点 $(a,b)$ 计算梯度、单位方向 $u$，以及在该方向的方向导数。</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>对函数 $F(x,y)=(x^2,y^2)$，写出每个分量的梯度与方向导数。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h1>7. 多元中值定理的几何含义</h1>
+<p>下面给出 <strong>《多元中值定理的几何含义》</strong> 的完整笔记草稿。本博文探讨多元柯西中值定理及向量值函数的中值定理在几何中的直观理解。</p>
+<h2 id="摘要-7">摘要</h2>
+<p>多元中值定理将函数在两点之间的增量与其在中间点的导数信息联系起来。通过雅可比矩阵，我们可以将增量的差分近似看作线性映射作用的结果，从而获得对变化范围的几何估计。</p>
+<h2 id="关键词-7">关键词</h2>
+<p>中值定理、雅可比、局部线性化、线性映射</p>
+<h2 id="结构-7">结构</h2>
+<ul>
+<li>H2: 定理陈述与直观</li>
+<li>H2: 与雅可比的关系</li>
+<li>H3: 示例</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-7">开头示例</h2>
+<p>设 F: R^n → R^m，在开集内连续可微。对 a,b ∈ R^n，存在 ξ 使得 F(b)−F(a) = J_F(ξ)(b−a) 的表示近似于线性映射的作用。这个公式将多元增量以单一线性运算表达，呈现出线性代数在非线性函数中的核心作用。</p>
+<h2 id="正文-7">正文</h2>
+<ul>
+<li>多元牛顿-莱布尼茨式的中值形式：$F(b)-F(a) \approx J_F(\xi)(b-a)$。
+<ul>
+<li>若 F 为标量函数，等式退化为一元的中值定理的向量化版本。</li>
+</ul>
+</li>
+</ul>
+<h3 id="16-2-与雅可比的关系">16.2 与雅可比的关系</h3>
+<ul>
+<li>增量近似 F(b)-F(a) ≈ J_F(ξ)(b-a)，其中 J_F(ξ) 为在 ξ 点的雅可比矩阵。`</li>
+<li>这揭示了微分的线性本质：在局部区域内，非线性映射可由线性映射近似。</li>
+</ul>
+<h3 id="16-3-练习">16.3 练习</h3>
+<ul>
+<li>给定 F(x,y)=(x^2, y^2)，在点 a=(1,2), b=(2,3) 的增量近似中，计算是否存在 ξ 使得 F(b)-F(a) ≈ J_F(ξ)(b-a) 并给出近似误差界。</li>
+</ul>
+<hr>
+<h1>8. 多元泰勒展开与 Hessian 的应用</h1>
+<p>下面给出 <strong>《多元泰勒展开与 Hessian 的应用》</strong> 的完整笔记草稿。本博文聚焦二阶及以上的泰勒展开在多元优化中的作用。</p>
+<h2 id="摘要-8">摘要</h2>
+<p>二阶及以上的泰勒展开将非线性映射在某点的行为拆解为线性项和高阶项的组合。二阶项由 Hessian 决定其曲率信息，正定性决定局部极值性质。通过公式推导与实例演示，展示在无约束最优化、拟合与误差分析中的应用。</p>
+<h2 id="关键词-8">关键词</h2>
+<p>泰勒展开、Hessian、极值、局部近似</p>
+<h2 id="结构-8">结构</h2>
+<ul>
+<li>H2: 二阶泰勒展开公式</li>
+<li>H2: Hessian 的角色</li>
+<li>H2: 应用示例</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-8">开头示例</h2>
+<p>对 $f(x,y)=x^2+2xy+y^2$，在点 $x_0=(1,1)$ 处，二阶泰勒展开近似为：<br>
+$$f(x,y) \approx f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_0).$$<br>
+其中 $\nabla f(1,1)=(4,4)$，$H_f(1,1)=\begin{pmatrix}2 & 2 \\ 2 & 2\end{pmatrix}$。</p>
+<h2 id="正文-8">正文</h2>
+<h3 id="17-1-二阶泰勒展开">17.1 二阶泰勒展开</h3>
+<ul>
+<li>给定 $f: \mathbb{R}^n → \mathbb{R}$，在点 $x_0$ 附近有：<br>
+$$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_0) + o(\|x-x_0\|^2).$$</li>
+</ul>
+<h3 id="17-2-Hessian-的作用">17.2 Hessian 的作用</h3>
+<ul>
+<li>Hessian 提供关于曲率的对称二次型信息。$\nabla f$ 的线性项决定增量方向的线性近似，二阶项决定曲率方向。</li>
+</ul>
+<h3 id="17-3-应用示例">17.3 应用示例</h3>
+<ul>
+<li>例：对 $f(x,y)=x^2+2xy+y^2$ 进行二阶展开，验证极值分析结论。</li>
+</ul>
+<h2 id="练习-3">练习</h2>
+<ol>
+<li>求 $f(x,y)=\exp(x) + y^2$ 在点 $(0,0)$ 的二阶泰勒展开及 Hessian，判断该点的局部极值性。</li>
+<li>给定 $f(x,y)=x^3+y^3$，讨论在原点的二阶展开及局部性质。</li>
+</ol>
+<hr>
+<h1>9. 线性代数工具在最优化中的应用</h1>
+<p>下面给出 <strong>《线性代数工具在最优化中的应用》</strong> 的完整笔记草稿。本博文把线性代数中的工具引入到无约束最优化、凸性分析等场景中。</p>
+<h2 id="摘要-9">摘要</h2>
+<p>最优化中的核心难题通常来自非线性关系。通过将问题转化为对称矩阵的特征分解、坐标变换、正交化等线性代数过程，可以简化极值判断与收敛性分析，提升数值稳定性与理论可解释性。本文给出若干典型情形的解决思路。</p>
+<h2 id="关键词-9">关键词</h2>
+<p>特征值、对角化、正交化、最优化</p>
+<h2 id="结构-9">结构</h2>
+<ul>
+<li>H2: 特征分解与曲率分析</li>
+<li>H2: 坐标变换与对角化的意义</li>
+<li>H2: 正交化在最优化中的应用</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-9">开头示例</h2>
+<p>考虑函数 f(x) = x^T A x，其中 A 为对称矩阵。若对称矩阵 A 可以正交对角化为 Q^T Λ Q，则 f 可以写成最简单的坐标系下的二次型：f(x) = ∑ λ_i y_i^2，极大/极小的性质取决于 λ_i 的符号。</p>
+<h2 id="正文-9">正文</h2>
+<h3 id="18-1-特征分解在曲率分析中的作用">18.1 特征分解在曲率分析中的作用</h3>
+<ul>
+<li>对二阶最优化问题，Hessian 的特征值分布决定了局部曲率。通过对 Hessian 进行特征分解，可以将局部模型转化为若干独立的一维二次型。</li>
+</ul>
+<h3 id="18-2-坐标变换与对角化">18.2 坐标变换与对角化</h3>
+<ul>
+<li>通过坐标变换使 Hessian 或目标函数近似对角化，简化最优化路径与约束分析。</li>
+</ul>
+<h3 id="18-3-练习">18.3 练习</h3>
+<ol>
+<li>设 $f(x) = x^T A x$，$A = \begin{pmatrix}4 & 1\\ 1 & 3\end{pmatrix}$，给出在原点附近的最速下降方向及收敛性分析。</li>
+<li>对 f(x,y)=3x^2+4xy+2y^2，计算 Hessian 的特征值并判断局部极值性质。</li>
+</ol>
+<hr>
+<h1>10. 梯度与最速下降路径的几何解读</h1>
+<p>下面给出 <strong>《梯度与最速下降路径的几何解读》</strong> 的完整笔记草稿。本文从几何视角解释梯度为何指引最速下降/上升的路径，以及优化迭代中路径的几何特征。</p>
+<h2 id="摘要-10">摘要</h2>
+<p>梯度给出方向导数的最大变化方向。对无约束优化问题，沿负梯度逐步迭代的路径在局部看起来是一条逐步向等高线内靠近的曲线。通过例题和直觉图解，展示最速下降路径与曲面切平面的关系。</p>
+<h2 id="关键词-10">关键词</h2>
+<p>梯度下降、最速下降路径、几何直观</p>
+<h2 id="结构-10">结构</h2>
+<ul>
+<li>H2: 负梯度方向与局部极值</li>
+<li>H2: 路径的几何描述</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-10">开头示例</h2>
+<p>对 f(x,y)=x^2+y^2，初始点 (2,0) 采用负梯度方向更新：x_{k+1} = x_k - α ∇f(x_k)。由于 ∇f(x)=(2x,2y)，在起点梯度方向为 (4,0)，若选取步长 α=0.25，则下一步点为 (1,0)，路径逐步靠近原点。</p>
+<h2 id="正文-10">正文</h2>
+<h3 id="19-1-梯度与路径关系">19.1 梯度与路径关系</h3>
+<ul>
+<li>沿负梯度方向的更新可视化为在等高线之间的下滑路径。</li>
+<li>局部线性化帮助理解每一步的前进方向与距离。</li>
+</ul>
+<h3 id="19-2-路径性质">19.2 路径性质</h3>
+<ul>
+<li>路径趋向于在极小点处停止。</li>
+<li>当目标函数是凸的，梯度下降通常具有全局收敛性。</li>
+</ul>
+<h3 id="19-3-练习">19.3 练习</h3>
+<ol>
+<li>对 f(x,y)=x^2+4y^2，初始点 (1,2) 使用梯度下降法，给出第一步的更新与路径直观分析。</li>
+<li>对 f(x,y)=x^3+y^2，讨论在 (0,0) 附近的最速下降路径的特征。</li>
+</ol>
+<hr>
+<h1>11. 正交投影与最小二乘问题的联系</h1>
+<p>下面给出 <strong>《正交投影与最小二乘问题的联系》</strong> 的完整笔记草稿。本文解释正交投影在高维空间中的几何意义，以及最小二乘问题的解可以看作把数据投影到列空间的正交子空间上。</p>
+<h2 id="摘要-11">摘要</h2>
+<p>最小二乘解通常等价于将观测向量投影到列空间的最佳近似。通过正交性原理可以直观理解解的几何含义及其稳定性。</p>
+<h2 id="关键词-11">关键词</h2>
+<p>正交投影、最小二乘、拟合、投影</p>
+<h2 id="结构-11">结构</h2>
+<ul>
+<li>H2: 正交投影的定义</li>
+<li>H2: 最小二乘与投影的关系</li>
+<li>H2: 练习</li>
+</ul>
+<h2 id="开头示例-11">开头示例</h2>
+<p>设 $A \in \mathbb{R}^{m\times n}$，观测向量 $b \in \mathbb{R}^m$，最小二乘解 $x^*$ 满足 $Ax^*$ 收敛到 $b$ 的最小距离。若列空间 $\mathrm{Col}(A)$ 的正交补为 $\mathrm{Col}(A)^{\perp}$，则 $b$ 的最佳逼近在 $\mathrm{Col}(A)$ 上的正交投影为 $Ax^*$，因此 $x^*$ 是投影系数。</p>
+<h2 id="正文-11">正文</h2>
+<h3 id="20-1-正交投影定义">20.1 正交投影定义</h3>
+<ul>
+<li>对任意向量 $v$，存在唯一的向量 $p$ 使得 $v-p \perp W$，其中 $W$ 为某子空间，$p$ 属于 $W$，$p$ 即 $v$ 的在 $W$ 上的正交投影。</li>
+</ul>
+<h3 id="20-2-最小二乘解的几何解释">20.2 最小二乘解的几何解释</h3>
+<ul>
+<li>给定线性系统 $Ax=b$，若 $A$ 的列向量张成的空间为 $\,\mathrm{Col}(A)$，最小二乘解等价于寻找在 $\,\mathrm{Col}(A)$ 上的近似 $Ax$，使得误差 $b-Ax$ 垂直于 $\,\mathrm{Col}(A)$。</li>
+</ul>
+<h2 id="练习-4">练习</h2>
+<ol>
+<li>设 $A=\begin{bmatrix}1&2\\3&4\end{bmatrix}$，$b=\begin{bmatrix}5\\7\end{bmatrix}$，求最小二乘解 $x^*$ 并给出几何解释。</li>
+<li>解释为什么正交投影在高斯-乔丹消元前后仍然等价于最小二乘解。</li>
+</ol>
+<hr>
+<h1>12. 局部线性化在微分方程中的作用</h1>
+<p>下面给出 <strong>《局部线性化在微分方程中的作用》</strong> 的完整笔记草稿。本博文展示如何通过局部线性化将非线性微分方程近似为线性系统，以分析局部行为与稳定性。</p>
+<h2 id="摘要-12">摘要</h2>
+<p>非线性微分方程在分析与数值求解上常常困难。局部线性化通过在平衡点处用雅可比矩阵近似非线性项，将系统转化为线性系统，从而利用线性系统稳定性理论判断局部行为。</p>
+<h2 id="关键词-12">关键词</h2>
+<p>局部线性化、非线性系统、稳定性、雅可比</p>
+<h2 id="结构-12">结构</h2>
+<ul>
+<li>H2: 线性化原理</li>
+<li>H2: 稳定性判据</li>
+<li>H2: 简单实例</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-12">开头示例</h2>
+<p>考虑二阶系统 x’ = f(x)，若 x* 是平衡点且 Df(x*) 存在，则在 x 近似小扰动时，系统近似为线性：ξ’ = Df(x*) ξ，ξ = x-x*。</p>
+<h2 id="正文-12">正文</h2>
+<h3 id="21-1-线性化原理">21.1 线性化原理</h3>
+<ul>
+<li>将非线性项在平衡点处的泰勒展开截断到一阶，得到局部线性系统。</li>
+</ul>
+<h3 id="21-2-稳定性分析">21.2 稳定性分析</h3>
+<ul>
+<li>线性化的特征值决定了局部稳定性：若所有特征值的实部都小于 0，平衡点局部渐近稳定；若存在实部大于 0 的特征值，局部失稳。</li>
+</ul>
+<h3 id="21-3-练习">21.3 练习</h3>
+<ol>
+<li>对系统 x’ = y, y’ = -x + x^2，找出平衡点并用线性化判断局部稳定性。</li>
+<li>对 x’ = x - x^3，分析在原点的局部稳定性。</li>
+</ol>
+<hr>
+<h1>13. 特征分解在几何中的直观应用</h1>
+<p>下面给出 <strong>《特征分解在几何中的直观应用》</strong> 的完整笔记草稿。本博文介绍如何利用特征分解将几何对象在更易处理的坐标系中表示与分析。</p>
+<h2 id="摘要-13">摘要</h2>
+<p>对称矩阵可以被正交变换对角化，这使得二次形式在新坐标系中成为简单的和的形式。通过几何投影、曲率分析和坐标变换的案例，说明特征分解在高维几何中的作用。</p>
+<h2 id="关键词-13">关键词</h2>
+<p>特征分解、对角化、坐标变换、正交基</p>
+<h2 id="结构-13">结构</h2>
+<ul>
+<li>H2: 定义与直观</li>
+<li>H2: 对角化与几何意义</li>
+<li>H2: 应用示例</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-13">开头示例</h2>
+<p>对对称矩阵 $A$，可以写成 $A = Q \Lambda Q^T$，其中 $Q$ 为正交矩阵，$\Lambda$ 为对角矩阵。若考虑二次型 $x^T A x$，则在坐标变换 $y = Q^T x$ 下，$x^T A x = y^T \Lambda y = \sum_i \lambda_i y_i^2$，极值性质由 $\lambda_i$ 的符号决定。</p>
+<h2 id="正文-13">正文</h2>
+<h3 id="22-1-特征分解与二次型">22.1 特征分解与二次型</h3>
+<ul>
+<li>通过特征分解将二次型分解成独立的一维二次型，便于分析符号、极值与稳定性。</li>
+</ul>
+<h3 id="22-2-坐标变换的几何含义">22.2 坐标变换的几何含义</h3>
+<ul>
+<li>坐标变换改变了观察角度，使得问题在新坐标系中更易理解和求解。</li>
+</ul>
+<h3 id="22-3-练习">22.3 练习</h3>
+<ol>
+<li>对 f(x)=x^T A x，A= [ [2,1], [1,3] ]，给出在原点处的特征值并解释几何意义。</li>
+<li>对向量值函数 F(x) = Ax 的线性变换，在单位球上讨论投影方向。</li>
+</ol>
+<hr>
+<h1>14. 从微分到线性代数的整合视角</h1>
+<p>下面给出 <strong>《从微分到线性代数的整合视角》</strong> 的完整笔记草稿。本博文总结微分（一阶、二阶）如何通过线性代数语言呈现，并讨论两者在解决实际问题时相互促进的方式。</p>
+<h2 id="摘要-14">摘要</h2>
+<p>微分将局部性质用线性算子来刻画，线性代数提供了工具来处理这些算子（矩阵、特征值、对角化、正交化）。通过将差分、线性近似和二阶形式统一在矩阵语言下，学习者可以在解题时快速建立统一框架。</p>
+<h2 id="关键词-14">关键词</h2>
+<p>微分、线性代数、桥梁、矩阵</p>
+<h2 id="结构-14">结构</h2>
+<ul>
+<li>H2: 一阶与雅可比</li>
+<li>H2: 二阶与 Hessian</li>
+<li>H2: 桥梁与应用</li>
+<li>H3: 练习</li>
+</ul>
+<h2 id="开头示例-14">开头示例</h2>
+<p>设 $f: \mathbb{R}^n \to \mathbb{R}$，在点 $x_0$ 的局部近似由一阶导数给出：$f(x) \approx f(x_0) + \nabla f(x_0)^T (x- x_0)$。若引入正交基底，使得梯度在新坐标系中仅有一个分量，这样的简化使得高维问题可以分成为若干一维问题处理。</p>
+<h2 id="正文-14">正文</h2>
+<h3 id="23-1-一阶微分与雅可比">23.1 一阶微分与雅可比</h3>
+<ul>
+<li>$df_x(h) = \nabla f(x)^T h$，即线性映射在方向 $h$ 的作用。</li>
+</ul>
+<h3 id="23-2-二阶微分与-Hessian">23.2 二阶微分与 Hessian</h3>
+<ul>
+<li>$H_f(x)$ 描述二阶信息，提供曲率信息。</li>
+</ul>
+<h3 id="23-3-桥梁概述">23.3 桥梁概述</h3>
+<ul>
+<li>将微分与线性代数的工具结合，提升问题建模与求解的效率。</li>
+</ul>
+<h2 id="练习-5">练习</h2>
+<ol>
+<li>给定 $f(x,y) = x^2 y + y^3$，计算在点 $(1,1)$ 的梯度、$H_f$，并讨论极值的潜在性质。</li>
+<li>对向量值函数 $F(x) = Ax + b$，给出局部线性化及其在优化中的应用场景。</li>
+</ol>
+<hr>
+<h1>15. 综述：从微分到几何的统一视角</h1>
+<p>下面给出 <strong>《综述：从微分到几何的统一视角》</strong> 的完整笔记草稿。本博文回顾前述 10–23 篇的核心思想，强调微分的线性本质、二阶信息的几何解释，以及线性代数工具在多元微积分中的统一作用。</p>
+<h2 id="摘要-15">摘要</h2>
+<p>通过回顾与对比，本文揭示：多元微积分的核心问题都可转化为线性代数问题，关键在于选择合适的投影、坐标系和近似策略（如雅可比、Hessian、特征分解等）。这种统一视角有助于简化推导、提升直觉和减少错误。</p>
+<h2 id="关键词-15">关键词</h2>
+<p>统一视角、线性代数、微分、几何</p>
+<h2 id="结构-15">结构</h2>
+<ul>
+<li>H2: 核心思想回顾</li>
+<li>H2: 常见题型的解题框架</li>
+<li>H2: 进一步阅读与扩展</li>
+</ul>
+<h2 id="开头示例-15">开头示例</h2>
+<p>回顾本系列的核心结论：在高维空间中，局部行为可以通过一阶线性近似（雅可比）与二阶信息 ($\mathrm{Hessian}$) 来描述，通过适当的坐标变换（对角化、正交化）可以将复杂问题拆解为更易处理的子问题。</p>
+<h2 id="练习-6">练习</h2>
+<ol>
+<li>设 f(x) = x^T A x，其中 A 对称，给出在原点处的二阶近似并讨论极值性质。</li>
+<li>选择一个非凸函数，说明在某些点靠近该点时的局部行为如何通过矩阵工具分析。</li>
+</ol>
+<hr>
+<h2 id="总结">总结</h2>
+<p>本系列从多元函数的基本概念出发，系统性地构建了微分与线性代数之间的桥梁：</p>
+<ol>
+<li><strong>一阶工具</strong>：梯度、方向导数、雅可比矩阵提供了局部线性化的基础</li>
+<li><strong>二阶工具</strong>：Hessian 矩阵揭示了曲率与极值性质</li>
+<li><strong>线性代数桥梁</strong>：特征分解、正交投影、坐标变换将微积分问题转化为矩阵运算</li>
+<li><strong>应用场景</strong>：最优化、微分方程、最小二乘等问题都可以通过这一统一框架进行分析</li>
+</ol>
+<p>通过这一系统性视角，读者可以更深入地理解多元微积分的本质，并在解决实际问题时快速选择合适的方法和工具。</p>
+]]></content>
+      <categories>
+        <category>数学分析</category>
+      </categories>
+      <tags>
+        <tag>多元函数</tag>
+        <tag>线性代数</tag>
+        <tag>微分</tag>
+        <tag>Hessian</tag>
+        <tag>梯度</tag>
+        <tag>雅可比</tag>
+        <tag>最优化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>从sprintf到snprintf字符输出</title>
     <url>/posts/adec.html</url>
     <content><![CDATA[<p><strong>sprintf() 是 C 标准库中的一个函数，用于将格式化的字符串输出到一个字符数组中。它有类似于 printf() 的语法和用法，但不是将数据输出到控制台，而是将数据输出到指定的字符数组中。</strong></p>
@@ -806,114 +1809,6 @@ d(i-1,j-1)+1,& \text{当}A_i=A_j\\
         <tag>sprintf</tag>
         <tag>snprintf</tag>
         <tag>输出</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C语言中qsort函数</title>
-    <url>/posts/695b.html</url>
-    <content><![CDATA[<p><code>#include&lt;stdlib.h&gt;</code></p>
-<p>qsort ( 数组第一个元素的地址，数数组中的元素个数，每个元素的大小，比较函数 )<span id="more"></span></p>
-<p>1、地址的话，像数组 a[10] ,直接写a就行。<br>
-2、元素个数也是直接写。<br>
-3、元素大小一般用 sizeof ( int ) 或者其他类型。<br>
-4、比较函数，<code>int compare ( const void * a ,const void * b)</code><br>
-<code>{  return ( * ( int *) a -* (int *) b ) ;    }</code></p>
-<p>return的东西可以改变   a - b 时是升序，b - a 时是降序</p>
-<p>具体一点的用法如下：</p>
-<p>七种qsort排序方法</p>
-<p>&lt;排序都是采用的从小到大排序&gt;</p>
-<p>一、对int类型数组排序</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> num[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span> <span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">     <span class="keyword">return</span> *(<span class="type">int</span> *)a - *(<span class="type">int</span> *)b; </span><br><span class="line">&#125; </span><br><span class="line">qsort(num,<span class="number">100</span>,<span class="keyword">sizeof</span>(num[<span class="number">0</span>]),cmp);</span><br></pre></td></tr></table></figure>
-<p>二、对char类型数组排序（同int类型）</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> word[<span class="number">50</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">return</span> *(<span class="type">char</span> *)a - *(<span class="type">int</span> *)b; </span><br><span class="line">&#125; </span><br><span class="line">qsort(word,<span class="number">100</span>,<span class="keyword">sizeof</span>(word[<span class="number">0</span>]),cmp);</span><br></pre></td></tr></table></figure>
-<p>三、对double类型数组排序</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">double</span> in[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">     <span class="keyword">return</span> *(<span class="type">double</span> *)a &gt; *(<span class="type">double</span> *)b ? <span class="number">1</span> : <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(in,<span class="number">100</span>,<span class="keyword">sizeof</span>(in[<span class="number">0</span>]),cmp)； </span><br></pre></td></tr></table></figure>
-<p>四、对结构体一级排序</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">  <span class="type">double</span> data; </span><br><span class="line">  <span class="type">int</span> other; </span><br><span class="line">&#125;s[<span class="number">100</span>] </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照data的值从小到大将结构体排序,关于结构体内的排序关键数据data的类型可以很多种，参考上面的例子写 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a ,<span class="type">const</span> <span class="type">void</span> *b)</span> </span><br><span class="line">&#123; </span><br><span class="line">   <span class="keyword">return</span> (*(In *)a).data &gt; (*(In *)b).data ? <span class="number">1</span> : <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
-<p>五、对结构体二级排序</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">  <span class="type">int</span> x; </span><br><span class="line">  <span class="type">int</span> y; </span><br><span class="line">&#125;s[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照x从小到大排序，当x相等时按照y从大到小排序 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">In</span> *<span class="title">c</span> =</span> (In *)a; </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">In</span> *<span class="title">d</span> =</span> (In *)b; </span><br><span class="line">  <span class="keyword">if</span>(c-&gt;x != d-&gt;x) <span class="keyword">return</span> c-&gt;x - d-&gt;x; </span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> d-&gt;y - c-&gt;y; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
-<p>六、对结构体三级排序（都是从小到大）</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">item</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> num,length,width;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">comp</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *p1,<span class="type">const</span> <span class="type">void</span> *p2)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">item</span> *<span class="title">c</span>=</span>(item*)p1;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">item</span> *<span class="title">d</span>=</span>(item*)p2;</span><br><span class="line">    <span class="keyword">if</span>(c-&gt;num!=d-&gt;num)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> d-&gt;num&lt;c-&gt;num?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(c-&gt;length!=d-&gt;length&amp;&amp;c-&gt;num==d-&gt;num)</span><br><span class="line">    <span class="keyword">return</span> d-&gt;length&lt;c-&gt;length?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> d-&gt;width&lt;c-&gt;width?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line">item ss[<span class="number">1200</span>];</span><br><span class="line">qsort(ss,n,<span class="keyword">sizeof</span>(ss[<span class="number">0</span>]),comp);</span><br></pre></td></tr></table></figure>
-<p>七、对字符串进行排序</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line"><span class="type">int</span> data; </span><br><span class="line"><span class="type">char</span> str[<span class="number">100</span>]; </span><br><span class="line">&#125;s[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照结构体中字符串str的字典顺序排序 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span> <span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line"><span class="keyword">return</span> <span class="built_in">strcmp</span>( (*(In *)a)-&gt;str , (*(In *)b)-&gt;str ); </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
-<p>八、计算几何中求凸包的cmp</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *a,<span class="type">const</span> <span class="type">void</span> *b)</span> <span class="comment">//重点cmp函数，把除了1点外的所有点，旋转角度排序 </span></span><br><span class="line">&#123; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> *<span class="title">c</span>=</span>(point *)a; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> *<span class="title">d</span>=</span>(point *)b; </span><br><span class="line"><span class="keyword">if</span>( calc(*c,*d,p[<span class="number">1</span>]) &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>; </span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>( !calc(*c,*d,p[<span class="number">1</span>]) &amp;&amp; dis(c-&gt;x,c-&gt;y,p[<span class="number">1</span>].x,p[<span class="number">1</span>].y) &lt; dis(d-&gt;x,d-&gt;y,p[<span class="number">1</span>].x,p[<span class="number">1</span>].y)) <span class="comment">//如果在一条直线上，则把远的放在前面 </span></span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>; </span><br><span class="line"><span class="keyword">else</span> <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>快速排序</tag>
-        <tag>结构体排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Memset初始化的运用</title>
-    <url>/posts/54d4.html</url>
-    <content><![CDATA[<p><code>#include&lt;string.h&gt;</code></p>
-<p><code>memset( void*s, char ch, unsigned n);</code><span id="more"></span></p>
-<p><code>void*s </code>是要求的第一个地址，<code>char ch</code>是初始化的值（也可以为数字），<code>n</code>为sizeof( a ) **前N个字节</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> arr[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">memset</span>(arr, <span class="number">0</span>, <span class="keyword">sizeof</span>(arr)); </span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> str[<span class="number">100</span>];</span><br><span class="line">　 <span class="built_in">memset</span>(str,<span class="number">0</span>,<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
-<p>更重要的是，memset在结构体初始化方面的运用</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sample_struct</span></span></span><br><span class="line"><span class="class">　 &#123;</span></span><br><span class="line">　　     <span class="type">char</span> csName[<span class="number">16</span>];</span><br><span class="line">　　     <span class="type">int</span> iSeq;</span><br><span class="line">　　     <span class="type">int</span> iType;</span><br><span class="line">　 &#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sample_strcut</span> <span class="title">stTest</span>;</span></span><br><span class="line"><span class="built_in">memset</span>(&amp;stTest,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">struct</span> sample_struct));</span><br></pre></td></tr></table></figure>
-<p>如果是数组的话</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">memset</span>(TEST,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">struct</span> sample_struct)*<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>数组初始化</tag>
-        <tag>结构体初始化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>大学生数学竞赛备考笔记</title>
-    <url>/posts/5ec6.html</url>
-    <content><![CDATA[<h1>定积分</h1>
-<p><img src="../images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20251201195739_51_138.jpg" alt=""><br>
-<img src="../images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20251201195740_52_138.jpg" alt=""></p>
-<h1>反常积分</h1>
-<p><img src="../images/11aaad4468ba0ebff928317cd0ae328d.jpg" alt=""><br>
-<img src="../images/ad9c198049bcd130cc06627b0514a6f2.jpg" alt=""></p>
-<h1>二重积分</h1>
-<p><img src="../images/a7d2b10b65825af01d1aaa3e24391ba5.jpg" alt=""><br>
-<img src="../images/2b64d7259f66f7f21f7aace47214a61e.jpg" alt=""></p>
-<h1>三重积分</h1>
-<p><img src="../images/3c20e3aae4c3f3754fc60f29d5bce301.jpg" alt=""><br>
-<img src="../images/5e920526911739fc6519fff2c84720ee.jpg" alt=""></p>
-<h1>曲线积分</h1>
-<p><img src="../images/47f67239ae9f56f09b32d09ac867c1b2.jpg" alt=""><br>
-<img src="../images/e07f19e68e8fb95f5ebca72a938457c8.jpg" alt=""></p>
-<h1>曲面积分</h1>
-<p><img src="../images/294a6c1ad32b67c46d698fb03267ebfd.jpg" alt=""><br>
-<img src="../images/d6b6e1574b07c043bdc53ca802fc8be2.jpg" alt=""></p>
-<h1>微分方程</h1>
-<p><img src="../images/b15c7293bffbbbdbbc88b05fb908e682.jpg" alt=""><br>
-<img src="../images/37b167c158bdcdbf0a44f94cdb6f5f27.jpg" alt=""></p>
-<h1>空间解析几何</h1>
-<p><img src="../images/ba641cac1dbb63e2fb628fa45ec261b3.jpg" alt=""><br>
-<img src="../images/26555934c2a1bd249ff05d5eabd5bc7f.jpg" alt=""></p>
-<h1>无穷级数</h1>
-<p><img src="../images/67cc1ce534d6c3599bcc7f20535dedd2.jpg" alt=""></p>
-<h1>中值定理</h1>
-<p><img src="../images/f535158f8c13b4f2fa227630e84d105f.jpg" alt=""></p>
-<h1>不等式</h1>
-<p><img src="../images/44a76330b9c189a039f2e8da148dfea3.jpg" alt=""></p>
-<h1>应试技巧</h1>
-<p><img src="../images/599277b5ec6ec0d0ea58c6056db9dccd.jpg" alt=""></p>
-]]></content>
-      <categories>
-        <category>数学分析</category>
-      </categories>
-      <tags>
-        <tag>微积分</tag>
-        <tag>微分方程</tag>
-        <tag>空间解析几何</tag>
-        <tag>级数</tag>
-        <tag>中值定理</tag>
-        <tag>不等式</tag>
       </tags>
   </entry>
   <entry>
@@ -1533,567 +2428,6 @@ d(i-1,j-1)+1,& \text{当}A_i=A_j\\
       </tags>
   </entry>
   <entry>
-    <title>高等数学多元函数章节与线性代数内在联系探究（完整系列）</title>
-    <url>/posts/series-complete.html</url>
-    <content><![CDATA[<h1>系列总览</h1>
-<p>本系列共15篇文章，系统探讨多元函数微积分与线性代数的内在联系。从极值、梯度、方向导数出发，通过雅可比矩阵、Hessian矩阵的线性代数工具，构建从微分到几何的统一视角。</p>
-<h2 id="15篇提纲">15篇提纲</h2>
-<ol>
-<li>多元函数极值与凸性</li>
-<li>梯度与方向导数的几何解读</li>
-<li>雅可比矩阵在局部线性化中的作用</li>
-<li>Hessian 矩阵与极值性质解析</li>
-<li>线性映射视角下的微分与最速上升</li>
-<li>方向导数与内积的联系</li>
-<li>多元中值定理的几何含义</li>
-<li>多元泰勒展开与 Hessian 的应用</li>
-<li>线性代数工具在最优化中的应用</li>
-<li>梯度与最速下降路径的几何解读</li>
-<li>正交投影与最小二乘问题的联系</li>
-<li>局部线性化在微分方程中的作用</li>
-<li>特征分解在几何中的直观应用</li>
-<li>从微分到线性代数的整合视角</li>
-<li>综述：从微分到几何的统一视角</li>
-</ol>
-<hr>
-<h1>1. 多元函数极值与凸性</h1>
-<p>下面给出 <strong>《多元函数极值与凸性》</strong> 的完整笔记草稿。本博文从极值的必要与充分条件出发，结合线性代数工具（矩阵正定性、特征值等）来判断局部极值和全局凸性。</p>
-<h2 id="摘要">摘要</h2>
-<p>在多元函数的极值问题中，二阶信息（$H_f$ 矩阵）提供了比梯度更丰富的局部判据。若 $H_f(x_0)$ 在点 $x_0$ 正定，该点是严格局部极小点；若负定，则为严格局部极大点；若不定则有可能是鞍点。通过将 Hessian 的特征值问题与二次型的正定性联系起来，可将极值判定转化为线性代数运算，进而与凸性理论相连。</p>
-<h2 id="关键词">关键词</h2>
-<p>极值、凸性、$H_f$、特征值、二阶判别、局部极值</p>
-<h2 id="结构">结构</h2>
-<ul>
-<li>H2: 定义与背景</li>
-<li>H2: 二阶充分条件</li>
-<li>H3: 例题与应用</li>
-</ul>
-<h2 id="开头示例">开头示例</h2>
-<p>设 $f(x,y)=x^2+y^2$。显然在原点有局部极小性，$H_f(0,0)=\begin{pmatrix}2&0\\0&2\end{pmatrix}$，特征值均为 2，正定，故原点为严格局部极小点。反过来，若 $f(x,y)=x^2-y^2$，则 $H_f(0,0)=\begin{pmatrix}2&0\\0&-2\end{pmatrix}$，特征值符号混合，存在鞍点。</p>
-<h2 id="正文">正文</h2>
-<h3 id="10-1-二阶导数与-Hessian">10.1 二阶导数与 Hessian</h3>
-<ul>
-<li>定义：$H_f(x)=\left[\frac{\partial^2 f}{\partial x_i \partial x_j}(x)\right]$</li>
-<li>二阶形式：$h^T H_f(x) h$</li>
-</ul>
-<h3 id="10-2-判别规则">10.2 判别规则</h3>
-<ul>
-<li>若 $H_f(x_0)$ 正定，则 $x_0$ 为严格局部最小点</li>
-<li>若 $H_f(x_0)$ 负定，则 $x_0$ 为严格局部最大点</li>
-<li>若 $H_f(x_0)$ 不定，则需结合梯度信息或进一步分析</li>
-</ul>
-<h3 id="10-3-例题">10.3 例题</h3>
-<ul>
-<li>例1：$f(x,y)=x^2+y^2$ 在 $(0,0)$ 处的 Hessian 为 $\begin{pmatrix}2&0\\0&2\end{pmatrix}$ → 严格局部最小</li>
-<li>例2：$f(x,y)=x^4+y^2$ 在 $(0,0)$ 处的 Hessian 为 $\begin{pmatrix}0&0\\0&2\end{pmatrix}$，Hessian 半正定但不严格，需进一步分析</li>
-</ul>
-<h2 id="练习题">练习题</h2>
-<ol>
-<li>求 $f(x,y)=x^2+2xy+y^2$ 的 Hessian，并在点 $(1,-1)$ 判断极值性质。</li>
-<li>给定 $f(x,y)=x^3+y^3$，写出 Hessian 并讨论 $(0,0)$ 的极值性质。</li>
-<li>证明：若 $f$ 在某区域内二阶连续可微且 Hessian 在该区域正定，则 $f$ 在该区域凸。</li>
-</ol>
-<hr>
-<h1>2. 梯度与方向导数的几何解读</h1>
-<p>下面给出 <strong>《梯度与方向导数的几何解读》</strong> 的完整笔记草稿。本博文从几何角度揭示梯度的意义，以及方向导数如何通过梯度内积体现空间方向上的变化率。</p>
-<h2 id="摘要-2">摘要</h2>
-<p>梯度被视为等值面法向量，方向导数则是沿任意单位向量的切线方向的导数。二者通过内积联系起来，形成了一个统一的线性代数框架来描述函数在各个方向的变化率。本文通过公式推导、几何直观和简单实例，帮助读者建立从微分到线性代数的直观联系。</p>
-<h2 id="关键词-2">关键词</h2>
-<p>梯度、方向导数、内积、线性代数、几何解释</p>
-<h2 id="结构-2">结构</h2>
-<ul>
-<li>H2: 梯度概念</li>
-<li>H2: 方向导数的内积形式</li>
-<li>H2: 几何意义与例子</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-2">开头示例</h2>
-<p>设 $f(x,y)=x^2+y^2$。则<br>
-$$\nabla f(x,y)=(2x,2y)^{\top}.$$<br>
-在点 $(1,2)$ 处，梯度为 $(2,4)$，方向导数在单位向量 $u=(1/\sqrt{2},1/\sqrt{2})$ 的值为<br>
-$$D_u f(1,2)=\nabla f(1,2)^{\top} u = (2,4)\cdot(1/\sqrt{2},1/\sqrt{2})=\frac{6}{\sqrt{2}}.$$<br>
-这体现了方向导数等于梯度与方向向量的内积。</p>
-<h2 id="正文-2">正文</h2>
-<h3 id="11-1-梯度的定义与性质">11.1 梯度的定义与性质</h3>
-<ul>
-<li>设 $f: \mathbb{R}^n \to \mathbb{R}$，梯度 $\nabla f(x)$ 由各分量偏导数组成：<br>
-$$\nabla f(x)=\left(\frac{\partial f}{\partial x_1},\dots,\frac{\partial f}{\partial x_n}\right)^{\top}.$$</li>
-<li>梯度在某点的方向反映该点沿各方向的最大速率变化方向。</li>
-</ul>
-<h3 id="11-2-方向导数的内积表达">11.2 方向导数的内积表达</h3>
-<ul>
-<li>对任意单位向量 $u$，方向导数：<br>
-$$D_u f(x)=\nabla f(x)^{\top} u.$$</li>
-<li>当 $u = \nabla f(x)/\|\nabla f(x)\|$ 时，方向导数达到最大，等于 $\|\nabla f(x)\|$。</li>
-</ul>
-<h3 id="11-3-几何意义与练习">11.3 几何意义与练习</h3>
-<ul>
-<li>例子与图示：等高线/等值面在法向方向上的跳跃与梯度大小的关系。</li>
-<li>练习：给定 f(x,y)=x^2+3y^2，计算 (a,b) 处的梯度、单位方向 u，以及在 u 的方向导数。</li>
-</ul>
-<h2 id="练习题-2">练习题</h2>
-<ol>
-<li>对 f(x,y)=x^2-2xy+y^2，计算在点 (1,1) 处的梯度及方向导数沿单位向量 u=(1/√2,-1/√2)。</li>
-<li>对向量值函数 F(x,y)=(x^2, y^2)，写出梯度与每分量的方向导数。</li>
-</ol>
-<hr>
-<h1>3. 雅可比矩阵在局部线性化中的作用</h1>
-<p>下面给出 <strong>《雅可比矩阵在局部线性化中的作用》</strong> 的完整笔记草稿。本文解释如何用雅可比矩阵近似描述在一个点附近的非线性向量值函数的行为，以及这对理解微分的本质有何帮助。</p>
-<h2 id="摘要-3">摘要</h2>
-<p>在开集 $U=\mathbb{R}^n$的增量近似可以用一阶导数（雅可比矩阵）来描述：<br>
-$$F(x+h) \approx F(x) + J_F(x) h.$$<br>
-这就是局部线性化的核心思想。通过一个简单例子，我们可以看出如何用雅可比矩阵把非线性映射转化为线性映射的作用。</p>
-<h2 id="关键词-3">关键词</h2>
-<p>雅可比矩阵、局部线性化、线性近似、导数</p>
-<h2 id="结构-3">结构</h2>
-<ul>
-<li>H2: 定义与直观</li>
-<li>H2: 局部线性化公式</li>
-<li>H2: 举例与应用</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-3">开头示例</h2>
-<p>设 $F(x,y)=\bigl(xe^{y},\, y\sin x\bigr)$，在点 $(0,0)$ 附近的线性近似。</p>
-<ul>
-<li>雅可比矩阵：<br>
-$$J_F(x,y)=\begin{pmatrix} e^{y} & xe^{y} \\ y\cos x & \sin x \end{pmatrix}, \quad J_F(0,0)=\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}.$$</li>
-<li>线性化：<br>
-$$F(x,y) \approx F(0,0) + J_F(0,0) \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} + \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix}.$$<br>
-这表明在原点附近，映射的第一分量沿 x 方向线性变化，第二分量保持近似不变。</li>
-</ul>
-<h2 id="正文-3">正文</h2>
-<h3 id="12-1-定义与直观">12.1 定义与直观</h3>
-<ul>
-<li>对 $F: \mathbb{R}^n → \mathbb{R}^m$，雅可比矩阵 J_F(x) 是 m×n 矩阵，其元素为 \partial F_i/\partial x_j。</li>
-<li>当 h → 0 时，F(x+h) 的增量可以由 J_F(x) 乘以 h 表示：,F(x+h) \approx F(x) + J_F(x) h。</li>
-</ul>
-<h3 id="12-2-局部线性化的意义">12.2 局部线性化的意义</h3>
-<ul>
-<li>微分本质上就是在一个点的局部把非线性映射近似为线性映射，从而可以用线性代数工具分析局部行为。</li>
-<li>这也是数值分析中线性近似求解的基础。</li>
-</ul>
-<h3 id="12-3-示例">12.3 示例</h3>
-<p>例：对 F(x,y)=(x^2, y^2) 在点 (1,2) 处的局部线性化：<br>
-$J_F(x,y)=\begin{pmatrix}2x & 0\\0 & 2y\end{pmatrix},\ J_F(1,2)=\begin{pmatrix}2 & 0\\0 & 4\end{pmatrix}$.<br>
-因此 F(x,y) ≈ F(1,2) + J_F(1,2) ( [x-1, y-2]^T ).</p>
-<h2 id="练习">练习</h2>
-<ol>
-<li>求 F(x,y)= (\sin x, e^y) 在点 (0,0) 的雅可比矩阵及线性近似。</li>
-<li>给定向量值函数 $F: \mathbb{R}^2 → \mathbb{R}^2，F(x,y)=(x^2+y, x-y^3)$，在点 (1,1) 计算 J_F、线性近似和误差级别。</li>
-</ol>
-<hr>
-<h1>4. Hessian 矩阵与极值性质解析</h1>
-<p>下面给出 <strong>《Hessian 矩阵与极值性质解析》</strong> 的完整笔记草稿。本博文聚焦 Hessian 的定义、二阶充分条件以及在凸分析中的作用。</p>
-<h2 id="摘要-4">摘要</h2>
-<p>Hessian 矩阵描述了二阶偏导数信息，给出曲面的局部曲率。若在某点 $x_0$，$H_f(x_0)$ 为正定/负定，则该点分别是严格局部极小点/极大点。若 Hessian 不定，需要结合一阶梯度信息与更高阶信息进行判断。通过几个典型例子，可以看到平方和型函数的简单极值，以及更复杂的非线性函数在局部的极值性质。</p>
-<h2 id="关键词-4">关键词</h2>
-<p>Hessian、二阶微分、正定、极值、局部极值</p>
-<h2 id="结构-4">结构</h2>
-<ul>
-<li>H2: 定义与几何含义</li>
-<li>H2: 二阶判别法</li>
-<li>H2: 例题</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-4">开头示例</h2>
-<p>对 $f(x,y)=x^2+y^2$，在原点，其 Hessian 为 $\operatorname{diag}(2,2)$，特征值均为正，故原点严格局部极小。对 $f(x,y)=x^2-y^2$，$H_f(0,0)=\operatorname{diag}(2,-2)$，特征值符号混合，存在鞍点。</p>
-<h2 id="正文-4">正文</h2>
-<h3 id="13-1-Hessian-的定义">13.1 Hessian 的定义</h3>
-<ul>
-<li>$H_f(x) = \left[\frac{\partial^2 f}{\partial x_i \partial x_j}(x)\right]$, 对称矩阵。</li>
-<li>二阶微分形式：$h^T H_f(x) h$。</li>
-</ul>
-<h3 id="13-2-二阶判别法">13.2 二阶判别法</h3>
-<ul>
-<li>如果 $H_f(x_0)$ 正定，则 $x_0$ 为严格局部最小点</li>
-<li>如果 $H_f(x_0)$ 负定，则 $x_0$ 为严格局部最大点</li>
-<li>如果 $H_f(x_0)$ 不定，则需要进一步分析</li>
-</ul>
-<h3 id="13-3-例题">13.3 例题</h3>
-<ul>
-<li>例1：$f(x,y)=x^2+y^2$，$H_f(0,0)=\begin{pmatrix}2&0\\0&2\end{pmatrix}$ -&gt; 极小</li>
-<li>例2：$f(x,y)=x^4+y^2$，$H_f(0,0)=\begin{pmatrix}0&0\\0&2\end{pmatrix}$ 半正定，需结合梯度做进一步分析</li>
-</ul>
-<h2 id="练习-2">练习</h2>
-<ol>
-<li>对 $f(x,y)= x^3 + y^4$，在 $(0,0)$ 处计算 Hessian，判断极值性质并解释结论。</li>
-<li>给定 $f(x,y)= x^2 + 3xy + y^2$，计算 Hessian，并判断 $(0,0)$ 的极值性质。</li>
-</ol>
-<hr>
-<h1>5. 线性映射视角下的微分与最速上升</h1>
-<p>下面给出 <strong>《线性映射视角下的微分与最速上升》</strong> 的完整笔记草稿。本文将微分理解为局部线性映射，并将梯度与最速上升方向的关系从矩阵角度表达清楚。</p>
-<h2 id="摘要-5">摘要</h2>
-<p>微分在向量值函数的情形下可以看作一个线性映射，记作 $df_x: R^n → R^m$。若对标量函数 f，则 $df_x(h) = ∇f(x)^T h$。梯度的模 length ∥∇f(x)∥ 决定了在单位方向上的最大变化率，且该方向即为最速上升方向。</p>
-<h2 id="关键词-5">关键词</h2>
-<p>线性映射、微分、梯度、最速上升</p>
-<h2 id="结构-5">结构</h2>
-<ul>
-<li>H2: 微分的线性本质</li>
-<li>H2: 梯度与最速上升方向</li>
-<li>H2: 例题与直观</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-5">开头示例</h2>
-<p>设 $f(x,y)=x^2+y^2$。对点 $(a,b)$，梯度为 $\nabla f=(2a,2b)$，单位向量 $u = \nabla f/\|\nabla f\|$ 指向最速上升方向，方向导数最大值为 $\|\nabla f\|$。对任意 $h$，线性近似给出：$f(a+h) \approx f(a) + \nabla f(a)^T h$。</p>
-<h2 id="正文-5">正文</h2>
-<h3 id="14-1-微分的线性本质">14.1 微分的线性本质</h3>
-<ul>
-<li>对标量函数 $f: \mathbb{R}^n → \mathbb{R}$，微分 $df_x$ 是一个线性映射，使得 $f(x+h) \approx f(x) + df_x(h)$。</li>
-<li>其中 $df_x(h) = \nabla f(x)^T h$。</li>
-</ul>
-<h3 id="14-2-最速上升方向">14.2 最速上升方向</h3>
-<ul>
-<li>方向导数 $D_u f(x) = \nabla f(x)^T u$，最大值在 $u = \nabla f/\|\nabla f\|$ 处，等于 $\|\nabla f\|$。</li>
-<li>通过 Cauchy–Schwarz 不等式可得：$|D_u f(x)| \le \|\nabla f(x)\|\|u\|$，等号在 $u$ 与 $\nabla f$ 同向时成立。</li>
-</ul>
-<h3 id="14-3-练习">14.3 练习</h3>
-<ol>
-<li>对 f(x,y)=x^2+2xy+y^2，在点 (1, -1) 计算 ∇f，并给出其在单位向量 u=(cos θ, sin θ) 上的方向导数表达式。</li>
-<li>对 F(x,y)=(x^2, y^2) 的分量，写出每个分量的微分及对应的线性近似。</li>
-</ol>
-<hr>
-<h1>6. 方向导数与内积的联系</h1>
-<p>下面给出 <strong>《方向导数与内积的联系》</strong> 的完整笔记草稿。本博文将方向导数的内积表述、几何直观和在多变量优化中的应用系统化。</p>
-<h2 id="摘要-6">摘要</h2>
-<p>方向导数 $D_u f(x) = \nabla f(x)^T u$ 将方向导数转化为梯度与方向向量的内积。该表达揭示了方向导数在单位方向上的响应等价于梯度的投影，最大值发生在梯度方向上。通过几个直观例子，展示内积如何把方向信息编码到微分中。</p>
-<h2 id="关键词-6">关键词</h2>
-<p>方向导数、内积、梯度、投影、几何解释</p>
-<h2 id="结构-6">结构</h2>
-<ul>
-<li>H2: 方向导数的定义</li>
-<li>H2: 内积形式与几何意义</li>
-<li>H2: 例题</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-6">开头示例</h2>
-<p>设 $f(x,y)=x^2+y^2$，则 $\nabla f=(2x,2y)$。在点 $(1,2)$ 处，单位向量 $u=(1/\sqrt{2},1/\sqrt{2})$ 的方向导数为<br>
-$$D_u f(1,2)=\nabla f(1,2)^T u = (2,4)\cdot(1/\sqrt{2},1/\sqrt{2})=\frac{6}{\sqrt{2}}.$$<br>
-这表明方向导数等于梯度与方向向量的内积。</p>
-<h2 id="正文-6">正文</h2>
-<h3 id="11-1-方向导数的定义与性质">11.1 方向导数的定义与性质</h3>
-<ul>
-<li>设 $f: \mathbb{R}^n \to \mathbb{R}$，方向导数在单位向量 $u$ 的定义：<br>
-$$D_u f(x)=\lim_{h\to0}\frac{f(x+hu)-f(x)}{h}.$$</li>
-<li>若 $f$ 在 $x$ 可微，则<br>
-$$D_u f(x)=\nabla f(x)^T u.$$</li>
-</ul>
-<h3 id="11-2-内积形式与几何意义">11.2 内积形式与几何意义</h3>
-<ul>
-<li>$D_u f(x) = \nabla f(x)^T u$。</li>
-<li>当 $u=\nabla f(x)/\|\nabla f(x)\|$ 时，$D_u f(x)=\|\nabla f(x)\|$。</li>
-</ul>
-<h3 id="11-3-练习">11.3 练习</h3>
-<ul>
-<li>
-<ol>
-<li>对 $f(x,y)=x^2+3y^2$，在点 $(a,b)$ 计算梯度、单位方向 $u$，以及在该方向的方向导数。</li>
-</ol>
-</li>
-<li>
-<ol start="2">
-<li>对函数 $F(x,y)=(x^2,y^2)$，写出每个分量的梯度与方向导数。</li>
-</ol>
-</li>
-</ul>
-<hr>
-<h1>7. 多元中值定理的几何含义</h1>
-<p>下面给出 <strong>《多元中值定理的几何含义》</strong> 的完整笔记草稿。本博文探讨多元柯西中值定理及向量值函数的中值定理在几何中的直观理解。</p>
-<h2 id="摘要-7">摘要</h2>
-<p>多元中值定理将函数在两点之间的增量与其在中间点的导数信息联系起来。通过雅可比矩阵，我们可以将增量的差分近似看作线性映射作用的结果，从而获得对变化范围的几何估计。</p>
-<h2 id="关键词-7">关键词</h2>
-<p>中值定理、雅可比、局部线性化、线性映射</p>
-<h2 id="结构-7">结构</h2>
-<ul>
-<li>H2: 定理陈述与直观</li>
-<li>H2: 与雅可比的关系</li>
-<li>H3: 示例</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-7">开头示例</h2>
-<p>设 F: R^n → R^m，在开集内连续可微。对 a,b ∈ R^n，存在 ξ 使得 F(b)−F(a) = J_F(ξ)(b−a) 的表示近似于线性映射的作用。这个公式将多元增量以单一线性运算表达，呈现出线性代数在非线性函数中的核心作用。</p>
-<h2 id="正文-7">正文</h2>
-<ul>
-<li>多元牛顿-莱布尼茨式的中值形式：$F(b)-F(a) \approx J_F(\xi)(b-a)$。
-<ul>
-<li>若 F 为标量函数，等式退化为一元的中值定理的向量化版本。</li>
-</ul>
-</li>
-</ul>
-<h3 id="16-2-与雅可比的关系">16.2 与雅可比的关系</h3>
-<ul>
-<li>增量近似 F(b)-F(a) ≈ J_F(ξ)(b-a)，其中 J_F(ξ) 为在 ξ 点的雅可比矩阵。`</li>
-<li>这揭示了微分的线性本质：在局部区域内，非线性映射可由线性映射近似。</li>
-</ul>
-<h3 id="16-3-练习">16.3 练习</h3>
-<ul>
-<li>给定 F(x,y)=(x^2, y^2)，在点 a=(1,2), b=(2,3) 的增量近似中，计算是否存在 ξ 使得 F(b)-F(a) ≈ J_F(ξ)(b-a) 并给出近似误差界。</li>
-</ul>
-<hr>
-<h1>8. 多元泰勒展开与 Hessian 的应用</h1>
-<p>下面给出 <strong>《多元泰勒展开与 Hessian 的应用》</strong> 的完整笔记草稿。本博文聚焦二阶及以上的泰勒展开在多元优化中的作用。</p>
-<h2 id="摘要-8">摘要</h2>
-<p>二阶及以上的泰勒展开将非线性映射在某点的行为拆解为线性项和高阶项的组合。二阶项由 Hessian 决定其曲率信息，正定性决定局部极值性质。通过公式推导与实例演示，展示在无约束最优化、拟合与误差分析中的应用。</p>
-<h2 id="关键词-8">关键词</h2>
-<p>泰勒展开、Hessian、极值、局部近似</p>
-<h2 id="结构-8">结构</h2>
-<ul>
-<li>H2: 二阶泰勒展开公式</li>
-<li>H2: Hessian 的角色</li>
-<li>H2: 应用示例</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-8">开头示例</h2>
-<p>对 $f(x,y)=x^2+2xy+y^2$，在点 $x_0=(1,1)$ 处，二阶泰勒展开近似为：<br>
-$$f(x,y) \approx f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_0).$$<br>
-其中 $\nabla f(1,1)=(4,4)$，$H_f(1,1)=\begin{pmatrix}2 & 2 \\ 2 & 2\end{pmatrix}$。</p>
-<h2 id="正文-8">正文</h2>
-<h3 id="17-1-二阶泰勒展开">17.1 二阶泰勒展开</h3>
-<ul>
-<li>给定 $f: \mathbb{R}^n → \mathbb{R}$，在点 $x_0$ 附近有：<br>
-$$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_0) + o(\|x-x_0\|^2).$$</li>
-</ul>
-<h3 id="17-2-Hessian-的作用">17.2 Hessian 的作用</h3>
-<ul>
-<li>Hessian 提供关于曲率的对称二次型信息。$\nabla f$ 的线性项决定增量方向的线性近似，二阶项决定曲率方向。</li>
-</ul>
-<h3 id="17-3-应用示例">17.3 应用示例</h3>
-<ul>
-<li>例：对 $f(x,y)=x^2+2xy+y^2$ 进行二阶展开，验证极值分析结论。</li>
-</ul>
-<h2 id="练习-3">练习</h2>
-<ol>
-<li>求 $f(x,y)=\exp(x) + y^2$ 在点 $(0,0)$ 的二阶泰勒展开及 Hessian，判断该点的局部极值性。</li>
-<li>给定 $f(x,y)=x^3+y^3$，讨论在原点的二阶展开及局部性质。</li>
-</ol>
-<hr>
-<h1>9. 线性代数工具在最优化中的应用</h1>
-<p>下面给出 <strong>《线性代数工具在最优化中的应用》</strong> 的完整笔记草稿。本博文把线性代数中的工具引入到无约束最优化、凸性分析等场景中。</p>
-<h2 id="摘要-9">摘要</h2>
-<p>最优化中的核心难题通常来自非线性关系。通过将问题转化为对称矩阵的特征分解、坐标变换、正交化等线性代数过程，可以简化极值判断与收敛性分析，提升数值稳定性与理论可解释性。本文给出若干典型情形的解决思路。</p>
-<h2 id="关键词-9">关键词</h2>
-<p>特征值、对角化、正交化、最优化</p>
-<h2 id="结构-9">结构</h2>
-<ul>
-<li>H2: 特征分解与曲率分析</li>
-<li>H2: 坐标变换与对角化的意义</li>
-<li>H2: 正交化在最优化中的应用</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-9">开头示例</h2>
-<p>考虑函数 f(x) = x^T A x，其中 A 为对称矩阵。若对称矩阵 A 可以正交对角化为 Q^T Λ Q，则 f 可以写成最简单的坐标系下的二次型：f(x) = ∑ λ_i y_i^2，极大/极小的性质取决于 λ_i 的符号。</p>
-<h2 id="正文-9">正文</h2>
-<h3 id="18-1-特征分解在曲率分析中的作用">18.1 特征分解在曲率分析中的作用</h3>
-<ul>
-<li>对二阶最优化问题，Hessian 的特征值分布决定了局部曲率。通过对 Hessian 进行特征分解，可以将局部模型转化为若干独立的一维二次型。</li>
-</ul>
-<h3 id="18-2-坐标变换与对角化">18.2 坐标变换与对角化</h3>
-<ul>
-<li>通过坐标变换使 Hessian 或目标函数近似对角化，简化最优化路径与约束分析。</li>
-</ul>
-<h3 id="18-3-练习">18.3 练习</h3>
-<ol>
-<li>设 $f(x) = x^T A x$，$A = \begin{pmatrix}4 & 1\\ 1 & 3\end{pmatrix}$，给出在原点附近的最速下降方向及收敛性分析。</li>
-<li>对 f(x,y)=3x^2+4xy+2y^2，计算 Hessian 的特征值并判断局部极值性质。</li>
-</ol>
-<hr>
-<h1>10. 梯度与最速下降路径的几何解读</h1>
-<p>下面给出 <strong>《梯度与最速下降路径的几何解读》</strong> 的完整笔记草稿。本文从几何视角解释梯度为何指引最速下降/上升的路径，以及优化迭代中路径的几何特征。</p>
-<h2 id="摘要-10">摘要</h2>
-<p>梯度给出方向导数的最大变化方向。对无约束优化问题，沿负梯度逐步迭代的路径在局部看起来是一条逐步向等高线内靠近的曲线。通过例题和直觉图解，展示最速下降路径与曲面切平面的关系。</p>
-<h2 id="关键词-10">关键词</h2>
-<p>梯度下降、最速下降路径、几何直观</p>
-<h2 id="结构-10">结构</h2>
-<ul>
-<li>H2: 负梯度方向与局部极值</li>
-<li>H2: 路径的几何描述</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-10">开头示例</h2>
-<p>对 f(x,y)=x^2+y^2，初始点 (2,0) 采用负梯度方向更新：x_{k+1} = x_k - α ∇f(x_k)。由于 ∇f(x)=(2x,2y)，在起点梯度方向为 (4,0)，若选取步长 α=0.25，则下一步点为 (1,0)，路径逐步靠近原点。</p>
-<h2 id="正文-10">正文</h2>
-<h3 id="19-1-梯度与路径关系">19.1 梯度与路径关系</h3>
-<ul>
-<li>沿负梯度方向的更新可视化为在等高线之间的下滑路径。</li>
-<li>局部线性化帮助理解每一步的前进方向与距离。</li>
-</ul>
-<h3 id="19-2-路径性质">19.2 路径性质</h3>
-<ul>
-<li>路径趋向于在极小点处停止。</li>
-<li>当目标函数是凸的，梯度下降通常具有全局收敛性。</li>
-</ul>
-<h3 id="19-3-练习">19.3 练习</h3>
-<ol>
-<li>对 f(x,y)=x^2+4y^2，初始点 (1,2) 使用梯度下降法，给出第一步的更新与路径直观分析。</li>
-<li>对 f(x,y)=x^3+y^2，讨论在 (0,0) 附近的最速下降路径的特征。</li>
-</ol>
-<hr>
-<h1>11. 正交投影与最小二乘问题的联系</h1>
-<p>下面给出 <strong>《正交投影与最小二乘问题的联系》</strong> 的完整笔记草稿。本文解释正交投影在高维空间中的几何意义，以及最小二乘问题的解可以看作把数据投影到列空间的正交子空间上。</p>
-<h2 id="摘要-11">摘要</h2>
-<p>最小二乘解通常等价于将观测向量投影到列空间的最佳近似。通过正交性原理可以直观理解解的几何含义及其稳定性。</p>
-<h2 id="关键词-11">关键词</h2>
-<p>正交投影、最小二乘、拟合、投影</p>
-<h2 id="结构-11">结构</h2>
-<ul>
-<li>H2: 正交投影的定义</li>
-<li>H2: 最小二乘与投影的关系</li>
-<li>H2: 练习</li>
-</ul>
-<h2 id="开头示例-11">开头示例</h2>
-<p>设 $A \in \mathbb{R}^{m\times n}$，观测向量 $b \in \mathbb{R}^m$，最小二乘解 $x^*$ 满足 $Ax^*$ 收敛到 $b$ 的最小距离。若列空间 $\mathrm{Col}(A)$ 的正交补为 $\mathrm{Col}(A)^{\perp}$，则 $b$ 的最佳逼近在 $\mathrm{Col}(A)$ 上的正交投影为 $Ax^*$，因此 $x^*$ 是投影系数。</p>
-<h2 id="正文-11">正文</h2>
-<h3 id="20-1-正交投影定义">20.1 正交投影定义</h3>
-<ul>
-<li>对任意向量 $v$，存在唯一的向量 $p$ 使得 $v-p \perp W$，其中 $W$ 为某子空间，$p$ 属于 $W$，$p$ 即 $v$ 的在 $W$ 上的正交投影。</li>
-</ul>
-<h3 id="20-2-最小二乘解的几何解释">20.2 最小二乘解的几何解释</h3>
-<ul>
-<li>给定线性系统 $Ax=b$，若 $A$ 的列向量张成的空间为 $\,\mathrm{Col}(A)$，最小二乘解等价于寻找在 $\,\mathrm{Col}(A)$ 上的近似 $Ax$，使得误差 $b-Ax$ 垂直于 $\,\mathrm{Col}(A)$。</li>
-</ul>
-<h2 id="练习-4">练习</h2>
-<ol>
-<li>设 $A=\begin{bmatrix}1&2\\3&4\end{bmatrix}$，$b=\begin{bmatrix}5\\7\end{bmatrix}$，求最小二乘解 $x^*$ 并给出几何解释。</li>
-<li>解释为什么正交投影在高斯-乔丹消元前后仍然等价于最小二乘解。</li>
-</ol>
-<hr>
-<h1>12. 局部线性化在微分方程中的作用</h1>
-<p>下面给出 <strong>《局部线性化在微分方程中的作用》</strong> 的完整笔记草稿。本博文展示如何通过局部线性化将非线性微分方程近似为线性系统，以分析局部行为与稳定性。</p>
-<h2 id="摘要-12">摘要</h2>
-<p>非线性微分方程在分析与数值求解上常常困难。局部线性化通过在平衡点处用雅可比矩阵近似非线性项，将系统转化为线性系统，从而利用线性系统稳定性理论判断局部行为。</p>
-<h2 id="关键词-12">关键词</h2>
-<p>局部线性化、非线性系统、稳定性、雅可比</p>
-<h2 id="结构-12">结构</h2>
-<ul>
-<li>H2: 线性化原理</li>
-<li>H2: 稳定性判据</li>
-<li>H2: 简单实例</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-12">开头示例</h2>
-<p>考虑二阶系统 x’ = f(x)，若 x* 是平衡点且 Df(x*) 存在，则在 x 近似小扰动时，系统近似为线性：ξ’ = Df(x*) ξ，ξ = x-x*。</p>
-<h2 id="正文-12">正文</h2>
-<h3 id="21-1-线性化原理">21.1 线性化原理</h3>
-<ul>
-<li>将非线性项在平衡点处的泰勒展开截断到一阶，得到局部线性系统。</li>
-</ul>
-<h3 id="21-2-稳定性分析">21.2 稳定性分析</h3>
-<ul>
-<li>线性化的特征值决定了局部稳定性：若所有特征值的实部都小于 0，平衡点局部渐近稳定；若存在实部大于 0 的特征值，局部失稳。</li>
-</ul>
-<h3 id="21-3-练习">21.3 练习</h3>
-<ol>
-<li>对系统 x’ = y, y’ = -x + x^2，找出平衡点并用线性化判断局部稳定性。</li>
-<li>对 x’ = x - x^3，分析在原点的局部稳定性。</li>
-</ol>
-<hr>
-<h1>13. 特征分解在几何中的直观应用</h1>
-<p>下面给出 <strong>《特征分解在几何中的直观应用》</strong> 的完整笔记草稿。本博文介绍如何利用特征分解将几何对象在更易处理的坐标系中表示与分析。</p>
-<h2 id="摘要-13">摘要</h2>
-<p>对称矩阵可以被正交变换对角化，这使得二次形式在新坐标系中成为简单的和的形式。通过几何投影、曲率分析和坐标变换的案例，说明特征分解在高维几何中的作用。</p>
-<h2 id="关键词-13">关键词</h2>
-<p>特征分解、对角化、坐标变换、正交基</p>
-<h2 id="结构-13">结构</h2>
-<ul>
-<li>H2: 定义与直观</li>
-<li>H2: 对角化与几何意义</li>
-<li>H2: 应用示例</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-13">开头示例</h2>
-<p>对对称矩阵 $A$，可以写成 $A = Q \Lambda Q^T$，其中 $Q$ 为正交矩阵，$\Lambda$ 为对角矩阵。若考虑二次型 $x^T A x$，则在坐标变换 $y = Q^T x$ 下，$x^T A x = y^T \Lambda y = \sum_i \lambda_i y_i^2$，极值性质由 $\lambda_i$ 的符号决定。</p>
-<h2 id="正文-13">正文</h2>
-<h3 id="22-1-特征分解与二次型">22.1 特征分解与二次型</h3>
-<ul>
-<li>通过特征分解将二次型分解成独立的一维二次型，便于分析符号、极值与稳定性。</li>
-</ul>
-<h3 id="22-2-坐标变换的几何含义">22.2 坐标变换的几何含义</h3>
-<ul>
-<li>坐标变换改变了观察角度，使得问题在新坐标系中更易理解和求解。</li>
-</ul>
-<h3 id="22-3-练习">22.3 练习</h3>
-<ol>
-<li>对 f(x)=x^T A x，A= [ [2,1], [1,3] ]，给出在原点处的特征值并解释几何意义。</li>
-<li>对向量值函数 F(x) = Ax 的线性变换，在单位球上讨论投影方向。</li>
-</ol>
-<hr>
-<h1>14. 从微分到线性代数的整合视角</h1>
-<p>下面给出 <strong>《从微分到线性代数的整合视角》</strong> 的完整笔记草稿。本博文总结微分（一阶、二阶）如何通过线性代数语言呈现，并讨论两者在解决实际问题时相互促进的方式。</p>
-<h2 id="摘要-14">摘要</h2>
-<p>微分将局部性质用线性算子来刻画，线性代数提供了工具来处理这些算子（矩阵、特征值、对角化、正交化）。通过将差分、线性近似和二阶形式统一在矩阵语言下，学习者可以在解题时快速建立统一框架。</p>
-<h2 id="关键词-14">关键词</h2>
-<p>微分、线性代数、桥梁、矩阵</p>
-<h2 id="结构-14">结构</h2>
-<ul>
-<li>H2: 一阶与雅可比</li>
-<li>H2: 二阶与 Hessian</li>
-<li>H2: 桥梁与应用</li>
-<li>H3: 练习</li>
-</ul>
-<h2 id="开头示例-14">开头示例</h2>
-<p>设 $f: \mathbb{R}^n \to \mathbb{R}$，在点 $x_0$ 的局部近似由一阶导数给出：$f(x) \approx f(x_0) + \nabla f(x_0)^T (x- x_0)$。若引入正交基底，使得梯度在新坐标系中仅有一个分量，这样的简化使得高维问题可以分成为若干一维问题处理。</p>
-<h2 id="正文-14">正文</h2>
-<h3 id="23-1-一阶微分与雅可比">23.1 一阶微分与雅可比</h3>
-<ul>
-<li>$df_x(h) = \nabla f(x)^T h$，即线性映射在方向 $h$ 的作用。</li>
-</ul>
-<h3 id="23-2-二阶微分与-Hessian">23.2 二阶微分与 Hessian</h3>
-<ul>
-<li>$H_f(x)$ 描述二阶信息，提供曲率信息。</li>
-</ul>
-<h3 id="23-3-桥梁概述">23.3 桥梁概述</h3>
-<ul>
-<li>将微分与线性代数的工具结合，提升问题建模与求解的效率。</li>
-</ul>
-<h2 id="练习-5">练习</h2>
-<ol>
-<li>给定 $f(x,y) = x^2 y + y^3$，计算在点 $(1,1)$ 的梯度、$H_f$，并讨论极值的潜在性质。</li>
-<li>对向量值函数 $F(x) = Ax + b$，给出局部线性化及其在优化中的应用场景。</li>
-</ol>
-<hr>
-<h1>15. 综述：从微分到几何的统一视角</h1>
-<p>下面给出 <strong>《综述：从微分到几何的统一视角》</strong> 的完整笔记草稿。本博文回顾前述 10–23 篇的核心思想，强调微分的线性本质、二阶信息的几何解释，以及线性代数工具在多元微积分中的统一作用。</p>
-<h2 id="摘要-15">摘要</h2>
-<p>通过回顾与对比，本文揭示：多元微积分的核心问题都可转化为线性代数问题，关键在于选择合适的投影、坐标系和近似策略（如雅可比、Hessian、特征分解等）。这种统一视角有助于简化推导、提升直觉和减少错误。</p>
-<h2 id="关键词-15">关键词</h2>
-<p>统一视角、线性代数、微分、几何</p>
-<h2 id="结构-15">结构</h2>
-<ul>
-<li>H2: 核心思想回顾</li>
-<li>H2: 常见题型的解题框架</li>
-<li>H2: 进一步阅读与扩展</li>
-</ul>
-<h2 id="开头示例-15">开头示例</h2>
-<p>回顾本系列的核心结论：在高维空间中，局部行为可以通过一阶线性近似（雅可比）与二阶信息 ($\mathrm{Hessian}$) 来描述，通过适当的坐标变换（对角化、正交化）可以将复杂问题拆解为更易处理的子问题。</p>
-<h2 id="练习-6">练习</h2>
-<ol>
-<li>设 f(x) = x^T A x，其中 A 对称，给出在原点处的二阶近似并讨论极值性质。</li>
-<li>选择一个非凸函数，说明在某些点靠近该点时的局部行为如何通过矩阵工具分析。</li>
-</ol>
-<hr>
-<h2 id="总结">总结</h2>
-<p>本系列从多元函数的基本概念出发，系统性地构建了微分与线性代数之间的桥梁：</p>
-<ol>
-<li><strong>一阶工具</strong>：梯度、方向导数、雅可比矩阵提供了局部线性化的基础</li>
-<li><strong>二阶工具</strong>：Hessian 矩阵揭示了曲率与极值性质</li>
-<li><strong>线性代数桥梁</strong>：特征分解、正交投影、坐标变换将微积分问题转化为矩阵运算</li>
-<li><strong>应用场景</strong>：最优化、微分方程、最小二乘等问题都可以通过这一统一框架进行分析</li>
-</ol>
-<p>通过这一系统性视角，读者可以更深入地理解多元微积分的本质，并在解决实际问题时快速选择合适的方法和工具。</p>
-]]></content>
-      <categories>
-        <category>数学分析</category>
-      </categories>
-      <tags>
-        <tag>线性代数</tag>
-        <tag>多元函数</tag>
-        <tag>微分</tag>
-        <tag>Hessian</tag>
-        <tag>梯度</tag>
-        <tag>雅可比</tag>
-        <tag>最优化</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>二分算法及模板</title>
     <url>/posts/5166.html</url>
     <content><![CDATA[<p>最近在做二分的题目，看到有些题解提供的二分模板，特此记录。</p>
@@ -2148,6 +2482,163 @@ $$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_
       </categories>
       <tags>
         <tag>输入输出</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>程序设计期中知识汇总</title>
+    <url>/posts/b1d9.html</url>
+    <content><![CDATA[<h2 id="根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习-more">根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习<span id="more"></span></h2>
+<h1>第一部分：编程知识</h1>
+<h2 id="输入">输入</h2>
+<h3 id="整型数">整型数</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>short %hd</code></td>
+<td>-2<sup>15</sup><code>~</code> 2<sup>15</sup>-1</td>
+</tr>
+<tr>
+<td><code>int %d</code></td>
+<td>-2<sup>31</sup><code>~</code>2<sup>31</sup>-1</td>
+</tr>
+<tr>
+<td><code>long long %lld</code></td>
+<td>-2<sup>63</sup><code>~</code>2<sup>63</sup>-1</td>
+</tr>
+<tr>
+<td><code>unsigned int %u</code></td>
+<td>0<code>~</code>2<sup>32</sup>-1</td>
+</tr>
+<tr>
+<td><code>unsigned long long %llu</code></td>
+<td>0<code>~</code>2<sup>64</sup>-1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="浮点数">浮点数</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>精度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>float %f</code></td>
+<td>6位小数</td>
+</tr>
+<tr>
+<td><code>double %lf</code></td>
+<td>15位小数</td>
+</tr>
+<tr>
+<td><code>long double %llf</code></td>
+<td>18位小数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="字符">字符</h3>
+<p><code>char %c</code><br>
+<code>string %s</code></p>
+<h2 id="输出">输出</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%f\n&quot;</span>,r);     正常输出</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%10f\n&quot;</span>,r);   长度为<span class="number">10</span>，空格填充，右对齐</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%10.2f\n&quot;</span>,r); 长度为<span class="number">10</span>，两位小数，空格填充，右对齐    </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-10.2f\n&quot;</span>,r);左对齐，同上   </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%+10.2f\n&quot;</span>,r);右对齐，显示正负号     </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;% 10.2f\n&quot;</span>,r);右对齐，空字符填充</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%010.2f\n&quot;</span>,r);右对齐，<span class="number">0</span>填充</span><br><span class="line"></span><br><span class="line">具体效果</span><br><span class="line"><span class="number">3.140000</span></span><br><span class="line">  <span class="number">3.140000</span></span><br><span class="line">      <span class="number">3.14</span></span><br><span class="line"><span class="number">3.14</span></span><br><span class="line">     +<span class="number">3.14</span></span><br><span class="line">      <span class="number">3.14</span></span><br><span class="line"><span class="number">0000003.14</span></span><br></pre></td></tr></table></figure>
+<p>除此之外还要特别注意的有<br>
+<code>%o 无符号八进制整数，不输出前缀0</code><br>
+<code>%u 无符号十进制整数</code><br>
+<code>%x/X 无符号十六进制整数，不输出前缀0x,字母有大小写区分</code><br>
+<code>%e/E 科学计数法，e有大小写区分</code><br>
+<code>%g/G 有效位数，如%.8g保留8位有效数字（自动简化）</code><br>
+<code>%p 以十六进制形式输出指针</code><br>
+<code>%n 不读取任何字符，只读取截至目前读取的字符个数</code></p>
+<h2 id="其他">其他</h2>
+<p>常量<code> const</code><br>
+转义字符<code>\n \&quot;</code><br>
+存储类 <code>static  extern</code></p>
+<h2 id="运算符">运算符</h2>
+<h3 id="位运算（整型、字符型）">位运算（整型、字符型）</h3>
+<p><code>&amp;</code> 与<br>
+<code>|</code> 或<br>
+<code>~</code>非<br>
+<code>^</code>异或<br>
+<code>&lt;&lt;</code>左移<br>
+<code>&gt;&gt;</code>右移</p>
+<h3 id="三目运算符">三目运算符</h3>
+<p><code>a &gt; b ? a : b</code></p>
+<h2 id="类型转换">类型转换</h2>
+<h3 id="隐式类型转换">隐式类型转换</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">float</span> a = <span class="number">3.2</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="type">float</span> c = a / b;</span><br></pre></td></tr></table></figure>
+<h3 id="显示-强制类型转换">显示/强制类型转换</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a;</span><br><span class="line">(<span class="type">double</span>)a;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1>第二部分：编程技巧介绍</h1>
+<h2 id="枚举与模拟">枚举与模拟</h2>
+<p>列举出所有情况，然后判断是否符合题目要求<br>
+参考Luogu P1102 ( 需要二分和双指针 )</p>
+<h2 id="报错-调试">报错&amp;调试</h2>
+<h3 id="1-简单调试">1.简单调试</h3>
+<h3 id="2-模块化编程">2.模块化编程</h3>
+<h3 id="3-理解编译错误">3.理解编译错误</h3>
+<ol>
+<li><strong>AC</strong> - Accepted（答案正确）</li>
+<li><strong>WA</strong> - Wrong Answer（答案错误）</li>
+<li><strong>TLE</strong> - Time Limit Exceeded（超出时间限制）</li>
+<li><strong>RE</strong> - Runtime Error（运行时错误）</li>
+<li><strong>CE</strong> - Compilation Error（编译错误）</li>
+<li><strong>MLE</strong> - Memory Limit Exceeded（超出内存限制）</li>
+<li><strong>OLE</strong> - Output Limit Exceeded（输出限制超出）</li>
+<li><strong>PE</strong> - Presentation Error（格式错误）</li>
+<li><strong>TCI</strong> - Time Complexity Incorrect（时间复杂度错误）</li>
+<li><strong>MCI</strong> - Memory Complexity Incorrect（空间复杂度错误）</li>
+</ol>
+<h2 id="常见trick">常见trick</h2>
+<h3 id="0-index-与-1-index">0-index 与 1-index</h3>
+<h3 id="表达式优先级">表达式优先级</h3>
+<p>如果不确定可以全打上括号</p>
+<h3 id="处理整数型数据相除得到小数而非整数">处理整数型数据相除得到小数而非整数</h3>
+<h4 id="方法1：强制转换-（double">方法1：强制转换 （double)</h4>
+<h4 id="方法2：在表达式前面加上1-0">方法2：在表达式前面加上1.0*</h4>
+<h3 id="注意数据范围">注意数据范围</h3>
+<p>常见的范围是：int 最大是2<sup>31</sup>-1 ,long long最大是2<sup>63</sup>-1。</p>
+<h3 id="注意初始化">注意初始化</h3>
+<p>记得给每一个变量赋一个初始值。</p>
+<h4 id="退出循环的姿势">退出循环的姿势</h4>
+<p>如果是在函数里，可以<code>return</code><br>
+如果是在主函数里，可以<code>return 0 最正常的写法是</code>break<code> 配合</code>flag=0`</p>
+<h4 id="递归模板">递归模板</h4>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">func</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(终止条件)&#123;</span><br><span class="line">        <span class="keyword">return</span> ?;</span><br><span class="line">    &#125;</span><br><span class="line">    继续遍历；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="正确开数组">正确开数组</h4>
+<p>一般要在数据范围之外多开5。<br>
+一般建议开成全局数组，开在主函数里有爆栈的风险。<br>
+在编译选项里，编译时加入以下命令<code>-wl,--stack,268435456</code>.<br>
+同时，单个数组大小不要超过10<sup>7</sup>,不然会编译错误。</p>
+<h2 id="骗分技巧">骗分技巧</h2>
+<h3 id="1-编译分">1.编译分</h3>
+<h3 id="2-打表分">2.打表分</h3>
+<h2 id="头文件">头文件</h2>
+<p>常见有：<br>
+<code>stdio.h</code><br>
+<code>stdlib.h</code><br>
+<code>math.h</code><br>
+<code>string.h</code><br>
+<code>time.h</code><br>
+<code>ctype.h</code></p>
+<h2 id="多文件编译">多文件编译</h2>
+<p>一般有三个文件，分别为<code>main.c</code>  <code>function.h</code>  <code>function.c</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">main.c</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;...&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;function.h&quot;</span></span></span><br><span class="line">主程序部分</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">function.h</span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> FUNCTION_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FUNCTION_H</span></span><br><span class="line">函数声明</span><br><span class="line"><span class="type">int</span> <span class="title function_">function</span><span class="params">( )</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">function.c</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;...&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;function.h&quot;</span></span></span><br><span class="line">函数部分</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>知识复习</tag>
       </tags>
   </entry>
   <entry>
@@ -3078,497 +3569,6 @@ $$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_
         <tag>模拟流程</tag>
         <tag>多资源任务分配</tag>
         <tag>时间线优化管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>高等数学多元函数章节与线性代数内在联系探究</title>
-    <url>/posts/d0da.html</url>
-    <content><![CDATA[<p>下面给出 <strong>《高等数学——多元函数章节与线性代数内在联系探究》</strong> 的完整笔记草稿。<br>
-该笔记围绕 <strong>多元函数的中值定理、梯度、方向导数、雅可比矩阵、Hessian 矩阵</strong> 等内容展开，并系统阐述它们与 <strong>线性代数（向量空间、线性映射、特征值/特征向量、正交投影）</strong> 的内在联系。</p>
-<hr>
-<h2 id="1-多元函数的基本概念">1. 多元函数的基本概念</h2>
-<table>
-<thead>
-<tr>
-<th>概念</th>
-<th>记号</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>定义域</strong></td>
-<td>$D\subset\mathbb{R}^n$</td>
-<td>$f:\;D\to\mathbb{R}$（标量函数）或 $f:\;D\to\mathbb{R}^m$（向量值函数）</td>
-</tr>
-<tr>
-<td><strong>连续</strong></td>
-<td>$\displaystyle\lim_{\mathbf{x}\to\mathbf{x}_0}f(\mathbf{x})=f(\mathbf{x}_0)$</td>
-<td>与一元情形完全相同，只是 $\mathbf{x}=(x_1,\dots,x_n)$</td>
-</tr>
-<tr>
-<td><strong>可微</strong></td>
-<td>$f$ 在 $\mathbf{x}_0$ 可微 ⇔ 存在线性映射 $L$ 使 $$\lim_{\mathbf{h}\to0}\frac{\|f(\mathbf{x}_0+\mathbf{h})-f(\mathbf{x}_0)-L(\mathbf{h})\|}{\|\mathbf{h}\|}=0.$$</td>
-<td>线性映射 $L$ 正是 <strong>雅可比矩阵</strong> $J_f(\mathbf{x}_0)$ 的作用。</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="2-梯度、方向导数与线性代数">2. 梯度、方向导数与线性代数</h2>
-<h3 id="2-1-偏导数与梯度">2.1 偏导数与梯度</h3>
-<ul>
-<li>
-<p><strong>偏导数</strong><br>
-$$\frac{\partial f}{\partial x_i}(\mathbf{x})=\lim_{h\to0}\frac{f(x_1,\dots,x_i+h,\dots,x_n)-f(\mathbf{x})}{h}.$$</p>
-</li>
-<li>
-<p><strong>梯度向量</strong>（Gradient）<br>
-$$\nabla f(\mathbf{x})=\left(\frac{\partial f}{\partial x_1},\dots,\frac{\partial f}{\partial x_n}\right)^{\!\top}.$$</p>
-</li>
-</ul>
-<blockquote>
-<p><strong>线性代数视角</strong>：梯度是 <strong>函数的最速上升方向</strong>，它本身是 <strong>列向量</strong>，在欧氏空间中可视为 <strong>线性映射</strong> $L_{\nabla f}(\mathbf{h})=\nabla f^{\!\top}\mathbf{h}$。</p>
-</blockquote>
-<h3 id="2-2-方向导数">2.2 方向导数</h3>
-<p>给定单位向量 $\mathbf{u}\in\mathbb{R}^n$，方向导数定义为<br>
-$$D_{\mathbf{u}}f(\mathbf{x})=\lim_{h\to0}\frac{f(\mathbf{x}+h\mathbf{u})-f(\mathbf{x})}{h}.$$</p>
-<p>若 $f$ 在 $\mathbf{x}$ 可微，则<br>
-$$D_{\mathbf{u}}f(\mathbf{x})=\nabla f(\mathbf{x})^{\!\top}\mathbf{u}.$$</p>
-<blockquote>
-<p>这正是 <strong>向量内积</strong> 的形式，说明方向导数是梯度向量与方向向量的 <strong>线性映射</strong>（点积）。</p>
-</blockquote>
-<h3 id="2-3-梯度的几何意义">2.3 梯度的几何意义</h3>
-<ul>
-<li>$\nabla f(\mathbf{x})$ 与等值面（等高面）<strong>正交</strong>。</li>
-<li>在欧氏空间中，梯度的 <strong>长度</strong> $ \|\nabla f(\mathbf{x})\| $ 表示 <strong>最速上升率</strong>。</li>
-</ul>
-<hr>
-<h2 id="3-多元函数的中值定理">3. 多元函数的中值定理</h2>
-<h3 id="3-1-多元介值定理（Brouwer-不动点定理的简化版）">3.1 多元介值定理（Brouwer 不动点定理的简化版）</h3>
-<blockquote>
-<p><strong>定理</strong>（多元介值定理的直观形式）：若 $f:\;[a_1,b_1]\times\cdots\times[a_n,b_n]\to\mathbb{R}^n$ 连续且对每个坐标 $i$ 有<br>
-$$f_i(a_1,\dots,a_n)\le a_i\le f_i(b_1,\dots,b_n),$$<br>
-则存在 $\mathbf{x}^\ast$ 使得 $f(\mathbf{x}^\ast)=\mathbf{x}^\ast$（即不动点）。</p>
-</blockquote>
-<blockquote>
-<p>该定理的证明依赖 <strong>Brouwer 不动点定理</strong>，而 Brouwer 定理本身是 <strong>拓扑</strong> 与 <strong>线性代数</strong>（紧致性、连续映射）相结合的结果。</p>
-</blockquote>
-<h3 id="3-2-多元拉格朗日中值定理（Mean-Value-Theorem-for-Vector‑Valued-Functions）">3.2 多元拉格朗日中值定理（Mean Value Theorem for Vector‑Valued Functions）</h3>
-<p>设 $F:\;U\subset\mathbb{R}^n\to\mathbb{R}^m$ 在开凸集 $U$ 上 <strong>连续可微</strong>，取两点 $\mathbf{a},\mathbf{b}\in U$，则存在 $\mathbf{\xi}= \mathbf{a}+t(\mathbf{b}-\mathbf{a})$（$t\in(0,1)$）使得</p>
-<p>$$
-F(\mathbf{b})-F(\mathbf{a}) = J_F(\mathbf{\xi})\,(\mathbf{b}-\mathbf{a}),
-$$</p>
-<p>其中 $J_F(\mathbf{\xi})$ 为 <strong>雅可比矩阵</strong>（$m\times n$），即 $[J_F]_{ij}= \displaystyle\frac{\partial F_i}{\partial x_j}$。</p>
-<blockquote>
-<p><strong>线性代数联系</strong>：该等式正是 <strong>线性映射</strong>（雅可比矩阵）在向量 $\mathbf{b}-\mathbf{a}$ 上的作用，体现了 <strong>微分</strong> 本质上是 <strong>局部线性化</strong>。</p>
-</blockquote>
-<h3 id="3-3-多元柯西中值定理（Cauchy-Mean-Value-Theorem）">3.3 多元柯西中值定理（Cauchy Mean Value Theorem）</h3>
-<p>若 $f,g:U\to\mathbb{R}$ 在开凸集 $U$ 上连续可微且 $g'$ 在 $U$ 上不为零，则对任意 $\mathbf{a},\mathbf{b}\in U$，存在 $\mathbf{\xi}$ 使得</p>
-<p>$$
-\frac{\nabla f(\mathbf{\xi})^{\!\top}(\mathbf{b}-\mathbf{a})}{\nabla g(\mathbf{\xi})^{\!\top}(\mathbf{b}-\mathbf{a})}
-= \frac{f(\mathbf{b})-f(\mathbf{a})}{g(\mathbf{b})-g(\mathbf{a})}.
-$$</p>
-<blockquote>
-<p>这里的 <strong>点积</strong> 再次把梯度（列向量）转化为 <strong>标量</strong>，与一元情形的分子分母结构保持一致。</p>
-</blockquote>
-<hr>
-<h2 id="4-多元泰勒展开与-Hessian-矩阵">4. 多元泰勒展开与 Hessian 矩阵</h2>
-<h3 id="4-1-二阶泰勒公式（带余项）">4.1 二阶泰勒公式（带余项）</h3>
-<p>设 $f:\;U\subset\mathbb{R}^n\to\mathbb{R}$ 在点 $\mathbf{x}_0$ 的邻域内二阶连续可微，则对任意 $\mathbf{x}\in U$，有</p>
-<p>$$
-\begin{aligned}
-f(\mathbf{x}) &= f(\mathbf{x}_0)
-+ \nabla f(\mathbf{x}_0)^{\!\top}(\mathbf{x}-\mathbf{x}_0) \\
-&\quad + \frac12(\mathbf{x}-\mathbf{x}_0)^{\!\top} H_f(\mathbf{\xi}) (\mathbf{x}-\mathbf{x}_0),
-\end{aligned}
-$$</p>
-<p>其中 $H_f(\mathbf{\xi})$ 为 <strong>Hessian 矩阵</strong>（二阶偏导数组成的对称矩阵），$\mathbf{\xi}$ 位于 $\mathbf{x}_0$ 与 $\mathbf{x}$ 连线的某点。</p>
-<blockquote>
-<p><strong>线性代数视角</strong>：</p>
-<ul>
-<li>$\nabla f(\mathbf{x}_0)^{\!\top}(\mathbf{x}-\mathbf{x}_0)$ 是 <strong>一次线性映射</strong>（梯度点乘）。</li>
-<li>$(\mathbf{x}-\mathbf{x}_0)^{\!\top} H_f(\mathbf{\xi}) (\mathbf{x}-\mathbf{x}_0)$ 是 <strong>二次型</strong>，可通过 <strong>特征分解</strong> 分析正定性，从而判断极值性质。</li>
-</ul>
-</blockquote>
-<h3 id="4-2-极值判别（二阶充分条件）">4.2 极值判别（二阶充分条件）</h3>
-<ul>
-<li>若 $H_f(\mathbf{x}_0)$ <strong>正定</strong>（所有特征值 $>0$），则 $\mathbf{x}_0$ 为 <strong>严格局部最小点</strong>。</li>
-<li>若 $H_f(\mathbf{x}_0)$ <strong>负定</strong>（所有特征值 $<0$），则 $\mathbf{x}_0$ 为 <strong>严格局部最大点</strong>。</li>
-<li>若 $H_f(\mathbf{x}_0)$ <strong>不定</strong>，则 $\mathbf{x}_0$ 为 <strong>鞍点</strong>。</li>
-</ul>
-<blockquote>
-<p>这里的 <strong>正定/负定</strong> 完全是 <strong>矩阵特征值</strong> 的概念，直接把 <strong>线性代数</strong> 的工具用于 <strong>多元微积分</strong> 的极值判别。</p>
-</blockquote>
-<hr>
-<h2 id="5-多元函数与线性映射的等价关系">5. 多元函数与线性映射的等价关系</h2>
-<table>
-<thead>
-<tr>
-<th>多元分析概念</th>
-<th>对应的线性代数对象</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>梯度 $\nabla f$</strong></td>
-<td>列向量（线性函数的系数）</td>
-</tr>
-<tr>
-<td><strong>雅可比矩阵 $J_F$</strong></td>
-<td><strong>线性映射</strong> $DF_{\mathbf{x}}:\mathbb{R}^n\to\mathbb{R}^m$ 的矩阵表示</td>
-</tr>
-<tr>
-<td><strong>Hessian 矩阵 $H_f$</strong></td>
-<td>对称二次型对应的 <strong>自伴线性算子</strong></td>
-</tr>
-<tr>
-<td><strong>方向导数 $D_{\mathbf{u}}f$</strong></td>
-<td>向量 $\mathbf{u}$ 与梯度的 <strong>内积</strong>（线性映射的作用）</td>
-</tr>
-<tr>
-<td><strong>多元中值定理</strong></td>
-<td>雅可比矩阵在两点之间的 <strong>平均线性映射</strong></td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>通过上述对应关系，可把 <strong>求极值、最速上升、曲面切平面</strong> 等几何问题转化为 <strong>矩阵运算</strong>（求特征值、正交化、求逆）的问题，从而实现 <strong>微积分与线性代数的统一</strong>。</p>
-</blockquote>
-<hr>
-<h2 id="6-示例与应用">6. 示例与应用</h2>
-<h3 id="示例-1：求函数-MATH-INLINE-72-的极值">示例 1：求函数 $f(x,y)=x^2+2xy+y^2$ 的极值</h3>
-<ol>
-<li>
-<p><strong>梯度</strong><br>
-$$\nabla f = \begin{pmatrix}2x+2y\\2x+2y\end{pmatrix}=2\begin{pmatrix}x+y\\x+y\end{pmatrix}.$$<br>
-令 $\nabla f=0$ 得 $x+y=0\;\Rightarrow\;y=-x$。</p>
-</li>
-<li>
-<p><strong>Hessian</strong><br>
-$$H_f=\begin{pmatrix}2&2\\2&2\end{pmatrix}.$$<br>
-特征值 $\lambda_1=4,\;\lambda_2=0$（半正定），因此在直线 $y=-x$ 上每一点都是 <strong>极小值</strong>（但不是严格极小，因为 $H_f$ 仅半正定）。</p>
-</li>
-</ol>
-<h3 id="示例-2：线性映射的局部线性化">示例 2：线性映射的局部线性化</h3>
-<p>设 $F(x,y)=\bigl(xe^{y},\;y\sin x\bigr)$，求在点 $\mathbf{a}=(0,0)$ 附近的线性近似。</p>
-<ul>
-<li><strong>雅可比矩阵</strong><br>
-$$
-  J_F(\mathbf{x})=
-  \begin{pmatrix}
-  e^{y} & xe^{y}\\
-  y\cos x & \sin x
-  \end{pmatrix},
-  \qquad
-  J_F(\mathbf{0})=
-  \begin{pmatrix}
-  1 & 0\\
-  0 & 0
-  \end{pmatrix}.
-  $$</li>
-<li><strong>线性化</strong><br>
-$$F(\mathbf{x})\approx F(\mathbf{0})+J_F(\mathbf{0})(\mathbf{x}-\mathbf{0})
-  =\begin{pmatrix}0\\0\end{pmatrix}+\begin{pmatrix}1&0\\0&0\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}
-  =\begin{pmatrix}x\\0\end{pmatrix}.$$</li>
-</ul>
-<blockquote>
-<p>这说明在原点附近，$F$ 的行为相当于把向量 $(x,y)$ <strong>投影</strong> 到 $x$ 轴上——典型的 <strong>线性代数投影</strong> 操作。</p>
-</blockquote>
-<hr>
-<h2 id="7-参考文献">7. 参考文献</h2>
-<table>
-<thead>
-<tr>
-<th>编号</th>
-<th>文献</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>[1]</td>
-<td>Stewart, <em>Calculus: Early Transcendentals</em>, 8th ed., Cengage, 2015.（多元微积分章节）</td>
-</tr>
-<tr>
-<td>[2]</td>
-<td>Strang, <em>Linear Algebra and Its Applications</em>, 5th ed., Cengage, 2016.（矩阵、特征值）</td>
-</tr>
-<tr>
-<td>[3]</td>
-<td>Apostol, <em>Mathematical Analysis</em>, 2nd ed., Addison‑Wesley, 1974.（中值定理的严谨证明）</td>
-</tr>
-<tr>
-<td>[4]</td>
-<td>Rudin, <em>Principles of Mathematical Analysis</em>, 3rd ed., McGraw‑Hill, 1976.（Brouwer 不动点定理）</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="8-练习题（供自测）">8. 练习题（供自测）</h2>
-<ol>
-<li>设 $f(x,y)=\sin x\cos y$，求其梯度并验证在点 $(\pi/4,\pi/4)$ 处的方向导数沿单位向量 $\mathbf{u}=(1/\sqrt2,1/\sqrt2)$ 的值。</li>
-<li>对向量值函数 $F(x,y)=(x^2-y,\,xy)$，计算雅可比矩阵并在点 $(1,2)$ 给出线性化近似。</li>
-<li>证明：若 $f$ 在开凸集 $U$ 上二次可微且 Hessian 矩阵在 $U$ 为正定，则 $f$ 在 $U$ 上为 <strong>严格凸函数</strong>。</li>
-<li>用 <strong>拉格朗日中值定理</strong> 推导一元函数的 <strong>均值不等式</strong>：若 $f$ 在 $[a,b]$ 连续可微，则<br>
-$$\min_{x\in[a,b]}f'(x)\le\frac{f(b)-f(a)}{b-a}\le\max_{x\in[a,b]}f'(x).$$</li>
-</ol>
-<hr>
-<blockquote>
-<p><strong>小结</strong>：多元函数的微分本质上是 <strong>线性映射</strong>（雅可比矩阵），而二阶微分则对应 <strong>二次型</strong>（Hessian）。通过矩阵的特征分解、正定性判别等线性代数工具，我们可以更系统、更几何地理解极值、最速上升方向以及局部线性化等概念。希望本笔记能帮助你在 <strong>高等数学</strong> 与 <strong>线性代数</strong> 之间搭建起坚实的桥梁。祝学习愉快！</p>
-</blockquote>
-<h2 id="16-多元中值定理的几何含义">16. 多元中值定理的几何含义</h2>
-<p>摘要：多元柯西和向量值函数的中值定理提供了在局部线性化附近对函数增量的近似控制。本节通过直观几何与矩阵表示，讲解在高维空间中中值定理的意义及其与雅可比矩阵的联系。<br>
-关键词：中值定理、柯西、雅可比、局部线性化<br>
-结构：</p>
-<ul>
-<li>H2: 定理陈述与直观</li>
-<li>H2: 与雅可比的关系</li>
-<li>H3: 示例</li>
-</ul>
-<p>开头示例：设 F: R^n -&gt; R^m 在某开集内连续可微，取点 a,b，利用雅可比在某点的线性近似可把 F(b)-F(a) 近似为 JF(ξ)(b-a)，从而获得增量的线性界限。</p>
-<h2 id="17-多元泰勒展开与-Hessian-的应用">17. 多元泰勒展开与 Hessian 的应用</h2>
-<p>摘要：二阶泰勒展开将非线性映射按局部线性与二阶项展开，Hessian 的正定性提供极值的判别信息。本节给出展开公式和在优化中的几何解读。<br>
-关键词：泰勒展开、Hessian、极值、局部近似<br>
-结构：</p>
-<ul>
-<li>H2: 展开公式</li>
-<li>H2: 极值与二阶信息</li>
-<li>H3: 应用示例</li>
-</ul>
-<p>开头示例：对 f(x,y) 的点 (a,b) 进行二阶泰勒展开，得到 f(a+h) ≈ f(a) + ∇f(a)·h + 1/2 h^T Hf(a) h，这里的二阶项揭示了曲面的局部曲率。</p>
-<h2 id="18-线性代数工具在最优化中的应用">18. 线性代数工具在最优化中的应用</h2>
-<p>摘要：通过特征值、特征向量、对角化等线性代数工具来分析凸性、曲率和局部极值，帮助快速判断最优解的存在性与性质。<br>
-关键词：特征值、特征向量、对角化、最优化<br>
-结构：</p>
-<ul>
-<li>H2: 特征分解与正定性</li>
-<li>H2: 最优化中的应用场景</li>
-<li>H3: 练习要点</li>
-</ul>
-<p>开头示例：若 Hessian 在一点正定，则该点是严格局部极小点；若不定，则需结合梯度的一阶项来判断极值的存在性。</p>
-<h2 id="19-梯度与最速下降路径的几何解读">19. 梯度与最速下降路径的几何解读</h2>
-<p>摘要：从几何角度理解梯度方向，即为下降法的反方向，最速下降路径近似沿梯度方向的路径。通过可视化图像帮助理解迭代收敛的路径特征。<br>
-关键词：梯度下降、最速路径、迭代<br>
-结构：</p>
-<ul>
-<li>H2: 梯度与路径关系</li>
-<li>H2: 迭代几何直觉</li>
-<li>H3: 收敛性要点</li>
-</ul>
-<p>开头示例：在二维平面上，若选取初始点并按负梯度方向更新，则路径将逐步贴近函数的等高线向内收敛。</p>
-<h2 id="20-正交投影与最小二乘问题的联系">20. 正交投影与最小二乘问题的联系</h2>
-<p>摘要：正交投影在高维空间中的直观解释，是最小二乘解的几何本质。通过投影误差最小化来理解最优拟合。<br>
-关键词：正交投影、最小二乘、拟合<br>
-结构：</p>
-<ul>
-<li>H2: 正交投影定义</li>
-<li>H2: 最小二乘解的几何interpretation</li>
-<li>H3: 例题</li>
-</ul>
-<p>开头示例：在列向量 b 上寻找一个尽量接近 ax 的向量 x，使得误差 ||b - Ax|| 最小，这等价于将 b 投影到列空间 Span{A} 的正交补上。</p>
-<h2 id="21-局部线性化在微分方程中的作用">21. 局部线性化在微分方程中的作用</h2>
-<p>摘要：微分方程系统经常需要局部线性化来分析局部稳定性与近似解，本节结合一阶近似与线性系统理论，给出常见分支点的分析方法。<br>
-关键词：局部线性化、微分方程、稳定性<br>
-结构：</p>
-<ul>
-<li>H2: 线性化原理</li>
-<li>H2: 稳定性分析要点</li>
-<li>H3: 示例</li>
-</ul>
-<p>开头示例：考虑非线性系统 x’ = f(x)，在平衡点 x* 处可用线性化 x’ ≈ Df(x*) (x - x*) 来分析局部行为。</p>
-<h2 id="22-特征分解在几何中的直观应用">22. 特征分解在几何中的直观应用</h2>
-<p>摘要：特征分解提供了在坐标变换下对称矩阵的简单描述，帮助理解曲率、投影和坐标系统的选择对问题简化的影响。<br>
-关键词：特征分解、对角化、坐标变换<br>
-结构：</p>
-<ul>
-<li>H2: 定义与直观</li>
-<li>H2: 对称矩阵的对角化意义</li>
-<li>H3: 应用示例</li>
-</ul>
-<p>开头示例：对称 Hessian 可以通过正交特征向量组成的基底对角化，使得二阶形式易于判断符号和大小。</p>
-<h2 id="23-从微分到线性代数的整合视角">23. 从微分到线性代数的整合视角</h2>
-<p>摘要：总结本系列中微分与线性代数的主线索，强调两者在极值、投影和线性近似中的互补性。<br>
-关键词：微分、线性代数、整合<br>
-结构：</p>
-<ul>
-<li>H2: 核心桥梁</li>
-<li>H2: 常见题型与解法</li>
-<li>H3: 练习要点</li>
-</ul>
-<p>开头示例：从梯度、雅可比与 Hessian 的角度出发，我们可以统一地将微分与线性代数工具用于分析曲面、拟合与优化问题。</p>
-<h2 id="24-综述：从微分到几何的统一视角">24. 综述：从微分到几何的统一视角</h2>
-<p>摘要：回顾本系列的核心思想，强调以线性映射和二阶性质为主线来理解多元微积分的几何图景。<br>
-关键词：统一视角、几何、微分<br>
-结构：</p>
-<ul>
-<li>H2: 核心观点回顾</li>
-<li>H2: 进一步阅读</li>
-<li>H3: 练习与延伸</li>
-</ul>
-<p>开头示例：通过把微分转化为局部线性映射，以及把二阶信息视作二次型，我们在多元微积分和线性代数之间建立起清晰的桥梁。</p>
-]]></content>
-      <categories>
-        <category>数学分析</category>
-      </categories>
-      <tags>
-        <tag>线性代数</tag>
-        <tag>多元函数</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>程序设计期中知识汇总</title>
-    <url>/posts/b1d9.html</url>
-    <content><![CDATA[<h2 id="根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习-more">根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习<span id="more"></span></h2>
-<h1>第一部分：编程知识</h1>
-<h2 id="输入">输入</h2>
-<h3 id="整型数">整型数</h3>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>范围</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>short %hd</code></td>
-<td>-2<sup>15</sup><code>~</code> 2<sup>15</sup>-1</td>
-</tr>
-<tr>
-<td><code>int %d</code></td>
-<td>-2<sup>31</sup><code>~</code>2<sup>31</sup>-1</td>
-</tr>
-<tr>
-<td><code>long long %lld</code></td>
-<td>-2<sup>63</sup><code>~</code>2<sup>63</sup>-1</td>
-</tr>
-<tr>
-<td><code>unsigned int %u</code></td>
-<td>0<code>~</code>2<sup>32</sup>-1</td>
-</tr>
-<tr>
-<td><code>unsigned long long %llu</code></td>
-<td>0<code>~</code>2<sup>64</sup>-1</td>
-</tr>
-</tbody>
-</table>
-<h3 id="浮点数">浮点数</h3>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>精度</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>float %f</code></td>
-<td>6位小数</td>
-</tr>
-<tr>
-<td><code>double %lf</code></td>
-<td>15位小数</td>
-</tr>
-<tr>
-<td><code>long double %llf</code></td>
-<td>18位小数</td>
-</tr>
-</tbody>
-</table>
-<h3 id="字符">字符</h3>
-<p><code>char %c</code><br>
-<code>string %s</code></p>
-<h2 id="输出">输出</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%f\n&quot;</span>,r);     正常输出</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%10f\n&quot;</span>,r);   长度为<span class="number">10</span>，空格填充，右对齐</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%10.2f\n&quot;</span>,r); 长度为<span class="number">10</span>，两位小数，空格填充，右对齐    </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-10.2f\n&quot;</span>,r);左对齐，同上   </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%+10.2f\n&quot;</span>,r);右对齐，显示正负号     </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;% 10.2f\n&quot;</span>,r);右对齐，空字符填充</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%010.2f\n&quot;</span>,r);右对齐，<span class="number">0</span>填充</span><br><span class="line"></span><br><span class="line">具体效果</span><br><span class="line"><span class="number">3.140000</span></span><br><span class="line">  <span class="number">3.140000</span></span><br><span class="line">      <span class="number">3.14</span></span><br><span class="line"><span class="number">3.14</span></span><br><span class="line">     +<span class="number">3.14</span></span><br><span class="line">      <span class="number">3.14</span></span><br><span class="line"><span class="number">0000003.14</span></span><br></pre></td></tr></table></figure>
-<p>除此之外还要特别注意的有<br>
-<code>%o 无符号八进制整数，不输出前缀0</code><br>
-<code>%u 无符号十进制整数</code><br>
-<code>%x/X 无符号十六进制整数，不输出前缀0x,字母有大小写区分</code><br>
-<code>%e/E 科学计数法，e有大小写区分</code><br>
-<code>%g/G 有效位数，如%.8g保留8位有效数字（自动简化）</code><br>
-<code>%p 以十六进制形式输出指针</code><br>
-<code>%n 不读取任何字符，只读取截至目前读取的字符个数</code></p>
-<h2 id="其他">其他</h2>
-<p>常量<code> const</code><br>
-转义字符<code>\n \&quot;</code><br>
-存储类 <code>static  extern</code></p>
-<h2 id="运算符">运算符</h2>
-<h3 id="位运算（整型、字符型）">位运算（整型、字符型）</h3>
-<p><code>&amp;</code> 与<br>
-<code>|</code> 或<br>
-<code>~</code>非<br>
-<code>^</code>异或<br>
-<code>&lt;&lt;</code>左移<br>
-<code>&gt;&gt;</code>右移</p>
-<h3 id="三目运算符">三目运算符</h3>
-<p><code>a &gt; b ? a : b</code></p>
-<h2 id="类型转换">类型转换</h2>
-<h3 id="隐式类型转换">隐式类型转换</h3>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">float</span> a = <span class="number">3.2</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="type">float</span> c = a / b;</span><br></pre></td></tr></table></figure>
-<h3 id="显示-强制类型转换">显示/强制类型转换</h3>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a;</span><br><span class="line">(<span class="type">double</span>)a;</span><br></pre></td></tr></table></figure>
-<hr>
-<h1>第二部分：编程技巧介绍</h1>
-<h2 id="枚举与模拟">枚举与模拟</h2>
-<p>列举出所有情况，然后判断是否符合题目要求<br>
-参考Luogu P1102 ( 需要二分和双指针 )</p>
-<h2 id="报错-调试">报错&amp;调试</h2>
-<h3 id="1-简单调试">1.简单调试</h3>
-<h3 id="2-模块化编程">2.模块化编程</h3>
-<h3 id="3-理解编译错误">3.理解编译错误</h3>
-<ol>
-<li><strong>AC</strong> - Accepted（答案正确）</li>
-<li><strong>WA</strong> - Wrong Answer（答案错误）</li>
-<li><strong>TLE</strong> - Time Limit Exceeded（超出时间限制）</li>
-<li><strong>RE</strong> - Runtime Error（运行时错误）</li>
-<li><strong>CE</strong> - Compilation Error（编译错误）</li>
-<li><strong>MLE</strong> - Memory Limit Exceeded（超出内存限制）</li>
-<li><strong>OLE</strong> - Output Limit Exceeded（输出限制超出）</li>
-<li><strong>PE</strong> - Presentation Error（格式错误）</li>
-<li><strong>TCI</strong> - Time Complexity Incorrect（时间复杂度错误）</li>
-<li><strong>MCI</strong> - Memory Complexity Incorrect（空间复杂度错误）</li>
-</ol>
-<h2 id="常见trick">常见trick</h2>
-<h3 id="0-index-与-1-index">0-index 与 1-index</h3>
-<h3 id="表达式优先级">表达式优先级</h3>
-<p>如果不确定可以全打上括号</p>
-<h3 id="处理整数型数据相除得到小数而非整数">处理整数型数据相除得到小数而非整数</h3>
-<h4 id="方法1：强制转换-（double">方法1：强制转换 （double)</h4>
-<h4 id="方法2：在表达式前面加上1-0">方法2：在表达式前面加上1.0*</h4>
-<h3 id="注意数据范围">注意数据范围</h3>
-<p>常见的范围是：int 最大是2<sup>31</sup>-1 ,long long最大是2<sup>63</sup>-1。</p>
-<h3 id="注意初始化">注意初始化</h3>
-<p>记得给每一个变量赋一个初始值。</p>
-<h4 id="退出循环的姿势">退出循环的姿势</h4>
-<p>如果是在函数里，可以<code>return</code><br>
-如果是在主函数里，可以<code>return 0 最正常的写法是</code>break<code> 配合</code>flag=0`</p>
-<h4 id="递归模板">递归模板</h4>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">func</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(终止条件)&#123;</span><br><span class="line">        <span class="keyword">return</span> ?;</span><br><span class="line">    &#125;</span><br><span class="line">    继续遍历；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="正确开数组">正确开数组</h4>
-<p>一般要在数据范围之外多开5。<br>
-一般建议开成全局数组，开在主函数里有爆栈的风险。<br>
-在编译选项里，编译时加入以下命令<code>-wl,--stack,268435456</code>.<br>
-同时，单个数组大小不要超过10<sup>7</sup>,不然会编译错误。</p>
-<h2 id="骗分技巧">骗分技巧</h2>
-<h3 id="1-编译分">1.编译分</h3>
-<h3 id="2-打表分">2.打表分</h3>
-<h2 id="头文件">头文件</h2>
-<p>常见有：<br>
-<code>stdio.h</code><br>
-<code>stdlib.h</code><br>
-<code>math.h</code><br>
-<code>string.h</code><br>
-<code>time.h</code><br>
-<code>ctype.h</code></p>
-<h2 id="多文件编译">多文件编译</h2>
-<p>一般有三个文件，分别为<code>main.c</code>  <code>function.h</code>  <code>function.c</code></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">main.c</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;...&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;function.h&quot;</span></span></span><br><span class="line">主程序部分</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">function.h</span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> FUNCTION_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FUNCTION_H</span></span><br><span class="line">函数声明</span><br><span class="line"><span class="type">int</span> <span class="title function_">function</span><span class="params">( )</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">function.c</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;...&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;function.h&quot;</span></span></span><br><span class="line">函数部分</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>知识复习</tag>
       </tags>
   </entry>
   <entry>

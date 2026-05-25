@@ -1,0 +1,1632 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Welcome to Charks's Blog | Welcome to Charks's Blog</title><meta name="author" content="Charks"><meta name="copyright" content="Charks"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="机器学习从零到深度学习精通 — 完全指南  MathJax &#x3D; {   tex: {     inlineMath: [[&#39;$&#39;, &#39;$&#39;], [&#39;\\(&#39;, &#39;\\)&#39;]],     displayMath: [[&#39;$$&#39;, &#39;$$&#39;], [&#39;\\[&#39;, &#39;\\]&#39;]]   } };    *{margin:0;padding:0;box-sizing:border-box;} bod">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Welcome to Charks&#39;s Blog">
+<meta property="og:url" content="http://charkschen.github.io/ai/2.html">
+<meta property="og:site_name" content="Welcome to Charks&#39;s Blog">
+<meta property="og:description" content="机器学习从零到深度学习精通 — 完全指南  MathJax &#x3D; {   tex: {     inlineMath: [[&#39;$&#39;, &#39;$&#39;], [&#39;\\(&#39;, &#39;\\)&#39;]],     displayMath: [[&#39;$$&#39;, &#39;$$&#39;], [&#39;\\[&#39;, &#39;\\]&#39;]]   } };    *{margin:0;padding:0;box-sizing:border-box;} bod">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://charkschen.github.io/img/top-img/img0.png">
+<meta property="article:published_time" content="2026-05-25T14:12:36.154Z">
+<meta property="article:modified_time" content="2026-05-25T02:45:54.038Z">
+<meta property="article:author" content="Charks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://charkschen.github.io/img/top-img/img0.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://charkschen.github.io/ai/2.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":true,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Welcome to Charks\'s Blog',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Welcome to Charks's Blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/top-img/img0.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(/img/top-img/img1.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Welcome to Charks's Blog</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title"></h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>机器学习从零到深度学习精通 — 完全指南</title>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']]
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI','Microsoft YaHei',sans-serif;line-height:1.9;color:#2c3e50;max-width:1100px;margin:0 auto;padding:20px;background:#f0f2f5;}
+.container{background:white;border-radius:8px;box-shadow:0 2px 24px rgba(0,0,0,0.08);padding:50px 60px;margin-top:20px;}
+header{text-align:center;margin-bottom:50px;padding-bottom:30px;border-bottom:3px solid #e8ecf1;}
+h1{color:#1a1a2e;font-size:2.4em;margin-bottom:12px;letter-spacing:1px;}
+.subtitle{color:#6c757d;font-size:1.15em;margin-bottom:8px;}
+.meta{color:#adb5bd;font-size:0.9em;}
+h2{color:#2c3e50;font-size:1.7em;margin:50px 0 20px;padding:12px 0 12px 20px;border-left:5px solid #3498db;background:#f8fafc;border-radius:0 6px 6px 0;}
+h3{color:#34495e;font-size:1.3em;margin:35px 0 15px;padding-bottom:8px;border-bottom:2px solid #e9ecef;}
+h4{color:#495057;font-size:1.1em;margin:25px 0 10px;}
+p{margin-bottom:18px;text-align:justify;}
+ul,ol{margin:15px 0 20px 30px;}
+li{margin-bottom:10px;}
+.note{background:#e8f4fd;border-left:4px solid #3498db;padding:16px 20px;margin:25px 0;border-radius:0 6px 6px 0;}
+.warning{background:#fff8e1;border-left:4px solid #ffc107;padding:16px 20px;margin:25px 0;border-radius:0 6px 6px 0;}
+.success{background:#e8f5e9;border-left:4px solid #28a745;padding:16px 20px;margin:25px 0;border-radius:0 6px 6px 0;}
+.tip{background:#f3e5f5;border-left:4px solid #9b59b6;padding:16px 20px;margin:25px 0;border-radius:0 6px 6px 0;}
+table{width:100%;border-collapse:collapse;margin:25px 0;box-shadow:0 1px 6px rgba(0,0,0,0.06);}
+th{background:#3498db;color:white;padding:14px 16px;text-align:left;font-weight:600;}
+td{padding:12px 16px;border-bottom:1px solid #e9ecef;}
+tr:nth-child(even){background:#f8fafc;}
+tr:hover{background:#e8f4fd;}
+.code-block{background:#1e293b;color:#e2e8f0;padding:18px 22px;border-radius:8px;margin:22px 0;overflow-x:auto;font-family:'Consolas','Monaco','Fira Code',monospace;font-size:0.9em;line-height:1.6;}
+.resources-section{background:#f8fafc;padding:35px 40px;border-radius:10px;margin-top:50px;}
+.resource-item{margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid #dee2e6;}
+.resource-item:last-child{border-bottom:none;}
+.resource-title{font-weight:700;color:#1a1a2e;margin-bottom:4px;font-size:1.05em;}
+.resource-url{margin-bottom:6px;}
+.resource-url a{color:#3498db;word-break:break-all;text-decoration:none;}
+.resource-url a:hover{text-decoration:underline;color:#2980b9;}
+.resource-desc{color:#6c757d;font-size:0.92em;}
+.resource-platform{display:inline-block;background:#e9ecef;color:#495057;padding:2px 8px;border-radius:3px;font-size:0.8em;margin-left:8px;}
+footer{text-align:center;margin-top:50px;padding-top:25px;border-top:1px solid #e9ecef;color:#adb5bd;font-size:0.9em;}
+nav.toc{background:white;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.06);padding:25px 30px;margin-bottom:30px;}
+nav.toc h2{margin:0 0 15px;font-size:1.2em;background:none;border:none;padding:0;color:#3498db;}
+nav.toc ol{columns:2;column-gap:30px;list-style:decimal;margin:0;padding-left:20px;}
+nav.toc li{margin-bottom:6px;break-inside:avoid;}
+nav.toc a{color:#2c3e50;text-decoration:none;font-size:0.95em;}
+nav.toc a:hover{color:#3498db;text-decoration:underline;}
+@media(max-width:768px){.container{padding:20px;}h1{font-size:1.8em;}nav.toc ol{columns:1;}table{font-size:0.85em;}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>机器学习从零到深度学习精通</h1>
+<div class="subtitle">基于全网50+篇高质量学习笔记与经典教材整理 · 公式渲染 · 链接可点击</div>
+<div class="meta">生成日期：2026年5月25日 | 参考平台：GitHub、知乎、CSDN、博客园、51CTO、腾讯云 等</div>
+</header>
+
+<nav class="toc">
+<h2>目录导航</h2>
+<ol>
+<li><a href="#ch1">什么是机器学习</a></li>
+<li><a href="#ch2">Python 基础与环境搭建</a></li>
+<li><a href="#ch3">数学基础（上）：线性代数</a></li>
+<li><a href="#ch4">数学基础（下）：概率论、统计与微积分</a></li>
+<li><a href="#ch5">监督学习：线性回归</a></li>
+<li><a href="#ch6">监督学习：逻辑回归</a></li>
+<li><a href="#ch7">监督学习：决策树与随机森林</a></li>
+<li><a href="#ch8">监督学习：支持向量机 (SVM)</a></li>
+<li><a href="#ch9">监督学习：KNN 与朴素贝叶斯</a></li>
+<li><a href="#ch10">无监督学习：聚类与降维</a></li>
+<li><a href="#ch11">集成学习：Bagging、Boosting、Stacking</a></li>
+<li><a href="#ch12">特征工程实战</a></li>
+<li><a href="#ch13">模型评估与超参数调优</a></li>
+<li><a href="#ch14">神经网络基础</a></li>
+<li><a href="#ch15">卷积神经网络 (CNN)</a></li>
+<li><a href="#ch16">循环神经网络 (RNN、LSTM、GRU)</a></li>
+<li><a href="#ch17">Transformer 与注意力机制</a></li>
+<li><a href="#ch18">生成模型：GAN 与 VAE</a></li>
+<li><a href="#ch19">深度学习框架：PyTorch 与 TensorFlow</a></li>
+<li><a href="#ch20">实战项目：从数据到部署</a></li>
+<li><a href="#ch21">完整学习路线图</a></li>
+<li><a href="#ch22">50+ 参考资源链接</a></li>
+</ol>
+</nav>
+
+<div class="container">
+
+<!-- ==================== 第1章 ==================== -->
+<section id="ch1">
+<h2>一、什么是机器学习</h2>
+
+<h3>1.1 定义与核心思想</h3>
+<p>机器学习（Machine Learning）是人工智能的核心分支。Arthur Samuel（1959）将其定义为："赋予计算机无需显式编程即可学习的能力的研究领域。" Tom Mitchell（1997）给出了更形式化的定义：<strong>对于某类任务 $T$ 和性能度量 $P$，一个计算机程序被认为从经验 $E$ 中学习，当它在任务 $T$ 中的性能（由 $P$ 衡量）随着经验 $E$ 的增加而提高。</strong></p>
+
+<p>传统编程与机器学习的本质区别：</p>
+<ul>
+<li><strong>传统编程</strong>：规则 + 数据 → 答案</li>
+<li><strong>机器学习</strong>：数据 + 答案 → 规则</li>
+</ul>
+
+<h3>1.2 三大学习范式</h3>
+<table>
+<thead><tr><th>范式</th><th>数据需求</th><th>核心任务</th><th>典型算法</th></tr></thead>
+<tbody>
+<tr><td><strong>监督学习</strong></td><td>带标签数据 $(x_i, y_i)$</td><td>分类、回归</td><td>线性回归、逻辑回归、SVM、决策树、神经网络</td></tr>
+<tr><td><strong>无监督学习</strong></td><td>无标签数据 $x_i$</td><td>聚类、降维、密度估计</td><td>K-Means、DBSCAN、PCA、t-SNE</td></tr>
+<tr><td><strong>强化学习</strong></td><td>交互经验 $(s, a, r, s')$</td><td>序贯决策</td><td>Q-Learning、Policy Gradient、PPO</td></tr>
+</tbody>
+</table>
+
+<h3>1.3 发展简史</h3>
+<ol>
+<li><strong>推理期（1950s-1970s）</strong>：符号主义AI，逻辑推理为主。1950年图灵提出"图灵测试"，1956年达特茅斯会议标志AI诞生。</li>
+<li><strong>知识期（1970s-1980s）</strong>：专家系统兴起，将人类专家知识编码为规则。</li>
+<li><strong>统计学习期（1990s-2010s）</strong>：SVM、决策树、集成学习蓬勃发展，数学理论日趋成熟。</li>
+<li><strong>深度学习期（2012-至今）</strong>：AlexNet（2012）引爆深度神经网络浪潮，GPT系列开启大模型时代。</li>
+</ol>
+
+<div class="note">
+<strong>关键洞察：</strong>机器学习不是魔法，而是一套基于数据、通过优化目标函数来学习模式的数学方法。理解这一点比记住任何算法都重要。
+</div>
+</section>
+
+<!-- ==================== 第2章 ==================== -->
+<section id="ch2">
+<h2>二、Python 基础与环境搭建</h2>
+
+<h3>2.1 为什么选择 Python</h3>
+<p>Python 是机器学习领域的首选语言，原因包括：丰富的科学计算生态（NumPy、Pandas、SciPy）、主流框架均提供Python API（Scikit-learn、PyTorch、TensorFlow）、社区活跃且学习曲线平缓。</p>
+
+<h3>2.2 核心库速览</h3>
+<table>
+<thead><tr><th>库</th><th>用途</th><th>关键功能</th></tr></thead>
+<tbody>
+<tr><td>NumPy</td><td>数值计算</td><td>多维数组、线性代数、随机数</td></tr>
+<tr><td>Pandas</td><td>数据处理</td><td>DataFrame、数据清洗、合并</td></tr>
+<tr><td>Matplotlib / Seaborn</td><td>数据可视化</td><td>折线图、散点图、热力图</td></tr>
+<tr><td>Scikit-learn</td><td>传统机器学习</td><td>分类、回归、聚类、预处理</td></tr>
+<tr><td>PyTorch</td><td>深度学习</td><td>动态计算图、自动微分</td></tr>
+<tr><td>TensorFlow/Keras</td><td>深度学习</td><td>静态图、生产部署</td></tr>
+</tbody>
+</table>
+
+<h3>2.3 环境配置</h3>
+<p>推荐使用 Anaconda 管理 Python 环境，或直接使用 Google Colab 在线运行。以下为本地环境配置示例：</p>
+
+<div class="code-block">
+# 创建虚拟环境
+conda create -n ml python=3.10
+conda activate ml
+
+# 安装核心库
+pip install numpy pandas matplotlib seaborn scikit-learn
+pip install torch torchvision torchaudio
+pip install jupyter notebook
+</div>
+
+<div class="tip">
+<strong>新手建议：</strong>如果本地配置困难，优先使用 <a href="https://colab.research.google.com/" target="_blank">Google Colab</a>，免费提供GPU算力，无需安装任何软件。
+</div>
+</section>
+
+<!-- ==================== 第3章 ==================== -->
+<section id="ch3">
+<h2>三、数学基础（上）：线性代数</h2>
+
+<h3>3.1 标量、向量与矩阵</h3>
+<p>机器学习中，数据通常以矩阵形式表示。一个包含 $m$ 个样本、$n$ 个特征的数据集可表示为矩阵 $\mathbf{X} \in \mathbb{R}^{m \times n}$。</p>
+
+<ul>
+<li><strong>标量</strong>：单个数值，如 $a \in \mathbb{R}$</li>
+<li><strong>向量</strong>：一维数组，如 $\mathbf{x} = [x_1, x_2, \ldots, x_n]^T$</li>
+<li><strong>矩阵</strong>：二维数组，如 $\mathbf{X} = \begin{bmatrix} x_{11} & x_{12} \\ x_{21} & x_{22} \end{bmatrix}$</li>
+</ul>
+
+<h3>3.2 矩阵运算</h3>
+<p><strong>矩阵乘法</strong>：若 $\mathbf{A} \in \mathbb{R}^{m \times n}$，$\mathbf{B} \in \mathbb{R}^{n \times p}$，则 $\mathbf{C} = \mathbf{A}\mathbf{B} \in \mathbb{R}^{m \times p}$，其中：</p>
+$$c_{ij} = \sum_{k=1}^{n} a_{ik} b_{kj}$$
+
+<h3>3.3 范数</h3>
+<p>范数用于衡量向量的大小，在正则化中起到关键作用。</p>
+<ul>
+<li><strong>$L_1$ 范数</strong>：$\|\mathbf{x}\|_1 = \sum_i |x_i|$，产生稀疏解，用于特征选择</li>
+<li><strong>$L_2$ 范数</strong>：$\|\mathbf{x}\|_2 = \sqrt{\sum_i x_i^2}$，防止过拟合，在岭回归和权重衰减中使用</li>
+</ul>
+
+<h3>3.4 特征值与特征向量</h3>
+<p>对于方阵 $\mathbf{A}$，若 $\mathbf{A}\mathbf{v} = \lambda \mathbf{v}$，则 $\lambda$ 为特征值，$\mathbf{v}$ 为特征向量。PCA 降维的核心就是对协方差矩阵进行特征值分解。</p>
+
+<h3>3.5 奇异值分解 (SVD)</h3>
+<p>$\mathbf{A} = \mathbf{U} \boldsymbol{\Sigma} \mathbf{V}^T$，其中 $\mathbf{U}$ 和 $\mathbf{V}$ 是正交矩阵，$\boldsymbol{\Sigma}$ 是对角矩阵。SVD 广泛应用于推荐系统（协同过滤）和降维。</p>
+
+<div class="code-block">
+import numpy as np
+# 矩阵乘法
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+C = A @ B  # 或 np.dot(A, B)
+
+# SVD分解
+U, S, Vt = np.linalg.svd(A)
+print("奇异值:", S)
+</div>
+</section>
+
+<!-- ==================== 第4章 ==================== -->
+<section id="ch4">
+<h2>四、数学基础（下）：概率论、统计与微积分</h2>
+
+<h3>4.1 概率基础</h3>
+<ul>
+<li><strong>条件概率</strong>：$P(A|B) = \frac{P(A \cap B)}{P(B)}$</li>
+<li><strong>贝叶斯定理</strong>：$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$，这是朴素贝叶斯分类器和很多概率模型的基础。</li>
+<li><strong>独立事件</strong>：$P(A \cap B) = P(A)P(B)$</li>
+</ul>
+
+<h3>4.2 常见概率分布</h3>
+<table>
+<thead><tr><th>分布</th><th>概率密度/质量函数</th><th>机器学习中的使用</th></tr></thead>
+<tbody>
+<tr><td>高斯分布</td><td>$f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$</td><td>线性回归误差假设、高斯朴素贝叶斯</td></tr>
+<tr><td>伯努利分布</td><td>$P(X=1)=p, P(X=0)=1-p$</td><td>二分类问题建模</td></tr>
+<tr><td>多项分布</td><td>$P(X_1=x_1,...,X_k=x_k)=\frac{n!}{x_1!...x_k!}p_1^{x_1}...p_k^{x_k}$</td><td>文本分类、多分类</td></tr>
+</tbody>
+</table>
+
+<h3>4.3 最大似然估计 (MLE)</h3>
+<p>给定数据 $\mathcal{D} = \{x_1, x_2, \ldots, x_n\}$，参数 $\theta$ 的最大似然估计为：</p>
+$$\hat{\theta}_{MLE} = \arg\max_\theta \prod_{i=1}^n P(x_i|\theta)$$
+<p>实际中常对似然函数取对数（对数似然），将乘法变为加法：</p>
+$$\hat{\theta}_{MLE} = \arg\max_\theta \sum_{i=1}^n \log P(x_i|\theta)$$
+
+<h3>4.4 微积分与优化</h3>
+<p><strong>梯度</strong>：函数 $f(\mathbf{x})$ 的梯度 $\nabla f(\mathbf{x})$ 指向函数增长最快的方向。在机器学习中，我们沿梯度的反方向更新参数以最小化损失函数。</p>
+<p><strong>梯度下降更新公式</strong>：</p>
+$$\theta_{t+1} = \theta_t - \eta \nabla_\theta J(\theta_t)$$
+<p>其中 $\eta$ 是学习率，$J(\theta)$ 是损失函数。</p>
+
+<p><strong>链式法则</strong>：若 $z = f(y)$ 且 $y = g(x)$，则 $\frac{dz}{dx} = \frac{dz}{dy} \cdot \frac{dy}{dx}$。这是反向传播算法的数学基础。</p>
+</section>
+
+<!-- ==================== 第5章 ==================== -->
+<section id="ch5">
+<h2>五、监督学习：线性回归</h2>
+
+<h3>5.1 模型假设</h3>
+<p>线性回归假设目标值 $y$ 是输入特征 $\mathbf{x}$ 的线性函数：</p>
+$$h_\theta(\mathbf{x}) = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_n x_n = \boldsymbol{\theta}^T \mathbf{x}$$
+<p>其中 $\theta_0$ 是偏置项（截距），$\theta_1, \ldots, \theta_n$ 是各特征的权重。</p>
+
+<h3>5.2 损失函数：均方误差 (MSE)</h3>
+$$J(\boldsymbol{\theta}) = \frac{1}{2m} \sum_{i=1}^{m} (h_\theta(\mathbf{x}^{(i)}) - y^{(i)})^2$$
+<p>系数 $\frac{1}{2}$ 是为了求导方便，消去平方项的系数2。</p>
+
+<h3>5.3 求解方法</h3>
+
+<h4>正规方程 (Normal Equation)</h4>
+$$\boldsymbol{\theta} = (\mathbf{X}^T\mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}$$
+<p>优点：一步到位，无需迭代。缺点：计算 $(\mathbf{X}^T\mathbf{X})^{-1}$ 的时间复杂度为 $O(n^3)$，不适合大量特征。</p>
+
+<h4>梯度下降 (Gradient Descent)</h4>
+$$\theta_j := \theta_j - \alpha \frac{\partial}{\partial \theta_j} J(\boldsymbol{\theta})$$
+<p>其中偏导数：$\frac{\partial}{\partial \theta_j} J(\boldsymbol{\theta}) = \frac{1}{m} \sum_{i=1}^{m} (h_\theta(\mathbf{x}^{(i)}) - y^{(i)}) x_j^{(i)}$</p>
+
+<h3>5.4 正则化</h3>
+<ul>
+<li><strong>岭回归 (Ridge, $L_2$)</strong>：$J(\boldsymbol{\theta}) = MSE + \lambda \sum_{j=1}^{n} \theta_j^2$</li>
+<li><strong>Lasso ($L_1$)</strong>：$J(\boldsymbol{\theta}) = MSE + \lambda \sum_{j=1}^{n} |\theta_j|$</li>
+<li><strong>弹性网络 (Elastic Net)</strong>：结合 $L_1$ 和 $L_2$：$J(\boldsymbol{\theta}) = MSE + \lambda_1 \sum |\theta_j| + \lambda_2 \sum \theta_j^2$</li>
+</ul>
+
+<div class="code-block">
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# 普通线性回归
+lr = LinearRegression()
+lr.fit(X_train, y_train)
+
+# 岭回归
+ridge = Ridge(alpha=1.0)
+ridge.fit(X_train, y_train)
+
+print("R² 分数:", lr.score(X_test, y_test))
+</div>
+</section>
+
+<!-- ==================== 第6章 ==================== -->
+<section id="ch6">
+<h2>六、监督学习：逻辑回归</h2>
+
+<h3>6.1 从回归到分类</h3>
+<p>逻辑回归通过 Sigmoid 函数将线性输出映射到 $[0, 1]$ 区间，表示属于正类的概率：</p>
+$$g(z) = \frac{1}{1 + e^{-z}}$$
+$$h_\theta(\mathbf{x}) = g(\boldsymbol{\theta}^T \mathbf{x}) = \frac{1}{1 + e^{-\boldsymbol{\theta}^T \mathbf{x}}}$$
+
+<h3>6.2 决策边界</h3>
+<p>当 $h_\theta(\mathbf{x}) \geq 0.5$（即 $\boldsymbol{\theta}^T \mathbf{x} \geq 0$）时预测为正类；否则预测为负类。</p>
+
+<h3>6.3 损失函数：交叉熵</h3>
+$$J(\boldsymbol{\theta}) = -\frac{1}{m} \sum_{i=1}^{m} \left[ y^{(i)} \log(h_\theta(\mathbf{x}^{(i)})) + (1-y^{(i)}) \log(1 - h_\theta(\mathbf{x}^{(i)})) \right]$$
+
+<p>为什么不用 MSE？对于逻辑回归，MSE 会导致非凸优化问题，容易陷入局部最优。交叉熵损失是凸函数，保证梯度下降能找到全局最优。</p>
+
+<h3>6.4 多分类扩展：Softmax 回归</h3>
+<p>对于 $K$ 类分类问题，Softmax 函数为每个类别计算概率：</p>
+$$P(y=k|\mathbf{x}) = \frac{e^{\boldsymbol{\theta}_k^T \mathbf{x}}}{\sum_{j=1}^{K} e^{\boldsymbol{\theta}_j^T \mathbf{x}}}$$
+
+<div class="code-block">
+from sklearn.linear_model import LogisticRegression
+
+# 二分类
+clf = LogisticRegression(penalty='l2', C=1.0, solver='lbfgs')
+clf.fit(X_train, y_train)
+
+# 多分类
+clf_multi = LogisticRegression(multi_class='multinomial', solver='lbfgs')
+clf_multi.fit(X_train, y_train)
+
+print("准确率:", clf.score(X_test, y_test))
+</div>
+</section>
+
+<!-- ==================== 第7章 ==================== -->
+<section id="ch7">
+<h2>七、监督学习：决策树与随机森林</h2>
+
+<h3>7.1 决策树原理</h3>
+<p>决策树通过递归地选择最优特征进行分裂，构建树形结构。每次分裂追求"纯度提升"最大化。</p>
+
+<h3>7.2 特征选择指标</h3>
+
+<h4>信息增益 (ID3)</h4>
+<p>熵：$H(D) = -\sum_{k=1}^{K} p_k \log_2 p_k$</p>
+<p>信息增益：$g(D, A) = H(D) - H(D|A) = H(D) - \sum_{v} \frac{|D^v|}{|D|} H(D^v)$</p>
+
+<h4>信息增益比 (C4.5)</h4>
+<p>$g_R(D, A) = \frac{g(D, A)}{H_A(D)}$，解决信息增益偏向取值较多特征的问题。</p>
+
+<h4>基尼不纯度 (CART)</h4>
+$$Gini(D) = 1 - \sum_{k=1}^{K} p_k^2$$
+<p>基尼系数越小，数据集纯度越高。</p>
+
+<h3>7.3 剪枝策略</h3>
+<ul>
+<li><strong>预剪枝</strong>：在分裂前评估，若分裂不能带来泛化性能提升则停止</li>
+<li><strong>后剪枝</strong>：先生成完整树，再自底向上剪去不重要的分支</li>
+</ul>
+
+<h3>7.4 随机森林</h3>
+<p>随机森林是 Bagging + 决策树的组合，通过双重随机性（样本随机采样 + 特征随机选择）来降低方差。</p>
+<p>对于分类任务，随机森林通常取 $m = \sqrt{p}$ 个特征（$p$ 是总特征数），对于回归任务取 $m = p/3$。</p>
+
+<div class="code-block">
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+
+# 单棵决策树
+dt = DecisionTreeClassifier(max_depth=5, criterion='gini')
+
+# 随机森林
+rf = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
+rf.fit(X_train, y_train)
+
+# 特征重要性
+importances = rf.feature_importances_
+</div>
+</section>
+
+<!-- ==================== 第8章 ==================== -->
+<section id="ch8">
+<h2>八、监督学习：支持向量机 (SVM)</h2>
+
+<h3>8.1 最大间隔原理</h3>
+<p>SVM 的目标是找到一个超平面 $\mathbf{w}^T\mathbf{x} + b = 0$，使得不同类别的样本到超平面的最小距离（间隔）最大化。</p>
+<p>对于线性可分数据，超平面方程为：</p>
+$$\mathbf{w}^T \mathbf{x} + b = 0$$
+<p>间隔为 $\frac{2}{\|\mathbf{w}\|}$，最大化间隔等价于最小化 $\frac{1}{2}\|\mathbf{w}\|^2$。</p>
+
+<h3>8.2 软间隔与松弛变量</h3>
+<p>现实数据往往线性不可分，引入松弛变量 $\xi_i \geq 0$ 允许部分误分类：</p>
+$$\min_{\mathbf{w}, b, \boldsymbol{\xi}} \frac{1}{2}\|\mathbf{w}\|^2 + C \sum_{i=1}^{m} \xi_i$$
+<p>$C$ 是惩罚参数：$C$ 越大，对误分类惩罚越重，越容易过拟合；$C$ 越小，间隔越大，容错性越强。</p>
+
+<h3>8.3 核技巧</h3>
+<p>通过核函数隐式地将数据映射到高维特征空间，在高维空间中找到线性超平面：</p>
+$$K(\mathbf{x}_i, \mathbf{x}_j) = \phi(\mathbf{x}_i)^T \phi(\mathbf{x}_j)$$
+<table>
+<thead><tr><th>核函数</th><th>表达式</th><th>适用场景</th></tr></thead>
+<tbody>
+<tr><td>线性核</td><td>$K(\mathbf{x}_i, \mathbf{x}_j) = \mathbf{x}_i^T \mathbf{x}_j$</td><td>线性可分数据</td></tr>
+<tr><td>多项式核</td><td>$K(\mathbf{x}_i, \mathbf{x}_j) = (\mathbf{x}_i^T \mathbf{x}_j + c)^d$</td><td>有一定非线性特征</td></tr>
+<tr><td>高斯核 (RBF)</td><td>$K(\mathbf{x}_i, \mathbf{x}_j) = \exp(-\gamma \|\mathbf{x}_i - \mathbf{x}_j\|^2)$</td><td>通用、最常用</td></tr>
+<tr><td>Sigmoid 核</td><td>$K(\mathbf{x}_i, \mathbf{x}_j) = \tanh(\alpha \mathbf{x}_i^T \mathbf{x}_j + c)$</td><td>类似神经网络</td></tr>
+</tbody>
+</table>
+
+<div class="code-block">
+from sklearn.svm import SVC
+
+# RBF核SVM
+svm_rbf = SVC(kernel='rbf', C=1.0, gamma='scale', probability=True)
+svm_rbf.fit(X_train, y_train)
+
+# 获取支持向量
+print("支持向量数量:", len(svm_rbf.support_vectors_))
+</div>
+
+<div class="tip">
+<strong>调参建议：</strong>先使用线性核确定 baseline，再尝试 RBF 核。$\gamma$ 越大，决策边界越复杂，越容易过拟合。
+</div>
+</section>
+
+<!-- ==================== 第9章 ==================== -->
+<section id="ch9">
+<h2>九、监督学习：KNN 与朴素贝叶斯</h2>
+
+<h3>9.1 K近邻算法 (KNN)</h3>
+<p>KNN 是典型的"惰性学习"算法——没有显式训练过程，预测时才计算样本与所有训练数据的距离。</p>
+
+<h4>距离度量</h4>
+<ul>
+<li><strong>欧氏距离</strong>：$d(\mathbf{x}, \mathbf{y}) = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}$</li>
+<li><strong>曼哈顿距离</strong>：$d(\mathbf{x}, \mathbf{y}) = \sum_{i=1}^{n} |x_i - y_i|$</li>
+<li><strong>闵可夫斯基距离</strong>：$d(\mathbf{x}, \mathbf{y}) = (\sum_{i=1}^{n} |x_i - y_i|^p)^{1/p}$</li>
+<li><strong>余弦相似度</strong>：$\cos(\mathbf{x}, \mathbf{y}) = \frac{\mathbf{x}^T \mathbf{y}}{\|\mathbf{x}\| \|\mathbf{y}\|}$</li>
+</ul>
+
+<h4>K值选择</h4>
+<p>$K$ 太小：模型复杂，容易过拟合（对噪声敏感）；$K$ 太大：模型简单，容易欠拟合（忽略局部特征）。通常通过交叉验证选择最优 $K$。</p>
+
+<h3>9.2 朴素贝叶斯</h3>
+<p>基于贝叶斯定理和"特征条件独立"假设（这是"朴素"的来源）：</p>
+$$P(y|x_1, x_2, \ldots, x_n) \propto P(y) \prod_{i=1}^{n} P(x_i|y)$$
+
+<h4>常见变体</h4>
+<ul>
+<li><strong>高斯朴素贝叶斯</strong>：假设 $P(x_i|y) \sim \mathcal{N}(\mu_{y,i}, \sigma_{y,i}^2)$，适用于连续特征</li>
+<li><strong>多项式朴素贝叶斯</strong>：适用于离散计数特征（如文本词频）</li>
+<li><strong>伯努利朴素贝叶斯</strong>：适用于二值特征（如词是否出现）</li>
+</ul>
+
+<div class="warning">
+<strong>注意：</strong>朴素贝叶斯的"特征独立"假设在现实中几乎不成立，但它依然在很多任务（尤其是文本分类）中表现良好，因为分类决策关注的是 $P(y|\mathbf{x})$ 的相对大小而非绝对值。
+</div>
+
+<div class="code-block">
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB, MultinomialNB
+
+knn = KNeighborsClassifier(n_neighbors=5, weights='distance')
+knn.fit(X_train, y_train)
+
+gnb = GaussianNB()
+gnb.fit(X_train, y_train)
+
+print("KNN准确率:", knn.score(X_test, y_test))
+print("Naive Bayes准确率:", gnb.score(X_test, y_test))
+</div>
+</section>
+
+<!-- ==================== 第10章 ==================== -->
+<section id="ch10">
+<h2>十、无监督学习：聚类与降维</h2>
+
+<h3>10.1 K-Means 聚类</h3>
+<p>K-Means 是最经典的聚类算法，目标是最小化簇内平方和：</p>
+$$\min_{\mathbf{C}, \boldsymbol{\mu}} \sum_{k=1}^{K} \sum_{\mathbf{x}_i \in C_k} \|\mathbf{x}_i - \boldsymbol{\mu}_k\|^2$$
+<p><strong>算法步骤</strong>：①随机初始化 $K$ 个中心点 → ②将每个样本分配给最近的中心点 → ③重新计算每个簇的中心点（均值）→ ④重复②③直到收敛。</p>
+
+<h4>K值选择</h4>
+<ul>
+<li><strong>肘部法则</strong>：绘制 $K$ 与 SSE（簇内误差平方和）的关系图，找到"拐点"</li>
+<li><strong>轮廓系数</strong>：$s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}$，取值范围 $[-1,1]$，越接近1越好</li>
+</ul>
+
+<h3>10.2 层次聚类</h3>
+<p>不需要预先指定簇数，生成树状图 (Dendrogram)。分为凝聚式（自底向上）和分裂式（自顶向下）。</p>
+
+<h3>10.3 DBSCAN</h3>
+<p>基于密度的聚类算法，能够发现任意形状的簇，并自动识别噪声点。核心参数：$\varepsilon$（邻域半径）和 $minPts$（最小点数）。</p>
+
+<h3>10.4 主成分分析 (PCA)</h3>
+<p>PCA 是线性降维方法，目标是找到数据方差最大的方向（主成分）：</p>
+<p><strong>步骤</strong>：①数据中心化 → ②计算协方差矩阵 $\mathbf{S} = \frac{1}{n-1}\mathbf{X}^T\mathbf{X}$ → ③对 $\mathbf{S}$ 做特征值分解 → ④取前 $k$ 大特征值对应的特征向量构成投影矩阵。</p>
+<p>保留的方差比例：$\frac{\sum_{i=1}^{k} \lambda_i}{\sum_{i=1}^{n} \lambda_i}$</p>
+
+<h3>10.5 t-SNE</h3>
+<p>非线性降维技术，特别适合高维数据的可视化。保持数据点之间的局部相似性，将高维数据嵌入到2D或3D空间。注意：t-SNE 主要用于可视化，不适合作为特征提取步骤。</p>
+
+<div class="code-block">
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
+
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+clusters = kmeans.fit_predict(X)
+
+# PCA降维到2维用于可视化
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X)
+print("保留方差比例:", pca.explained_variance_ratio_.sum())
+</div>
+</section>
+
+<!-- ==================== 第11章 ==================== -->
+<section id="ch11">
+<h2>十一、集成学习</h2>
+
+<h3>11.1 为什么需要集成</h3>
+<p>单个模型可能存在偏差或方差问题。通过组合多个"弱学习器"，集成方法可以显著提升泛化性能。集成学习分为两大类：并行化方法（Bagging）和序列化方法（Boosting）。</p>
+
+<h3>11.2 Bagging (Bootstrap Aggregating)</h3>
+<p><strong>核心思想</strong>：并行训练 $T$ 个基学习器，每个学习器使用自助采样（有放回）得到的不同训练集。最终通过投票（分类）或平均（回归）得到结果。</p>
+<p><strong>代表算法：随机森林</strong>——在 Bagging 基础上增加了特征随机选择。</p>
+
+<h3>11.3 Boosting</h3>
+<p><strong>核心思想</strong>：串行训练基学习器，每个新学习器重点关注前一个学习器错误分类的样本。</p>
+
+<h4>AdaBoost</h4>
+<p>通过调整样本权重实现：错误分类的样本权重增加，正确分类的权重减少。</p>
+<p>分类器权重：$\alpha_t = \frac{1}{2} \ln\left(\frac{1 - \epsilon_t}{\epsilon_t}\right)$</p>
+
+<h4>梯度提升 (GBDT)</h4>
+<p>每个新学习器拟合前一个学习器的残差（负梯度方向）：</p>
+$$F_m(\mathbf{x}) = F_{m-1}(\mathbf{x}) + \nu \cdot h_m(\mathbf{x})$$
+<p>其中 $\nu$ 是学习率（ shrinkage），$h_m$ 是拟合残差的决策树。</p>
+
+<h4>XGBoost</h4>
+<p>在 GBDT 基础上做了大量工程优化：</p>
+<ul>
+<li>目标函数加入正则项：$Obj = \sum_i L(y_i, \hat{y}_i) + \sum_k \Omega(f_k)$</li>
+<li>二阶泰勒展开，利用二阶导数信息</li>
+<li>支持列采样、缺失值自动处理</li>
+<li>支持并行化特征分裂</li>
+</ul>
+
+<h4>LightGBM</h4>
+<p>基于直方图的决策树算法，使用单边梯度采样 (GOSS) 和互斥特征捆绑 (EFB)，训练速度更快，内存占用更低。</p>
+
+<h3>11.4 Stacking</h3>
+<p>训练多个不同的基模型（第一层），用它们的预测输出作为元模型（第二层）的输入特征，学习最优的组合方式。</p>
+
+<div class="code-block">
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+import xgboost as xgb
+
+rf = RandomForestClassifier(n_estimators=100)
+gbdt = GradientBoostingClassifier(n_estimators=100, learning_rate=0.1)
+xgb_model = xgb.XGBClassifier(n_estimators=100, learning_rate=0.1)
+
+for model in [rf, gbdt, xgb_model]:
+    model.fit(X_train, y_train)
+    print(f"{model.__class__.__name__}: {model.score(X_test, y_test):.4f}")
+</div>
+</section>
+
+<!-- ==================== 第12章 ==================== -->
+<section id="ch12">
+<h2>十二、特征工程实战</h2>
+
+<h3>12.1 数据清洗</h3>
+<ul>
+<li><strong>缺失值处理</strong>：删除（缺失比例高）、填充（均值/中位数/众数/模型预测）、标记</li>
+<li><strong>异常值处理</strong>：IQR法（$Q1-1.5 \times IQR$ 到 $Q3+1.5 \times IQR$）、Z-score法（$|Z| > 3$）、截断或转换</li>
+<li><strong>重复值</strong>：直接删除或保留一条</li>
+</ul>
+
+<h3>12.2 特征缩放</h3>
+<ul>
+<li><strong>标准化 (Standardization)</strong>：$x' = \frac{x - \mu}{\sigma}$，使特征均值为0、方差为1</li>
+<li><strong>归一化 (Min-Max Scaling)</strong>：$x' = \frac{x - x_{min}}{x_{max} - x_{min}}$，映射到 $[0,1]$</li>
+<li><strong>鲁棒缩放 (Robust Scaling)</strong>：$x' = \frac{x - median}{IQR}$，对异常值鲁棒</li>
+</ul>
+
+<h3>12.3 特征编码</h3>
+<ul>
+<li><strong>独热编码 (One-Hot)</strong>：$K$ 个类别生成 $K$ 维向量，适用于类别数少的无序变量</li>
+<li><strong>标签编码 (Label)</strong>：将类别映射为整数 $0,1,\ldots,K-1$，适用于有序变量或树模型</li>
+<li><strong>目标编码 (Target Encoding)</strong>：用目标变量的均值替换类别值，需注意防止数据泄露</li>
+</ul>
+
+<h3>12.4 特征构造</h3>
+<ul>
+<li><strong>多项式特征</strong>：从 $x_1, x_2$ 构造 $x_1^2, x_2^2, x_1x_2$ 等</li>
+<li><strong>交互特征</strong>：组合两个特征的乘积或比值</li>
+<li><strong>分箱</strong>：将连续变量离散化</li>
+<li><strong>时间特征</strong>：从日期提取年、月、日、星期、季度等</li>
+</ul>
+
+<h3>12.5 特征选择</h3>
+<table>
+<thead><tr><th>方法</th><th>类型</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>过滤法 (Filter)</td><td>统计指标</td><td>相关系数、卡方检验、互信息、方差阈值</td></tr>
+<tr><td>包裹法 (Wrapper)</td><td>模型性能</td><td>递归特征消除 (RFE)、前向/后向搜索</td></tr>
+<tr><td>嵌入法 (Embedded)</td><td>模型自带</td><td>Lasso ($L_1$)、树模型特征重要性</td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- ==================== 第13章 ==================== -->
+<section id="ch13">
+<h2>十三、模型评估与超参数调优</h2>
+
+<h3>13.1 分类指标</h3>
+<p>定义混淆矩阵：</p>
+<table>
+<thead><tr><th></th><th>预测正类</th><th>预测负类</th></tr></thead>
+<tbody>
+<tr><td>实际正类</td><td>TP (True Positive)</td><td>FN (False Negative)</td></tr>
+<tr><td>实际负类</td><td>FP (False Positive)</td><td>TN (True Negative)</td></tr>
+</tbody>
+</table>
+
+<ul>
+<li><strong>准确率</strong>：$Accuracy = \frac{TP + TN}{TP + TN + FP + FN}$</li>
+<li><strong>精确率</strong>：$Precision = \frac{TP}{TP + FP}$（预测为正的有多少是真的）</li>
+<li><strong>召回率</strong>：$Recall = \frac{TP}{TP + FN}$（真正的正类有多少被找出来）</li>
+<li><strong>F1 分数</strong>：$F_1 = 2 \cdot \frac{Precision \cdot Recall}{Precision + Recall}$</li>
+<li><strong>ROC-AUC</strong>：ROC 曲线下的面积，衡量模型整体区分正负类的能力，$AUC \in [0.5, 1]$</li>
+</ul>
+
+<h3>13.2 回归指标</h3>
+<ul>
+<li><strong>MSE</strong>：$MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2$</li>
+<li><strong>RMSE</strong>：$RMSE = \sqrt{MSE}$</li>
+<li><strong>MAE</strong>：$MAE = \frac{1}{n}\sum_{i=1}^{n}|y_i - \hat{y}_i|$</li>
+<li><strong>$R^2$</strong>：$R^2 = 1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}$，越接近1越好</li>
+</ul>
+
+<h3>13.3 交叉验证</h3>
+<p>$K$ 折交叉验证：将数据均匀分成 $K$ 份，每次用 $K-1$ 份训练、1份验证，重复 $K$ 次取平均。常用 $K=5$ 或 $K=10$。分层 $K$ 折确保每折类别比例一致。</p>
+
+<h3>13.4 偏差-方差权衡</h3>
+<ul>
+<li><strong>高偏差（欠拟合）</strong>：模型太简单，训练误差和验证误差都高 → 增加模型复杂度、添加特征</li>
+<li><strong>高方差（过拟合）</strong>：训练误差低但验证误差高 → 增加数据、正则化、简化模型</li>
+</ul>
+
+<h3>13.5 超参数调优</h3>
+<ul>
+<li><strong>网格搜索 (Grid Search)</strong>：穷举所有参数组合，适合小参数空间</li>
+<li><strong>随机搜索 (Random Search)</strong>：随机采样参数空间，效率更高</li>
+<li><strong>贝叶斯优化</strong>：使用代理模型（如高斯过程）建模参数与性能的关系，智能选择下一组参数</li>
+</ul>
+
+<div class="code-block">
+from sklearn.model_selection import GridSearchCV, cross_val_score
+
+param_grid = {
+    'n_estimators': [50, 100, 200],
+    'max_depth': [5, 10, None],
+    'min_samples_split': [2, 5, 10]
+}
+rf = RandomForestClassifier(random_state=42)
+grid = GridSearchCV(rf, param_grid, cv=5, scoring='f1', n_jobs=-1)
+grid.fit(X_train, y_train)
+print("最佳参数:", grid.best_params_)
+print("最佳分数:", grid.best_score_)
+</div>
+</section>
+
+<!-- ==================== 第14章 ==================== -->
+<section id="ch14">
+<h2>十四、神经网络基础</h2>
+
+<h3>14.1 感知机</h3>
+<p>感知机是最简单的神经网络单元：$f(\mathbf{x}) = sign(\mathbf{w}^T\mathbf{x} + b)$。但单层感知机只能解决线性可分问题（无法处理 XOR）。</p>
+
+<h3>14.2 多层感知机 (MLP)</h3>
+<p>通过堆叠多个全连接层，引入非线性激活函数，MLP 能够逼近任意函数（万能逼近定理）。</p>
+<p>一层隐藏层的 MLP：$\mathbf{h} = g(\mathbf{W}_1\mathbf{x} + \mathbf{b}_1)$，$\hat{\mathbf{y}} = \mathbf{W}_2\mathbf{h} + \mathbf{b}_2$</p>
+
+<h3>14.3 激活函数</h3>
+<table>
+<thead><tr><th>函数</th><th>公式</th><th>优点</th><th>缺点</th></tr></thead>
+<tbody>
+<tr><td>Sigmoid</td><td>$\sigma(x) = \frac{1}{1+e^{-x}}$</td><td>平滑、输出(0,1)</td><td>梯度消失、非零中心</td></tr>
+<tr><td>Tanh</td><td>$\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$</td><td>零中心、输出(-1,1)</td><td>梯度消失</td></tr>
+<tr><td>ReLU</td><td>$f(x) = \max(0, x)$</td><td>计算快、缓解梯度消失</td><td>神经元"死亡"(负输入梯度0)</td></tr>
+<tr><td>Leaky ReLU</td><td>$f(x) = \max(\alpha x, x)$</td><td>解决死亡ReLU</td><td>引入了超参数 $\alpha$</td></tr>
+</tbody>
+</table>
+
+<h3>14.4 前向传播与反向传播</h3>
+<p><strong>前向传播</strong>：输入数据逐层通过网络的权重矩阵和非线性激活函数，最终输出预测值。</p>
+<p><strong>反向传播</strong>：利用链式法则计算损失函数对每个参数的梯度：</p>
+$$\frac{\partial L}{\partial \mathbf{W}^{(l)}} = \frac{\partial L}{\partial \mathbf{a}^{(l)}} \cdot \frac{\partial \mathbf{a}^{(l)}}{\partial \mathbf{z}^{(l)}} \cdot \frac{\partial \mathbf{z}^{(l)}}{\partial \mathbf{W}^{(l)}}$$
+<p>然后使用梯度下降或其变体更新参数：$\mathbf{W} \leftarrow \mathbf{W} - \eta \nabla_\mathbf{W} L$</p>
+
+<h3>14.5 损失函数</h3>
+<ul>
+<li><strong>回归</strong>：MSE Loss = $\frac{1}{n}\sum(y_i - \hat{y}_i)^2$；MAE Loss = $\frac{1}{n}\sum|y_i - \hat{y}_i|$</li>
+<li><strong>二分类</strong>：BCE Loss = $-\frac{1}{n}\sum[y_i\log\hat{y}_i + (1-y_i)\log(1-\hat{y}_i)]$</li>
+<li><strong>多分类</strong>：CrossEntropy Loss = $-\frac{1}{n}\sum\sum y_{ik}\log\hat{y}_{ik}$</li>
+</ul>
+
+<h3>14.6 优化器</h3>
+<ul>
+<li><strong>SGD</strong>：$\theta_{t+1}=\theta_t - \eta g_t$，简单但收敛慢</li>
+<li><strong>SGD + Momentum</strong>：$v_{t+1}=\beta v_t + (1-\beta)g_t$，$\theta_{t+1}=\theta_t - \eta v_{t+1}$，加速收敛</li>
+<li><strong>Adam</strong>：结合 Momentum 和 RMSProp，自适应学习率，是目前最常用的优化器</li>
+</ul>
+
+<h3>14.7 正则化技术</h3>
+<ul>
+<li><strong>$L_1/L_2$ 权重衰减</strong>：在损失中加入 $\lambda\|\mathbf{W}\|^2$</li>
+<li><strong>Dropout</strong>：训练时随机丢弃 $p$ 比例的神经元，防止过拟合</li>
+<li><strong>Batch Normalization</strong>：对每层输入进行标准化，加速训练，有一定正则化效果</li>
+</ul>
+</section>
+
+<!-- ==================== 第15章 ==================== -->
+<section id="ch15">
+<h2>十五、卷积神经网络 (CNN)</h2>
+
+<h3>15.1 为什么需要 CNN</h3>
+<p>全连接网络处理图像时面临两大问题：①参数量爆炸（$224\times224\times3$ 的图像第一层就有1500万+参数）；②忽略了图像的空间局部结构。CNN 通过<strong>局部连接</strong>和<strong>权值共享</strong>解决了这两个问题。</p>
+
+<h3>15.2 核心组件</h3>
+
+<h4>卷积层</h4>
+<p>卷积核在输入上滑动，执行逐元素乘加操作。卷积操作：</p>
+$$(f * g)(t) = \sum_{\tau} f(\tau) g(t-\tau)$$
+<p>输出尺寸：$O = \frac{W - K + 2P}{S} + 1$，其中 $W$ 是输入尺寸，$K$ 是卷积核大小，$P$ 是填充，$S$ 是步长。</p>
+
+<h4>池化层</h4>
+<p>降采样操作，减小特征图尺寸，增加平移不变性。最大池化是最常用的池化方式。</p>
+
+<h3>15.3 经典架构演进</h3>
+<table>
+<thead><tr><th>模型</th><th>年份</th><th>核心创新</th><th>Top-5错误率</th></tr></thead>
+<tbody>
+<tr><td>LeNet-5</td><td>1998</td><td>首个CNN应用（手写数字识别）</td><td>—</td></tr>
+<tr><td>AlexNet</td><td>2012</td><td>ReLU + Dropout + GPU并行</td><td>15.3%</td></tr>
+<tr><td>VGG-16</td><td>2014</td><td>全部使用3×3小卷积核，深度增加</td><td>7.3%</td></tr>
+<tr><td>GoogLeNet (Inception)</td><td>2014</td><td>多尺度卷积核并行 + 1×1卷积降维</td><td>6.7%</td></tr>
+<tr><td>ResNet</td><td>2015</td><td>残差连接 $\mathbf{y} = F(\mathbf{x}) + \mathbf{x}$，训练152层</td><td>3.57%</td></tr>
+</tbody>
+</table>
+
+<h3>15.4 残差网络 (ResNet) 详解</h3>
+<p>核心思想：引入跳跃连接（Skip Connection），让网络学习残差映射：</p>
+$$\mathbf{y} = \mathcal{F}(\mathbf{x}, \{W_i\}) + \mathbf{x}$$
+<p>当 $\mathcal{F}=0$ 时，$\mathbf{y}=\mathbf{x}$，恒等映射。这种设计解决了深层网络的退化问题（层数增加但性能反而下降），使训练数百层的网络成为可能。</p>
+
+<div class="code-block">
+import torch.nn as nn
+
+# 简单的CNN
+class SimpleCNN(nn.Module):
+    def __init__(self, num_classes=10):
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 32, 3, padding=1)
+        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.fc1 = nn.Linear(64 * 8 * 8, 512)
+        self.fc2 = nn.Linear(512, num_classes)
+        self.relu = nn.ReLU()
+        self.dropout = nn.Dropout(0.5)
+    
+    def forward(self, x):
+        x = self.pool(self.relu(self.conv1(x)))
+        x = self.pool(self.relu(self.conv2(x)))
+        x = x.view(x.size(0), -1)
+        x = self.relu(self.fc1(x))
+        x = self.dropout(x)
+        return self.fc2(x)
+</div>
+</section>
+
+<!-- ==================== 第16章 ==================== -->
+<section id="ch16">
+<h2>十六、循环神经网络 (RNN / LSTM / GRU)</h2>
+
+<h3>16.1 RNN 基础</h3>
+<p>RNN 通过隐藏状态 $h_t$ 将前一时间步的信息传递到当前步：</p>
+$$h_t = \tanh(\mathbf{W}_{ih} x_t + \mathbf{W}_{hh} h_{t-1} + b_h)$$
+$$y_t = \mathbf{W}_{hy} h_t + b_y$$
+
+<h3>16.2 RNN 的问题</h3>
+<p><strong>梯度消失/爆炸</strong>：由于反向传播通过时间 (BPTT) 涉及连乘操作，当序列较长时，早期时间步的梯度要么趋于零（梯度消失），要么趋于无穷大（梯度爆炸）。这导致 RNN 无法捕捉长距离依赖关系。</p>
+
+<h3>16.3 LSTM (长短期记忆)</h3>
+<p>LSTM 引入<strong>细胞状态</strong> $C_t$ 和三个<strong>门控机制</strong>，有效解决梯度消失问题：</p>
+<ul>
+<li><strong>遗忘门</strong>：$f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)$ —— 决定丢弃哪些旧信息</li>
+<li><strong>输入门</strong>：$i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i)$，$\tilde{C}_t = \tanh(W_C \cdot [h_{t-1}, x_t] + b_C)$ —— 决定存储哪些新信息</li>
+<li><strong>细胞状态更新</strong>：$C_t = f_t * C_{t-1} + i_t * \tilde{C}_t$</li>
+<li><strong>输出门</strong>：$o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o)$，$h_t = o_t * \tanh(C_t)$</li>
+</ul>
+
+<h3>16.4 GRU (门控循环单元)</h3>
+<p>GRU 是 LSTM 的简化版，合并了遗忘门和输入门为单一的<strong>更新门</strong>，参数更少，训练更快：</p>
+<ul>
+<li><strong>更新门</strong>：$z_t = \sigma(W_z \cdot [h_{t-1}, x_t])$</li>
+<li><strong>重置门</strong>：$r_t = \sigma(W_r \cdot [h_{t-1}, x_t])$</li>
+<li><strong>候选隐藏状态</strong>：$\tilde{h}_t = \tanh(W \cdot [r_t * h_{t-1}, x_t])$</li>
+<li><strong>最终隐藏状态</strong>：$h_t = (1 - z_t) * h_{t-1} + z_t * \tilde{h}_t$</li>
+</ul>
+
+<h3>16.5 应用场景</h3>
+<ul>
+<li><strong>文本分类/情感分析</strong>：LSTM/GRU + 全连接层</li>
+<li><strong>机器翻译</strong>：Seq2Seq（编码器-解码器架构）</li>
+<li><strong>时间序列预测</strong>：股票价格、天气预测</li>
+<li><strong>命名实体识别 (NER)</strong>：BiLSTM + CRF</li>
+</ul>
+
+<div class="code-block">
+import torch.nn as nn
+
+class SentimentLSTM(nn.Module):
+    def __init__(self, vocab_size, embed_dim, hidden_dim, num_classes):
+        super().__init__()
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+        self.lstm = nn.LSTM(embed_dim, hidden_dim, num_layers=2, 
+                            batch_first=True, bidirectional=True)
+        self.fc = nn.Linear(hidden_dim * 2, num_classes)
+        self.dropout = nn.Dropout(0.5)
+    
+    def forward(self, x):
+        x = self.embedding(x)
+        out, (h_n, c_n) = self.lstm(x)
+        # 取最后时间步的双向拼接
+        out = torch.cat((h_n[-2,:,:], h_n[-1,:,:]), dim=1)
+        out = self.dropout(out)
+        return self.fc(out)
+</div>
+</section>
+
+<!-- ==================== 第17章 ==================== -->
+<section id="ch17">
+<h2>十七、Transformer 与注意力机制</h2>
+
+<h3>17.1 自注意力 (Self-Attention)</h3>
+<p>Transformer 的核心创新是完全抛弃了 RNN 的序列结构，仅依赖注意力机制。自注意力计算每个位置与其他所有位置的相关性：</p>
+$$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right) \mathbf{V}$$
+<p>其中 $\mathbf{Q} = \mathbf{X}\mathbf{W}^Q$，$\mathbf{K} = \mathbf{X}\mathbf{W}^K$，$\mathbf{V} = \mathbf{X}\mathbf{W}^V$。除以 $\sqrt{d_k}$ 是为了防止点积过大导致 softmax 梯度消失。</p>
+
+<h3>17.2 多头注意力 (Multi-Head Attention)</h3>
+<p>并行计算多个注意力"头"，每个头关注不同的表示子空间：</p>
+$$\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h) \mathbf{W}^O$$
+$$\text{head}_i = \text{Attention}(\mathbf{Q}\mathbf{W}_i^Q, \mathbf{K}\mathbf{W}_i^K, \mathbf{V}\mathbf{W}_i^V)$$
+
+<h3>17.3 Transformer 架构</h3>
+<p><strong>编码器 (Encoder)</strong>：由 $N$ 个相同的层堆叠，每层包含：多头自注意力 → 残差连接+层归一化 → 前馈网络 → 残差连接+层归一化。BERT 使用编码器部分。</p>
+<p><strong>解码器 (Decoder)</strong>：除了与编码器相同的两个子层，还增加了<strong>交叉注意力层</strong>（对编码器输出做注意力）。使用掩码自注意力确保预测当前位置时只能看到之前的位置。GPT 系列使用解码器部分。</p>
+
+<h3>17.4 位置编码</h3>
+<p>由于 Transformer 没有 RNN 的序列处理能力，需要显式注入位置信息：</p>
+$$PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{model}}}\right)$$
+$$PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d_{model}}}\right)$$
+
+<h3>17.5 主流变体</h3>
+<table>
+<thead><tr><th>模型</th><th>架构</th><th>参数量</th><th>特点</th></tr></thead>
+<tbody>
+<tr><td>BERT</td><td>仅编码器</td><td>110M/340M</td><td>双向上下文理解，适合NLU任务</td></tr>
+<tr><td>GPT-3</td><td>仅解码器</td><td>175B</td><td>自回归生成，Few-shot学习</td></tr>
+<tr><td>GPT-4</td><td>仅解码器</td><td>未公开</td><td>多模态，更强推理能力</td></tr>
+<tr><td>T5</td><td>编码器-解码器</td><td>60M-11B</td><td>统一的Text-to-Text框架</td></tr>
+<tr><td>ViT</td><td>仅编码器</td><td>86M-632M</td><td>将图像分块视为Token序列</td></tr>
+</tbody>
+</table>
+
+<div class="tip">
+<strong>学习建议：</strong>先理解 Attention 的本质——它是一种"软寻址"：Query是查询条件，Key是索引，Value是内容。Attention输出是对Value的加权求和，权重由Query和Key的相似度决定。
+</div>
+</section>
+
+<!-- ==================== 第18章 ==================== -->
+<section id="ch18">
+<h2>十八、生成模型：GAN 与 VAE</h2>
+
+<h3>18.1 生成对抗网络 (GAN)</h3>
+<p>GAN 由生成器 $G$ 和判别器 $D$ 组成，两者进行<strong>极小极大博弈</strong>：</p>
+$$\min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{data}}[\log D(x)] + \mathbb{E}_{z \sim p_z}[\log(1 - D(G(z)))]$$
+<ul>
+<li><strong>生成器</strong>：从随机噪声 $z$ 生成逼真的假样本，目标是骗过判别器</li>
+<li><strong>判别器</strong>：区分真实样本和假样本</li>
+</ul>
+
+<h3>18.2 GAN 的训练难点</h3>
+<ul>
+<li><strong>模式坍塌 (Mode Collapse)</strong>：生成器只产生少数几种样本</li>
+<li><strong>训练不稳定</strong>：生成器和判别器的平衡难以维持</li>
+<li><strong>梯度消失</strong>：判别器太强时，生成器梯度接近零</li>
+</ul>
+
+<h3>18.3 变分自编码器 (VAE)</h3>
+<p>VAE 学习数据的潜在分布 $p(z|x)$，通过最大化<strong>证据下界 (ELBO)</strong> 来训练：</p>
+$$\mathcal{L} = \mathbb{E}_{q(z|x)}[\log p(x|z)] - D_{KL}(q(z|x) \| p(z))$$
+<p>第一项是重建损失，第二项是 KL 散度正则项，迫使潜在分布接近标准正态分布。</p>
+
+<div class="warning">
+<strong>注意：</strong>GAN 的理论优雅但工程实现困难，是深度学习中最难训练的模型之一。初学者建议先从 VAE 入手理解生成模型的基本框架。
+</div>
+</section>
+
+<!-- ==================== 第19章 ==================== -->
+<section id="ch19">
+<h2>十九、深度学习框架：PyTorch 与 TensorFlow</h2>
+
+<h3>19.1 PyTorch</h3>
+<p>由 Meta AI 开发，以<strong>动态计算图</strong>为核心特色。代码风格贴近 Python 原生语法，调试方便，是学术界的首选框架。</p>
+
+<h4>核心概念</h4>
+<ul>
+<li><strong>Tensor</strong>：多维数组，与 NumPy 类似但支持 GPU 加速和自动微分</li>
+<li><strong>autograd</strong>：自动微分引擎，记录所有操作并自动计算梯度</li>
+<li><strong>nn.Module</strong>：所有神经网络模块的基类</li>
+<li><strong>DataLoader</strong>：高效的数据加载和批处理</li>
+</ul>
+
+<h3>19.2 TensorFlow / Keras</h3>
+<p>由 Google 开发，以<strong>静态计算图</strong>（TF 2.x 也支持动态图）和<strong>生产部署</strong>生态著称。Keras 作为高层 API，简洁易用。</p>
+
+<h3>19.3 框架选择建议</h3>
+<table>
+<thead><tr><th>维度</th><th>PyTorch</th><th>TensorFlow</th></tr></thead>
+<tbody>
+<tr><td>入门难度</td><td>⭐⭐（容易）</td><td>⭐⭐⭐（中等）</td></tr>
+<tr><td>研究社区</td><td>⭐⭐⭐⭐⭐（绝对主流）</td><td>⭐⭐⭐</td></tr>
+<tr><td>工业部署</td><td>⭐⭐⭐（TorchServe）</td><td>⭐⭐⭐⭐⭐（TF Serving）</td></tr>
+<tr><td>移动端</td><td>⭐⭐⭐（PyTorch Mobile）</td><td>⭐⭐⭐⭐⭐（TF Lite）</td></tr>
+<tr><td>HuggingFace 生态</td><td>⭐⭐⭐⭐⭐（原生支持）</td><td>⭐⭐⭐⭐（也支持）</td></tr>
+</tbody>
+</table>
+
+<div class="success">
+<strong>推荐路线：</strong>初学者先学 PyTorch（概念清晰、调试友好），入门后可补充 TensorFlow 知识（工业部署需要）。两者底层逻辑相通，掌握一个后可快速上手另一个。
+</div>
+</section>
+
+<!-- ==================== 第20章 ==================== -->
+<section id="ch20">
+<h2>二十、实战项目：从数据到部署</h2>
+
+<h3>20.1 完整机器学习流程</h3>
+<ol>
+<li><strong>问题定义</strong>：明确是分类、回归还是其他任务</li>
+<li><strong>数据收集</strong>：获取原始数据</li>
+<li><strong>探索性数据分析 (EDA)</strong>：可视化、统计摘要、相关性分析</li>
+<li><strong>数据预处理</strong>：缺失值、异常值、编码、缩放</li>
+<li><strong>特征工程</strong>：特征构造、选择、降维</li>
+<li><strong>模型选择</strong>：根据问题类型选择候选算法</li>
+<li><strong>模型训练</strong>：交叉验证 + 超参数调优</li>
+<li><strong>模型评估</strong>：选择合适的评估指标</li>
+<li><strong>模型解释</strong>：特征重要性、SHAP值</li>
+<li><strong>模型部署</strong>：保存模型、构建API服务</li>
+</ol>
+
+<h3>20.2 推荐实战项目（由易到难）</h3>
+<ol>
+<li><strong>房价预测</strong>（回归）：使用 Boston 或 California 房价数据集，练习数据预处理和线性回归/Random Forest</li>
+<li><strong>泰坦尼克号生存预测</strong>（分类）：Kaggle 经典入门赛，练习特征工程</li>
+<li><strong>鸢尾花分类</strong>（多分类）：练习 SVM、决策树、KNN</li>
+<li><strong>MNIST 手写数字识别</strong>（图像分类）：入门 CNN</li>
+<li><strong>IMDB 电影评论情感分析</strong>（NLP）：入门 RNN/LSTM 和文本处理</li>
+<li><strong>CIFAR-10/CIFAR-100 图像分类</strong>：练习更复杂的 CNN 架构（ResNet）</li>
+<li><strong>Kaggle 竞赛（如 House Prices、Titanic 进阶）</strong>：完整 ML 流程实践</li>
+</ol>
+
+<div class="code-block">
+# 完整ML Pipeline示例
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('feature_selector', SelectFromModel(RandomForestClassifier(n_estimators=100))),
+    ('classifier', RandomForestClassifier(n_estimators=200, max_depth=15))
+])
+
+scores = cross_val_score(pipeline, X, y, cv=5, scoring='accuracy')
+print(f"5折交叉验证准确率: {scores.mean():.4f} ± {scores.std():.4f}")
+</div>
+</section>
+
+<!-- ==================== 第21章 ==================== -->
+<section id="ch21">
+<h2>二十一、完整学习路线图</h2>
+
+<h3>阶段一：基础入门（第1-4周）</h3>
+<ul>
+<li>✅ Python编程基础（变量、循环、函数、面向对象）</li>
+<li>✅ NumPy、Pandas、Matplotlib 基本使用</li>
+<li>✅ 机器学习基本概念：监督/无监督、分类/回归、训练/测试</li>
+<li>✅ Scikit-learn 基础API调用</li>
+<li>✅ 动手实现线性回归和逻辑回归</li>
+</ul>
+
+<h3>阶段二：算法深入（第5-12周）</h3>
+<ul>
+<li>✅ 系统学习数学基础（线性代数、概率论、微积分）</li>
+<li>✅ 掌握核心算法原理：SVM、决策树、随机森林、KNN、朴素贝叶斯</li>
+<li>✅ 集成学习：Bagging、Boosting、XGBoost、LightGBM</li>
+<li>✅ 特征工程完整流程</li>
+<li>✅ 交叉验证、超参数调优</li>
+<li>✅ 参加1-2个 Kaggle 竞赛</li>
+</ul>
+
+<h3>阶段三：深度学习（第13-20周）</h3>
+<ul>
+<li>✅ 神经网络原理：前向传播、反向传播、激活函数</li>
+<li>✅ PyTorch 框架熟练使用</li>
+<li>✅ CNN + 图像分类项目</li>
+<li>✅ RNN/LSTM + 文本/时序项目</li>
+<li>✅ Transformer 原理与实战</li>
+<li>✅ 学习使用预训练模型（HuggingFace Transformers）</li>
+</ul>
+
+<h3>阶段四：专项深入（持续）</h3>
+<ul>
+<li>✅ 选择方向深耕：CV（目标检测、语义分割）/ NLP（BERT、GPT微调）/ 推荐系统 / 强化学习</li>
+<li>✅ 阅读经典论文：ResNet、Attention Is All You Need、BERT、GPT系列</li>
+<li>✅ 参与开源项目贡献代码</li>
+<li>✅ 关注前沿：大模型、多模态、AI Agent</li>
+</ul>
+
+<div class="note">
+<strong>核心原则：</strong>① 理论与实践交替进行，每天写代码；② 不要试图一次理解所有细节，迭代学习；③ 善用AI工具辅助学习和编码（但不替代独立思考）；④ 每周至少做一个mini项目巩固所学。
+</div>
+</section>
+
+<!-- ==================== 参考资源 ==================== -->
+<section id="ch22" class="resources-section">
+<h2>二十二、参考资料与高质量学习笔记链接（50+篇）</h2>
+<p>以下链接全部可直接点击访问，按主题分类，均为各平台高Star/高赞/高阅读量的优质资源。</p>
+
+<h3>📚 经典教材笔记</h3>
+
+<div class="resource-item">
+<div class="resource-title">1. 《机器学习》（西瓜书）2000+ Star 完整学习笔记</div>
+<div class="resource-url"><a href="https://github.com/Vay-keen/Machine-learning-learning-notes" target="_blank">https://github.com/Vay-keen/Machine-learning-learning-notes</a></div>
+<div class="resource-desc">周志华《机器学习》17章完整笔记，GitHub 2000+ Star，深圳大学学生整理<span class="resource-platform">GitHub</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">2. Mu-L 机器学习/概率模型/深度学习讲义（2000+页）</div>
+<div class="resource-url"><a href="https://github.com/Mu-L/machine-learning-notes" target="_blank">https://github.com/Mu-L/machine-learning-notes</a></div>
+<div class="resource-desc">不间断更新的英文讲义，包含贝叶斯、回归、神经网络等，附视频链接<span class="resource-platform">GitHub</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">3. 1.8k Star 机器学习个人笔记项目</div>
+<div class="resource-url"><a href="https://www.toutiao.com/w/1857516008551433/" target="_blank">https://www.toutiao.com/w/1857516008551433/</a></div>
+<div class="resource-desc">23章节完整笔记，覆盖数学基础到高级概率图模型<span class="resource-platform">今日头条/GitHub</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">4. 懂点Python就能读懂的机器学习全流程笔记（GitHub热榜第三）</div>
+<div class="resource-url"><a href="http://cloud.tencent.com.cn/developer/news/404028" target="_blank">http://cloud.tencent.com.cn/developer/news/404028</a></div>
+<div class="resource-desc">理论+代码双覆盖，从线性回归到深度学习<span class="resource-platform">腾讯云</span></div>
+</div>
+
+<h3>🎓 吴恩达课程笔记</h3>
+
+<div class="resource-item">
+<div class="resource-title">5. 黄海广：吴恩达机器学习+深度学习课程笔记（6578+赞）</div>
+<div class="resource-url"><a href="https://zhuanlan.zhihu.com/p/82868576" target="_blank">https://zhuanlan.zhihu.com/p/82868576</a></div>
+<div class="resource-desc">吴恩达课程打印版笔记+视频资源合集，知乎最高赞AI文章之一<span class="resource-platform">知乎</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">6. 吴恩达DeepLearning Specialization课程笔记</div>
+<div class="resource-url"><a href="https://zhuanlan.zhihu.com/p/625490514" target="_blank">https://zhuanlan.zhihu.com/p/625490514</a></div>
+<div class="resource-desc">LaTeX格式完整笔记，从Logistic Regression到Transformer<span class="resource-platform">知乎</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">7. 吴恩达深度学习教程中文笔记目录</div>
+<div class="resource-url"><a href="https://blog.51cto.com/zhuxiaoxia/6724974" target="_blank">https://blog.51cto.com/zhuxiaoxia/6724974</a></div>
+<div class="resource-desc">180+课程笔记完整中文翻译，附代码作业<span class="resource-platform">51CTO</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">8. 吴恩达机器学习课程中文版学习笔记（8周版本）</div>
+<div class="resource-url"><a href="https://m.blog.csdn.net/sharepython/article/details/150111429" target="_blank">https://m.blog.csdn.net/sharepython/article/details/150111429</a></div>
+<div class="resource-desc">按8周学习计划组织的课程精华笔记<span class="resource-platform">CSDN</span></div>
+</div>
+
+<h3>🎯 知乎高赞专栏</h3>
+
+<div class="resource-item">
+<div class="resource-title">9. 机器学习笔记专栏（3845赞）</div>
+<div class="resource-url"><a href="https://zhuanlan.zhihu.com/c_1134831892254924800" target="_blank">https://zhuanlan.zhihu.com/c_1134831892254924800</a></div>
+<div class="resource-desc">通俗易懂的ML科普，评价指标、因果分析等专题<span class="resource-platform">知乎</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">10. 机器学习+深度学习笔记集（4731赞）</div>
+<div class="resource-url"><a href="https://www.zhihu.com/column/c_1136588553852223488" target="_blank">https://www.zhihu.com/column/c_1136588553852223488</a></div>
+<div class="resource-desc">白板推导系列+代码实现，39篇内容<span class="resource-platform">知乎</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">11. 李宏毅老师机器学习笔记专栏</div>
+<div class="resource-url"><a href="https://www.zhihu.com/column/c_1960844746151929714" target="_blank">https://www.zhihu.com/column/c_1960844746151929714</a></div>
+<div class="resource-desc">李宏毅ML课程的系统笔记，含PPT和作业指导<span class="resource-platform">知乎</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">12. 机器学习：算法原理与实战（618赞）</div>
+<div class="resource-url"><a href="https://www.zhihu.com/column/c_1638234643412594688" target="_blank">https://www.zhihu.com/column/c_1638234643412594688</a></div>
+<div class="resource-desc">从基本概念到实际应用，含GPT大模型技术<span class="resource-platform">知乎</span></div>
+</div>
+
+<h3>🐍 算法详解（CSDN/博客园）</h3>
+
+<div class="resource-item">
+<div class="resource-title">13. 万字硬核笔记：从贝叶斯到深度学习一文全搞懂</div>
+<div class="resource-url"><a href="https://blog.csdn.net/qq_57376018/article/details/160558013" target="_blank">https://blog.csdn.net/qq_57376018/article/details/160558013</a></div>
+<div class="resource-desc">完整ML知识框架+学习路径推演，300+阅读<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">14. 一文纵览9大机器学习基础算法（附代码）</div>
+<div class="resource-url"><a href="https://xiexu.blog.csdn.net/article/details/131029516" target="_blank">https://xiexu.blog.csdn.net/article/details/131029516</a></div>
+<div class="resource-desc">线性回归→SVM→随机森林→神经网络→KNN全解析<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">15. 人工智能从入门到精通：ML基础算法实战</div>
+<div class="resource-url"><a href="https://m.blog.csdn.net/xcLeigh/article/details/156711265" target="_blank">https://m.blog.csdn.net/xcLeigh/article/details/156711265</a></div>
+<div class="resource-desc">1w+阅读，线性回归+逻辑回归+决策树原理与代码<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">16. 【学习笔记】机器学习-监督学习六大算法详解</div>
+<div class="resource-url"><a href="https://blog.51cto.com/u_16213629/14495524" target="_blank">https://blog.51cto.com/u_16213629/14495524</a></div>
+<div class="resource-desc">算法对比+选择决策树+代码模板<span class="resource-platform">51CTO</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">17. 机器学习核心算法全流程技术详解</div>
+<div class="resource-url"><a href="https://guosy.blog.csdn.net/article/details/152138836" target="_blank">https://guosy.blog.csdn.net/article/details/152138836</a></div>
+<div class="resource-desc">SVM、逻辑回归、朴素贝叶斯的设计思想和源码<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">18. 常用数据分类算法原理+优缺点+代码（10种算法）</div>
+<div class="resource-url"><a href="https://yishuihancheng.blog.csdn.net/article/details/131591482" target="_blank">https://yishuihancheng.blog.csdn.net/article/details/131591482</a></div>
+<div class="resource-desc">LR/RF/DT/SVM/NB/XGBoost/DNN/LightGBM全对比<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">19. 10分钟理解机器学习五大经典算法原理</div>
+<div class="resource-url"><a href="https://zhuanlan.zhihu.com/p/1994458057565042528" target="_blank">https://zhuanlan.zhihu.com/p/1994458057565042528</a></div>
+<div class="resource-desc">线性回归、逻辑回归、决策树、SVM、K-Means通俗讲解<span class="resource-platform">知乎</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">20. Python机器学习基础系列：线性模型精髓</div>
+<div class="resource-url"><a href="https://zhuanlan.zhihu.com/p/1929114549799360333" target="_blank">https://zhuanlan.zhihu.com/p/1929114549799360333</a></div>
+<div class="resource-desc">线性回归+逻辑回归原理推导+正则化+代码实现<span class="resource-platform">知乎</span></div>
+</div>
+
+<h3>🌲 集成学习专题</h3>
+
+<div class="resource-item">
+<div class="resource-title">21. 集成学习详解：Bagging、Boosting、随机森林、XGBoost</div>
+<div class="resource-url"><a href="https://chuanchuan.blog.csdn.net/article/details/126416688" target="_blank">https://chuanchuan.blog.csdn.net/article/details/126416688</a></div>
+<div class="resource-desc">袋装法和提升法完整对比+糖尿病/蘑菇分类案例<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">22. XGBoost从零理解（集成学习算法详解）</div>
+<div class="resource-url"><a href="https://wxw-123.blog.csdn.net/article/details/122870062" target="_blank">https://wxw-123.blog.csdn.net/article/details/122870062</a></div>
+<div class="resource-desc">XGBoost目标函数、泰勒展开、加权分位数算法<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">23. 随机森林、AdaBoost、GBDT、XGBoost从零理解</div>
+<div class="resource-url"><a href="https://blog.csdn.net/weixin_43935696/article/details/126256060" target="_blank">https://blog.csdn.net/weixin_43935696/article/details/126256060</a></div>
+<div class="resource-desc">四种集成算法的原理推导和对比<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">24. SVM与XGBoost详解（含手把手推导）</div>
+<div class="resource-url"><a href="https://blog.csdn.net/m0_71189030/article/details/132584075" target="_blank">https://blog.csdn.net/m0_71189030/article/details/132584075</a></div>
+<div class="resource-desc">SVM三层境界+XGBoost原理+Kaggle实战<span class="resource-platform">CSDN</span></div>
+</div>
+
+<h3>🔍 特征工程与模型调优</h3>
+
+<div class="resource-item">
+<div class="resource-title">25. 构建健壮的ML管道：从数据清洗到模型部署</div>
+<div class="resource-url"><a href="https://blog.csdn.net/ZHONGHUALONG/article/details/154615107" target="_blank">https://blog.csdn.net/ZHONGHUALONG/article/details/154615107</a></div>
+<div class="resource-desc">全流程实战：EDA→预处理→特征工程→模型调优→部署<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">26. 零基础掌握AI：实战机器学习全流程</div>
+<div class="resource-url"><a href="https://www.cnblogs.com/jzssuanfa/p/19475375" target="_blank">https://www.cnblogs.com/jzssuanfa/p/19475375</a></div>
+<div class="resource-desc">数据→特征工程→模型训练→超参数调优→完整案例<span class="resource-platform">博客园</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">27. 机器学习模型性能提升教程（特征工程+模型优化）</div>
+<div class="resource-url"><a href="https://www.cnblogs.com/TS86/p/18811414" target="_blank">https://www.cnblogs.com/TS86/p/18811414</a></div>
+<div class="resource-desc">特征选择+超参数调优+模型融合实战<span class="resource-platform">博客园</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">28. 构建高效ML模型：从特征工程到模型调优</div>
+<div class="resource-url"><a href="https://yq.aliyun.com/articles/1483218" target="_blank">https://yq.aliyun.com/articles/1483218</a></div>
+<div class="resource-desc">阿里云开发者社区，特征工程+算法选择+调优完整指南<span class="resource-platform">阿里云</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">29. 实战：模型评估与优化（Python AI数据分析进阶）</div>
+<div class="resource-url"><a href="https://blog.csdn.net/imewe/article/details/149856748" target="_blank">https://blog.csdn.net/imewe/article/details/149856748</a></div>
+<div class="resource-desc">逻辑回归+网格搜索+过拟合+评估指标完整教程<span class="resource-platform">CSDN</span></div>
+</div>
+
+<h3>🧠 深度学习综合</h3>
+
+<div class="resource-item">
+<div class="resource-title">30. 深度学习完全入门笔记（小白友好版）</div>
+<div class="resource-url"><a href="https://www.cnblogs.com/wsyl/p/19992382" target="_blank">https://www.cnblogs.com/wsyl/p/19992382</a></div>
+<div class="resource-desc">CNN→RNN→LSTM→Transformer完整入门<span class="resource-platform">博客园</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">31. 深度学习入门：从全连接网络到Transformer架构</div>
+<div class="resource-url"><a href="https://blog.csdn.net/weixin_65409651/article/details/147595977" target="_blank">https://blog.csdn.net/weixin_65409651/article/details/147595977</a></div>
+<div class="resource-desc">CNN/RNN/LSTM经典架构演进+代码示例<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">32. 深度学习入门完整总结</div>
+<div class="resource-url"><a href="https://www.cnblogs.com/wsyl/p/20094284" target="_blank">https://www.cnblogs.com/wsyl/p/20094284</a></div>
+<div class="resource-desc">CNN/RNN/GAN/Transformer/GNN全面梳理<span class="resource-platform">博客园</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">33. 机器学习+深度学习+GPT学习路线图</div>
+<div class="resource-url"><a href="https://lzwjava.github.io/dl-study-map-zh" target="_blank">https://lzwjava.github.io/dl-study-map-zh</a></div>
+<div class="resource-desc">分基础/中级/高级三阶段，含GPT演进详解<span class="resource-platform">GitHub Pages</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">34. GitHub: 机器学习/深度学习学习路径及知识总结</div>
+<div class="resource-url"><a href="https://github.com/ZeyuL01/machine-learning-deep-learning-notes" target="_blank">https://github.com/ZeyuL01/machine-learning-deep-learning-notes</a></div>
+<div class="resource-desc">ML/DL/RL+Kaggle实战+论文阅读的系统路径<span class="resource-platform">GitHub</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">35. GitHub: HsJiang1 机器学习/深度学习笔记</div>
+<div class="resource-url"><a href="http://github.dongbeiw.com/HsJiang1/machine-learning-deep-learning-notes" target="_blank">http://github.dongbeiw.com/HsJiang1/machine-learning-deep-learning-notes</a></div>
+<div class="resource-desc">2025热门方向+推荐工具环境+学习技巧<span class="resource-platform">GitHub</span></div>
+</div>
+
+<h3>📖 李沐《动手学深度学习》</h3>
+
+<div class="resource-item">
+<div class="resource-title">36. 《动手学深度学习》官方在线版</div>
+<div class="resource-url"><a href="https://zh.d2l.ai/" target="_blank">https://zh.d2l.ai/</a></div>
+<div class="resource-desc">李沐等著，全球300所大学采用，完整代码+公式+图示<span class="resource-platform">官方网站</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">37. 李沐「动手学深度学习」中文课程笔记</div>
+<div class="resource-url"><a href="https://cloud.tencent.com/developer/article/2003885" target="_blank">https://cloud.tencent.com/developer/article/2003885</a></div>
+<div class="resource-desc">哈工大学生整理，markdown笔记+Jupyter代码中文注释<span class="resource-platform">腾讯云</span></div>
+</div>
+
+<h3>🛠️ 框架教程</h3>
+
+<div class="resource-item">
+<div class="resource-title">38. PyTorch中文入门教程</div>
+<div class="resource-url"><a href="https://www.pytorchchina.com/" target="_blank">https://www.pytorchchina.com/</a></div>
+<div class="resource-desc">PyTorch官方60分钟教程+364页《动手学深度学习》PyTorch版<span class="resource-platform">PyTorch中国</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">39. Python深度学习：TensorFlow与PyTorch核心用法对比</div>
+<div class="resource-url"><a href="https://www.cnblogs.com/sanmutong/p/19449549" target="_blank">https://www.cnblogs.com/sanmutong/p/19449549</a></div>
+<div class="resource-desc">两大框架零基础对比，从安装到实战<span class="resource-platform">博客园</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">40. 强烈推荐的TensorFlow/PyTorch/Keras样例资源（2174赞）</div>
+<div class="resource-url"><a href="https://zhuanlan.zhihu.com/p/82868576" target="_blank">https://zhuanlan.zhihu.com/p/82868576</a></div>
+<div class="resource-desc">三框架样例合集，深度学习初学者必收藏<span class="resource-platform">知乎</span></div>
+</div>
+
+<h3>📊 更多实战与进阶</h3>
+
+<div class="resource-item">
+<div class="resource-title">41. 机器学习之学习笔记（随机森林+线性回归详解）</div>
+<div class="resource-url"><a href="https://blog.csdn.net/deven3452208524/article/details/146028941" target="_blank">https://blog.csdn.net/deven3452208524/article/details/146028941</a></div>
+<div class="resource-desc">随机森林双重随机性+超参数调优+回归算法详解<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">42. 推荐系统中的Attention机制深入讲解</div>
+<div class="resource-url"><a href="https://zhuanlan.zhihu.com/p/269610432" target="_blank">https://zhuanlan.zhihu.com/p/269610432</a></div>
+<div class="resource-desc">Self-Attention在推荐系统中的实际应用分析<span class="resource-platform">知乎</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">43. 常见算法的Python实现（GitHub 25000+ Star）</div>
+<div class="resource-url"><a href="https://zhuanlan.zhihu.com/p/63754427" target="_blank">https://zhuanlan.zhihu.com/p/63754427</a></div>
+<div class="resource-desc">各种算法Python实现+动图演示<span class="resource-platform">知乎</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">44. 《统计学习方法》Python代码实现+课件（1056赞）</div>
+<div class="resource-url"><a href="https://zhuanlan.zhihu.com/p/82868576" target="_blank">https://zhuanlan.zhihu.com/p/82868576</a></div>
+<div class="resource-desc">李航《统计学习方法》配套代码，面试必看<span class="resource-platform">知乎</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">45. GitHub: AI学习必备资料合集</div>
+<div class="resource-url"><a href="https://github.com/alsm168/AI_Learning_Materials" target="_blank">https://github.com/alsm168/AI_Learning_Materials</a></div>
+<div class="resource-desc">ML/DL/NLP/CV 课程+书籍+工具一站式汇总<span class="resource-platform">GitHub</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">46. 周志华《机器学习》学习路线最全汇总</div>
+<div class="resource-url"><a href="https://blog.51cto.com/u_16213629/14495524" target="_blank">https://blog.51cto.com/u_16213629/14495524</a></div>
+<div class="resource-desc">西瓜书+南瓜书+习题+视频完整生态<span class="resource-platform">51CTO</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">47. 吴恩达深度学习笔记完整版（CSDN）</div>
+<div class="resource-url"><a href="https://blog.csdn.net/qq_45069496/article/details/126240306" target="_blank">https://blog.csdn.net/qq_45069496/article/details/126240306</a></div>
+<div class="resource-desc">神经网络+深度学习入门+反向传播完整笔记<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">48. 赶紧收藏！西瓜书完整笔记来了</div>
+<div class="resource-url"><a href="https://www.zhuanzhiai.com/document/dbb8dc76765637fb36a0dd28cc07737b" target="_blank">https://www.zhuanzhiai.com/document/dbb8dc76765637fb36a0dd28cc07737b</a></div>
+<div class="resource-desc">1400+ GitHub Star，17章完整笔记<span class="resource-platform">专知</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">49. 《深度学习入门：基于PyTorch和TensorFlow》书籍</div>
+<div class="resource-url"><a href="https://baike.baidu.com/item/深度学习入门：基于PyTorch和TensorFlow的理论与实现/24342012" target="_blank">https://baike.baidu.com/item/深度学习入门：基于PyTorch和TensorFlow的理论与实现/24342012</a></div>
+<div class="resource-desc">红色石头著，从Python基础到两大框架实战<span class="resource-platform">百度百科</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">50. 机器学习入门学习教程（附中文版学习笔记，8周完整版）</div>
+<div class="resource-url"><a href="https://m.blog.csdn.net/sharepython/article/details/150111429" target="_blank">https://m.blog.csdn.net/sharepython/article/details/150111429</a></div>
+<div class="resource-desc">吴恩达课程完整中文笔记，8周全记录<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">51. 西瓜书《机器学习》2000+ Star笔记（365seal）</div>
+<div class="resource-url"><a href="https://www.365seal.com/y/gDpXzbojvb.html" target="_blank">https://www.365seal.com/y/gDpXzbojvb.html</a></div>
+<div class="resource-desc">17章节完整笔记目录+精选讲解<span class="resource-platform">365seal</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">52. AI编程社区：西瓜书纯手推笔记（600+ Star）</div>
+<div class="resource-url"><a href="https://aicoding.csdn.net/683ea3f8606a8318e85ad343.html" target="_blank">https://aicoding.csdn.net/683ea3f8606a8318e85ad343.html</a></div>
+<div class="resource-desc">Top985 AI博士开源西瓜书手推笔记<span class="resource-platform">CSDN</span></div>
+</div>
+
+<div class="resource-item">
+<div class="resource-title">53. 吴恩达21年DeepLearning Specialization课程LaTeX笔记</div>
+<div class="resource-url"><a href="https://zhuanlan.zhihu.com/p/625490514" target="_blank">https://zhuanlan.zhihu.com/p/625490514</a></div>
+<div class="resource-desc">Logistic Regression→CNN→RNN→Attention Transformer<span class="resource-platform">知乎</span></div>
+</div>
+
+</section>
+
+</div>
+
+<footer>
+<p>本教程基于全网 50+ 篇高质量机器学习学习笔记与经典教材整理而成</p>
+<p>生成日期：2026年5月25日 | 公式渲染：MathJax 3 | 所有参考链接可直接点击访问</p>
+<p>© 2026 — 机器学习完全指南</p>
+</footer>
+
+</body>
+</html></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/top-img/img0.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Charks</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CharksChen"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/series-complete.html" title="高等数学多元函数章节与线性代数内在联系探究（完整系列）">高等数学多元函数章节与线性代数内在联系探究（完整系列）</a><time datetime="2026-04-30T16:00:00.000Z" title="发表于 2026-05-01 00:00:00">2026-05-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/d0da.html" title="高等数学多元函数章节与线性代数内在联系探究">高等数学多元函数章节与线性代数内在联系探究</a><time datetime="2026-04-24T16:00:00.000Z" title="发表于 2026-04-25 00:00:00">2026-04-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/3c.html" title="C++之STL（from ChrisKim_ZHT)">C++之STL（from ChrisKim_ZHT)</a><time datetime="2026-04-15T10:02:43.000Z" title="发表于 2026-04-15 18:02:43">2026-04-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/8b25.html" title="线性代数的本质（整理自3Blue1Brown）">线性代数的本质（整理自3Blue1Brown）</a><time datetime="2025-12-30T09:09:49.000Z" title="发表于 2025-12-30 17:09:49">2025-12-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/d090.html" title="线性代数复习简略版">线性代数复习简略版</a><time datetime="2025-12-12T03:47:23.000Z" title="发表于 2025-12-12 11:47:23">2025-12-12</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/"><span class="card-category-list-name">数学分析</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"><span class="card-category-list-name">线性代数</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"><span class="card-category-list-name">计算机</span><span class="card-category-list-count">12</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E9%AB%98%E7%B2%BE%E5%BA%A6/" style="font-size: 1.1em; color: #999">高精度</a> <a href="/tags/%E5%BE%AE%E5%88%86/" style="font-size: 1.1em; color: #999">微分</a> <a href="/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/" style="font-size: 1.3em; color: #99a1ac">多元函数</a> <a href="/tags/%E4%B8%AD%E5%80%BC%E5%AE%9A%E7%90%86/" style="font-size: 1.1em; color: #999">中值定理</a> <a href="/tags/snprintf/" style="font-size: 1.1em; color: #999">snprintf</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0/" style="font-size: 1.1em; color: #999">线性代数复习</a> <a href="/tags/%E7%BA%A7%E6%95%B0/" style="font-size: 1.1em; color: #999">级数</a> <a href="/tags/%E6%A8%A1%E6%8B%9F%E6%B5%81%E7%A8%8B/" style="font-size: 1.1em; color: #999">模拟流程</a> <a href="/tags/%E8%BE%93%E5%87%BA/" style="font-size: 1.1em; color: #999">输出</a> <a href="/tags/%E6%97%B6%E9%97%B4%E7%BA%BF%E4%BC%98%E5%8C%96%E7%AE%A1%E7%90%86/" style="font-size: 1.1em; color: #999">时间线优化管理</a> <a href="/tags/%E4%BA%8C%E5%88%86%E7%AE%97%E6%B3%95/" style="font-size: 1.3em; color: #99a1ac">二分算法</a> <a href="/tags/%E4%B8%8D%E7%AD%89%E5%BC%8F/" style="font-size: 1.1em; color: #999">不等式</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%A4%8D%E4%B9%A0/" style="font-size: 1.1em; color: #999">知识复习</a> <a href="/tags/STL/" style="font-size: 1.1em; color: #999">STL</a> <a href="/tags/LIS/" style="font-size: 1.1em; color: #999">LIS</a> <a href="/tags/sprintf/" style="font-size: 1.1em; color: #999">sprintf</a> <a href="/tags/3Blue1Brown/" style="font-size: 1.1em; color: #999">3Blue1Brown</a> <a href="/tags/%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B/" style="font-size: 1.1em; color: #999">微分方程</a> <a href="/tags/%E6%9C%80%E4%BC%98%E5%8C%96/" style="font-size: 1.1em; color: #999">最优化</a> <a href="/tags/%E7%BB%93%E6%9E%84%E4%BD%93%E5%88%9D%E5%A7%8B%E5%8C%96/" style="font-size: 1.1em; color: #999">结构体初始化</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 1.5em; color: #99a9bf">线性代数</a> <a href="/tags/Hessian/" style="font-size: 1.1em; color: #999">Hessian</a> <a href="/tags/%E6%A2%AF%E5%BA%A6/" style="font-size: 1.1em; color: #999">梯度</a> <a href="/tags/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" style="font-size: 1.1em; color: #999">归并排序</a> <a href="/tags/%E9%9B%85%E5%8F%AF%E6%AF%94/" style="font-size: 1.1em; color: #999">雅可比</a> <a href="/tags/%E9%80%86%E5%BA%8F%E5%AF%B9/" style="font-size: 1.1em; color: #999">逆序对</a> <a href="/tags/%E7%BB%93%E6%9E%84%E4%BD%93%E6%8E%92%E5%BA%8F/" style="font-size: 1.1em; color: #999">结构体排序</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 1.1em; color: #999">动态规划</a> <a href="/tags/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" style="font-size: 1.1em; color: #999">快速排序</a> <a href="/tags/%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6/" style="font-size: 1.1em; color: #999">边界条件</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" style="font-size: 1.1em; color: #999">输入输出</a> <a href="/tags/%E6%95%B0%E7%BB%84%E5%88%9D%E5%A7%8B%E5%8C%96/" style="font-size: 1.1em; color: #999">数组初始化</a> <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" style="font-size: 1.1em; color: #999">微积分</a> <a href="/tags/%E7%A9%BA%E9%97%B4%E8%A7%A3%E6%9E%90%E5%87%A0%E4%BD%95/" style="font-size: 1.1em; color: #999">空间解析几何</a> <a href="/tags/%E5%A4%9A%E8%B5%84%E6%BA%90%E4%BB%BB%E5%8A%A1%E5%88%86%E9%85%8D/" style="font-size: 1.1em; color: #999">多资源任务分配</a> <a href="/tags/LCS/" style="font-size: 1.1em; color: #999">LCS</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/05/">
+            <span class="card-archive-list-date">
+              五月 2026
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/04/">
+            <span class="card-archive-list-date">
+              四月 2026
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/12/">
+            <span class="card-archive-list-date">
+              十二月 2025
+            </span>
+            <span class="card-archive-list-count">5</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/11/">
+            <span class="card-archive-list-date">
+              十一月 2025
+            </span>
+            <span class="card-archive-list-count">5</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/10/">
+            <span class="card-archive-list-date">
+              十月 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">17</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-25T14:19:00.947Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/top-img/img1.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Charks</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.0.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.2"></script></div></div></body></html>
