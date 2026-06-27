@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>从逆序对到归并排序</title>
+    <url>/posts/9a56.html</url>
+    <content><![CDATA[<p>原本在思考逆序对的简单方法，发现冒泡排序的求法还是太慢了</p>
+<span id="more"></span>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="type">int</span> a[<span class="number">50005</span>],t[<span class="number">50005</span>];</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> ans;</span><br><span class="line"><span class="type">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> a[], <span class="type">int</span> head, <span class="type">int</span> tail)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> a[], <span class="type">int</span> head, <span class="type">int</span> tail)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (head == tail)  <span class="keyword">return</span>;</span><br><span class="line">	<span class="type">int</span> mid = (head + tail) / <span class="number">2</span>;</span><br><span class="line">	merge(a, head, mid);</span><br><span class="line">	merge(a, mid + <span class="number">1</span>, tail);</span><br><span class="line">	<span class="type">int</span> i, j, k;<span class="comment">//i用于临时数组t的索引，j是左半区间的起始索引，k是右半区间的起始索引</span></span><br><span class="line">	<span class="keyword">for</span> (i = head, j = head, k = mid + <span class="number">1</span>;i &lt;= tail;i++)  <span class="comment">//i从1遍历到tail,j是左半区间的起点，k是右半区间的起点</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (j == mid + <span class="number">1</span>) <span class="comment">//如果左半区间全部处理</span></span><br><span class="line">			t[i] = a[k++];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (k == tail + <span class="number">1</span>) <span class="comment">//如果右半区间全部处理</span></span><br><span class="line">			t[i] = a[j++], ans += k - mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (a[j] &lt;= a[k]) <span class="comment">//左空间元素小于右空间元素，放左边的</span></span><br><span class="line">			t[i] = a[j++], ans += k - mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> t[i] = a[k++];<span class="comment">//否则放右边的</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (i = head;i &lt;= tail;i++) a[i] = t[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//归并排序</span></span><br><span class="line">	<span class="type">int</span> n,i;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>;i &lt;= n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">	merge(a, <span class="number">1</span>, n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>, ans);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="../images/Pasted%20image%2020251103203446.png" alt=""></p>
+<p>这是具体模拟整个过程</p>
+<p>当然，这个过程已经实现了排序功能，t [ ] 是排序后的数组，元素从小到大排列。如果想从大到小排列，也可以将 ’ &lt;= ‘ 改为 ’ &gt;= ‘  。</p>
+<p>这题也可以用树状数组、线段树 、Trie树（字典树）</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>逆序对</tag>
+        <tag>归并排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Memset初始化的运用</title>
+    <url>/posts/54d4.html</url>
+    <content><![CDATA[<p><code>#include&lt;string.h&gt;</code></p>
+<p><code>memset( void*s, char ch, unsigned n);</code><span id="more"></span></p>
+<p><code>void*s </code>是要求的第一个地址，<code>char ch</code>是初始化的值（也可以为数字），<code>n</code>为sizeof( a ) **前N个字节</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> arr[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">memset</span>(arr, <span class="number">0</span>, <span class="keyword">sizeof</span>(arr)); </span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> str[<span class="number">100</span>];</span><br><span class="line">　 <span class="built_in">memset</span>(str,<span class="number">0</span>,<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+<p>更重要的是，memset在结构体初始化方面的运用</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sample_struct</span></span></span><br><span class="line"><span class="class">　 &#123;</span></span><br><span class="line">　　     <span class="type">char</span> csName[<span class="number">16</span>];</span><br><span class="line">　　     <span class="type">int</span> iSeq;</span><br><span class="line">　　     <span class="type">int</span> iType;</span><br><span class="line">　 &#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sample_strcut</span> <span class="title">stTest</span>;</span></span><br><span class="line"><span class="built_in">memset</span>(&amp;stTest,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">struct</span> sample_struct));</span><br></pre></td></tr></table></figure>
+<p>如果是数组的话</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">memset</span>(TEST,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">struct</span> sample_struct)*<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>数组初始化</tag>
+        <tag>结构体初始化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>快速幂的代码</title>
     <url>/posts/bd0e.html</url>
     <content><![CDATA[<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 快速幂的代码</span><br><span class="line">categories:</span><br><span class="line"><span class="bullet">  -</span> 计算机</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">  -</span> 二分算法</span><br><span class="line">abbrlink: bd0e</span><br><span class="line"><span class="section">date: 2025-10-26 21:03:16</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">对一个数的极大幂求余数的优化时间复杂度后的解法&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line"><span class="code">```c</span></span><br><span class="line"><span class="code">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">/* 迭代版（原有） */</span></span><br><span class="line"><span class="code">int power_iter(int a, int b, int p)</span></span><br><span class="line"><span class="code">&#123;</span></span><br><span class="line"><span class="code">    int r = 1;</span></span><br><span class="line"><span class="code">    while (b)</span></span><br><span class="line"><span class="code">    &#123;</span></span><br><span class="line"><span class="code">        if (b &amp; 1) r = (r * a) % p;</span></span><br><span class="line"><span class="code">        a = a * a % p;</span></span><br><span class="line"><span class="code">        b &gt;&gt;= 1;</span></span><br><span class="line"><span class="code">    &#125;</span></span><br><span class="line"><span class="code">    return r;</span></span><br><span class="line"><span class="code">&#125;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">/* 递归版 */</span></span><br><span class="line"><span class="code">int power_rec(int a, int b, int p)</span></span><br><span class="line"><span class="code">&#123;</span></span><br><span class="line"><span class="code">    if (b == 0)               // a^0 ≡ 1 (mod p)</span></span><br><span class="line"><span class="code">        return 1;</span></span><br><span class="line"><span class="code">    long long half = power_rec(a, b / 2, p);   // 计算 a^&#123;b/2&#125;</span></span><br><span class="line"><span class="code">    long long res = (half * half) % p;         // (a^&#123;b/2&#125;)^2</span></span><br><span class="line"><span class="code">    if (b &amp; 1)                // 若 b 为奇数，再乘一次 a</span></span><br><span class="line"><span class="code">        res = (res * a) % p;</span></span><br><span class="line"><span class="code">    return (int)res;</span></span><br><span class="line"><span class="code">&#125;</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="code">int main()</span></span><br><span class="line"><span class="code">&#123;</span></span><br><span class="line"><span class="code">    int a, b, p, s_iter, s_rec;</span></span><br><span class="line"><span class="code">    scanf(&quot;%d %d %d&quot;, &amp;a, &amp;b, &amp;p);</span></span><br><span class="line"><span class="code">    s_iter = power_iter(a, b, p);</span></span><br><span class="line"><span class="code">    s_rec  = power_rec(a, b, p);</span></span><br><span class="line"><span class="code">    printf(&quot;%d^%d mod %d (iter) = %d\n&quot;, a, b, p, s_iter);</span></span><br><span class="line"><span class="code">    printf(&quot;%d^%d mod %d (rec)  = %d\n&quot;, a, b, p, s_rec);</span></span><br><span class="line"><span class="code">    return 0;</span></span><br><span class="line"><span class="code">&#125;</span></span><br></pre></td></tr></table></figure>
@@ -21,42 +61,49 @@
       </tags>
   </entry>
   <entry>
-    <title>C语言中qsort函数</title>
-    <url>/posts/695b.html</url>
-    <content><![CDATA[<p><code>#include&lt;stdlib.h&gt;</code></p>
-<p>qsort ( 数组第一个元素的地址，数数组中的元素个数，每个元素的大小，比较函数 )<span id="more"></span></p>
-<p>1、地址的话，像数组 a[10] ,直接写a就行。<br>
-2、元素个数也是直接写。<br>
-3、元素大小一般用 sizeof ( int ) 或者其他类型。<br>
-4、比较函数，<code>int compare ( const void * a ,const void * b)</code><br>
-<code>{  return ( * ( int *) a -* (int *) b ) ;    }</code></p>
-<p>return的东西可以改变   a - b 时是升序，b - a 时是降序</p>
-<p>具体一点的用法如下：</p>
-<p>七种qsort排序方法</p>
-<p>&lt;排序都是采用的从小到大排序&gt;</p>
-<p>一、对int类型数组排序</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> num[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span> <span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">     <span class="keyword">return</span> *(<span class="type">int</span> *)a - *(<span class="type">int</span> *)b; </span><br><span class="line">&#125; </span><br><span class="line">qsort(num,<span class="number">100</span>,<span class="keyword">sizeof</span>(num[<span class="number">0</span>]),cmp);</span><br></pre></td></tr></table></figure>
-<p>二、对char类型数组排序（同int类型）</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> word[<span class="number">50</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">return</span> *(<span class="type">char</span> *)a - *(<span class="type">int</span> *)b; </span><br><span class="line">&#125; </span><br><span class="line">qsort(word,<span class="number">100</span>,<span class="keyword">sizeof</span>(word[<span class="number">0</span>]),cmp);</span><br></pre></td></tr></table></figure>
-<p>三、对double类型数组排序</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">double</span> in[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">     <span class="keyword">return</span> *(<span class="type">double</span> *)a &gt; *(<span class="type">double</span> *)b ? <span class="number">1</span> : <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(in,<span class="number">100</span>,<span class="keyword">sizeof</span>(in[<span class="number">0</span>]),cmp)； </span><br></pre></td></tr></table></figure>
-<p>四、对结构体一级排序</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">  <span class="type">double</span> data; </span><br><span class="line">  <span class="type">int</span> other; </span><br><span class="line">&#125;s[<span class="number">100</span>] </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照data的值从小到大将结构体排序,关于结构体内的排序关键数据data的类型可以很多种，参考上面的例子写 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a ,<span class="type">const</span> <span class="type">void</span> *b)</span> </span><br><span class="line">&#123; </span><br><span class="line">   <span class="keyword">return</span> (*(In *)a).data &gt; (*(In *)b).data ? <span class="number">1</span> : <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
-<p>五、对结构体二级排序</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">  <span class="type">int</span> x; </span><br><span class="line">  <span class="type">int</span> y; </span><br><span class="line">&#125;s[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照x从小到大排序，当x相等时按照y从大到小排序 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">In</span> *<span class="title">c</span> =</span> (In *)a; </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">In</span> *<span class="title">d</span> =</span> (In *)b; </span><br><span class="line">  <span class="keyword">if</span>(c-&gt;x != d-&gt;x) <span class="keyword">return</span> c-&gt;x - d-&gt;x; </span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> d-&gt;y - c-&gt;y; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
-<p>六、对结构体三级排序（都是从小到大）</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">item</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> num,length,width;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">comp</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *p1,<span class="type">const</span> <span class="type">void</span> *p2)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">item</span> *<span class="title">c</span>=</span>(item*)p1;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">item</span> *<span class="title">d</span>=</span>(item*)p2;</span><br><span class="line">    <span class="keyword">if</span>(c-&gt;num!=d-&gt;num)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> d-&gt;num&lt;c-&gt;num?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(c-&gt;length!=d-&gt;length&amp;&amp;c-&gt;num==d-&gt;num)</span><br><span class="line">    <span class="keyword">return</span> d-&gt;length&lt;c-&gt;length?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> d-&gt;width&lt;c-&gt;width?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line">item ss[<span class="number">1200</span>];</span><br><span class="line">qsort(ss,n,<span class="keyword">sizeof</span>(ss[<span class="number">0</span>]),comp);</span><br></pre></td></tr></table></figure>
-<p>七、对字符串进行排序</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line"><span class="type">int</span> data; </span><br><span class="line"><span class="type">char</span> str[<span class="number">100</span>]; </span><br><span class="line">&#125;s[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照结构体中字符串str的字典顺序排序 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span> <span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line"><span class="keyword">return</span> <span class="built_in">strcmp</span>( (*(In *)a)-&gt;str , (*(In *)b)-&gt;str ); </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
-<p>八、计算几何中求凸包的cmp</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *a,<span class="type">const</span> <span class="type">void</span> *b)</span> <span class="comment">//重点cmp函数，把除了1点外的所有点，旋转角度排序 </span></span><br><span class="line">&#123; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> *<span class="title">c</span>=</span>(point *)a; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> *<span class="title">d</span>=</span>(point *)b; </span><br><span class="line"><span class="keyword">if</span>( calc(*c,*d,p[<span class="number">1</span>]) &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>; </span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>( !calc(*c,*d,p[<span class="number">1</span>]) &amp;&amp; dis(c-&gt;x,c-&gt;y,p[<span class="number">1</span>].x,p[<span class="number">1</span>].y) &lt; dis(d-&gt;x,d-&gt;y,p[<span class="number">1</span>].x,p[<span class="number">1</span>].y)) <span class="comment">//如果在一条直线上，则把远的放在前面 </span></span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>; </span><br><span class="line"><span class="keyword">else</span> <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+    <title>从sprintf到snprintf字符输出</title>
+    <url>/posts/adec.html</url>
+    <content><![CDATA[<p><strong>sprintf() 是 C 标准库中的一个函数，用于将格式化的字符串输出到一个字符数组中。它有类似于 printf() 的语法和用法，但不是将数据输出到控制台，而是将数据输出到指定的字符数组中。</strong></p>
+<p>格式<br>
+<code>sprintf(char* str, const char* format, ...)</code></p>
+<p>作用</p>
+<ol>
+<li>字符串拼接</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> str1[] = <span class="string">&quot;Hello&quot;</span>;  </span><br><span class="line"><span class="type">char</span> str2[] = <span class="string">&quot;world!&quot;</span>;  </span><br><span class="line"><span class="type">char</span> str3[<span class="number">100</span>];  </span><br><span class="line"><span class="built_in">sprintf</span>(str3, <span class="string">&quot;%s %s&quot;</span>, str1, str2);  </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, str3); <span class="comment">// 输出 &quot;Hello world!&quot;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>数字转字符串</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">数字类型如 <span class="type">int</span> <span class="type">float</span> <span class="type">double</span> … 均可转成字符串</span><br><span class="line">  </span><br><span class="line"><span class="type">int</span> num = <span class="number">123</span>;  </span><br><span class="line"><span class="type">char</span> str[<span class="number">100</span>];  </span><br><span class="line"><span class="built_in">sprintf</span>(str, <span class="string">&quot;%d&quot;</span>, num);  </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, str); <span class="comment">// 输出 &quot;123&quot;</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>填充字符串</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">填充规则基本和 <span class="built_in">printf</span> 函数一样</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> str[<span class="number">10</span>];  </span><br><span class="line"><span class="built_in">sprintf</span>(str, <span class="string">&quot;%10s&quot;</span>, <span class="string">&quot;Hello&quot;</span>);  </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;&#x27;%s&#x27;\n&quot;</span>, str); <span class="comment">// 输出 &quot;     Hello&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> buffer[<span class="number">50</span>];</span><br><span class="line"><span class="type">double</span> num = <span class="number">123.456</span>;</span><br><span class="line"><span class="built_in">sprintf</span>(buffer, <span class="string">&quot;%010.2f&quot;</span>, num); <span class="comment">// buffer中存储的是：&quot;000123.46&quot;</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%sn&quot;</span>, buffer);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>格式化输出</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">格式化输出也和 <span class="built_in">printf</span> 函数类似</span><br><span class="line"><span class="type">double</span> pi = <span class="number">3.1415926</span>;  </span><br><span class="line"><span class="type">char</span> str[<span class="number">100</span>];  </span><br><span class="line"><span class="built_in">sprintf</span>(str, <span class="string">&quot;The value of pi is approximately %.2f&quot;</span>, pi);  </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, str); <span class="comment">// 输出 &quot;The value of pi is approximately 3.14&quot;</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>补充：字符串转整数 atoi</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">经常会碰到数字转字符串或者字符串转数字的</span><br><span class="line">这里提及的函数就是数字转成字符串</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;字符串\&quot;123456\&quot;转换为数字：%d\n&quot;</span>, atoi(<span class="string">&quot;123456&quot;</span>));  </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;字符串\&quot;-123456\&quot;转换为数字：%d\n&quot;</span>, atoi(<span class="string">&quot;-123456&quot;</span>));</span><br></pre></td></tr></table></figure>
+<p>更安全的函数 snprintf</p>
+<p>格式<br>
+<code>int snprintf(char* str, size_t size, const char* format, ...)</code></p>
+<p>**sprintf() 函数没有对目标字符串的长度进行限制，因此可能会导致缓冲区溢出。如果生成的字符串超过了目标字符串的容量，就会发生未定义的行为。  **</p>
+<p><strong>snprintf() 函数通过第二个参数来限制目标字符串的最大长度，包括终止的空字符。即使生成的字符串超过了指定的长度，snprintf() 也会确保生成的字符串不会溢出目标缓冲区。</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> buffer[<span class="number">50</span>];  </span><br><span class="line">    <span class="type">char</span>* s = <span class="string">&quot;runoobcom&quot;</span>;  </span><br><span class="line">    <span class="comment">// 读取字符串并存储在 buffer 中  </span></span><br><span class="line">    <span class="type">int</span> j = <span class="built_in">snprintf</span>(buffer, <span class="number">6</span>, <span class="string">&quot;%s\n&quot;</span>, s);  </span><br><span class="line">    <span class="comment">// 输出 buffer及字符数  </span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;string:\n%s\ncharacter count = %d\n&quot;</span>, buffer, j);</span><br><span class="line">    </span><br><span class="line">    输出</span><br><span class="line">    <span class="built_in">string</span>:</span><br><span class="line">runoo</span><br><span class="line">character count = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>两者的返回值</p>
+<p>sprintf    返回一个整数：如果成功写入则返回写入的字符总数，不包括字符串追加在字符串末尾的空字符；如果编码错误则返回负值</p>
+<p>snprintf  返回一个整数：如果成功写入则返回将要写入的字符数，包括字符串追加在字符串末尾的空字符，可能会大于size ; 如果编码错误则返回负值</p>
 ]]></content>
       <categories>
         <category>计算机</category>
       </categories>
       <tags>
-        <tag>快速排序</tag>
-        <tag>结构体排序</tag>
+        <tag>sprintf</tag>
+        <tag>snprintf</tag>
+        <tag>输出</tag>
       </tags>
   </entry>
   <entry>
@@ -108,25 +155,6 @@
       </tags>
   </entry>
   <entry>
-    <title>从逆序对到归并排序</title>
-    <url>/posts/9a56.html</url>
-    <content><![CDATA[<p>原本在思考逆序对的简单方法，发现冒泡排序的求法还是太慢了</p>
-<span id="more"></span>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="type">int</span> a[<span class="number">50005</span>],t[<span class="number">50005</span>];</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> ans;</span><br><span class="line"><span class="type">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> a[], <span class="type">int</span> head, <span class="type">int</span> tail)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">merge</span><span class="params">(<span class="type">int</span> a[], <span class="type">int</span> head, <span class="type">int</span> tail)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (head == tail)  <span class="keyword">return</span>;</span><br><span class="line">	<span class="type">int</span> mid = (head + tail) / <span class="number">2</span>;</span><br><span class="line">	merge(a, head, mid);</span><br><span class="line">	merge(a, mid + <span class="number">1</span>, tail);</span><br><span class="line">	<span class="type">int</span> i, j, k;<span class="comment">//i用于临时数组t的索引，j是左半区间的起始索引，k是右半区间的起始索引</span></span><br><span class="line">	<span class="keyword">for</span> (i = head, j = head, k = mid + <span class="number">1</span>;i &lt;= tail;i++)  <span class="comment">//i从1遍历到tail,j是左半区间的起点，k是右半区间的起点</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (j == mid + <span class="number">1</span>) <span class="comment">//如果左半区间全部处理</span></span><br><span class="line">			t[i] = a[k++];</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (k == tail + <span class="number">1</span>) <span class="comment">//如果右半区间全部处理</span></span><br><span class="line">			t[i] = a[j++], ans += k - mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (a[j] &lt;= a[k]) <span class="comment">//左空间元素小于右空间元素，放左边的</span></span><br><span class="line">			t[i] = a[j++], ans += k - mid - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> t[i] = a[k++];<span class="comment">//否则放右边的</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (i = head;i &lt;= tail;i++) a[i] = t[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//归并排序</span></span><br><span class="line">	<span class="type">int</span> n,i;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>;i &lt;= n;i++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">	merge(a, <span class="number">1</span>, n);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>, ans);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="../images/Pasted%20image%2020251103203446.png" alt=""></p>
-<p>这是具体模拟整个过程</p>
-<p>当然，这个过程已经实现了排序功能，t [ ] 是排序后的数组，元素从小到大排列。如果想从大到小排列，也可以将 ’ &lt;= ‘ 改为 ’ &gt;= ‘  。</p>
-<p>这题也可以用树状数组、线段树 、Trie树（字典树）</p>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>逆序对</tag>
-        <tag>归并排序</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LCS最长公共子序列问题</title>
     <url>/posts/6d90.html</url>
     <content><![CDATA[<h1>LIS最长上升子序列引入</h1>
@@ -159,24 +187,733 @@ d(i-1,j-1)+1,& \text{当}A_i=A_j\\
       </tags>
   </entry>
   <entry>
-    <title>Memset初始化的运用</title>
-    <url>/posts/54d4.html</url>
-    <content><![CDATA[<p><code>#include&lt;string.h&gt;</code></p>
-<p><code>memset( void*s, char ch, unsigned n);</code><span id="more"></span></p>
-<p><code>void*s </code>是要求的第一个地址，<code>char ch</code>是初始化的值（也可以为数字），<code>n</code>为sizeof( a ) **前N个字节</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> arr[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">memset</span>(arr, <span class="number">0</span>, <span class="keyword">sizeof</span>(arr)); </span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> str[<span class="number">100</span>];</span><br><span class="line">　 <span class="built_in">memset</span>(str,<span class="number">0</span>,<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
-<p>更重要的是，memset在结构体初始化方面的运用</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sample_struct</span></span></span><br><span class="line"><span class="class">　 &#123;</span></span><br><span class="line">　　     <span class="type">char</span> csName[<span class="number">16</span>];</span><br><span class="line">　　     <span class="type">int</span> iSeq;</span><br><span class="line">　　     <span class="type">int</span> iType;</span><br><span class="line">　 &#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sample_strcut</span> <span class="title">stTest</span>;</span></span><br><span class="line"><span class="built_in">memset</span>(&amp;stTest,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">struct</span> sample_struct));</span><br></pre></td></tr></table></figure>
-<p>如果是数组的话</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">memset</span>(TEST,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">struct</span> sample_struct)*<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+    <title>C语言中qsort函数</title>
+    <url>/posts/695b.html</url>
+    <content><![CDATA[<p><code>#include&lt;stdlib.h&gt;</code></p>
+<p>qsort ( 数组第一个元素的地址，数数组中的元素个数，每个元素的大小，比较函数 )<span id="more"></span></p>
+<p>1、地址的话，像数组 a[10] ,直接写a就行。<br>
+2、元素个数也是直接写。<br>
+3、元素大小一般用 sizeof ( int ) 或者其他类型。<br>
+4、比较函数，<code>int compare ( const void * a ,const void * b)</code><br>
+<code>{  return ( * ( int *) a -* (int *) b ) ;    }</code></p>
+<p>return的东西可以改变   a - b 时是升序，b - a 时是降序</p>
+<p>具体一点的用法如下：</p>
+<p>七种qsort排序方法</p>
+<p>&lt;排序都是采用的从小到大排序&gt;</p>
+<p>一、对int类型数组排序</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> num[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span> <span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">     <span class="keyword">return</span> *(<span class="type">int</span> *)a - *(<span class="type">int</span> *)b; </span><br><span class="line">&#125; </span><br><span class="line">qsort(num,<span class="number">100</span>,<span class="keyword">sizeof</span>(num[<span class="number">0</span>]),cmp);</span><br></pre></td></tr></table></figure>
+<p>二、对char类型数组排序（同int类型）</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> word[<span class="number">50</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">return</span> *(<span class="type">char</span> *)a - *(<span class="type">int</span> *)b; </span><br><span class="line">&#125; </span><br><span class="line">qsort(word,<span class="number">100</span>,<span class="keyword">sizeof</span>(word[<span class="number">0</span>]),cmp);</span><br></pre></td></tr></table></figure>
+<p>三、对double类型数组排序</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">double</span> in[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">     <span class="keyword">return</span> *(<span class="type">double</span> *)a &gt; *(<span class="type">double</span> *)b ? <span class="number">1</span> : <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(in,<span class="number">100</span>,<span class="keyword">sizeof</span>(in[<span class="number">0</span>]),cmp)； </span><br></pre></td></tr></table></figure>
+<p>四、对结构体一级排序</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">  <span class="type">double</span> data; </span><br><span class="line">  <span class="type">int</span> other; </span><br><span class="line">&#125;s[<span class="number">100</span>] </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照data的值从小到大将结构体排序,关于结构体内的排序关键数据data的类型可以很多种，参考上面的例子写 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a ,<span class="type">const</span> <span class="type">void</span> *b)</span> </span><br><span class="line">&#123; </span><br><span class="line">   <span class="keyword">return</span> (*(In *)a).data &gt; (*(In *)b).data ? <span class="number">1</span> : <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
+<p>五、对结构体二级排序</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">  <span class="type">int</span> x; </span><br><span class="line">  <span class="type">int</span> y; </span><br><span class="line">&#125;s[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照x从小到大排序，当x相等时按照y从大到小排序 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">In</span> *<span class="title">c</span> =</span> (In *)a; </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">In</span> *<span class="title">d</span> =</span> (In *)b; </span><br><span class="line">  <span class="keyword">if</span>(c-&gt;x != d-&gt;x) <span class="keyword">return</span> c-&gt;x - d-&gt;x; </span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> d-&gt;y - c-&gt;y; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
+<p>六、对结构体三级排序（都是从小到大）</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">item</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> num,length,width;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">comp</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *p1,<span class="type">const</span> <span class="type">void</span> *p2)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">item</span> *<span class="title">c</span>=</span>(item*)p1;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">item</span> *<span class="title">d</span>=</span>(item*)p2;</span><br><span class="line">    <span class="keyword">if</span>(c-&gt;num!=d-&gt;num)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> d-&gt;num&lt;c-&gt;num?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(c-&gt;length!=d-&gt;length&amp;&amp;c-&gt;num==d-&gt;num)</span><br><span class="line">    <span class="keyword">return</span> d-&gt;length&lt;c-&gt;length?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> d-&gt;width&lt;c-&gt;width?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line">item ss[<span class="number">1200</span>];</span><br><span class="line">qsort(ss,n,<span class="keyword">sizeof</span>(ss[<span class="number">0</span>]),comp);</span><br></pre></td></tr></table></figure>
+<p>七、对字符串进行排序</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">In</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line"><span class="type">int</span> data; </span><br><span class="line"><span class="type">char</span> str[<span class="number">100</span>]; </span><br><span class="line">&#125;s[<span class="number">100</span>]; </span><br><span class="line"></span><br><span class="line"><span class="comment">//按照结构体中字符串str的字典顺序排序 </span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">cmp</span> <span class="params">( <span class="type">const</span> <span class="type">void</span> *a , <span class="type">const</span> <span class="type">void</span> *b )</span> </span><br><span class="line">&#123; </span><br><span class="line"><span class="keyword">return</span> <span class="built_in">strcmp</span>( (*(In *)a)-&gt;str , (*(In *)b)-&gt;str ); </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">qsort(s,<span class="number">100</span>,<span class="keyword">sizeof</span>(s[<span class="number">0</span>]),cmp); </span><br></pre></td></tr></table></figure>
+<p>八、计算几何中求凸包的cmp</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">cmp</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *a,<span class="type">const</span> <span class="type">void</span> *b)</span> <span class="comment">//重点cmp函数，把除了1点外的所有点，旋转角度排序 </span></span><br><span class="line">&#123; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> *<span class="title">c</span>=</span>(point *)a; </span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> *<span class="title">d</span>=</span>(point *)b; </span><br><span class="line"><span class="keyword">if</span>( calc(*c,*d,p[<span class="number">1</span>]) &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>; </span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>( !calc(*c,*d,p[<span class="number">1</span>]) &amp;&amp; dis(c-&gt;x,c-&gt;y,p[<span class="number">1</span>].x,p[<span class="number">1</span>].y) &lt; dis(d-&gt;x,d-&gt;y,p[<span class="number">1</span>].x,p[<span class="number">1</span>].y)) <span class="comment">//如果在一条直线上，则把远的放在前面 </span></span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>; </span><br><span class="line"><span class="keyword">else</span> <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>计算机</category>
       </categories>
       <tags>
-        <tag>数组初始化</tag>
-        <tag>结构体初始化</tag>
+        <tag>快速排序</tag>
+        <tag>结构体排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线性代数复习简略版</title>
+    <url>/posts/d090.html</url>
+    <content><![CDATA[<h1><strong>线性代数课程讲义知识点全梳理</strong>(Made By AI)</h1>
+<hr>
+<h3 id="Lecture-1CN：课程介绍与线性方程组基础"><strong>Lecture-1CN：课程介绍与线性方程组基础</strong></h3>
+<ul>
+<li>
+<p><strong>课程目标</strong>：掌握线性方程组、矩阵论、矩阵分解、向量空间、特征值、正交性、最小二乘法等核心内容。</p>
+</li>
+<li>
+<p><strong>线性方程 (Linear Equation)</strong>：变量为一次幂的方程。</p>
+</li>
+<li>
+<p><strong>线性方程组 (System of Linear Equations)</strong>：一组包含相同变量的线性方程。</p>
+</li>
+<li>
+<p><strong>解 (Solution)</strong>：使所有方程同时成立的变量值集合。</p>
+</li>
+<li>
+<p><strong>解集 (Solution Set)</strong>：所有解的集合。</p>
+</li>
+<li>
+<p><strong>等价系统 (Equivalent Systems)</strong>：拥有相同解集的线性方程组。</p>
+</li>
+<li>
+<p><strong>矩阵 (Matrix)</strong>：矩形的数表。用于表示线性方程组。</p>
+</li>
+<li>
+<p><strong>系数矩阵 (Coefficient Matrix)</strong>：仅包含方程系数的矩阵。</p>
+</li>
+<li>
+<p><strong>增广矩阵 (Augmented Matrix)</strong>：在系数矩阵右侧增加常数项列构成的矩阵。</p>
+</li>
+<li>
+<p><strong>初等行变换 (Elementary Row Operations)</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>倍加变换：把某一行换成它本身与另一行的倍数之和。</p>
+</li>
+<li>
+<p>对换变换：交换两行。</p>
+</li>
+<li>
+<p>倍乘变换：把某一行的所有元素乘以同一个非零数。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>行等价 (Row Equivalent)</strong>：一个矩阵可以经过一系列初等行变换变成另一个矩阵。</p>
+</li>
+<li>
+<p><strong>求解线性方程组的基本思想</strong>：对增广矩阵进行初等行变换，将其化为更简单的“阶梯形”，从而易于求解。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-2CN：阶梯形、行化简算法与线性方程组的解"><strong>Lecture-2CN：阶梯形、行化简算法与线性方程组的解</strong></h3>
+<ul>
+<li><strong>阶梯形 (Echelon Form)</strong>：矩阵满足：</li>
+</ul>
+<ol>
+<li>
+<p>所有非零行在零行之上。</p>
+</li>
+<li>
+<p>非零行的先导元素（该行最左的非零元）的列标严格递增。</p>
+</li>
+<li>
+<p>先导元素所在列下方的元素均为零。</p>
+</li>
+</ol>
+<ul>
+<li><strong>简化阶梯形 (Reduced Echelon Form)</strong>：在阶梯形基础上，还满足：</li>
+</ul>
+<ol start="4">
+<li>
+<p>每个先导元素均为1。</p>
+</li>
+<li>
+<p>每个先导1是该列中唯一的非零元。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>定理5</strong>：每个矩阵都行等价于一个<strong>唯一</strong>的简化阶梯形矩阵。</p>
+</li>
+<li>
+<p><strong>主元位置 (Pivot Position)</strong>：矩阵A行等价于某个阶梯形矩阵B时，B中先导元素的位置。这些位置在A的行等价变换中保持不变。</p>
+</li>
+<li>
+<p><strong>主元列 (Pivot Column)</strong>：包含主元位置的列。</p>
+</li>
+<li>
+<p><strong>行化简算法 (Row Reduction Algorithm)</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p><strong>向前步骤</strong>：化为阶梯形。</p>
+</li>
+<li>
+<p>从左到右找到第一非零列作为主元列。</p>
+</li>
+<li>
+<p>选定一个非零元作为主元，必要时交换行使其位于顶部。</p>
+</li>
+<li>
+<p>用行倍加变换将主元下方元素消为零。</p>
+</li>
+<li>
+<p>对余下的子矩阵重复上述步骤。</p>
+</li>
+<li>
+<p><strong>向后步骤</strong>：化为简化阶梯形。</p>
+</li>
+<li>
+<p>从最右下的主元开始，向上进行。</p>
+</li>
+<li>
+<p>用行倍加变换将主元上方元素消为零。</p>
+</li>
+<li>
+<p>用行倍乘变换将每个主元化为1。</p>
+</li>
+</ol>
+<ul>
+<li><strong>线性方程组的解</strong>：</li>
+</ul>
+<ol>
+<li>
+<p><strong>无解 (Inconsistent)</strong>：增广矩阵的简化阶梯形中，出现形如    [0 … 0 | b] (b≠0)  的行。方程组<strong>不相容</strong>。</p>
+</li>
+<li>
+<p><strong>唯一解</strong>：每个变量都是基本变量（对应主元列），没有自由变量。</p>
+</li>
+<li>
+<p><strong>无穷多解</strong>：存在至少一个自由变量（对应非主元列）。解集需用自由变量<strong>参数化</strong>表示。</p>
+</li>
+</ol>
+<hr>
+<h3 id="Lecture-3CN：向量与线性组合"><strong>Lecture-3CN：向量与线性组合</strong></h3>
+<ul>
+<li>
+<p><strong>向量 (Vector)</strong>：   ℝ²  和    ℝⁿ  中的元素，表示为列。</p>
+</li>
+<li>
+<p><strong>向量运算</strong>：加法、标量乘法。</p>
+</li>
+<li>
+<p><strong>向量运算的性质 (定理2)</strong>：加法结合/交换律、加法单位元(零向量)、加法逆元(负向量)；标量乘法的分配律、结合律等。构成<strong>阿贝尔群 (Abelian Group)</strong>。</p>
+</li>
+<li>
+<p><strong>线性组合 (Linear Combination)</strong>：给定向量    v₁, …, vₙ  和标量    c₁, …, cₙ ，向量    v = c₁v₁ + … + cₙvₙ  称为前者的一个线性组合，   cᵢ  称为<strong>系数</strong>或<strong>权重</strong>。</p>
+</li>
+<li>
+<p><strong>向量方程 (Vector Equation)</strong>：   x₁a₁ + x₂a₂ + … + xₙaₙ = b 。</p>
+</li>
+<li>
+<p><strong>重要等价关系</strong>：线性方程组、向量方程、矩阵方程    Ax = b  三者<strong>同解</strong>。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-4CN：矩阵方程、矩阵-向量积与解的存在性"><strong>Lecture-4CN：矩阵方程、矩阵-向量积与解的存在性</strong></h3>
+<ul>
+<li>
+<p><strong>矩阵-向量乘积 (Matrix-vector Product)</strong>：   A = [a₁ … aₙ] ,    x = [x₁ … xₙ]ᵀ ，则    Ax = x₁a₁ + … + xₙaₙ 。</p>
+</li>
+<li>
+<p><strong>矩阵方程 (Matrix Equation)</strong>：   Ax = b 。</p>
+</li>
+<li>
+<p><strong>解 (Solution)</strong>：满足    As = b  的向量    s 。</p>
+</li>
+<li>
+<p><strong>矩阵-向量积的性质 (定理1)</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>A(u+v) = Au + Av  （分配律）。</p>
+</li>
+<li>
+<p>A(λu) = λ(Au)  （齐次性/数乘性质）。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>共同定义了<strong>线性变换</strong>的核心性质。</p>
+</li>
+<li>
+<p><strong>解的存在性定理 (定理2)</strong>：对于    m×n  矩阵    A ，下列陈述等价：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>对任意    b ∈ ℝᵐ ，方程    Ax = b  有解（<strong>相容</strong>）。</p>
+</li>
+<li>
+<p>ℝᵐ  中任意    b  都是    A  的列向量的线性组合。</p>
+</li>
+<li>
+<p>A  的列向量张成    ℝᵐ ，即    Span{a₁, …, aₙ} = ℝᵐ 。</p>
+</li>
+<li>
+<p>A  的每一行都有一个主元位置。</p>
+</li>
+</ol>
+<hr>
+<h3 id="Lecture-5CN：线性无关"><strong>Lecture-5CN：线性无关</strong></h3>
+<ul>
+<li>
+<p><strong>线性无关 (Linear Independence)</strong>：向量集    {v₁, …, vₚ}  称为线性无关，若向量方程    x₁v₁ + … + xₚvₚ = 0  <strong>仅有平凡解</strong>    x₁ = … = xₚ = 0 。</p>
+</li>
+<li>
+<p><strong>线性相关 (Linear Dependence)</strong>：若非线性无关，则称为线性相关。即存在不全为零的标量使向量方程成立。</p>
+</li>
+<li>
+<p><strong>定理1</strong>：一个向量集线性相关 <strong>当且仅当</strong> 集合中至少有一个向量是其余向量的线性组合。</p>
+</li>
+<li>
+<p><strong>定理2</strong>：矩阵    A  的列线性无关 <strong>当且仅当</strong> 方程    Ax = 0  仅有平凡解。</p>
+</li>
+<li>
+<p><strong>定理3</strong>：若一个向量集包含的向量个数超过每个向量的维数 (   p &gt; n )，则该集合必线性相关。</p>
+</li>
+<li>
+<p><strong>定理4</strong>：若向量集    S = {v₁, …, vₚ}  包含零向量，则它线性相关。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-6CN：齐次与非齐次矩阵方程"><strong>Lecture-6CN：齐次与非齐次矩阵方程</strong></h3>
+<ul>
+<li>
+<p><strong>齐次方程 (Homogeneous Equation)</strong>：   Ax = 0 。总是有解（零解/平凡解）。</p>
+</li>
+<li>
+<p><strong>平凡解 (Trivial Solution)</strong>：   x = 0 。</p>
+</li>
+<li>
+<p><strong>非平凡解 (Nontrivial Solution)</strong>：   Ax = 0  的非零解。存在非平凡解 <strong>当且仅当</strong> 方程有自由变量。</p>
+</li>
+<li>
+<p><strong>参数向量形式 (Parametric Vector Form)</strong>：   Ax = 0  的解集表示为自由变量的线性组合。</p>
+</li>
+<li>
+<p><strong>非齐次方程 (Nonhomogeneous Equation)</strong>：   Ax = b ，其中    b ≠ 0 。</p>
+</li>
+<li>
+<p><strong>解的结构定理 (定理3)</strong>：若    Ax = b  有特解    p ，则其全部解集为：   {p} + Nul A  =    {p + v: v ∈ Nul A} 。</p>
+</li>
+<li>
+<p><strong>结论</strong>：</p>
+</li>
+<li>
+<p>若    Ax = 0  仅有平凡解，则    Ax = b  有唯一解。</p>
+</li>
+<li>
+<p>若    Ax = 0  有非平凡解（自由变量），则    Ax = b  要么无解，要么有无穷多解。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-7CN：线性变换及其矩阵表示"><strong>Lecture-7CN：线性变换及其矩阵表示</strong></h3>
+<p><em>(注：此讲文档概要提及，但具体内容未在提供片段中详细展开。根据线性代数常规内容补充如下)</em></p>
+<ul>
+<li>
+<p><strong>线性变换 (Linear Transformation) T: ℝⁿ → ℝᵐ</strong>：满足    T(u+v) = T(u) + T(v)  和    T(cu) = cT(u) 。</p>
+</li>
+<li>
+<p><strong>标准矩阵 (Standard Matrix)</strong>：对于线性变换    T ，其标准矩阵    A = [T(e₁) T(e₂) … T(eₙ)] ，其中    eⱼ  是单位矩阵的第    j  列。有    T(x) = Ax 。</p>
+</li>
+<li>
+<p><strong>满射 (Onto/Surjective)</strong>：值域    Range(T) = ℝᵐ 。等价于    A  的列张成    ℝᵐ 。</p>
+</li>
+<li>
+<p><strong>单射 (One-to-one/Injective)</strong>：若    T(u)=T(v)  则必有    u=v 。等价于    Ax=0  仅有平凡解，即    A  的列线性无关。</p>
+</li>
+<li>
+<p><strong>线性变换与矩阵方程</strong>：研究    T(x)=b  的解集等同于研究    Ax=b  的解集。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-8CN：矩阵运算与逆"><strong>Lecture-8CN：矩阵运算与逆</strong></h3>
+<ul>
+<li>
+<p><strong>矩阵基本术语</strong>：</p>
+</li>
+<li>
+<p>(i, j) -元素 / 条目。</p>
+</li>
+<li>
+<p>主对角线 (Main Diagonal)。</p>
+</li>
+<li>
+<p>零矩阵    0 。</p>
+</li>
+<li>
+<p><strong>矩阵运算</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p><strong>加法</strong>：对应元素相加。</p>
+</li>
+<li>
+<p><strong>标量乘法</strong>：每个元素乘以标量。</p>
+</li>
+<li>
+<p><strong>乘法</strong>：   A (m×n)  与    B (n×p)  的乘积    AB (m×p) ，其中    (AB)<em>{ij} = Σ a</em>{ik}b_{kj} （行-列法则）。<strong>注意</strong>：乘法不满足交换律。</p>
+</li>
+<li>
+<p><strong>转置 (Transpose) Aᵀ</strong>：行变列。</p>
+</li>
+<li>
+<p><strong>方阵的逆 (Inverse)</strong>：对于    n×n  矩阵    A ，若存在    B  使    AB = BA = Iₙ ，则    A  <strong>可逆</strong>，   B  记作    A⁻¹ 。逆是唯一的。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>运算定理</strong>：</p>
+</li>
+<li>
+<p><strong>定理1</strong>：加法运算的性质（类似向量）。</p>
+</li>
+<li>
+<p><strong>定理2</strong>：乘法运算的性质（结合律、单位元、分配律）。</p>
+</li>
+<li>
+<p><strong>定理4</strong>：转置运算的性质：   (Aᵀ)ᵀ=A ,    (A+B)ᵀ=Aᵀ+Bᵀ ,    (rA)ᵀ=rAᵀ ,    (AB)ᵀ=BᵀAᵀ 。</p>
+</li>
+<li>
+<p><strong>定理5</strong>：逆运算的性质：   (A⁻¹)⁻¹=A ,    (AB)⁻¹=B⁻¹A⁻¹ ,    (Aᵀ)⁻¹=(A⁻¹)ᵀ 。</p>
+</li>
+<li>
+<p><strong>可逆矩阵定理 (关键！定理7/10)</strong>：设    A  为    n×n  矩阵，以下陈述等价：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>A  是可逆矩阵。</p>
+</li>
+<li>
+<p>A  行等价于    n×n  单位矩阵    I 。</p>
+</li>
+<li>
+<p>A  有    n  个主元位置。</p>
+</li>
+<li>
+<p>方程    Ax=0  仅有平凡解。</p>
+</li>
+<li>
+<p>A  的列线性无关。</p>
+</li>
+<li>
+<p>A  的列张成    ℝⁿ 。</p>
+</li>
+<li>
+<p>Ax=b  对任意    b∈ℝⁿ  至少有一个解。</p>
+</li>
+<li>
+<p>A  的列构成    ℝⁿ  的基。</p>
+</li>
+<li>
+<p>Aᵀ  是可逆矩阵。</p>
+</li>
+<li>
+<p>存在矩阵    C  使得    CA=I ，或存在矩阵    D  使得    AD=I （此时    C=D=A⁻¹ ）。</p>
+</li>
+</ol>
+<ul>
+<li><strong>求逆方法</strong>：行化简增广矩阵    | I]  →    [I | A⁻¹] 。若左侧不能化为    I ，则    A  不可逆。</li>
+</ul>
+<hr>
+<h3 id="Lecture-9CN：矩阵分块"><strong>Lecture-9CN：矩阵分块</strong></h3>
+<p><em>(注：此讲内容概要提及，但具体细节未在提供片段中展示。常规要点如下)</em></p>
+<ul>
+<li>
+<p><strong>分块矩阵 (Partitioned Matrix)</strong>：用水平线和垂直线将矩阵划分为更小的子矩阵（块）。</p>
+</li>
+<li>
+<p><strong>分块矩阵的运算</strong>：</p>
+</li>
+<li>
+<p>加法、标量乘法：对应块进行。</p>
+</li>
+<li>
+<p><strong>乘法</strong>：   A  的列分块方式须与    B  的行分块方式一致，计算如同普通矩阵乘法，但元素是子矩阵。</p>
+</li>
+<li>
+<p><strong>分块对角矩阵</strong>：非零块仅出现在主对角线上。其逆矩阵等于各对角块逆矩阵组成的分块对角矩阵。</p>
+</li>
+<li>
+<p><strong>应用</strong>：简化大规模矩阵运算和理论推导。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-10CN：三角矩阵与LU分解"><strong>Lecture-10CN：三角矩阵与LU分解</strong></h3>
+<p><em>(注：此讲内容概要提及，但具体细节未展示。常规要点如下)</em></p>
+<ul>
+<li>
+<p><strong>上/下三角矩阵</strong>：主对角线下方/上方的元素全为零。</p>
+</li>
+<li>
+<p><strong>定理</strong>：三角矩阵可逆 <strong>当且仅当</strong> 其主对角线元素均不为零。</p>
+</li>
+<li>
+<p><strong>LU分解</strong>：将矩阵    A  分解为一个下三角矩阵    L  和一个上三角矩阵    U  的乘积，即    A = LU 。</p>
+</li>
+<li>
+<p><strong>作用</strong>：高效求解    Ax=b 。先解    Ly=b （前向代入），再解    Ux=y （后向代入）。</p>
+</li>
+<li>
+<p><strong>算法</strong>：通过高斯消元法（不使用行交换）得到    U ，消元过程中使用的乘数构成    L 。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-11CN-12CN：行列式"><strong>Lecture-11CN &amp; 12CN：行列式</strong></h3>
+<ul>
+<li>
+<p><strong>行列式 (Determinant)</strong> 的定义与性质：</p>
+</li>
+<li>
+<p>det(I) = 1 。</p>
+</li>
+<li>
+<p>行交换 → 行列式变号。</p>
+</li>
+<li>
+<p>行倍乘    k  → 行列式乘    k 。</p>
+</li>
+<li>
+<p>行倍加 → 行列式不变。</p>
+</li>
+<li>
+<p>det(Aᵀ) = det(A) 。</p>
+</li>
+<li>
+<p>det(AB) = det(A)det(B) 。</p>
+</li>
+<li>
+<p>A  可逆 <strong>当且仅当</strong>    det(A) ≠ 0 。</p>
+</li>
+<li>
+<p>det(A⁻¹) = 1/det(A) 。</p>
+</li>
+<li>
+<p><strong>计算方法</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>余子式展开 (Cofactor Expansion)：对某行/列，   det(A)=Σ a_{ij}C_{ij} 。</p>
+</li>
+<li>
+<p>化为三角矩阵：行列式等于主对角线元素乘积。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>伴随矩阵 (Adjugate Matrix) adj(A)</strong>：由余子式    C_{ij}  构成的矩阵的转置。</p>
+</li>
+<li>
+<p><strong>求逆公式 (当 det(A)≠0)</strong>：   A⁻¹ = (1/det(A)) * adj(A) 。</p>
+</li>
+<li>
+<p><strong>克莱姆法则 (Cramer‘s Rule)</strong>：对于可逆矩阵    A ，方程组    Ax=b  的解为    x_i = det(A_i(b)) / det(A) ，其中    A_i(b)  是将    A  的第    i  列换为    b  得到的矩阵。</p>
+</li>
+<li>
+<p><strong>几何解释</strong>：</p>
+</li>
+<li>
+<p>2×2  矩阵行列式的绝对值等于其列向量张成的<strong>平行四边形的面积</strong>。</p>
+</li>
+<li>
+<p>3×3  矩阵行列式的绝对值等于其列向量张成的<strong>平行六面体的体积</strong>。</p>
+</li>
+<li>
+<p>线性变换    T(x)=Ax  将区域的面积/体积放大    |det(A)|  倍。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-13CN：向量空间与子空间"><strong>Lecture-13CN：向量空间与子空间</strong></h3>
+<ul>
+<li>
+<p><strong>向量空间 (Vector Space) V</strong>：定义了加法和标量乘法运算的集合，并满足10条公理（封闭性、结合律、交换律、零元、负元、分配律、单位标量乘法）。</p>
+</li>
+<li>
+<p><strong>子空间 (Subspace) H</strong>：向量空间    V  的一个子集，且    H  本身关于    V  的运算也构成向量空间。</p>
+</li>
+<li>
+<p><strong>判定定理1</strong>：   H  是子空间 <strong>当且仅当</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>V  中的零向量属于    H 。</p>
+</li>
+<li>
+<p>对    H  中任意    u, v ，有    u+v ∈ H （对加法封闭）。</p>
+</li>
+<li>
+<p>对    H  中任意    u  和任意标量    c ，有    cu ∈ H （对标量乘法封闭）。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>重要的子空间实例</strong>：</p>
+</li>
+<li>
+<p><strong>零空间 (Null Space) Nul A</strong>：   {x ∈ ℝⁿ: Ax = 0} 。<strong>定理3</strong>：   Nul A  是    ℝⁿ  的子空间。</p>
+</li>
+<li>
+<p><strong>列空间 (Column Space) Col A</strong>：   {b ∈ ℝᵐ: b = Ax for some x ∈ ℝⁿ} 。<strong>定理4</strong>：   Col A  是    ℝᵐ  的子空间。</p>
+</li>
+<li>
+<p><strong>行空间 (Row Space)</strong>：   A  的行向量的所有线性组合的集合，是    ℝⁿ  的子空间。</p>
+</li>
+<li>
+<p><strong>基 (Basis) for a subspace H</strong>：   H  中一个线性无关的集合，且能张成    H 。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-14CN：基、坐标与基变换"><strong>Lecture-14CN：基、坐标与基变换</strong></h3>
+<ul>
+<li>
+<p><strong>基 (Basis) for V</strong>：   V  中线性无关且能张成    V  的向量集。</p>
+</li>
+<li>
+<p><strong>坐标 (Coordinate)</strong>：对于基    B={b₁,…,bₙ}  和向量    x=c₁b₁+…+cₙbₙ ，向量    [x]_B = [c₁ … cₙ]ᵀ  称为    x  的 <strong>B-坐标向量</strong>。</p>
+</li>
+<li>
+<p><strong>坐标映射 (Coordinate Mapping) x → [x]_B</strong>：<strong>定理9</strong>：若    B  是    V  的基，则坐标映射是从    V  到    ℝⁿ  的<strong>线性、单射</strong>的变换，建立了    V  与    ℝⁿ  的一一对应。</p>
+</li>
+<li>
+<p><strong>基的变换 (Change of Basis)</strong>：</p>
+</li>
+<li>
+<p>设    B  和    C  是向量空间    V  的两个基。</p>
+</li>
+<li>
+<p><strong>坐标变换矩阵 (Change-of-coordinates Matrix)</strong>：从    C  到    B  的矩阵    _BP_C ，满足    [x]_B = _BP_C [x]_C 。</p>
+</li>
+<li>
+<p>_BP_C  的求法：其第    j  列是    C  中第    j  个基向量关于    B  的坐标向量，即    [cⱼ]_B 。</p>
+</li>
+<li>
+<p>_BP_C  是可逆的，且    (_BP_C)⁻¹ = _CP_B 。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-15CN：维数、秩与四大子空间"><strong>Lecture-15CN：维数、秩与四大子空间</strong></h3>
+<ul>
+<li>
+<p><strong>维数 (Dimension)</strong>：向量空间    V  的任意一个基中所含向量的个数，记作    dim V 。</p>
+</li>
+<li>
+<p><strong>定理1</strong>：若    dim V = n ，则    V  中任何超过    n  个向量的集合必线性相关。</p>
+</li>
+<li>
+<p><strong>定理4 &amp; 5</strong>：</p>
+</li>
+<li>
+<p>子空间    H  的维数满足    dim H ≤ dim V 。</p>
+</li>
+<li>
+<p>在    p  维空间    V  中，任何恰好含    p  个向量的线性无关集自动成为基；任何恰好含    p  个向量且能张成    V  的集合也自动成为基。</p>
+</li>
+<li>
+<p><strong>秩 (Rank)</strong>：矩阵    A  的列空间（或行空间）的维数，记作    rank A 。</p>
+</li>
+<li>
+<p><strong>零度 (Nullity)</strong>：零空间    Nul A  的维数，记作    dim(Nul A) 。</p>
+</li>
+<li>
+<p><strong>秩定理 (Rank Theorem)</strong>：   rank A + dim(Nul A) = n ，其中    A  是    m×n  矩阵。</p>
+</li>
+<li>
+<p><strong>定理6</strong>：   dim(Col A) = rank A = A  中主元列的个数。   dim(Nul A) =  自由变量的个数。</p>
+</li>
+<li>
+<p><strong>四大基本子空间及其关系</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>
+<p><strong>列空间 Col A</strong>：子空间 of    ℝᵐ ，维数 =    rank A 。</p>
+</li>
+<li>
+<p><strong>零空间 Nul A</strong>：子空间 of    ℝⁿ ，维数 =    n - rank A 。</p>
+</li>
+<li>
+<p><strong>行空间 Row A</strong>：子空间 of    ℝⁿ ，维数 =    rank A 。(   Col Aᵀ )</p>
+</li>
+<li>
+<p><strong>左零空间 Nul Aᵀ</strong>：子空间 of    ℝᵐ ，维数 =    m - rank A 。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><strong>子空间的基的求法</strong>：</p>
+</li>
+<li>
+<p>Col A ：取    A  的<strong>主元列</strong>（原始列）。</p>
+</li>
+<li>
+<p>Row A ：取    A  的<strong>行最简形 RREF(A)</strong> 的<strong>非零行</strong>。</p>
+</li>
+<li>
+<p>Nul A ：解    Ax=0 ，将自由变量参数化得到的<strong>解向量</strong>构成基。</p>
+</li>
+<li>
+<p>Nul Aᵀ ：解    Aᵀy=0 。</p>
+</li>
+</ul>
+<hr>
+<h3 id="Lecture-16CN：特征值与特征向量"><strong>Lecture-16CN：特征值与特征向量</strong></h3>
+<ul>
+<li>
+<p><strong>特征值 (Eigenvalue) λ</strong> 与 <strong>特征向量 (Eigenvector) v</strong>：对于方阵    A ，满足    Av = λv  (   v ≠ 0 ) 的标量    λ  和向量    v 。</p>
+</li>
+<li>
+<p><strong>特征方程 (Characteristic Equation)</strong>：   det(A - λI) = 0 。</p>
+</li>
+<li>
+<p><strong>特征多项式 (Characteristic Polynomial)</strong>：   det(A - λI) 。</p>
+</li>
+<li>
+<p><strong>特征空间 (Eigenspace)</strong>：对应于特征值    λ  的所有特征向量加上零向量构成的集合，即    Nul(A - λI) 。</p>
+</li>
+<li>
+<p><strong>定理2</strong>：对应于<strong>不同特征值</strong>的特征向量是<strong>线性无关</strong>的。</p>
+</li>
+<li>
+<p><strong>相似 (Similar)</strong>：若存在可逆矩阵    P  使    B = P⁻¹AP ，则    A  与    B  相似。相似矩阵有相同的特征多项式、特征值和行列式。</p>
+</li>
+<li>
+<p><strong>对角化 (Diagonalization)</strong>：</p>
+</li>
+<li>
+<p>若    A  有    n  个线性无关的特征向量    v₁, …, vₙ ，对应特征值    λ₁, …, λₙ 。</p>
+</li>
+<li>
+<p>令    P = [v₁ v₂ … vₙ] ,    D = diag(λ₁, …, λₙ) ，则有    A = PDP⁻¹  且    D = P⁻¹AP 。</p>
+</li>
+<li>
+<p><strong>定理5（可对角化定理）</strong>：   n×n  矩阵    A  可对角化 <strong>当且仅当</strong>    A  有    n  个线性无关的特征向量（即所有特征值的几何重数之和等于    n ）。</p>
+</li>
+<li>
+<p><strong>特征值的代数重数与几何重数</strong>：</p>
+</li>
+<li>
+<p><strong>代数重数</strong>：特征值作为特征根的重数。</p>
+</li>
+<li>
+<p><strong>几何重数</strong>：对应特征空间的维数    dim Nul(A - λI) 。</p>
+</li>
+<li>
+<p>几何重数 ≤ 代数重数。</p>
+</li>
+<li>
+<p>矩阵可对角化 <strong>当且仅当</strong> 对于每个特征值，其几何重数等于代数重数。</p>
+</li>
+</ul>
+<hr>
+<h3 id="总结与备考建议"><strong>总结与备考建议</strong></h3>
+<ol>
+<li>
+<p><strong>概念理解</strong>：清晰区分相关但不同的概念，如“线性无关”与“张成”、“列空间”与“零空间”、“特征值”与“特征向量”。</p>
+</li>
+<li>
+<p><strong>定理网络</strong>：将“可逆矩阵定理”、“秩定理”、“对角化定理”等核心定理及其等价条件串联成网。</p>
+</li>
+<li>
+<p><strong>计算熟练度</strong>：重点练习行化简、求逆、求行列式、求特征值/向量、求子空间的基、坐标变换。</p>
+</li>
+<li>
+<p><strong>证明思路</strong>：掌握子空间验证、线性无关证明、利用已知定理推导等典型证明方法。</p>
+</li>
+<li>
+<p><strong>真题演练</strong>：结合往届习题、课堂练习和作业，模拟判断题、填空题、计算题和证明题的答题过程。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>线性代数</category>
+      </categories>
+      <tags>
+        <tag>线性代数复习</tag>
       </tags>
   </entry>
   <entry>
@@ -1130,38 +1867,6 @@ $$\min_{x\in[a,b]}f'(x)\le\frac{f(b)-f(a)}{b-a}\le\max_{x\in[a,b]}f'(x).$$</li>
       </tags>
   </entry>
   <entry>
-    <title>高精度加减乘除及比较大小</title>
-    <url>/posts/9409.html</url>
-    <content><![CDATA[<p>课后练习里的一道高精度乘法题，进而思考起高精度的其他内容。</p>
-<h2 id="什么样的题要用到高精度">什么样的题要用到高精度</h2>
-<p>一般来说，数据量比较大时就需要用到高精度，超过<code>unsigned long long int</code>的范围$2 ^ {64} - 1$时。</p>
-<h2 id="计算流程">计算流程</h2>
-<ol>
-<li>通过字符串引入两串数字分别存放到两个字符数组</li>
-<li>将其每一位数字逆序分别存放到两个整型数组</li>
-<li>进行计算并处理进位（关键）</li>
-<li>将结果存放到第三个整型数组当中（引进动态数组）</li>
-<li>输出结果</li>
-</ol>
-<h2 id="准备工作">准备工作</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">引入数字</span><br><span class="line">    <span class="type">char</span> num1[<span class="number">102</span>]; </span><br><span class="line">    <span class="type">char</span> num2[<span class="number">102</span>]; </span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, num1);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, num2);</span><br><span class="line">    </span><br><span class="line">逆序存储</span><br><span class="line">    a[la-i<span class="number">-1</span>]=num1[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    b[lb-i<span class="number">-1</span>]=num2[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-<h2 id="高精度的核心算法">高精度的核心算法</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">加法</span><br><span class="line">   c[i] += a[i] + b[i];</span><br><span class="line">   c[i+<span class="number">1</span>] = c[i] / <span class="number">10</span>; </span><br><span class="line">   c[i] = c[i] % <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">减法</span><br><span class="line">   c[i] = a[i] - b[i];</span><br><span class="line">   <span class="keyword">if</span> (c[i] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      c[i] += <span class="number">10</span>;</span><br><span class="line">      a[i + <span class="number">1</span>]--;&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">乘法</span><br><span class="line">   c[i+j]+=a[i]*b[j]; </span><br><span class="line">   c[i+j+<span class="number">1</span>]+=c[i+j]/<span class="number">10</span>; </span><br><span class="line">   c[i+j]%=<span class="number">10</span>;</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">除法 </span><br><span class="line">   高精度/低精度</span><br><span class="line">   c[i] = (x*<span class="number">10</span> + a[i])/b;  </span><br><span class="line">   x = (x*<span class="number">10</span> + a[i])%b; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">比较大小</span><br><span class="line">   <span class="type">int</span> <span class="title function_">hpCmp</span><span class="params">(<span class="type">char</span> *a, <span class="type">char</span> *b)</span> &#123;               </span><br><span class="line">      <span class="type">int</span> lenA = <span class="built_in">strlen</span>(a), lenB = <span class="built_in">strlen</span>(b);</span><br><span class="line">      <span class="keyword">if</span> (lenA == lenB)</span><br><span class="line">          <span class="keyword">return</span> <span class="built_in">strcmp</span>(a, b);</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">          <span class="keyword">return</span> lenA &gt; lenB ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="补充">补充</h2>
-<p>涉及小数的高精度，如果是加减法，就将先将数字以小数点为界分成两部分，分别进行加减法运算；如果是乘除法，就将其看成整数，运算完后再打小数点即可。</p>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>高精度</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>高等数学多元函数章节与线性代数内在联系探究（完整系列）</title>
     <url>/posts/series-complete.html</url>
     <content><![CDATA[<h1>系列总览</h1>
@@ -1761,769 +2466,6 @@ $$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_
       </tags>
   </entry>
   <entry>
-    <title>一道时间线管理的模拟题</title>
-    <url>/posts/7a8e.html</url>
-    <content><![CDATA[<h2 id="题目来自2024年学院期中，是一道关于时间管理的模拟题-more">题目来自2024年学院期中，是一道关于时间管理的模拟题<span id="more"></span></h2>
-<h2 id="题目描述">题目描述</h2>
-<p><code>饭堂有个窗口,一个阿姨在卖肠粉。阿姨不会提前制作肠粉,只有在同学点餐后才会开始为该同学制作肠粉。阿姨制作肠粉的流程是,先花费t1时间处理原材料,然后放进肠粉机里蒸煮t2时间,煮好便可以立刻交付给同学。阿姨一次只能处理1份原材料,而阿姨有2台肠粉机,每台肠粉机一次只可以蒸煮一份肠粉。注意,阿姨处理原材料是独立于肠粉机的,也就是说当2台肠粉机各自蒸煮着肠粉时,阿姨也可以同时执行其他份肠粉的原材料处理。一共会来几个同学,其中第i个同学会在t=i^2时刻到达窗口排队并点一份肠粉。问:n个同学的等待时间总和是多少? (每个同学的等待时间是【拿到肠粉时刻】-【到达窗口时刻】)</code><br>
-<code>输入格式 </code>仅一行,3个正整数,依次是t1,t2, n<br>
-<code>输出格式 </code>输出一个正整数 tot,表示所有同学的等待时间总和。<br>
-<code>输入样例1 </code>3 7 10<br>
-<code>输出样例1 </code>100<br>
-<code>输入样例2 </code>10 1 10<br>
-<code>输出样例2 </code>194<br>
-<code>数据范围 </code>t1, t2, n∈ [1,105]</p>
-<hr>
-<p>这题比较像<code>午餐问题</code>、<code>餐厅排队叫号问题</code>、<code>任务调度</code>问题，做法是将 <em><strong>阿姨处理每份原材料的开始时间</strong></em>、<em><strong>第一台肠粉机的处理每份肠粉开始时间</strong></em>、<em><strong>第二台肠粉机的处理每份肠粉开始时间</strong></em> 看作三个数组，记为<code>a[n]</code> <code>b1[n]</code> <code>b2[n]</code>，这题就转化成求这三个量之间的关系，有点像数学里的数列题，去找这三个量的递推关系即可。具体代码如下：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">max</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> x&gt;=y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">         1 4 9 16 25 36 49 64 81 100</span></span><br><span class="line"><span class="comment">             1             4        9</span></span><br><span class="line"><span class="comment">            1   1+t1       max(1+t1,4) </span></span><br><span class="line"><span class="comment">         存开始做的时间</span></span><br><span class="line"><span class="comment">              a[i]= max(a[i-1]+t1 , i*i)</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">                    &#123; max(a[i]+t1,b1[i-1]+t2)</span></span><br><span class="line"><span class="comment">               b=min&#123; max(a[i]+t1,b2[i-1]+t2)            </span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line">    <span class="type">int</span> t1, t2, n,i;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>, &amp;t1, &amp;t2, &amp;n);</span><br><span class="line">    <span class="type">int</span>* a = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="type">int</span>* b1 = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="type">int</span>* b2 = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">    	a[i]=<span class="number">0</span>;</span><br><span class="line">    	b1[i]=<span class="number">0</span>;</span><br><span class="line">    	b2[i]=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    a[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    b1[<span class="number">0</span>] = <span class="number">1</span> + t1;</span><br><span class="line">    <span class="type">int</span> t = t1 + t2;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>;i &lt; n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i] = max(a[i - <span class="number">1</span>] + t1, (i+<span class="number">1</span>)*(i+<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">if</span> (max(a[i] + t1, b1[i - <span class="number">1</span>] + t2) &gt;= max(a[i] + t1, b2[i - <span class="number">1</span>] + t2))</span><br><span class="line">            b2[i] = max(a[i] + t1, b2[i - <span class="number">1</span>] + t2),b1[i]=b1[i<span class="number">-1</span>]; </span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            b1[i] = max(a[i] + t1, b1[i - <span class="number">1</span>] + t2),b2[i]=b2[i<span class="number">-1</span>];</span><br><span class="line">        t += max(b1[i], b2[i]) + t2 - (i+<span class="number">1</span>)*(i+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, t);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>模拟流程</tag>
-        <tag>多资源任务分配</tag>
-        <tag>时间线优化管理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>从sprintf到snprintf字符输出</title>
-    <url>/posts/adec.html</url>
-    <content><![CDATA[<p><strong>sprintf() 是 C 标准库中的一个函数，用于将格式化的字符串输出到一个字符数组中。它有类似于 printf() 的语法和用法，但不是将数据输出到控制台，而是将数据输出到指定的字符数组中。</strong></p>
-<p>格式<br>
-<code>sprintf(char* str, const char* format, ...)</code></p>
-<p>作用</p>
-<ol>
-<li>字符串拼接</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> str1[] = <span class="string">&quot;Hello&quot;</span>;  </span><br><span class="line"><span class="type">char</span> str2[] = <span class="string">&quot;world!&quot;</span>;  </span><br><span class="line"><span class="type">char</span> str3[<span class="number">100</span>];  </span><br><span class="line"><span class="built_in">sprintf</span>(str3, <span class="string">&quot;%s %s&quot;</span>, str1, str2);  </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, str3); <span class="comment">// 输出 &quot;Hello world!&quot;</span></span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>数字转字符串</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">数字类型如 <span class="type">int</span> <span class="type">float</span> <span class="type">double</span> … 均可转成字符串</span><br><span class="line">  </span><br><span class="line"><span class="type">int</span> num = <span class="number">123</span>;  </span><br><span class="line"><span class="type">char</span> str[<span class="number">100</span>];  </span><br><span class="line"><span class="built_in">sprintf</span>(str, <span class="string">&quot;%d&quot;</span>, num);  </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, str); <span class="comment">// 输出 &quot;123&quot;</span></span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>填充字符串</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">填充规则基本和 <span class="built_in">printf</span> 函数一样</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> str[<span class="number">10</span>];  </span><br><span class="line"><span class="built_in">sprintf</span>(str, <span class="string">&quot;%10s&quot;</span>, <span class="string">&quot;Hello&quot;</span>);  </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;&#x27;%s&#x27;\n&quot;</span>, str); <span class="comment">// 输出 &quot;     Hello&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> buffer[<span class="number">50</span>];</span><br><span class="line"><span class="type">double</span> num = <span class="number">123.456</span>;</span><br><span class="line"><span class="built_in">sprintf</span>(buffer, <span class="string">&quot;%010.2f&quot;</span>, num); <span class="comment">// buffer中存储的是：&quot;000123.46&quot;</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%sn&quot;</span>, buffer);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>格式化输出</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">格式化输出也和 <span class="built_in">printf</span> 函数类似</span><br><span class="line"><span class="type">double</span> pi = <span class="number">3.1415926</span>;  </span><br><span class="line"><span class="type">char</span> str[<span class="number">100</span>];  </span><br><span class="line"><span class="built_in">sprintf</span>(str, <span class="string">&quot;The value of pi is approximately %.2f&quot;</span>, pi);  </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, str); <span class="comment">// 输出 &quot;The value of pi is approximately 3.14&quot;</span></span><br></pre></td></tr></table></figure>
-<ol start="5">
-<li>补充：字符串转整数 atoi</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">经常会碰到数字转字符串或者字符串转数字的</span><br><span class="line">这里提及的函数就是数字转成字符串</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;字符串\&quot;123456\&quot;转换为数字：%d\n&quot;</span>, atoi(<span class="string">&quot;123456&quot;</span>));  </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;字符串\&quot;-123456\&quot;转换为数字：%d\n&quot;</span>, atoi(<span class="string">&quot;-123456&quot;</span>));</span><br></pre></td></tr></table></figure>
-<p>更安全的函数 snprintf</p>
-<p>格式<br>
-<code>int snprintf(char* str, size_t size, const char* format, ...)</code></p>
-<p>**sprintf() 函数没有对目标字符串的长度进行限制，因此可能会导致缓冲区溢出。如果生成的字符串超过了目标字符串的容量，就会发生未定义的行为。  **</p>
-<p><strong>snprintf() 函数通过第二个参数来限制目标字符串的最大长度，包括终止的空字符。即使生成的字符串超过了指定的长度，snprintf() 也会确保生成的字符串不会溢出目标缓冲区。</strong></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> buffer[<span class="number">50</span>];  </span><br><span class="line">    <span class="type">char</span>* s = <span class="string">&quot;runoobcom&quot;</span>;  </span><br><span class="line">    <span class="comment">// 读取字符串并存储在 buffer 中  </span></span><br><span class="line">    <span class="type">int</span> j = <span class="built_in">snprintf</span>(buffer, <span class="number">6</span>, <span class="string">&quot;%s\n&quot;</span>, s);  </span><br><span class="line">    <span class="comment">// 输出 buffer及字符数  </span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;string:\n%s\ncharacter count = %d\n&quot;</span>, buffer, j);</span><br><span class="line">    </span><br><span class="line">    输出</span><br><span class="line">    <span class="built_in">string</span>:</span><br><span class="line">runoo</span><br><span class="line">character count = <span class="number">10</span></span><br></pre></td></tr></table></figure>
-<p>两者的返回值</p>
-<p>sprintf    返回一个整数：如果成功写入则返回写入的字符总数，不包括字符串追加在字符串末尾的空字符；如果编码错误则返回负值</p>
-<p>snprintf  返回一个整数：如果成功写入则返回将要写入的字符数，包括字符串追加在字符串末尾的空字符，可能会大于size ; 如果编码错误则返回负值</p>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>sprintf</tag>
-        <tag>snprintf</tag>
-        <tag>输出</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>线性代数复习简略版</title>
-    <url>/posts/d090.html</url>
-    <content><![CDATA[<h1><strong>线性代数课程讲义知识点全梳理</strong>(Made By AI)</h1>
-<hr>
-<h3 id="Lecture-1CN：课程介绍与线性方程组基础"><strong>Lecture-1CN：课程介绍与线性方程组基础</strong></h3>
-<ul>
-<li>
-<p><strong>课程目标</strong>：掌握线性方程组、矩阵论、矩阵分解、向量空间、特征值、正交性、最小二乘法等核心内容。</p>
-</li>
-<li>
-<p><strong>线性方程 (Linear Equation)</strong>：变量为一次幂的方程。</p>
-</li>
-<li>
-<p><strong>线性方程组 (System of Linear Equations)</strong>：一组包含相同变量的线性方程。</p>
-</li>
-<li>
-<p><strong>解 (Solution)</strong>：使所有方程同时成立的变量值集合。</p>
-</li>
-<li>
-<p><strong>解集 (Solution Set)</strong>：所有解的集合。</p>
-</li>
-<li>
-<p><strong>等价系统 (Equivalent Systems)</strong>：拥有相同解集的线性方程组。</p>
-</li>
-<li>
-<p><strong>矩阵 (Matrix)</strong>：矩形的数表。用于表示线性方程组。</p>
-</li>
-<li>
-<p><strong>系数矩阵 (Coefficient Matrix)</strong>：仅包含方程系数的矩阵。</p>
-</li>
-<li>
-<p><strong>增广矩阵 (Augmented Matrix)</strong>：在系数矩阵右侧增加常数项列构成的矩阵。</p>
-</li>
-<li>
-<p><strong>初等行变换 (Elementary Row Operations)</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p>倍加变换：把某一行换成它本身与另一行的倍数之和。</p>
-</li>
-<li>
-<p>对换变换：交换两行。</p>
-</li>
-<li>
-<p>倍乘变换：把某一行的所有元素乘以同一个非零数。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>行等价 (Row Equivalent)</strong>：一个矩阵可以经过一系列初等行变换变成另一个矩阵。</p>
-</li>
-<li>
-<p><strong>求解线性方程组的基本思想</strong>：对增广矩阵进行初等行变换，将其化为更简单的“阶梯形”，从而易于求解。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-2CN：阶梯形、行化简算法与线性方程组的解"><strong>Lecture-2CN：阶梯形、行化简算法与线性方程组的解</strong></h3>
-<ul>
-<li><strong>阶梯形 (Echelon Form)</strong>：矩阵满足：</li>
-</ul>
-<ol>
-<li>
-<p>所有非零行在零行之上。</p>
-</li>
-<li>
-<p>非零行的先导元素（该行最左的非零元）的列标严格递增。</p>
-</li>
-<li>
-<p>先导元素所在列下方的元素均为零。</p>
-</li>
-</ol>
-<ul>
-<li><strong>简化阶梯形 (Reduced Echelon Form)</strong>：在阶梯形基础上，还满足：</li>
-</ul>
-<ol start="4">
-<li>
-<p>每个先导元素均为1。</p>
-</li>
-<li>
-<p>每个先导1是该列中唯一的非零元。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>定理5</strong>：每个矩阵都行等价于一个<strong>唯一</strong>的简化阶梯形矩阵。</p>
-</li>
-<li>
-<p><strong>主元位置 (Pivot Position)</strong>：矩阵A行等价于某个阶梯形矩阵B时，B中先导元素的位置。这些位置在A的行等价变换中保持不变。</p>
-</li>
-<li>
-<p><strong>主元列 (Pivot Column)</strong>：包含主元位置的列。</p>
-</li>
-<li>
-<p><strong>行化简算法 (Row Reduction Algorithm)</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p><strong>向前步骤</strong>：化为阶梯形。</p>
-</li>
-<li>
-<p>从左到右找到第一非零列作为主元列。</p>
-</li>
-<li>
-<p>选定一个非零元作为主元，必要时交换行使其位于顶部。</p>
-</li>
-<li>
-<p>用行倍加变换将主元下方元素消为零。</p>
-</li>
-<li>
-<p>对余下的子矩阵重复上述步骤。</p>
-</li>
-<li>
-<p><strong>向后步骤</strong>：化为简化阶梯形。</p>
-</li>
-<li>
-<p>从最右下的主元开始，向上进行。</p>
-</li>
-<li>
-<p>用行倍加变换将主元上方元素消为零。</p>
-</li>
-<li>
-<p>用行倍乘变换将每个主元化为1。</p>
-</li>
-</ol>
-<ul>
-<li><strong>线性方程组的解</strong>：</li>
-</ul>
-<ol>
-<li>
-<p><strong>无解 (Inconsistent)</strong>：增广矩阵的简化阶梯形中，出现形如    [0 … 0 | b] (b≠0)  的行。方程组<strong>不相容</strong>。</p>
-</li>
-<li>
-<p><strong>唯一解</strong>：每个变量都是基本变量（对应主元列），没有自由变量。</p>
-</li>
-<li>
-<p><strong>无穷多解</strong>：存在至少一个自由变量（对应非主元列）。解集需用自由变量<strong>参数化</strong>表示。</p>
-</li>
-</ol>
-<hr>
-<h3 id="Lecture-3CN：向量与线性组合"><strong>Lecture-3CN：向量与线性组合</strong></h3>
-<ul>
-<li>
-<p><strong>向量 (Vector)</strong>：   ℝ²  和    ℝⁿ  中的元素，表示为列。</p>
-</li>
-<li>
-<p><strong>向量运算</strong>：加法、标量乘法。</p>
-</li>
-<li>
-<p><strong>向量运算的性质 (定理2)</strong>：加法结合/交换律、加法单位元(零向量)、加法逆元(负向量)；标量乘法的分配律、结合律等。构成<strong>阿贝尔群 (Abelian Group)</strong>。</p>
-</li>
-<li>
-<p><strong>线性组合 (Linear Combination)</strong>：给定向量    v₁, …, vₙ  和标量    c₁, …, cₙ ，向量    v = c₁v₁ + … + cₙvₙ  称为前者的一个线性组合，   cᵢ  称为<strong>系数</strong>或<strong>权重</strong>。</p>
-</li>
-<li>
-<p><strong>向量方程 (Vector Equation)</strong>：   x₁a₁ + x₂a₂ + … + xₙaₙ = b 。</p>
-</li>
-<li>
-<p><strong>重要等价关系</strong>：线性方程组、向量方程、矩阵方程    Ax = b  三者<strong>同解</strong>。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-4CN：矩阵方程、矩阵-向量积与解的存在性"><strong>Lecture-4CN：矩阵方程、矩阵-向量积与解的存在性</strong></h3>
-<ul>
-<li>
-<p><strong>矩阵-向量乘积 (Matrix-vector Product)</strong>：   A = [a₁ … aₙ] ,    x = [x₁ … xₙ]ᵀ ，则    Ax = x₁a₁ + … + xₙaₙ 。</p>
-</li>
-<li>
-<p><strong>矩阵方程 (Matrix Equation)</strong>：   Ax = b 。</p>
-</li>
-<li>
-<p><strong>解 (Solution)</strong>：满足    As = b  的向量    s 。</p>
-</li>
-<li>
-<p><strong>矩阵-向量积的性质 (定理1)</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p>A(u+v) = Au + Av  （分配律）。</p>
-</li>
-<li>
-<p>A(λu) = λ(Au)  （齐次性/数乘性质）。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p>共同定义了<strong>线性变换</strong>的核心性质。</p>
-</li>
-<li>
-<p><strong>解的存在性定理 (定理2)</strong>：对于    m×n  矩阵    A ，下列陈述等价：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p>对任意    b ∈ ℝᵐ ，方程    Ax = b  有解（<strong>相容</strong>）。</p>
-</li>
-<li>
-<p>ℝᵐ  中任意    b  都是    A  的列向量的线性组合。</p>
-</li>
-<li>
-<p>A  的列向量张成    ℝᵐ ，即    Span{a₁, …, aₙ} = ℝᵐ 。</p>
-</li>
-<li>
-<p>A  的每一行都有一个主元位置。</p>
-</li>
-</ol>
-<hr>
-<h3 id="Lecture-5CN：线性无关"><strong>Lecture-5CN：线性无关</strong></h3>
-<ul>
-<li>
-<p><strong>线性无关 (Linear Independence)</strong>：向量集    {v₁, …, vₚ}  称为线性无关，若向量方程    x₁v₁ + … + xₚvₚ = 0  <strong>仅有平凡解</strong>    x₁ = … = xₚ = 0 。</p>
-</li>
-<li>
-<p><strong>线性相关 (Linear Dependence)</strong>：若非线性无关，则称为线性相关。即存在不全为零的标量使向量方程成立。</p>
-</li>
-<li>
-<p><strong>定理1</strong>：一个向量集线性相关 <strong>当且仅当</strong> 集合中至少有一个向量是其余向量的线性组合。</p>
-</li>
-<li>
-<p><strong>定理2</strong>：矩阵    A  的列线性无关 <strong>当且仅当</strong> 方程    Ax = 0  仅有平凡解。</p>
-</li>
-<li>
-<p><strong>定理3</strong>：若一个向量集包含的向量个数超过每个向量的维数 (   p &gt; n )，则该集合必线性相关。</p>
-</li>
-<li>
-<p><strong>定理4</strong>：若向量集    S = {v₁, …, vₚ}  包含零向量，则它线性相关。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-6CN：齐次与非齐次矩阵方程"><strong>Lecture-6CN：齐次与非齐次矩阵方程</strong></h3>
-<ul>
-<li>
-<p><strong>齐次方程 (Homogeneous Equation)</strong>：   Ax = 0 。总是有解（零解/平凡解）。</p>
-</li>
-<li>
-<p><strong>平凡解 (Trivial Solution)</strong>：   x = 0 。</p>
-</li>
-<li>
-<p><strong>非平凡解 (Nontrivial Solution)</strong>：   Ax = 0  的非零解。存在非平凡解 <strong>当且仅当</strong> 方程有自由变量。</p>
-</li>
-<li>
-<p><strong>参数向量形式 (Parametric Vector Form)</strong>：   Ax = 0  的解集表示为自由变量的线性组合。</p>
-</li>
-<li>
-<p><strong>非齐次方程 (Nonhomogeneous Equation)</strong>：   Ax = b ，其中    b ≠ 0 。</p>
-</li>
-<li>
-<p><strong>解的结构定理 (定理3)</strong>：若    Ax = b  有特解    p ，则其全部解集为：   {p} + Nul A  =    {p + v: v ∈ Nul A} 。</p>
-</li>
-<li>
-<p><strong>结论</strong>：</p>
-</li>
-<li>
-<p>若    Ax = 0  仅有平凡解，则    Ax = b  有唯一解。</p>
-</li>
-<li>
-<p>若    Ax = 0  有非平凡解（自由变量），则    Ax = b  要么无解，要么有无穷多解。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-7CN：线性变换及其矩阵表示"><strong>Lecture-7CN：线性变换及其矩阵表示</strong></h3>
-<p><em>(注：此讲文档概要提及，但具体内容未在提供片段中详细展开。根据线性代数常规内容补充如下)</em></p>
-<ul>
-<li>
-<p><strong>线性变换 (Linear Transformation) T: ℝⁿ → ℝᵐ</strong>：满足    T(u+v) = T(u) + T(v)  和    T(cu) = cT(u) 。</p>
-</li>
-<li>
-<p><strong>标准矩阵 (Standard Matrix)</strong>：对于线性变换    T ，其标准矩阵    A = [T(e₁) T(e₂) … T(eₙ)] ，其中    eⱼ  是单位矩阵的第    j  列。有    T(x) = Ax 。</p>
-</li>
-<li>
-<p><strong>满射 (Onto/Surjective)</strong>：值域    Range(T) = ℝᵐ 。等价于    A  的列张成    ℝᵐ 。</p>
-</li>
-<li>
-<p><strong>单射 (One-to-one/Injective)</strong>：若    T(u)=T(v)  则必有    u=v 。等价于    Ax=0  仅有平凡解，即    A  的列线性无关。</p>
-</li>
-<li>
-<p><strong>线性变换与矩阵方程</strong>：研究    T(x)=b  的解集等同于研究    Ax=b  的解集。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-8CN：矩阵运算与逆"><strong>Lecture-8CN：矩阵运算与逆</strong></h3>
-<ul>
-<li>
-<p><strong>矩阵基本术语</strong>：</p>
-</li>
-<li>
-<p>(i, j) -元素 / 条目。</p>
-</li>
-<li>
-<p>主对角线 (Main Diagonal)。</p>
-</li>
-<li>
-<p>零矩阵    0 。</p>
-</li>
-<li>
-<p><strong>矩阵运算</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p><strong>加法</strong>：对应元素相加。</p>
-</li>
-<li>
-<p><strong>标量乘法</strong>：每个元素乘以标量。</p>
-</li>
-<li>
-<p><strong>乘法</strong>：   A (m×n)  与    B (n×p)  的乘积    AB (m×p) ，其中    (AB)<em>{ij} = Σ a</em>{ik}b_{kj} （行-列法则）。<strong>注意</strong>：乘法不满足交换律。</p>
-</li>
-<li>
-<p><strong>转置 (Transpose) Aᵀ</strong>：行变列。</p>
-</li>
-<li>
-<p><strong>方阵的逆 (Inverse)</strong>：对于    n×n  矩阵    A ，若存在    B  使    AB = BA = Iₙ ，则    A  <strong>可逆</strong>，   B  记作    A⁻¹ 。逆是唯一的。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>运算定理</strong>：</p>
-</li>
-<li>
-<p><strong>定理1</strong>：加法运算的性质（类似向量）。</p>
-</li>
-<li>
-<p><strong>定理2</strong>：乘法运算的性质（结合律、单位元、分配律）。</p>
-</li>
-<li>
-<p><strong>定理4</strong>：转置运算的性质：   (Aᵀ)ᵀ=A ,    (A+B)ᵀ=Aᵀ+Bᵀ ,    (rA)ᵀ=rAᵀ ,    (AB)ᵀ=BᵀAᵀ 。</p>
-</li>
-<li>
-<p><strong>定理5</strong>：逆运算的性质：   (A⁻¹)⁻¹=A ,    (AB)⁻¹=B⁻¹A⁻¹ ,    (Aᵀ)⁻¹=(A⁻¹)ᵀ 。</p>
-</li>
-<li>
-<p><strong>可逆矩阵定理 (关键！定理7/10)</strong>：设    A  为    n×n  矩阵，以下陈述等价：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p>A  是可逆矩阵。</p>
-</li>
-<li>
-<p>A  行等价于    n×n  单位矩阵    I 。</p>
-</li>
-<li>
-<p>A  有    n  个主元位置。</p>
-</li>
-<li>
-<p>方程    Ax=0  仅有平凡解。</p>
-</li>
-<li>
-<p>A  的列线性无关。</p>
-</li>
-<li>
-<p>A  的列张成    ℝⁿ 。</p>
-</li>
-<li>
-<p>Ax=b  对任意    b∈ℝⁿ  至少有一个解。</p>
-</li>
-<li>
-<p>A  的列构成    ℝⁿ  的基。</p>
-</li>
-<li>
-<p>Aᵀ  是可逆矩阵。</p>
-</li>
-<li>
-<p>存在矩阵    C  使得    CA=I ，或存在矩阵    D  使得    AD=I （此时    C=D=A⁻¹ ）。</p>
-</li>
-</ol>
-<ul>
-<li><strong>求逆方法</strong>：行化简增广矩阵    | I]  →    [I | A⁻¹] 。若左侧不能化为    I ，则    A  不可逆。</li>
-</ul>
-<hr>
-<h3 id="Lecture-9CN：矩阵分块"><strong>Lecture-9CN：矩阵分块</strong></h3>
-<p><em>(注：此讲内容概要提及，但具体细节未在提供片段中展示。常规要点如下)</em></p>
-<ul>
-<li>
-<p><strong>分块矩阵 (Partitioned Matrix)</strong>：用水平线和垂直线将矩阵划分为更小的子矩阵（块）。</p>
-</li>
-<li>
-<p><strong>分块矩阵的运算</strong>：</p>
-</li>
-<li>
-<p>加法、标量乘法：对应块进行。</p>
-</li>
-<li>
-<p><strong>乘法</strong>：   A  的列分块方式须与    B  的行分块方式一致，计算如同普通矩阵乘法，但元素是子矩阵。</p>
-</li>
-<li>
-<p><strong>分块对角矩阵</strong>：非零块仅出现在主对角线上。其逆矩阵等于各对角块逆矩阵组成的分块对角矩阵。</p>
-</li>
-<li>
-<p><strong>应用</strong>：简化大规模矩阵运算和理论推导。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-10CN：三角矩阵与LU分解"><strong>Lecture-10CN：三角矩阵与LU分解</strong></h3>
-<p><em>(注：此讲内容概要提及，但具体细节未展示。常规要点如下)</em></p>
-<ul>
-<li>
-<p><strong>上/下三角矩阵</strong>：主对角线下方/上方的元素全为零。</p>
-</li>
-<li>
-<p><strong>定理</strong>：三角矩阵可逆 <strong>当且仅当</strong> 其主对角线元素均不为零。</p>
-</li>
-<li>
-<p><strong>LU分解</strong>：将矩阵    A  分解为一个下三角矩阵    L  和一个上三角矩阵    U  的乘积，即    A = LU 。</p>
-</li>
-<li>
-<p><strong>作用</strong>：高效求解    Ax=b 。先解    Ly=b （前向代入），再解    Ux=y （后向代入）。</p>
-</li>
-<li>
-<p><strong>算法</strong>：通过高斯消元法（不使用行交换）得到    U ，消元过程中使用的乘数构成    L 。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-11CN-12CN：行列式"><strong>Lecture-11CN &amp; 12CN：行列式</strong></h3>
-<ul>
-<li>
-<p><strong>行列式 (Determinant)</strong> 的定义与性质：</p>
-</li>
-<li>
-<p>det(I) = 1 。</p>
-</li>
-<li>
-<p>行交换 → 行列式变号。</p>
-</li>
-<li>
-<p>行倍乘    k  → 行列式乘    k 。</p>
-</li>
-<li>
-<p>行倍加 → 行列式不变。</p>
-</li>
-<li>
-<p>det(Aᵀ) = det(A) 。</p>
-</li>
-<li>
-<p>det(AB) = det(A)det(B) 。</p>
-</li>
-<li>
-<p>A  可逆 <strong>当且仅当</strong>    det(A) ≠ 0 。</p>
-</li>
-<li>
-<p>det(A⁻¹) = 1/det(A) 。</p>
-</li>
-<li>
-<p><strong>计算方法</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p>余子式展开 (Cofactor Expansion)：对某行/列，   det(A)=Σ a_{ij}C_{ij} 。</p>
-</li>
-<li>
-<p>化为三角矩阵：行列式等于主对角线元素乘积。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>伴随矩阵 (Adjugate Matrix) adj(A)</strong>：由余子式    C_{ij}  构成的矩阵的转置。</p>
-</li>
-<li>
-<p><strong>求逆公式 (当 det(A)≠0)</strong>：   A⁻¹ = (1/det(A)) * adj(A) 。</p>
-</li>
-<li>
-<p><strong>克莱姆法则 (Cramer‘s Rule)</strong>：对于可逆矩阵    A ，方程组    Ax=b  的解为    x_i = det(A_i(b)) / det(A) ，其中    A_i(b)  是将    A  的第    i  列换为    b  得到的矩阵。</p>
-</li>
-<li>
-<p><strong>几何解释</strong>：</p>
-</li>
-<li>
-<p>2×2  矩阵行列式的绝对值等于其列向量张成的<strong>平行四边形的面积</strong>。</p>
-</li>
-<li>
-<p>3×3  矩阵行列式的绝对值等于其列向量张成的<strong>平行六面体的体积</strong>。</p>
-</li>
-<li>
-<p>线性变换    T(x)=Ax  将区域的面积/体积放大    |det(A)|  倍。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-13CN：向量空间与子空间"><strong>Lecture-13CN：向量空间与子空间</strong></h3>
-<ul>
-<li>
-<p><strong>向量空间 (Vector Space) V</strong>：定义了加法和标量乘法运算的集合，并满足10条公理（封闭性、结合律、交换律、零元、负元、分配律、单位标量乘法）。</p>
-</li>
-<li>
-<p><strong>子空间 (Subspace) H</strong>：向量空间    V  的一个子集，且    H  本身关于    V  的运算也构成向量空间。</p>
-</li>
-<li>
-<p><strong>判定定理1</strong>：   H  是子空间 <strong>当且仅当</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p>V  中的零向量属于    H 。</p>
-</li>
-<li>
-<p>对    H  中任意    u, v ，有    u+v ∈ H （对加法封闭）。</p>
-</li>
-<li>
-<p>对    H  中任意    u  和任意标量    c ，有    cu ∈ H （对标量乘法封闭）。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>重要的子空间实例</strong>：</p>
-</li>
-<li>
-<p><strong>零空间 (Null Space) Nul A</strong>：   {x ∈ ℝⁿ: Ax = 0} 。<strong>定理3</strong>：   Nul A  是    ℝⁿ  的子空间。</p>
-</li>
-<li>
-<p><strong>列空间 (Column Space) Col A</strong>：   {b ∈ ℝᵐ: b = Ax for some x ∈ ℝⁿ} 。<strong>定理4</strong>：   Col A  是    ℝᵐ  的子空间。</p>
-</li>
-<li>
-<p><strong>行空间 (Row Space)</strong>：   A  的行向量的所有线性组合的集合，是    ℝⁿ  的子空间。</p>
-</li>
-<li>
-<p><strong>基 (Basis) for a subspace H</strong>：   H  中一个线性无关的集合，且能张成    H 。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-14CN：基、坐标与基变换"><strong>Lecture-14CN：基、坐标与基变换</strong></h3>
-<ul>
-<li>
-<p><strong>基 (Basis) for V</strong>：   V  中线性无关且能张成    V  的向量集。</p>
-</li>
-<li>
-<p><strong>坐标 (Coordinate)</strong>：对于基    B={b₁,…,bₙ}  和向量    x=c₁b₁+…+cₙbₙ ，向量    [x]_B = [c₁ … cₙ]ᵀ  称为    x  的 <strong>B-坐标向量</strong>。</p>
-</li>
-<li>
-<p><strong>坐标映射 (Coordinate Mapping) x → [x]_B</strong>：<strong>定理9</strong>：若    B  是    V  的基，则坐标映射是从    V  到    ℝⁿ  的<strong>线性、单射</strong>的变换，建立了    V  与    ℝⁿ  的一一对应。</p>
-</li>
-<li>
-<p><strong>基的变换 (Change of Basis)</strong>：</p>
-</li>
-<li>
-<p>设    B  和    C  是向量空间    V  的两个基。</p>
-</li>
-<li>
-<p><strong>坐标变换矩阵 (Change-of-coordinates Matrix)</strong>：从    C  到    B  的矩阵    _BP_C ，满足    [x]_B = _BP_C [x]_C 。</p>
-</li>
-<li>
-<p>_BP_C  的求法：其第    j  列是    C  中第    j  个基向量关于    B  的坐标向量，即    [cⱼ]_B 。</p>
-</li>
-<li>
-<p>_BP_C  是可逆的，且    (_BP_C)⁻¹ = _CP_B 。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-15CN：维数、秩与四大子空间"><strong>Lecture-15CN：维数、秩与四大子空间</strong></h3>
-<ul>
-<li>
-<p><strong>维数 (Dimension)</strong>：向量空间    V  的任意一个基中所含向量的个数，记作    dim V 。</p>
-</li>
-<li>
-<p><strong>定理1</strong>：若    dim V = n ，则    V  中任何超过    n  个向量的集合必线性相关。</p>
-</li>
-<li>
-<p><strong>定理4 &amp; 5</strong>：</p>
-</li>
-<li>
-<p>子空间    H  的维数满足    dim H ≤ dim V 。</p>
-</li>
-<li>
-<p>在    p  维空间    V  中，任何恰好含    p  个向量的线性无关集自动成为基；任何恰好含    p  个向量且能张成    V  的集合也自动成为基。</p>
-</li>
-<li>
-<p><strong>秩 (Rank)</strong>：矩阵    A  的列空间（或行空间）的维数，记作    rank A 。</p>
-</li>
-<li>
-<p><strong>零度 (Nullity)</strong>：零空间    Nul A  的维数，记作    dim(Nul A) 。</p>
-</li>
-<li>
-<p><strong>秩定理 (Rank Theorem)</strong>：   rank A + dim(Nul A) = n ，其中    A  是    m×n  矩阵。</p>
-</li>
-<li>
-<p><strong>定理6</strong>：   dim(Col A) = rank A = A  中主元列的个数。   dim(Nul A) =  自由变量的个数。</p>
-</li>
-<li>
-<p><strong>四大基本子空间及其关系</strong>：</p>
-</li>
-</ul>
-<ol>
-<li>
-<p><strong>列空间 Col A</strong>：子空间 of    ℝᵐ ，维数 =    rank A 。</p>
-</li>
-<li>
-<p><strong>零空间 Nul A</strong>：子空间 of    ℝⁿ ，维数 =    n - rank A 。</p>
-</li>
-<li>
-<p><strong>行空间 Row A</strong>：子空间 of    ℝⁿ ，维数 =    rank A 。(   Col Aᵀ )</p>
-</li>
-<li>
-<p><strong>左零空间 Nul Aᵀ</strong>：子空间 of    ℝᵐ ，维数 =    m - rank A 。</p>
-</li>
-</ol>
-<ul>
-<li>
-<p><strong>子空间的基的求法</strong>：</p>
-</li>
-<li>
-<p>Col A ：取    A  的<strong>主元列</strong>（原始列）。</p>
-</li>
-<li>
-<p>Row A ：取    A  的<strong>行最简形 RREF(A)</strong> 的<strong>非零行</strong>。</p>
-</li>
-<li>
-<p>Nul A ：解    Ax=0 ，将自由变量参数化得到的<strong>解向量</strong>构成基。</p>
-</li>
-<li>
-<p>Nul Aᵀ ：解    Aᵀy=0 。</p>
-</li>
-</ul>
-<hr>
-<h3 id="Lecture-16CN：特征值与特征向量"><strong>Lecture-16CN：特征值与特征向量</strong></h3>
-<ul>
-<li>
-<p><strong>特征值 (Eigenvalue) λ</strong> 与 <strong>特征向量 (Eigenvector) v</strong>：对于方阵    A ，满足    Av = λv  (   v ≠ 0 ) 的标量    λ  和向量    v 。</p>
-</li>
-<li>
-<p><strong>特征方程 (Characteristic Equation)</strong>：   det(A - λI) = 0 。</p>
-</li>
-<li>
-<p><strong>特征多项式 (Characteristic Polynomial)</strong>：   det(A - λI) 。</p>
-</li>
-<li>
-<p><strong>特征空间 (Eigenspace)</strong>：对应于特征值    λ  的所有特征向量加上零向量构成的集合，即    Nul(A - λI) 。</p>
-</li>
-<li>
-<p><strong>定理2</strong>：对应于<strong>不同特征值</strong>的特征向量是<strong>线性无关</strong>的。</p>
-</li>
-<li>
-<p><strong>相似 (Similar)</strong>：若存在可逆矩阵    P  使    B = P⁻¹AP ，则    A  与    B  相似。相似矩阵有相同的特征多项式、特征值和行列式。</p>
-</li>
-<li>
-<p><strong>对角化 (Diagonalization)</strong>：</p>
-</li>
-<li>
-<p>若    A  有    n  个线性无关的特征向量    v₁, …, vₙ ，对应特征值    λ₁, …, λₙ 。</p>
-</li>
-<li>
-<p>令    P = [v₁ v₂ … vₙ] ,    D = diag(λ₁, …, λₙ) ，则有    A = PDP⁻¹  且    D = P⁻¹AP 。</p>
-</li>
-<li>
-<p><strong>定理5（可对角化定理）</strong>：   n×n  矩阵    A  可对角化 <strong>当且仅当</strong>    A  有    n  个线性无关的特征向量（即所有特征值的几何重数之和等于    n ）。</p>
-</li>
-<li>
-<p><strong>特征值的代数重数与几何重数</strong>：</p>
-</li>
-<li>
-<p><strong>代数重数</strong>：特征值作为特征根的重数。</p>
-</li>
-<li>
-<p><strong>几何重数</strong>：对应特征空间的维数    dim Nul(A - λI) 。</p>
-</li>
-<li>
-<p>几何重数 ≤ 代数重数。</p>
-</li>
-<li>
-<p>矩阵可对角化 <strong>当且仅当</strong> 对于每个特征值，其几何重数等于代数重数。</p>
-</li>
-</ul>
-<hr>
-<h3 id="总结与备考建议"><strong>总结与备考建议</strong></h3>
-<ol>
-<li>
-<p><strong>概念理解</strong>：清晰区分相关但不同的概念，如“线性无关”与“张成”、“列空间”与“零空间”、“特征值”与“特征向量”。</p>
-</li>
-<li>
-<p><strong>定理网络</strong>：将“可逆矩阵定理”、“秩定理”、“对角化定理”等核心定理及其等价条件串联成网。</p>
-</li>
-<li>
-<p><strong>计算熟练度</strong>：重点练习行化简、求逆、求行列式、求特征值/向量、求子空间的基、坐标变换。</p>
-</li>
-<li>
-<p><strong>证明思路</strong>：掌握子空间验证、线性无关证明、利用已知定理推导等典型证明方法。</p>
-</li>
-<li>
-<p><strong>真题演练</strong>：结合往届习题、课堂练习和作业，模拟判断题、填空题、计算题和证明题的答题过程。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>线性代数</category>
-      </categories>
-      <tags>
-        <tag>线性代数复习</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于输入输出不得不说的……</title>
     <url>/posts/aeb5.html</url>
     <content><![CDATA[<h2 id="整理期中考试的第一题，有关字符串输入输出-more">整理期中考试的第一题，有关字符串输入输出<span id="more"></span></h2>
@@ -2540,163 +2482,6 @@ $$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_
       </categories>
       <tags>
         <tag>输入输出</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>程序设计期中知识汇总</title>
-    <url>/posts/b1d9.html</url>
-    <content><![CDATA[<h2 id="根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习-more">根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习<span id="more"></span></h2>
-<h1>第一部分：编程知识</h1>
-<h2 id="输入">输入</h2>
-<h3 id="整型数">整型数</h3>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>范围</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>short %hd</code></td>
-<td>-2<sup>15</sup><code>~</code> 2<sup>15</sup>-1</td>
-</tr>
-<tr>
-<td><code>int %d</code></td>
-<td>-2<sup>31</sup><code>~</code>2<sup>31</sup>-1</td>
-</tr>
-<tr>
-<td><code>long long %lld</code></td>
-<td>-2<sup>63</sup><code>~</code>2<sup>63</sup>-1</td>
-</tr>
-<tr>
-<td><code>unsigned int %u</code></td>
-<td>0<code>~</code>2<sup>32</sup>-1</td>
-</tr>
-<tr>
-<td><code>unsigned long long %llu</code></td>
-<td>0<code>~</code>2<sup>64</sup>-1</td>
-</tr>
-</tbody>
-</table>
-<h3 id="浮点数">浮点数</h3>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>精度</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>float %f</code></td>
-<td>6位小数</td>
-</tr>
-<tr>
-<td><code>double %lf</code></td>
-<td>15位小数</td>
-</tr>
-<tr>
-<td><code>long double %llf</code></td>
-<td>18位小数</td>
-</tr>
-</tbody>
-</table>
-<h3 id="字符">字符</h3>
-<p><code>char %c</code><br>
-<code>string %s</code></p>
-<h2 id="输出">输出</h2>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%f\n&quot;</span>,r);     正常输出</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%10f\n&quot;</span>,r);   长度为<span class="number">10</span>，空格填充，右对齐</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%10.2f\n&quot;</span>,r); 长度为<span class="number">10</span>，两位小数，空格填充，右对齐    </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-10.2f\n&quot;</span>,r);左对齐，同上   </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%+10.2f\n&quot;</span>,r);右对齐，显示正负号     </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;% 10.2f\n&quot;</span>,r);右对齐，空字符填充</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%010.2f\n&quot;</span>,r);右对齐，<span class="number">0</span>填充</span><br><span class="line"></span><br><span class="line">具体效果</span><br><span class="line"><span class="number">3.140000</span></span><br><span class="line">  <span class="number">3.140000</span></span><br><span class="line">      <span class="number">3.14</span></span><br><span class="line"><span class="number">3.14</span></span><br><span class="line">     +<span class="number">3.14</span></span><br><span class="line">      <span class="number">3.14</span></span><br><span class="line"><span class="number">0000003.14</span></span><br></pre></td></tr></table></figure>
-<p>除此之外还要特别注意的有<br>
-<code>%o 无符号八进制整数，不输出前缀0</code><br>
-<code>%u 无符号十进制整数</code><br>
-<code>%x/X 无符号十六进制整数，不输出前缀0x,字母有大小写区分</code><br>
-<code>%e/E 科学计数法，e有大小写区分</code><br>
-<code>%g/G 有效位数，如%.8g保留8位有效数字（自动简化）</code><br>
-<code>%p 以十六进制形式输出指针</code><br>
-<code>%n 不读取任何字符，只读取截至目前读取的字符个数</code></p>
-<h2 id="其他">其他</h2>
-<p>常量<code> const</code><br>
-转义字符<code>\n \&quot;</code><br>
-存储类 <code>static  extern</code></p>
-<h2 id="运算符">运算符</h2>
-<h3 id="位运算（整型、字符型）">位运算（整型、字符型）</h3>
-<p><code>&amp;</code> 与<br>
-<code>|</code> 或<br>
-<code>~</code>非<br>
-<code>^</code>异或<br>
-<code>&lt;&lt;</code>左移<br>
-<code>&gt;&gt;</code>右移</p>
-<h3 id="三目运算符">三目运算符</h3>
-<p><code>a &gt; b ? a : b</code></p>
-<h2 id="类型转换">类型转换</h2>
-<h3 id="隐式类型转换">隐式类型转换</h3>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">float</span> a = <span class="number">3.2</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="type">float</span> c = a / b;</span><br></pre></td></tr></table></figure>
-<h3 id="显示-强制类型转换">显示/强制类型转换</h3>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a;</span><br><span class="line">(<span class="type">double</span>)a;</span><br></pre></td></tr></table></figure>
-<hr>
-<h1>第二部分：编程技巧介绍</h1>
-<h2 id="枚举与模拟">枚举与模拟</h2>
-<p>列举出所有情况，然后判断是否符合题目要求<br>
-参考Luogu P1102 ( 需要二分和双指针 )</p>
-<h2 id="报错-调试">报错&amp;调试</h2>
-<h3 id="1-简单调试">1.简单调试</h3>
-<h3 id="2-模块化编程">2.模块化编程</h3>
-<h3 id="3-理解编译错误">3.理解编译错误</h3>
-<ol>
-<li><strong>AC</strong> - Accepted（答案正确）</li>
-<li><strong>WA</strong> - Wrong Answer（答案错误）</li>
-<li><strong>TLE</strong> - Time Limit Exceeded（超出时间限制）</li>
-<li><strong>RE</strong> - Runtime Error（运行时错误）</li>
-<li><strong>CE</strong> - Compilation Error（编译错误）</li>
-<li><strong>MLE</strong> - Memory Limit Exceeded（超出内存限制）</li>
-<li><strong>OLE</strong> - Output Limit Exceeded（输出限制超出）</li>
-<li><strong>PE</strong> - Presentation Error（格式错误）</li>
-<li><strong>TCI</strong> - Time Complexity Incorrect（时间复杂度错误）</li>
-<li><strong>MCI</strong> - Memory Complexity Incorrect（空间复杂度错误）</li>
-</ol>
-<h2 id="常见trick">常见trick</h2>
-<h3 id="0-index-与-1-index">0-index 与 1-index</h3>
-<h3 id="表达式优先级">表达式优先级</h3>
-<p>如果不确定可以全打上括号</p>
-<h3 id="处理整数型数据相除得到小数而非整数">处理整数型数据相除得到小数而非整数</h3>
-<h4 id="方法1：强制转换-（double">方法1：强制转换 （double)</h4>
-<h4 id="方法2：在表达式前面加上1-0">方法2：在表达式前面加上1.0*</h4>
-<h3 id="注意数据范围">注意数据范围</h3>
-<p>常见的范围是：int 最大是2<sup>31</sup>-1 ,long long最大是2<sup>63</sup>-1。</p>
-<h3 id="注意初始化">注意初始化</h3>
-<p>记得给每一个变量赋一个初始值。</p>
-<h4 id="退出循环的姿势">退出循环的姿势</h4>
-<p>如果是在函数里，可以<code>return</code><br>
-如果是在主函数里，可以<code>return 0 最正常的写法是</code>break<code> 配合</code>flag=0`</p>
-<h4 id="递归模板">递归模板</h4>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">func</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(终止条件)&#123;</span><br><span class="line">        <span class="keyword">return</span> ?;</span><br><span class="line">    &#125;</span><br><span class="line">    继续遍历；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="正确开数组">正确开数组</h4>
-<p>一般要在数据范围之外多开5。<br>
-一般建议开成全局数组，开在主函数里有爆栈的风险。<br>
-在编译选项里，编译时加入以下命令<code>-wl,--stack,268435456</code>.<br>
-同时，单个数组大小不要超过10<sup>7</sup>,不然会编译错误。</p>
-<h2 id="骗分技巧">骗分技巧</h2>
-<h3 id="1-编译分">1.编译分</h3>
-<h3 id="2-打表分">2.打表分</h3>
-<h2 id="头文件">头文件</h2>
-<p>常见有：<br>
-<code>stdio.h</code><br>
-<code>stdlib.h</code><br>
-<code>math.h</code><br>
-<code>string.h</code><br>
-<code>time.h</code><br>
-<code>ctype.h</code></p>
-<h2 id="多文件编译">多文件编译</h2>
-<p>一般有三个文件，分别为<code>main.c</code>  <code>function.h</code>  <code>function.c</code></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">main.c</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;...&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;function.h&quot;</span></span></span><br><span class="line">主程序部分</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">function.h</span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> FUNCTION_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FUNCTION_H</span></span><br><span class="line">函数声明</span><br><span class="line"><span class="type">int</span> <span class="title function_">function</span><span class="params">( )</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">function.c</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;...&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;function.h&quot;</span></span></span><br><span class="line">函数部分</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>知识复习</tag>
       </tags>
   </entry>
   <entry>
@@ -3601,6 +3386,221 @@ $$f(x) = f(x_0) + \nabla f(x_0)^T (x-x_0) + \frac{1}{2} (x-x_0)^T H_f(x_0) (x-x_
       </categories>
       <tags>
         <tag>STL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>高精度加减乘除及比较大小</title>
+    <url>/posts/9409.html</url>
+    <content><![CDATA[<p>课后练习里的一道高精度乘法题，进而思考起高精度的其他内容。</p>
+<h2 id="什么样的题要用到高精度">什么样的题要用到高精度</h2>
+<p>一般来说，数据量比较大时就需要用到高精度，超过<code>unsigned long long int</code>的范围$2 ^ {64} - 1$时。</p>
+<h2 id="计算流程">计算流程</h2>
+<ol>
+<li>通过字符串引入两串数字分别存放到两个字符数组</li>
+<li>将其每一位数字逆序分别存放到两个整型数组</li>
+<li>进行计算并处理进位（关键）</li>
+<li>将结果存放到第三个整型数组当中（引进动态数组）</li>
+<li>输出结果</li>
+</ol>
+<h2 id="准备工作">准备工作</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">引入数字</span><br><span class="line">    <span class="type">char</span> num1[<span class="number">102</span>]; </span><br><span class="line">    <span class="type">char</span> num2[<span class="number">102</span>]; </span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, num1);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, num2);</span><br><span class="line">    </span><br><span class="line">逆序存储</span><br><span class="line">    a[la-i<span class="number">-1</span>]=num1[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    b[lb-i<span class="number">-1</span>]=num2[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+<h2 id="高精度的核心算法">高精度的核心算法</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">加法</span><br><span class="line">   c[i] += a[i] + b[i];</span><br><span class="line">   c[i+<span class="number">1</span>] = c[i] / <span class="number">10</span>; </span><br><span class="line">   c[i] = c[i] % <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">减法</span><br><span class="line">   c[i] = a[i] - b[i];</span><br><span class="line">   <span class="keyword">if</span> (c[i] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      c[i] += <span class="number">10</span>;</span><br><span class="line">      a[i + <span class="number">1</span>]--;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">乘法</span><br><span class="line">   c[i+j]+=a[i]*b[j]; </span><br><span class="line">   c[i+j+<span class="number">1</span>]+=c[i+j]/<span class="number">10</span>; </span><br><span class="line">   c[i+j]%=<span class="number">10</span>;</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">除法 </span><br><span class="line">   高精度/低精度</span><br><span class="line">   c[i] = (x*<span class="number">10</span> + a[i])/b;  </span><br><span class="line">   x = (x*<span class="number">10</span> + a[i])%b; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">比较大小</span><br><span class="line">   <span class="type">int</span> <span class="title function_">hpCmp</span><span class="params">(<span class="type">char</span> *a, <span class="type">char</span> *b)</span> &#123;               </span><br><span class="line">      <span class="type">int</span> lenA = <span class="built_in">strlen</span>(a), lenB = <span class="built_in">strlen</span>(b);</span><br><span class="line">      <span class="keyword">if</span> (lenA == lenB)</span><br><span class="line">          <span class="keyword">return</span> <span class="built_in">strcmp</span>(a, b);</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">          <span class="keyword">return</span> lenA &gt; lenB ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="补充">补充</h2>
+<p>涉及小数的高精度，如果是加减法，就将先将数字以小数点为界分成两部分，分别进行加减法运算；如果是乘除法，就将其看成整数，运算完后再打小数点即可。</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>高精度</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一道时间线管理的模拟题</title>
+    <url>/posts/7a8e.html</url>
+    <content><![CDATA[<h2 id="题目来自2024年学院期中，是一道关于时间管理的模拟题-more">题目来自2024年学院期中，是一道关于时间管理的模拟题<span id="more"></span></h2>
+<h2 id="题目描述">题目描述</h2>
+<p><code>饭堂有个窗口,一个阿姨在卖肠粉。阿姨不会提前制作肠粉,只有在同学点餐后才会开始为该同学制作肠粉。阿姨制作肠粉的流程是,先花费t1时间处理原材料,然后放进肠粉机里蒸煮t2时间,煮好便可以立刻交付给同学。阿姨一次只能处理1份原材料,而阿姨有2台肠粉机,每台肠粉机一次只可以蒸煮一份肠粉。注意,阿姨处理原材料是独立于肠粉机的,也就是说当2台肠粉机各自蒸煮着肠粉时,阿姨也可以同时执行其他份肠粉的原材料处理。一共会来几个同学,其中第i个同学会在t=i^2时刻到达窗口排队并点一份肠粉。问:n个同学的等待时间总和是多少? (每个同学的等待时间是【拿到肠粉时刻】-【到达窗口时刻】)</code><br>
+<code>输入格式 </code>仅一行,3个正整数,依次是t1,t2, n<br>
+<code>输出格式 </code>输出一个正整数 tot,表示所有同学的等待时间总和。<br>
+<code>输入样例1 </code>3 7 10<br>
+<code>输出样例1 </code>100<br>
+<code>输入样例2 </code>10 1 10<br>
+<code>输出样例2 </code>194<br>
+<code>数据范围 </code>t1, t2, n∈ [1,105]</p>
+<hr>
+<p>这题比较像<code>午餐问题</code>、<code>餐厅排队叫号问题</code>、<code>任务调度</code>问题，做法是将 <em><strong>阿姨处理每份原材料的开始时间</strong></em>、<em><strong>第一台肠粉机的处理每份肠粉开始时间</strong></em>、<em><strong>第二台肠粉机的处理每份肠粉开始时间</strong></em> 看作三个数组，记为<code>a[n]</code> <code>b1[n]</code> <code>b2[n]</code>，这题就转化成求这三个量之间的关系，有点像数学里的数列题，去找这三个量的递推关系即可。具体代码如下：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">max</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> x&gt;=y?x:y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">         1 4 9 16 25 36 49 64 81 100</span></span><br><span class="line"><span class="comment">             1             4        9</span></span><br><span class="line"><span class="comment">            1   1+t1       max(1+t1,4) </span></span><br><span class="line"><span class="comment">         存开始做的时间</span></span><br><span class="line"><span class="comment">              a[i]= max(a[i-1]+t1 , i*i)</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">                    &#123; max(a[i]+t1,b1[i-1]+t2)</span></span><br><span class="line"><span class="comment">               b=min&#123; max(a[i]+t1,b2[i-1]+t2)            </span></span><br><span class="line"><span class="comment"> */</span> </span><br><span class="line">    <span class="type">int</span> t1, t2, n,i;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>, &amp;t1, &amp;t2, &amp;n);</span><br><span class="line">    <span class="type">int</span>* a = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="type">int</span>* b1 = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="type">int</span>* b2 = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * n);</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">    	a[i]=<span class="number">0</span>;</span><br><span class="line">    	b1[i]=<span class="number">0</span>;</span><br><span class="line">    	b2[i]=<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    a[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    b1[<span class="number">0</span>] = <span class="number">1</span> + t1;</span><br><span class="line">    <span class="type">int</span> t = t1 + t2;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>;i &lt; n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        a[i] = max(a[i - <span class="number">1</span>] + t1, (i+<span class="number">1</span>)*(i+<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">if</span> (max(a[i] + t1, b1[i - <span class="number">1</span>] + t2) &gt;= max(a[i] + t1, b2[i - <span class="number">1</span>] + t2))</span><br><span class="line">            b2[i] = max(a[i] + t1, b2[i - <span class="number">1</span>] + t2),b1[i]=b1[i<span class="number">-1</span>]; </span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            b1[i] = max(a[i] + t1, b1[i - <span class="number">1</span>] + t2),b2[i]=b2[i<span class="number">-1</span>];</span><br><span class="line">        t += max(b1[i], b2[i]) + t2 - (i+<span class="number">1</span>)*(i+<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, t);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>模拟流程</tag>
+        <tag>多资源任务分配</tag>
+        <tag>时间线优化管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>程序设计期中知识汇总</title>
+    <url>/posts/b1d9.html</url>
+    <content><![CDATA[<h2 id="根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习-more">根据11月4日视频课分享内容，将前半学期所学知识进行汇总，以供复习<span id="more"></span></h2>
+<h1>第一部分：编程知识</h1>
+<h2 id="输入">输入</h2>
+<h3 id="整型数">整型数</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>short %hd</code></td>
+<td>-2<sup>15</sup><code>~</code> 2<sup>15</sup>-1</td>
+</tr>
+<tr>
+<td><code>int %d</code></td>
+<td>-2<sup>31</sup><code>~</code>2<sup>31</sup>-1</td>
+</tr>
+<tr>
+<td><code>long long %lld</code></td>
+<td>-2<sup>63</sup><code>~</code>2<sup>63</sup>-1</td>
+</tr>
+<tr>
+<td><code>unsigned int %u</code></td>
+<td>0<code>~</code>2<sup>32</sup>-1</td>
+</tr>
+<tr>
+<td><code>unsigned long long %llu</code></td>
+<td>0<code>~</code>2<sup>64</sup>-1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="浮点数">浮点数</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>精度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>float %f</code></td>
+<td>6位小数</td>
+</tr>
+<tr>
+<td><code>double %lf</code></td>
+<td>15位小数</td>
+</tr>
+<tr>
+<td><code>long double %llf</code></td>
+<td>18位小数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="字符">字符</h3>
+<p><code>char %c</code><br>
+<code>string %s</code></p>
+<h2 id="输出">输出</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%f\n&quot;</span>,r);     正常输出</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%10f\n&quot;</span>,r);   长度为<span class="number">10</span>，空格填充，右对齐</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%10.2f\n&quot;</span>,r); 长度为<span class="number">10</span>，两位小数，空格填充，右对齐    </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-10.2f\n&quot;</span>,r);左对齐，同上   </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%+10.2f\n&quot;</span>,r);右对齐，显示正负号     </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;% 10.2f\n&quot;</span>,r);右对齐，空字符填充</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%010.2f\n&quot;</span>,r);右对齐，<span class="number">0</span>填充</span><br><span class="line"></span><br><span class="line">具体效果</span><br><span class="line"><span class="number">3.140000</span></span><br><span class="line">  <span class="number">3.140000</span></span><br><span class="line">      <span class="number">3.14</span></span><br><span class="line"><span class="number">3.14</span></span><br><span class="line">     +<span class="number">3.14</span></span><br><span class="line">      <span class="number">3.14</span></span><br><span class="line"><span class="number">0000003.14</span></span><br></pre></td></tr></table></figure>
+<p>除此之外还要特别注意的有<br>
+<code>%o 无符号八进制整数，不输出前缀0</code><br>
+<code>%u 无符号十进制整数</code><br>
+<code>%x/X 无符号十六进制整数，不输出前缀0x,字母有大小写区分</code><br>
+<code>%e/E 科学计数法，e有大小写区分</code><br>
+<code>%g/G 有效位数，如%.8g保留8位有效数字（自动简化）</code><br>
+<code>%p 以十六进制形式输出指针</code><br>
+<code>%n 不读取任何字符，只读取截至目前读取的字符个数</code></p>
+<h2 id="其他">其他</h2>
+<p>常量<code> const</code><br>
+转义字符<code>\n \&quot;</code><br>
+存储类 <code>static  extern</code></p>
+<h2 id="运算符">运算符</h2>
+<h3 id="位运算（整型、字符型）">位运算（整型、字符型）</h3>
+<p><code>&amp;</code> 与<br>
+<code>|</code> 或<br>
+<code>~</code>非<br>
+<code>^</code>异或<br>
+<code>&lt;&lt;</code>左移<br>
+<code>&gt;&gt;</code>右移</p>
+<h3 id="三目运算符">三目运算符</h3>
+<p><code>a &gt; b ? a : b</code></p>
+<h2 id="类型转换">类型转换</h2>
+<h3 id="隐式类型转换">隐式类型转换</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">float</span> a = <span class="number">3.2</span>;</span><br><span class="line"><span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="type">float</span> c = a / b;</span><br></pre></td></tr></table></figure>
+<h3 id="显示-强制类型转换">显示/强制类型转换</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a;</span><br><span class="line">(<span class="type">double</span>)a;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1>第二部分：编程技巧介绍</h1>
+<h2 id="枚举与模拟">枚举与模拟</h2>
+<p>列举出所有情况，然后判断是否符合题目要求<br>
+参考Luogu P1102 ( 需要二分和双指针 )</p>
+<h2 id="报错-调试">报错&amp;调试</h2>
+<h3 id="1-简单调试">1.简单调试</h3>
+<h3 id="2-模块化编程">2.模块化编程</h3>
+<h3 id="3-理解编译错误">3.理解编译错误</h3>
+<ol>
+<li><strong>AC</strong> - Accepted（答案正确）</li>
+<li><strong>WA</strong> - Wrong Answer（答案错误）</li>
+<li><strong>TLE</strong> - Time Limit Exceeded（超出时间限制）</li>
+<li><strong>RE</strong> - Runtime Error（运行时错误）</li>
+<li><strong>CE</strong> - Compilation Error（编译错误）</li>
+<li><strong>MLE</strong> - Memory Limit Exceeded（超出内存限制）</li>
+<li><strong>OLE</strong> - Output Limit Exceeded（输出限制超出）</li>
+<li><strong>PE</strong> - Presentation Error（格式错误）</li>
+<li><strong>TCI</strong> - Time Complexity Incorrect（时间复杂度错误）</li>
+<li><strong>MCI</strong> - Memory Complexity Incorrect（空间复杂度错误）</li>
+</ol>
+<h2 id="常见trick">常见trick</h2>
+<h3 id="0-index-与-1-index">0-index 与 1-index</h3>
+<h3 id="表达式优先级">表达式优先级</h3>
+<p>如果不确定可以全打上括号</p>
+<h3 id="处理整数型数据相除得到小数而非整数">处理整数型数据相除得到小数而非整数</h3>
+<h4 id="方法1：强制转换-（double">方法1：强制转换 （double)</h4>
+<h4 id="方法2：在表达式前面加上1-0">方法2：在表达式前面加上1.0*</h4>
+<h3 id="注意数据范围">注意数据范围</h3>
+<p>常见的范围是：int 最大是2<sup>31</sup>-1 ,long long最大是2<sup>63</sup>-1。</p>
+<h3 id="注意初始化">注意初始化</h3>
+<p>记得给每一个变量赋一个初始值。</p>
+<h4 id="退出循环的姿势">退出循环的姿势</h4>
+<p>如果是在函数里，可以<code>return</code><br>
+如果是在主函数里，可以<code>return 0 最正常的写法是</code>break<code> 配合</code>flag=0`</p>
+<h4 id="递归模板">递归模板</h4>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">func</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(终止条件)&#123;</span><br><span class="line">        <span class="keyword">return</span> ?;</span><br><span class="line">    &#125;</span><br><span class="line">    继续遍历；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="正确开数组">正确开数组</h4>
+<p>一般要在数据范围之外多开5。<br>
+一般建议开成全局数组，开在主函数里有爆栈的风险。<br>
+在编译选项里，编译时加入以下命令<code>-wl,--stack,268435456</code>.<br>
+同时，单个数组大小不要超过10<sup>7</sup>,不然会编译错误。</p>
+<h2 id="骗分技巧">骗分技巧</h2>
+<h3 id="1-编译分">1.编译分</h3>
+<h3 id="2-打表分">2.打表分</h3>
+<h2 id="头文件">头文件</h2>
+<p>常见有：<br>
+<code>stdio.h</code><br>
+<code>stdlib.h</code><br>
+<code>math.h</code><br>
+<code>string.h</code><br>
+<code>time.h</code><br>
+<code>ctype.h</code></p>
+<h2 id="多文件编译">多文件编译</h2>
+<p>一般有三个文件，分别为<code>main.c</code>  <code>function.h</code>  <code>function.c</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">main.c</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;...&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;function.h&quot;</span></span></span><br><span class="line">主程序部分</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">function.h</span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> FUNCTION_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> FUNCTION_H</span></span><br><span class="line">函数声明</span><br><span class="line"><span class="type">int</span> <span class="title function_">function</span><span class="params">( )</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">function.c</span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;...&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;function.h&quot;</span></span></span><br><span class="line">函数部分</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>知识复习</tag>
       </tags>
   </entry>
 </search>
