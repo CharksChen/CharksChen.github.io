@@ -14,11 +14,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .header-title h1{font-size:18px;font-weight:700;letter-spacing:.5px}
 .header-title p{font-size:12px;opacity:.8;margin-top:2px}
 .header-right{margin-left:auto;background:rgba(255,255,255,.15);border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600}
-.header-btns{display:flex;gap:6px;margin-left:auto}
-.hdr-btn{padding:5px 12px;border-radius:16px;border:none;cursor:pointer;font-size:12px;font-weight:600;transition:all .15s;white-space:nowrap}
-.hdr-btn:hover{transform:translateY(-1px);opacity:.9}
-.hdr-btn-export{background:rgba(255,255,255,.2);color:#fff}
-.hdr-btn-import{background:rgba(255,255,255,.35);color:#fff}
+
 
 /* Layout */
 .layout{display:flex;min-height:calc(100vh - 64px)}
@@ -184,10 +180,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
     <h1>程序设计II — 理论题复习</h1>
     <p>第1周至第17周 · 全量题库</p>
   </div>
-  <div class="header-btns">
-    <button class="hdr-btn hdr-btn-export" onclick="exportProgress()" title="导出进度文件">💾 保存进度</button>
-    <button class="hdr-btn hdr-btn-import" onclick="importProgress()" title="导入进度文件">📂 读取进度</button>
-  </div>
   <div class="header-right" id="hdrTotal">共 260 道题</div>
 </div>
 
@@ -288,75 +280,7 @@ function saveState(){
   try { localStorage.setItem('quiz_state', JSON.stringify({week:curWeek,mode:curMode,shuffle:shuffleOn})); } catch(e){}
 }
 
-// ─────── 文件保存/加载（file:// 协议兼容）───────
-function exportProgress(){
-  try {
-    const allData = {};
-    for(let i=0;i<localStorage.length;i++){
-      const k = localStorage.key(i);
-      if(k && k.startsWith('quiz_')) allData[k] = localStorage.getItem(k);
-    }
-    const blob = new Blob([JSON.stringify(allData,null,2)], {type:'application/json'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'quiz_progress.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(a.href);
-  } catch(e){}
-}
-function importProgress(){
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = '.json';
-  input.onchange = function(e){
-    const file = e.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = function(ev){
-      try {
-        const data = JSON.parse(ev.target.result);
-        Object.keys(data).forEach(k => {
-          if(k.startsWith('quiz_')) localStorage.setItem(k, data[k]);
-        });
-        location.reload();
-      } catch(err){ alert('文件格式错误'); }
-    };
-    reader.readAsText(file);
-  };
-  input.click();
-}
-function loadFromFile(){
-  try {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'quiz_progress.json', true);
-    xhr.onload = function(){
-      if(xhr.status === 200 || xhr.status === 0){
-        try {
-          const data = JSON.parse(xhr.responseText);
-          let changed = false;
-          Object.keys(data).forEach(k => {
-            if(k.startsWith('quiz_') && !localStorage.getItem(k)){
-              localStorage.setItem(k, data[k]);
-              changed = true;
-            }
-          });
-          if(changed){
-            const st = localStorage.getItem('quiz_state');
-            if(st){
-              const s = JSON.parse(st);
-              if(s.week && s.week !== 'exam' && W[s.week]) selectWeek(s.week);
-            }
-            Object.keys(W).forEach(w => updateSidebarCount(w));
-          }
-        } catch(e){}
-      }
-    };
-    xhr.onerror = function(){};
-    xhr.send();
-  } catch(e){}
-}
+// ─────── Select Week ───────
 function selectWeek(w){
   isExam = false;
   saveProgress();
@@ -741,7 +665,6 @@ try {
   }
 } catch(e){}
 buildNav();
-loadFromFile();
 try {
   const savedState = localStorage.getItem('quiz_state');
   if(savedState){
