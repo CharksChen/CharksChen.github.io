@@ -15,6 +15,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 .header-title p{font-size:12px;opacity:.8;margin-top:2px}
 .header-right{margin-left:auto;background:rgba(255,255,255,.15);border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600}
 
+
 /* Layout */
 .layout{display:flex;min-height:calc(100vh - 64px)}
 
@@ -163,17 +164,94 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
 /* Exam mode badge */
 .exam-badge{display:inline-flex;align-items:center;gap:6px;background:#fff3e0;color:#e65100;border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;margin-bottom:14px}
 
+/* Hamburger button */
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;margin-right:4px}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;margin:5px 0;border-radius:2px;transition:all .25s}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Sidebar overlay */
+.sidebar-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:199;opacity:0;transition:opacity .25s}
+.sidebar-overlay.show{display:block;opacity:1}
+
 @media(max-width:768px){
-  .sidebar{width:72px}
-  .week-btn .wlabel,.week-btn .wcnt,.sidebar-section,.spec-btn span{display:none}
-  .week-btn{padding:12px 0;justify-content:center}
-  .main{padding:16px 12px}
-  .modal{padding:24px 16px}
+  .hamburger{display:block}
+  .header-title p{display:none}
+  .header-title h1{font-size:15px}
+  .header{padding:0 12px;height:56px;gap:10px}
+  .header-right{font-size:11px;padding:4px 10px}
+  .header-logo{font-size:22px}
+
+  /* Sidebar drawer */
+  .sidebar{position:fixed;top:56px;left:-280px;width:280px;height:calc(100vh - 56px);z-index:200;transition:left .3s ease;box-shadow:none;border-right:1px solid #e8ecf0}
+  .sidebar.open{left:0;box-shadow:4px 0 20px rgba(0,0,0,.15)}
+  .sidebar.open ~ .sidebar-overlay{display:block;opacity:1}
+
+  /* Main content full width */
+  .layout{display:block}
+  .main{padding:16px 12px;max-width:100%}
+
+  /* Top bar stack vertically */
+  .top-bar{flex-direction:column;align-items:flex-start;gap:8px}
+  .top-bar h2{font-size:17px;min-width:auto}
+  .mode-btns{flex-wrap:wrap;gap:6px}
+  .btn{padding:6px 12px;font-size:12px}
+  .btn-submit{padding:7px 14px}
+
+  /* Mode bar */
+  .mode-bar{font-size:12px;padding:6px 10px}
+
+  /* Progress bar */
+  .prog-wrap{padding:10px 12px}
+
+  /* Question cards */
+  .qcard{padding:14px 16px;border-radius:10px;margin-bottom:12px}
+  .qnum{font-size:13px;margin-bottom:10px;padding-bottom:8px}
+  .qdesc{font-size:13.5px;line-height:1.7;margin-bottom:12px}
+  .qdesc pre.code-block code{font-size:12px}
+  .qdesc pre.code-block{padding:10px 12px}
+
+  /* Choice items — bigger touch targets */
+  .choice-item{padding:12px 12px;gap:10px;min-height:44px}
+  .choice-lbl{width:32px;height:32px;min-width:32px;font-size:14px}
+  .choice-txt{font-size:13.5px;padding-top:4px}
+  .choice-txt pre.code-block code{font-size:11.5px}
+  .choice-txt pre.code-block{padding:8px 10px}
+
+  /* Multi-confirm button */
+  .multi-confirm{padding:10px 24px;font-size:14px}
+
+  /* Answer reveal */
+  .ans-reveal{padding:12px 14px}
+  .choice-exp{padding:8px 10px}
+  .ce-text{font-size:12px;padding-left:24px}
+
+  /* Modal */
+  .modal{padding:20px 14px;width:95%;border-radius:16px}
+  .modal h2{font-size:18px}
+  .score-circle{width:100px;height:100px}
+  .score-num{font-size:22px}
+  .score-pct{font-size:14px}
+  .stats-row{gap:16px}
+  .stat-n{font-size:22px}
+  .result-list{max-height:200px}
+  .r-row{padding:8px 10px;font-size:12px}
+
+  /* Welcome */
+  .welcome{padding:28px 16px;border-radius:12px}
+  .welcome .w-icon{font-size:40px;margin-bottom:12px}
+  .welcome h3{font-size:18px}
+  .welcome p{font-size:13px}
+
+  /* Exam badge */
+  .exam-badge{font-size:11px;padding:3px 10px}
 }
 </style>
 </head>
 <body>
 <div class="header">
+  <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
   <div class="header-logo">📚</div>
   <div class="header-title">
     <h1>程序设计II — 理论题复习</h1>
@@ -192,6 +270,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hira
       <button class="spec-btn shuffle" id="shuffleGlobalBtn" onclick="toggleShuffle()">🔀 <span>随机顺序</span></button>
     </div>
   </div>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
   <!-- Main -->
   <div class="main">
@@ -257,6 +336,21 @@ const LET = ['A','B','C','D','E','F'];
 let curWeek = null, curMode = 'review', shuffleOn = false;
 let curQuestions = [], ans = {}, submitted = false, isExam = false;
 
+// ─────── Sidebar Drawer (mobile) ───────
+function toggleSidebar(){
+  const sb = document.querySelector('.sidebar');
+  const ov = document.getElementById('sidebarOverlay');
+  const hb = document.getElementById('hamburgerBtn');
+  sb.classList.toggle('open');
+  ov.classList.toggle('show');
+  hb.classList.toggle('active');
+}
+function closeSidebar(){
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('show');
+  document.getElementById('hamburgerBtn').classList.remove('active');
+}
+
 // ─────── Build Sidebar Navigation ───────
 function buildNav(){
   const nav = document.getElementById('weekNav');
@@ -270,21 +364,31 @@ function buildNav(){
     btn.innerHTML = `<span class="wlabel">第 ${w} 周</span><span class="wcnt" id="wc-${w}">${cnt}</span>`;
     btn.onclick = () => selectWeek(w);
     nav.appendChild(btn);
+    updateSidebarCount(w);
   });
+}
+
+// ─────── Select Week ───────
+function saveState(){
+  try { localStorage.setItem('quiz_state', JSON.stringify({week:curWeek,mode:curMode,shuffle:shuffleOn})); } catch(e){}
 }
 
 // ─────── Select Week ───────
 function selectWeek(w){
   isExam = false;
+  saveProgress();
   document.querySelectorAll('.week-btn').forEach(b=>b.classList.remove('active'));
   const btn = document.getElementById('wt-'+w);
   if(btn) btn.classList.add('active');
   curWeek = w;
   ans = {}; submitted = false;
+  if(!shuffleOn) loadWeekProgress(w);
   curQuestions = [...W[w].questions];
   if(shuffleOn) shuffle(curQuestions);
   showTopBar(W[w].title);
   renderAll();
+  saveState();
+  closeSidebar();
 }
 
 // ─────── Start Exam Mode ───────
@@ -308,6 +412,8 @@ function startExamMode(){
   curQuestions = pool.slice(0, 50);
   showTopBar('🎯 考试模式 · 综合50题');
   renderAll();
+  saveState();
+  closeSidebar();
 }
 
 // ─────── Toggle shuffle ───────
@@ -316,6 +422,8 @@ function toggleShuffle(){
   const btn = document.getElementById('shuffleGlobalBtn');
   if(shuffleOn){ btn.classList.add('active'); btn.querySelector('span').textContent='已开启随机'; }
   else { btn.classList.remove('active'); btn.querySelector('span').textContent='随机顺序'; }
+  try { localStorage.setItem('quiz_shuffle', shuffleOn?'true':'false'); } catch(e){}
+  saveState();
   if(curWeek && curWeek!=='exam'){
     const saved = ans; ans = {}; submitted = false;
     curQuestions = [...W[curWeek].questions];
@@ -326,12 +434,47 @@ function toggleShuffle(){
 }
 function shuffle(arr){ for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} }
 
+// ─────── LocalStorage 进度保存 ───────
+function saveProgress(){
+  try {
+    if(!curWeek || curWeek==='exam' || curMode==='exam' || shuffleOn) return;
+    const data = { ans, submitted, ts: Date.now() };
+    localStorage.setItem('quiz_week_'+curWeek, JSON.stringify(data));
+    localStorage.setItem('quiz_lastWeek', curWeek);
+    updateSidebarCount(curWeek);
+  } catch(e){}
+}
+function loadWeekProgress(w){
+  try {
+    const raw = localStorage.getItem('quiz_week_'+w);
+    if(!raw) return false;
+    const data = JSON.parse(raw);
+    ans = data.ans || {};
+    submitted = !!data.submitted;
+    return true;
+  } catch(e){ return false; }
+}
+function updateSidebarCount(w){
+  const wc = document.getElementById('wc-'+w);
+  if(!wc || !W[w]) return;
+  const total = W[w].questions.length;
+  const raw = localStorage.getItem('quiz_week_'+w);
+  if(!raw){ wc.textContent = total; return; }
+  try {
+    const data = JSON.parse(raw);
+    const done = Object.keys(data.ans||{}).filter(k=>(data.ans[k]||[]).length>0).length;
+    wc.textContent = done>0 ? done+'/'+total : total;
+  } catch(e){ wc.textContent = total; }
+}
+
 // ─────── Mode ───────
 function setMode(m){
   curMode = m;
   submitted = false;
   document.getElementById('btnReview').classList.toggle('active', m==='review');
   document.getElementById('btnExam').classList.toggle('active', m==='exam');
+  try { localStorage.setItem('quiz_mode', m); } catch(e){}
+  saveState();
   const mBar = document.getElementById('modeBar');
   mBar.className = 'mode-bar ' + m;
   document.getElementById('modeTxt').textContent = m==='review'
@@ -394,7 +537,7 @@ function buildCard(q, idx){
     el.onclick = () => selectChoice(q, idx, c.id, isMulti);
     cs.appendChild(el);
   });
-  // Restore answer state
+  // Restore answer state — always show full feedback for saved answers
   const ua = ans[q.id+'_'+idx];
   if(ua && ua.length>0){
     card.classList.add('answered');
@@ -402,13 +545,10 @@ function buildCard(q, idx){
       const el = document.getElementById(`ch-${q.id}_${idx}-${aid}`);
       if(el) el.classList.add('selected');
     });
-    if(curMode==='review' && !submitted){
-      showAnswerReveal(q, idx, ua);
-      // If multi-select, disable confirm button since already answered
-      if(isMulti){
-        const mc = document.getElementById('mc-' + q.id + '_' + idx);
-        if(mc){ mc.disabled = true; mc.textContent = '已提交'; }
-      }
+    showAnswerReveal(q, idx, ua, card);
+    if(isMulti){
+      const mc = document.getElementById('mc-' + q.id + '_' + idx);
+      if(mc){ mc.disabled = true; mc.textContent = '已提交'; }
     }
   }
   return card;
@@ -451,17 +591,12 @@ function selectChoice(q, idx, cid, isMulti){
         mc.disabled = false;
       }
     } else {
-      showAnswerReveal(q, idx, ans[key]);
+      showAnswerReveal(q, idx, ans[key], card);
     }
   }
   updateProg();
   // Update sidebar count
-  if(curWeek && curWeek !== 'exam'){
-    const total = curQuestions.length;
-    const done = Object.keys(ans).filter(k=>ans[k]&&ans[k].length>0).length;
-    const wc = document.getElementById('wc-'+curWeek);
-    if(wc) wc.textContent = done+'/'+total;
-  }
+  saveProgress();
 }
 
 function confirmMulti(qid, idx){
@@ -473,12 +608,14 @@ function confirmMulti(qid, idx){
   if(!q) return;
   const mc = document.getElementById('mc-' + qid + '_' + idx);
   if(mc){ mc.disabled = true; mc.textContent = '已提交'; }
-  showAnswerReveal(q, idx, ua);
+  const card = document.getElementById('qc-' + qid + '_' + idx);
+  showAnswerReveal(q, idx, ua, card);
   updateProg();
+  saveProgress();
 }
 
-function showAnswerReveal(q, idx, ua){
-  const ar = document.getElementById('ar-' + q.id + '_' + idx);
+function showAnswerReveal(q, idx, ua, card){
+  const ar = card ? card.querySelector('#ar-' + q.id + '_' + idx) : document.getElementById('ar-' + q.id + '_' + idx);
   if(!ar) return;
   const ca = q.answer||[];
   const ok = JSON.stringify([...ua].sort((a,b)=>a-b)) === JSON.stringify([...ca].sort((a,b)=>a-b));
@@ -513,9 +650,9 @@ function showAnswerReveal(q, idx, ua){
     html += `</div>`;
   }
   ar.innerHTML = html;
-  // Color choices
+  // Color choices (use card scope for DOM-independent lookup)
   (q.choices||[]).forEach((c,ci)=>{
-    const el = document.getElementById(`ch-${q.id}_${idx}-${c.id}`);
+    const el = card ? card.querySelector(`#ch-${q.id}_${idx}-${c.id}`) : document.getElementById(`ch-${q.id}_${idx}-${c.id}`);
     if(!el) return;
     el.classList.remove('c-correct','c-wrong');
     if(ca.includes(c.id)) el.classList.add('c-correct');
@@ -524,6 +661,15 @@ function showAnswerReveal(q, idx, ua){
 }
 
 function updateProg(){
+  if(curWeek && curWeek!=='exam'){
+    const total = curQuestions.length;
+    const done = curQuestions.filter((_,i)=>{
+      const k = curQuestions[i].id+'_'+i;
+      return ans[k]&&ans[k].length>0;
+    }).length;
+    const wc = document.getElementById('wc-'+curWeek);
+    if(wc) wc.textContent = done+'/'+total;
+  }
   if(curMode!=='exam') return;
   const total = curQuestions.length;
   const done = curQuestions.filter((_,i)=>{
@@ -549,7 +695,39 @@ function submitQuiz(){
     if(!ua||ua.length===0){
       skip++;
       rows.push({n:i+1,st:'skip',txt:q.description.replace(/<[^>]+>/g,'').substring(0,50)});
-      if(card) card.style.borderColor='#fbbc04';
+      if(card){
+        card.style.borderColor='#fbbc04';
+        // Show correct answer & explanation for skipped questions
+        const aLetters = ca.map(aid=>{
+          const ci = (q.choices||[]).findIndex(c=>c.id===aid);
+          return ci>=0 ? LET[ci] : aid;
+        }).join('、');
+        const arEl = card.querySelector('#ar-'+q.id+'_'+i);
+        if(arEl){
+          let rhtml = '<div class="ans-label">正确答案：'+aLetters+'</div>';
+          if(q.explanation && q.explanation.trim()) rhtml += '<div class="expl">💡 '+q.explanation+'</div>';
+          const hasCE = (q.choices||[]).some(c=>c.explanation&&c.explanation.trim());
+          if(hasCE){
+            rhtml += '<div class="choice-explanations"><div class="ce-title">📝 选项解析</div>';
+            (q.choices||[]).forEach((c,ci)=>{
+              const isC = ca.includes(c.id);
+              rhtml += '<div class="choice-exp '+(isC?'ce-correct':'ce-normal')+'">';
+              rhtml += '<div class="ce-header"><span class="ce-icon">'+(isC?'✅':'○')+'</span><span class="ce-label">'+LET[ci]+'. '+c.text+'</span></div>';
+              if(c.explanation&&c.explanation.trim()) rhtml += '<div class="ce-text">'+c.explanation+'</div>';
+              rhtml += '</div>';
+            });
+            rhtml += '</div>';
+          }
+          arEl.className = 'ans-reveal show';
+          arEl.innerHTML = rhtml;
+        }
+        // Color correct choices green
+        (q.choices||[]).forEach((c)=>{
+          const el = card.querySelector('#ch-'+q.id+'_'+i+'-'+c.id);
+          if(el && ca.includes(c.id)) el.classList.add('c-correct');
+        });
+        if(statusEl){statusEl.textContent='未答';statusEl.style.color='#fbbc04';}
+      }
     } else {
       const ok = JSON.stringify([...ua].sort((a,b)=>a-b))===JSON.stringify([...ca].sort((a,b)=>a-b));
       if(ok){correct++;rows.push({n:i+1,st:'ok',txt:q.description.replace(/<[^>]+>/g,'').substring(0,50)});}
@@ -558,11 +736,13 @@ function submitQuiz(){
       if(statusEl){statusEl.textContent=ok?'✅ 正确':'❌ 错误';statusEl.style.color=ok?'#34a853':'#ea4335';}
       // Show correct/wrong colors on choices
       (q.choices||[]).forEach((c,ci)=>{
-        const el = document.getElementById(`ch-${q.id}_${i}-${c.id}`);
+        const el = card ? card.querySelector(`#ch-${q.id}_${i}-${c.id}`) : document.getElementById(`ch-${q.id}_${i}-${c.id}`);
         if(!el) return;
         if(ca.includes(c.id)) el.classList.add('c-correct');
         else if(ua.includes(c.id)) el.classList.add('c-wrong');
       });
+      // Show full answer reveal with explanations
+      showAnswerReveal(q, i, ua, card);
     }
   });
   const total = curQuestions.length;
@@ -585,18 +765,47 @@ function submitQuiz(){
         <span style="color:${r.st==='err'?'#ea4335':'#aaa'};font-size:11px">${r.st==='err'?'答错':'未答'}</span>
       </div>`).join('');
   document.getElementById('modal').classList.add('show');
+  saveProgress();
 }
 
 function closeModal(){ document.getElementById('modal').classList.remove('show'); }
 function resetFromModal(){ closeModal(); resetQuiz(); }
 function resetQuiz(){
   ans = {}; submitted = false;
+  saveProgress();
   renderAll();
   document.getElementById('btnReset').style.display='none';
 }
 
 // ─────── Init ───────
+try {
+  const savedShuffle = localStorage.getItem('quiz_shuffle');
+  if(savedShuffle === 'true'){
+    shuffleOn = true;
+    const sb = document.getElementById('shuffleGlobalBtn');
+    if(sb){ sb.classList.add('active'); sb.querySelector('span').textContent='已开启随机'; }
+  }
+  const savedMode = localStorage.getItem('quiz_mode');
+  if(savedMode === 'exam'){
+    curMode = 'exam';
+    document.getElementById('btnReview').classList.remove('active');
+    document.getElementById('btnExam').classList.add('active');
+  }
+} catch(e){}
 buildNav();
+try {
+  const savedState = localStorage.getItem('quiz_state');
+  if(savedState){
+    const st = JSON.parse(savedState);
+    if(st.week === 'exam'){ startExamMode(); }
+    else if(st.week && W[st.week]){
+      selectWeek(st.week);
+    }
+  }
+} catch(e){}
+window.addEventListener('beforeunload', saveProgress);
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden) saveProgress(); });
+setInterval(()=>{ if(curWeek && curWeek!=='exam' && !shuffleOn) saveProgress(); }, 10000);
 </script>
 </body>
 </html>
