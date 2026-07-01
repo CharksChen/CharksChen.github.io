@@ -1,0 +1,694 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title># 程设 C++ 上机实验冲刺方案 | Welcome to Charks's Blog</title><meta name="author" content="Charks"><meta name="copyright" content="Charks"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="程设 C++ 上机考试 3 天冲刺方案，涵盖动态内存、深拷贝、继承多态、模板&#x2F;STL 专项训练及考场 180 分钟策略，目标稳定做出 6&#x2F;7 题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="# 程设 C++ 上机实验冲刺方案">
+<meta property="og:url" content="http://charkschen.github.io/posts/81ba.html">
+<meta property="og:site_name" content="Welcome to Charks&#39;s Blog">
+<meta property="og:description" content="程设 C++ 上机考试 3 天冲刺方案，涵盖动态内存、深拷贝、继承多态、模板&#x2F;STL 专项训练及考场 180 分钟策略，目标稳定做出 6&#x2F;7 题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://charkschen.github.io/img/top-img/img0.png">
+<meta property="article:published_time" content="2026-07-01T01:16:47.000Z">
+<meta property="article:modified_time" content="2026-07-01T02:27:45.031Z">
+<meta property="article:author" content="Charks">
+<meta property="article:tag" content="程设复习">
+<meta property="article:tag" content="面向对象">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://charkschen.github.io/img/top-img/img0.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "# 程设 C++ 上机实验冲刺方案",
+  "url": "http://charkschen.github.io/posts/81ba.html",
+  "image": "http://charkschen.github.io/img/top-img/img0.png",
+  "datePublished": "2026-07-01T01:16:47.000Z",
+  "dateModified": "2026-07-01T02:27:45.031Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Charks",
+      "url": "http://charkschen.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://charkschen.github.io/posts/81ba.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":true,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '# 程设 C++ 上机实验冲刺方案',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Welcome to Charks's Blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/top-img/img0.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">39</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/top-img/img1.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Welcome to Charks's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name"># 程设 C++ 上机实验冲刺方案</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title"># 程设 C++ 上机实验冲刺方案</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-07-01T01:16:47.000Z" title="发表于 2026-07-01 09:16:47">2026-07-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-07-01T02:27:45.031Z" title="更新于 2026-07-01 10:27:45">2026-07-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="0-当前诊断">0. 当前诊断</h2>
+<p>已检查当前文件夹：</p>
+<ul>
+<li>
+<p>课后练习共覆盖 79 个有 <code>Latest Submission</code> 的题目。</p>
+</li>
+<li>
+<p>用 <code>g++ -std=c++17</code> 编译：78 题能编译，1 题编译失败。</p>
+</li>
+<li>
+<p>跑样例：59 题通过，19 题样例未全过。</p>
+</li>
+</ul>
+<p>结论：你的问题不是“完全不会写 C++”，而是以下四类会在考试中丢大分：</p>
+<p>| 优先级 | 薄弱点 | 证据 | 考试风险 |</p>
+<p>|—|—|—|—|</p>
+<p>| P0 | 动态内存、深拷贝、赋值运算符 | 周5/周7/周8 多题样例失败 | 很容易编译过但运行错、double free、浅拷贝 |</p>
+<p>| P0 | 复杂类补全和边界条件 | 周4 Stack/TranStr/数字转换失败 | 审题漏条件后整题重写 |</p>
+<p>| P0 | 继承、多态、抽象类、派生类数组管理 | 周12/13/14 多题失败 | 中高难题常考，且补全文件很容易签名写错 |</p>
+<p>| P1 | STL 容器/算法/优先队列/Top-K | 周17整体较好但考试可能拔高 | 是最快拿分题，也可能出综合题 |</p>
+<p>| P1 | 模板、函数对象、非类型模板参数 | 周15整体较好但难度高 | 可能是第6题/第7题难题来源 |</p>
+<p>目标：3 小时 7 道题，稳定做出至少 6 道。策略不是平均复习，而是把 6 道题需要的标准模板练到“无提示能写、能编译、能过边界”。</p>
+<h2 id="1-三天总原则">1. 三天总原则</h2>
+<p>每道题都按“补充文件考试”的方式练：</p>
+<ol>
+<li>
+<p>只打开 <code>Description.md</code>、<code>Provided Codes</code>、<code>Tests</code>。</p>
+</li>
+<li>
+<p>先读 <code>main.cpp</code> 和 <code>.h/.hpp</code>，不要先看 <code>Standard Answer</code>。</p>
+</li>
+<li>
+<p>在纸上或注释里写 4 行：输入输出、要补哪些函数、对象所有权、边界条件。</p>
+</li>
+<li>
+<p>限时写，超过硬上限就停。</p>
+</li>
+<li>
+<p>跑样例；失败后先自己定位 8 分钟。</p>
+</li>
+<li>
+<p>仍不行才看 <code>Standard Answer</code>，只看函数签名和关键差异。</p>
+</li>
+<li>
+<p>第二天必须重做失败题，不能只“看懂”。</p>
+</li>
+</ol>
+<p>每题硬上限：</p>
+<ul>
+<li>
+<p>简单类/字符串/STL：20 分钟。</p>
+</li>
+<li>
+<p>动态内存/运算符重载：30 分钟。</p>
+</li>
+<li>
+<p>继承多态/综合模拟：35 分钟。</p>
+</li>
+<li>
+<p>模板/复杂综合题：40 分钟，超过就标记为第7题策略题。</p>
+</li>
+</ul>
+<h2 id="2-Day-1：语法清障-动态内存保命">2. Day 1：语法清障 + 动态内存保命</h2>
+<p>目标：把“编译错误”和“深拷贝炸运行”降到最低。今天必须练到能默写 Rule of Three。</p>
+<h3 id="上午：编译与基础类快速拿分">上午：编译与基础类快速拿分</h3>
+<p>底线题单，按顺序做：</p>
+<ol>
+<li>
+<p><code>课后练习/2865053 25程设II-周4-课后4</code>：Stack 类。</p>
+</li>
+<li>
+<p><code>课后练习/2865050 25程设II-周4-课后1</code>：TranStr 字符串变形。</p>
+</li>
+<li>
+<p><code>课后练习/2865052 25程设II-周4-课后2</code>：数字转换。</p>
+</li>
+<li>
+<p><code>课后练习/2834878 25程设II-周3-课后2</code>：Fraction。</p>
+</li>
+<li>
+<p><code>课后练习/2834890 25程设II-周3-课堂1</code>：Rectangle。</p>
+</li>
+</ol>
+<p>每题训练重点：</p>
+<ul>
+<li>
+<p>类声明后必须有分号。</p>
+</li>
+<li>
+<p><code>.cpp</code> 里成员函数必须写 <code>ClassName::func</code>。</p>
+</li>
+<li>
+<p>构造函数优先用初始化列表。</p>
+</li>
+<li>
+<p><code>const</code> 成员函数的声明和定义必须一致。</p>
+</li>
+<li>
+<p>头文件 include 名字必须和文件完全一致。</p>
+</li>
+</ul>
+<h3 id="下午：动态内存和深拷贝专项">下午：动态内存和深拷贝专项</h3>
+<p>必做题单：</p>
+<ol>
+<li>
+<p><code>课后练习/2834987 25程设II-周5-课堂1</code>：DynamicInt。</p>
+</li>
+<li>
+<p><code>课后练习/2834986 25程设II-周5-课堂2</code>：动态数组 IntStack。</p>
+</li>
+<li>
+<p><code>课后练习/2834971 25程设II-周5-课后3</code>：链表栈 IntStack。</p>
+</li>
+<li>
+<p><code>课后练习/2834977 25程设II-周5-课后2</code>：MyString。</p>
+</li>
+<li>
+<p><code>课后练习/2835111 25程设Ⅱ-周8-课后1</code>：Matrix 深拷贝。</p>
+</li>
+<li>
+<p><code>课后练习/2835113 25程设Ⅱ-周8-课后2</code>：Person 赋值运算符。</p>
+</li>
+<li>
+<p><code>课后练习/2835118 25程设Ⅱ-周8-课堂2</code>：IntArray 深拷贝。</p>
+</li>
+</ol>
+<p>必须默写模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">ClassName</span>(<span class="type">const</span> ClassName&amp; other);</span><br><span class="line"></span><br><span class="line">ClassName&amp; <span class="keyword">operator</span>=(<span class="type">const</span> ClassName&amp; other);</span><br><span class="line"></span><br><span class="line">~<span class="built_in">ClassName</span>();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>赋值运算符固定顺序：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">this</span> == &amp;other) <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span>[] data;</span><br><span class="line"></span><br><span class="line">size = other.size;</span><br><span class="line"></span><br><span class="line">data = <span class="keyword">new</span> T[size];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; ++i) data[i] = other.data[i];</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>晚上 30 分钟复盘：</p>
+<ul>
+<li>
+<p>把今天所有编译错误抄成“错误句子 -&gt; 正确句子”。</p>
+</li>
+<li>
+<p>第二天早上先不看答案重写 <code>2835118 IntArray</code> 和 <code>2834977 MyString</code> 的核心函数。</p>
+</li>
+</ul>
+<h2 id="3-Day-2：继承多态-综合类补全">3. Day 2：继承多态 + 综合类补全</h2>
+<p>目标：拿下考试中最可能的中高分题。继承多态题通常不是算法难，而是类关系、虚函数、数组管理、输出格式多。</p>
+<h3 id="上午：继承多态基础到中等题">上午：继承多态基础到中等题</h3>
+<p>必做题单：</p>
+<ol>
+<li>
+<p><code>课后练习/2953892 25程设Ⅱ-周10-课堂1</code>：Shape/Rectangle/Square。</p>
+</li>
+<li>
+<p><code>课后练习/2923954 25程设Ⅱ-周12-课堂1</code>：Cylinder 派生。</p>
+</li>
+<li>
+<p><code>课后练习/2923966 25程设Ⅱ-周12-课后1</code>：Point/Line/Circle。</p>
+</li>
+<li>
+<p><code>课后练习/2954023 25程设Ⅱ-周13-课堂1</code>：Animal。</p>
+</li>
+<li>
+<p><code>课后练习/2954039 25程设Ⅱ-周13-课后1</code>：物流运输计费。</p>
+</li>
+<li>
+<p><code>课后练习/2954041 25程设Ⅱ-周13-课后2</code>：员工奖金/ZooWorker 类题。</p>
+</li>
+</ol>
+<p>多态题固定检查：</p>
+<ul>
+<li>
+<p>基类析构函数是否要 <code>virtual</code>。</p>
+</li>
+<li>
+<p>派生类重写函数是否和基类签名完全一致。</p>
+</li>
+<li>
+<p>抽象类是否还有纯虚函数没实现。</p>
+</li>
+<li>
+<p>用基类指针/引用调用时，目标函数必须是 <code>virtual</code>。</p>
+</li>
+<li>
+<p>题目要求固定数组管理时，不要随便改成复杂结构，先按题目给的容量实现。</p>
+</li>
+</ul>
+<h3 id="下午：复杂模拟和模板题">下午：复杂模拟和模板题</h3>
+<p>必做题单：</p>
+<ol>
+<li>
+<p><code>课后练习/2923963 25程设Ⅱ-周12-课后3</code>：Pokemon 管理系统。</p>
+</li>
+<li>
+<p><code>课后练习/2954038 25程设Ⅱ-周13-课后3</code>：进程调度模拟。</p>
+</li>
+<li>
+<p><code>课后练习/2954101 25程设II-周14-课堂3</code>：电子设备资产管理，当前唯一编译失败题。</p>
+</li>
+<li>
+<p><code>课后练习/2954271 25程设Ⅱ-周16-课堂2</code>：SmartBookshelf 接口设计。</p>
+</li>
+<li>
+<p><code>课后练习/2954222 25程设Ⅱ-周15-课后1</code>：IntervalManager 模板。</p>
+</li>
+<li>
+<p><code>课后练习/2954230 25程设Ⅱ-周15-课后2</code>：Filter 模板/区间过滤。</p>
+</li>
+<li>
+<p><code>课后练习/2983970 25程设Ⅱ-周15-课堂2</code>：Top-K Score Wall。</p>
+</li>
+</ol>
+<p>模板题固定检查：</p>
+<ul>
+<li>
+<p>模板类函数定义尽量放 <code>.hpp/.h</code>，不要只放 <code>.cpp</code> 导致链接错误。</p>
+</li>
+<li>
+<p>非类型模板参数写法：<code>template&lt;typename T, int Limit&gt;</code>。</p>
+</li>
+<li>
+<p>比较函数/函数对象先确认排序方向。</p>
+</li>
+<li>
+<p>Top-K/排行榜优先考虑 <code>vector + sort</code> 保底；有时间再优化。</p>
+</li>
+</ul>
+<h3 id="晚上：90-分钟微型模拟">晚上：90 分钟微型模拟</h3>
+<p>从下面 4 题中任选 3 题，连续做，不查答案：</p>
+<ol>
+<li>
+<p><code>2835118</code> IntArray 深拷贝，30 分钟。</p>
+</li>
+<li>
+<p><code>2954039</code> 物流运输计费，30 分钟。</p>
+</li>
+<li>
+<p><code>2954230</code> Filter，35 分钟。</p>
+</li>
+<li>
+<p><code>2924236</code> 急诊分诊，20 分钟。</p>
+</li>
+</ol>
+<p>复盘只看三件事：</p>
+<ul>
+<li>
+<p>哪一题卡在读题。</p>
+</li>
+<li>
+<p>哪一题卡在函数签名。</p>
+</li>
+<li>
+<p>哪一题卡在边界/输出格式。</p>
+</li>
+</ul>
+<h2 id="4-Day-3：3-小时全真模拟-考前一页纸">4. Day 3：3 小时全真模拟 + 考前一页纸</h2>
+<p>目标：练出考试节奏。今天不再大范围学新东西，只补最高收益漏洞。</p>
+<h3 id="上午：3-小时-7-题模拟">上午：3 小时 7 题模拟</h3>
+<p>按下面顺序做，严格计时 180 分钟：</p>
+<p>| 题号 | 目录 | 类型 | 预算 |</p>
+<p>|—|—|—|—|</p>
+<p>| 1 | <code>2864968 25程设Ⅱ-周2-课后1</code> | 字符串标准化/回文 | 18 分钟 |</p>
+<p>| 2 | <code>2834878 25程设II-周3-课后2</code> | Fraction 类 | 20 分钟 |</p>
+<p>| 3 | <code>2835150 25程设II-周9-课堂1</code> | 下标运算符重载 | 22 分钟 |</p>
+<p>| 4 | <code>2835118 25程设Ⅱ-周8-课堂2</code> | 动态数组深拷贝 | 30 分钟 |</p>
+<p>| 5 | <code>2954039 25程设Ⅱ-周13-课后1</code> | 继承多态计费 | 30 分钟 |</p>
+<p>| 6 | <code>2954222 25程设Ⅱ-周15-课后1</code> | 模板区间管理 | 35 分钟 |</p>
+<p>| 7 | <code>2924236 25程设Ⅱ-周17-课后3</code> | 优先队列/分诊 | 20 分钟 |</p>
+<p>剩余 5 分钟用于扫卷和最终检查。</p>
+<p>模拟规则：</p>
+<ul>
+<li>
+<p>前 5 分钟只扫题，不写代码。</p>
+</li>
+<li>
+<p>标出 A/B/C：A 会做，B 可能做，C 时间杀手。</p>
+</li>
+<li>
+<p>先做 A，再做 B，最后 C。</p>
+</li>
+<li>
+<p>任一题 10 分钟仍不知道补哪些函数，跳过。</p>
+</li>
+<li>
+<p>任一题 20 分钟仍不能编译，跳过。</p>
+</li>
+<li>
+<p>任一题样例差一点但还有大题没做，先提交当前版本，最后再回来看。</p>
+</li>
+</ul>
+<h3 id="下午：只修模拟暴露的问题">下午：只修模拟暴露的问题</h3>
+<p>按模拟结果选择：</p>
+<ul>
+<li>
+<p>如果动态内存错：重做 <code>2834977 MyString</code>、<code>2835111 Matrix</code>。</p>
+</li>
+<li>
+<p>如果多态错：重做 <code>2954023 Animal</code>、<code>2954039 Transport</code>、<code>2954041 ZooWorker</code>。</p>
+</li>
+<li>
+<p>如果模板错：重做 <code>2954222 IntervalManager</code>、<code>2954230 Filter</code>。</p>
+</li>
+<li>
+<p>如果 STL 错：重做 <code>2924235 有效括号</code>、<code>2924236 急诊分诊</code>、<code>2924238 银行排队</code>、<code>2954490 MinStack</code>。</p>
+</li>
+<li>
+<p>如果审题慢：每题只读 8 分钟，写出“函数清单 + 边界清单”，不写代码，连续练 5 题。</p>
+</li>
+</ul>
+<h3 id="晚上：考前一页纸">晚上：考前一页纸</h3>
+<p>必须背到能默写：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stack&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>类题模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="built_in">A</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">A</span>(<span class="type">int</span> x);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getX</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">setX</span><span class="params">(<span class="type">int</span> x)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">A::<span class="built_in">A</span>() : <span class="built_in">x</span>(<span class="number">0</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">A::<span class="built_in">A</span>(<span class="type">int</span> x) : <span class="built_in">x</span>(x) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">A::getX</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> x; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">A::setX</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123; <span class="keyword">this</span>-&gt;x = x; &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>运算符模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">A <span class="keyword">operator</span>+(<span class="type">const</span> A&amp; rhs) <span class="type">const</span>;</span><br><span class="line"></span><br><span class="line">A&amp; <span class="keyword">operator</span>=(<span class="type">const</span> A&amp; rhs);</span><br><span class="line"></span><br><span class="line">A&amp; <span class="keyword">operator</span>++();      <span class="comment">// 前置</span></span><br><span class="line"></span><br><span class="line">A <span class="keyword">operator</span>++(<span class="type">int</span>);    <span class="comment">// 后置</span></span><br><span class="line"></span><br><span class="line">T&amp; <span class="keyword">operator</span>[](<span class="type">int</span> i);</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> <span class="keyword">operator</span>&lt;(<span class="type">const</span> A&amp; rhs) <span class="type">const</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>多态模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">work</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">Base</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> Base &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">work</span><span class="params">()</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>STL 模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">sort</span>(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line"><span class="built_in">sort</span>(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>(), [](<span class="type">const</span> A&amp; a, <span class="type">const</span> A&amp; b) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> a.score &gt; b.score;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line"></span><br><span class="line">stack&lt;<span class="type">int</span>&gt; st;</span><br><span class="line"></span><br><span class="line">priority_queue&lt;<span class="type">int</span>&gt; pq;</span><br><span class="line"></span><br><span class="line">priority_queue&lt;pair&lt;<span class="type">int</span>,<span class="type">int</span>&gt;&gt; pq2;</span><br><span class="line"></span><br><span class="line">map&lt;string, <span class="type">int</span>&gt; mp;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="5-考场-180-分钟策略">5. 考场 180 分钟策略</h2>
+<p>目标不是完美做 7 题，而是保证 6 题有效提交。</p>
+<p>时间安排：</p>
+<p>| 时间 | 动作 |</p>
+<p>|—|—|</p>
+<p>| 0-5 分钟 | 扫 7 题，标 A/B/C，确定顺序 |</p>
+<p>| 5-65 分钟 | 先做 3 道 A 类快题 |</p>
+<p>| 65-125 分钟 | 做 2 道中等题：动态内存/多态/STL |</p>
+<p>| 125-160 分钟 | 做第 6 题，优先模板或模拟题中较熟的 |</p>
+<p>| 160-175 分钟 | 回收一个半成品，至少让它编译过样例 |</p>
+<p>| 175-180 分钟 | 全部重新编译，确认提交文件没有漏 |</p>
+<p>跳题规则：</p>
+<ul>
+<li>
+<p>读完题不知道要补哪些函数：5 分钟后跳。</p>
+</li>
+<li>
+<p>写了 15 分钟还全是红编译错误：跳。</p>
+</li>
+<li>
+<p>逻辑要推倒重写：先交能编译版本，最后回来。</p>
+</li>
+<li>
+<p>第7题很难时，不要硬刚；你的目标是 6 题。</p>
+</li>
+</ul>
+<p>审题清单，每题开写前必须回答：</p>
+<ol>
+<li>
+<p><code>main.cpp</code> 调用了哪些函数？</p>
+</li>
+<li>
+<p><code>.h/.hpp</code> 要求哪些成员变量和函数签名？</p>
+</li>
+<li>
+<p>输入有没有多组、空串、0、负数、越界？</p>
+</li>
+<li>
+<p>输出格式有没有空格、换行、大小写、排序方向？</p>
+</li>
+<li>
+<p>对象有没有 <code>new/delete</code>、拷贝、赋值、析构？</p>
+</li>
+<li>
+<p>是否需要 <code>const</code>、引用返回、虚函数、模板写在头文件？</p>
+</li>
+</ol>
+<h2 id="6-最低完成清单">6. 最低完成清单</h2>
+<p>如果时间不够，优先完成这一版，不要贪多：</p>
+<p>Day 1 必做：</p>
+<ul>
+<li>
+<p><code>2865053 Stack</code></p>
+</li>
+<li>
+<p><code>2834977 MyString</code></p>
+</li>
+<li>
+<p><code>2835111 Matrix</code></p>
+</li>
+<li>
+<p><code>2835113 Person assignment</code></p>
+</li>
+<li>
+<p><code>2835118 IntArray</code></p>
+</li>
+</ul>
+<p>Day 2 必做：</p>
+<ul>
+<li>
+<p><code>2954023 Animal</code></p>
+</li>
+<li>
+<p><code>2954039 Transport</code></p>
+</li>
+<li>
+<p><code>2954041 ZooWorker</code></p>
+</li>
+<li>
+<p><code>2954101 Devices</code></p>
+</li>
+<li>
+<p><code>2954222 IntervalManager</code></p>
+</li>
+</ul>
+<p>Day 3 必做：</p>
+<ul>
+<li>
+<p>完成 3 小时模拟。</p>
+</li>
+<li>
+<p>重做模拟中失败的 2 题。</p>
+</li>
+<li>
+<p>背完考前一页纸。</p>
+</li>
+</ul>
+<h2 id="7-本轮闭环">7. 本轮闭环</h2>
+<ul>
+<li>
+<p>重点：动态内存深拷贝、继承多态、模板/STL 综合题。</p>
+</li>
+<li>
+<p>反馈：当前样例测试显示 19 题逻辑未全过、1 题编译失败，薄弱点集中在中后期 OOP 与综合题。</p>
+</li>
+<li>
+<p>下一轮：从 Day 1 的 <code>2865053 Stack</code> 开始限时做，做完立刻跑 Tests；如果失败，把错误输出和代码片段发来，我按考试标准批改并给修复题。</p>
+</li>
+<li>
+<p>SRS：三天内所有失败题必须隔天重做一次，不算“看过答案”。</p>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://charkschen.github.io">Charks</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://charkschen.github.io/posts/81ba.html">http://charkschen.github.io/posts/81ba.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://charkschen.github.io" target="_blank">Welcome to Charks's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E8%AE%BE%E5%A4%8D%E4%B9%A0/">程设复习</a><a class="post-meta__tags" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象</a></div><div class="post-share"><div class="social-share" data-image="/img/top-img/img0.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/top-img/img0.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Charks</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">39</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CharksChen"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E5%BD%93%E5%89%8D%E8%AF%8A%E6%96%AD"><span class="toc-number">1.</span> <span class="toc-text">0. 当前诊断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%89%E5%A4%A9%E6%80%BB%E5%8E%9F%E5%88%99"><span class="toc-number">2.</span> <span class="toc-text">1. 三天总原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Day-1%EF%BC%9A%E8%AF%AD%E6%B3%95%E6%B8%85%E9%9A%9C-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E4%BF%9D%E5%91%BD"><span class="toc-number">3.</span> <span class="toc-text">2. Day 1：语法清障 + 动态内存保命</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E5%8D%88%EF%BC%9A%E7%BC%96%E8%AF%91%E4%B8%8E%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%BF%AB%E9%80%9F%E6%8B%BF%E5%88%86"><span class="toc-number">3.1.</span> <span class="toc-text">上午：编译与基础类快速拿分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E5%8D%88%EF%BC%9A%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%93%E9%A1%B9"><span class="toc-number">3.2.</span> <span class="toc-text">下午：动态内存和深拷贝专项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Day-2%EF%BC%9A%E7%BB%A7%E6%89%BF%E5%A4%9A%E6%80%81-%E7%BB%BC%E5%90%88%E7%B1%BB%E8%A1%A5%E5%85%A8"><span class="toc-number">4.</span> <span class="toc-text">3. Day 2：继承多态 + 综合类补全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E5%8D%88%EF%BC%9A%E7%BB%A7%E6%89%BF%E5%A4%9A%E6%80%81%E5%9F%BA%E7%A1%80%E5%88%B0%E4%B8%AD%E7%AD%89%E9%A2%98"><span class="toc-number">4.1.</span> <span class="toc-text">上午：继承多态基础到中等题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E5%8D%88%EF%BC%9A%E5%A4%8D%E6%9D%82%E6%A8%A1%E6%8B%9F%E5%92%8C%E6%A8%A1%E6%9D%BF%E9%A2%98"><span class="toc-number">4.2.</span> <span class="toc-text">下午：复杂模拟和模板题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%9A%E4%B8%8A%EF%BC%9A90-%E5%88%86%E9%92%9F%E5%BE%AE%E5%9E%8B%E6%A8%A1%E6%8B%9F"><span class="toc-number">4.3.</span> <span class="toc-text">晚上：90 分钟微型模拟</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Day-3%EF%BC%9A3-%E5%B0%8F%E6%97%B6%E5%85%A8%E7%9C%9F%E6%A8%A1%E6%8B%9F-%E8%80%83%E5%89%8D%E4%B8%80%E9%A1%B5%E7%BA%B8"><span class="toc-number">5.</span> <span class="toc-text">4. Day 3：3 小时全真模拟 + 考前一页纸</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E5%8D%88%EF%BC%9A3-%E5%B0%8F%E6%97%B6-7-%E9%A2%98%E6%A8%A1%E6%8B%9F"><span class="toc-number">5.1.</span> <span class="toc-text">上午：3 小时 7 题模拟</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E5%8D%88%EF%BC%9A%E5%8F%AA%E4%BF%AE%E6%A8%A1%E6%8B%9F%E6%9A%B4%E9%9C%B2%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.2.</span> <span class="toc-text">下午：只修模拟暴露的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%9A%E4%B8%8A%EF%BC%9A%E8%80%83%E5%89%8D%E4%B8%80%E9%A1%B5%E7%BA%B8"><span class="toc-number">5.3.</span> <span class="toc-text">晚上：考前一页纸</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%80%83%E5%9C%BA-180-%E5%88%86%E9%92%9F%E7%AD%96%E7%95%A5"><span class="toc-number">6.</span> <span class="toc-text">5. 考场 180 分钟策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%9C%80%E4%BD%8E%E5%AE%8C%E6%88%90%E6%B8%85%E5%8D%95"><span class="toc-number">7.</span> <span class="toc-text">6. 最低完成清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%9C%AC%E8%BD%AE%E9%97%AD%E7%8E%AF"><span class="toc-number">8.</span> <span class="toc-text">7. 本轮闭环</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/550a.html" title="程设 C++ 上机模板速查手册">程设 C++ 上机模板速查手册</a><time datetime="2026-07-01T01:21:57.000Z" title="发表于 2026-07-01 09:21:57">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/81ba.html" title="# 程设 C++ 上机实验冲刺方案"># 程设 C++ 上机实验冲刺方案</a><time datetime="2026-07-01T01:16:47.000Z" title="发表于 2026-07-01 09:16:47">2026-07-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/series-complete.html" title="高等数学多元函数章节与线性代数内在联系探究（完整系列）">高等数学多元函数章节与线性代数内在联系探究（完整系列）</a><time datetime="2026-04-30T16:00:00.000Z" title="发表于 2026-05-01 00:00:00">2026-05-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/d0da.html" title="高等数学多元函数章节与线性代数内在联系探究">高等数学多元函数章节与线性代数内在联系探究</a><time datetime="2026-04-24T16:00:00.000Z" title="发表于 2026-04-25 00:00:00">2026-04-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/3c.html" title="C++之STL（from ChrisKim_ZHT)">C++之STL（from ChrisKim_ZHT)</a><time datetime="2026-04-15T10:02:43.000Z" title="发表于 2026-04-15 18:02:43">2026-04-15</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/top-img/img1.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Charks</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.0.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.0.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.2"></script></div></div></body></html>

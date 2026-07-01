@@ -6,7 +6,7 @@
   <link href="http://charkschen.github.io/atom.xml" rel="self"/>
   
   <link href="http://charkschen.github.io/"/>
-  <updated>2026-05-19T08:47:00.584Z</updated>
+  <updated>2026-07-01T02:27:46.046Z</updated>
   <id>http://charkschen.github.io/</id>
   
   <author>
@@ -15,6 +15,50 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>程设 C++ 上机模板速查手册</title>
+    <link href="http://charkschen.github.io/posts/550a.html"/>
+    <id>http://charkschen.github.io/posts/550a.html</id>
+    <published>2026-07-01T01:21:57.000Z</published>
+    <updated>2026-07-01T02:27:46.046Z</updated>
+    
+    
+    <summary type="html">程设 C++ 上机考试模板速查手册，涵盖普通类、动态内存深拷贝三件套、运算符重载、继承多态、模板、STL 速查及考场节奏，直接套用改名即可。</summary>
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="程设复习" scheme="http://charkschen.github.io/tags/%E7%A8%8B%E8%AE%BE%E5%A4%8D%E4%B9%A0/"/>
+    
+    <category term="面向对象" scheme="http://charkschen.github.io/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+    <category term="模板" scheme="http://charkschen.github.io/tags/%E6%A8%A1%E6%9D%BF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title># 程设 C++ 上机实验冲刺方案</title>
+    <link href="http://charkschen.github.io/posts/81ba.html"/>
+    <id>http://charkschen.github.io/posts/81ba.html</id>
+    <published>2026-07-01T01:16:47.000Z</published>
+    <updated>2026-07-01T02:27:45.031Z</updated>
+    
+    
+    <summary type="html">程设 C++ 上机考试 3 天冲刺方案，涵盖动态内存、深拷贝、继承多态、模板/STL 专项训练及考场 180 分钟策略，目标稳定做出 6/7 题。</summary>
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="程设复习" scheme="http://charkschen.github.io/tags/%E7%A8%8B%E8%AE%BE%E5%A4%8D%E4%B9%A0/"/>
+    
+    <category term="面向对象" scheme="http://charkschen.github.io/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>高等数学多元函数章节与线性代数内在联系探究（完整系列）</title>
@@ -31,9 +75,9 @@
     <category term="数学分析" scheme="http://charkschen.github.io/categories/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/"/>
     
     
-    <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
-    
     <category term="多元函数" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/"/>
+    
+    <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
     
     <category term="微分" scheme="http://charkschen.github.io/tags/%E5%BE%AE%E5%88%86/"/>
     
@@ -62,9 +106,9 @@
     <category term="数学分析" scheme="http://charkschen.github.io/categories/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/"/>
     
     
-    <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
-    
     <category term="多元函数" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/"/>
+    
+    <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
     
   </entry>
   
