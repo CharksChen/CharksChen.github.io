@@ -6,7 +6,7 @@
   <link href="http://charkschen.github.io/atom.xml" rel="self"/>
   
   <link href="http://charkschen.github.io/"/>
-  <updated>2026-07-07T13:34:05.949Z</updated>
+  <updated>2026-07-07T13:34:41.538Z</updated>
   <id>http://charkschen.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://charkschen.github.io/posts/f7db.html"/>
     <id>http://charkschen.github.io/posts/f7db.html</id>
     <published>2026-07-07T13:30:16.000Z</published>
-    <updated>2026-07-07T13:34:05.949Z</updated>
+    <updated>2026-07-07T13:34:41.538Z</updated>
     
     
     <summary type="html">基于真实作业错误分析的实战解题与调试手册，含审题方法论、各类题型解题流程、调试技巧、内存安全清单及考场急救流程。</summary>
@@ -44,7 +44,7 @@
     <link href="http://charkschen.github.io/posts/3c0b.html"/>
     <id>http://charkschen.github.io/posts/3c0b.html</id>
     <published>2026-07-07T13:29:02.000Z</published>
-    <updated>2026-07-07T13:34:05.212Z</updated>
+    <updated>2026-07-07T13:34:41.538Z</updated>
     
     
     <summary type="html">考场防编译错误专用速查卡，按&quot;你想写什么&quot;查找正确语法与错误写法对比，涵盖头文件、类、继承、多态、模板、STL 等完整语法清单。</summary>
@@ -67,7 +67,7 @@
     <link href="http://charkschen.github.io/posts/3695.html"/>
     <id>http://charkschen.github.io/posts/3695.html</id>
     <published>2026-07-07T13:26:33.000Z</published>
-    <updated>2026-07-07T13:34:04.541Z</updated>
+    <updated>2026-07-07T13:34:41.534Z</updated>
     
     
     <summary type="html">周1-周17 上机实操知识点系统梳理，按周次列出核心知识点与作业对照，含题型归纳、易错点总结、代码模板及高频考点练习建议。</summary>
@@ -165,9 +165,9 @@
     <category term="数学分析" scheme="http://charkschen.github.io/categories/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/"/>
     
     
-    <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
-    
     <category term="多元函数" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/"/>
+    
+    <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
     
     <category term="微分" scheme="http://charkschen.github.io/tags/%E5%BE%AE%E5%88%86/"/>
     
@@ -196,9 +196,9 @@
     <category term="数学分析" scheme="http://charkschen.github.io/categories/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/"/>
     
     
-    <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
-    
     <category term="多元函数" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/"/>
+    
+    <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
     
   </entry>
   
