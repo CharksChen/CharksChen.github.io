@@ -6,7 +6,7 @@
   <link href="http://charkschen.github.io/atom.xml" rel="self"/>
   
   <link href="http://charkschen.github.io/"/>
-  <updated>2026-07-06T09:18:56.826Z</updated>
+  <updated>2026-07-07T13:34:05.949Z</updated>
   <id>http://charkschen.github.io/</id>
   
   <author>
@@ -17,11 +17,80 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>程设 C++ 实战解题与调试手册</title>
+    <link href="http://charkschen.github.io/posts/f7db.html"/>
+    <id>http://charkschen.github.io/posts/f7db.html</id>
+    <published>2026-07-07T13:30:16.000Z</published>
+    <updated>2026-07-07T13:34:05.949Z</updated>
+    
+    
+    <summary type="html">基于真实作业错误分析的实战解题与调试手册，含审题方法论、各类题型解题流程、调试技巧、内存安全清单及考场急救流程。</summary>
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="程设复习" scheme="http://charkschen.github.io/tags/%E7%A8%8B%E8%AE%BE%E5%A4%8D%E4%B9%A0/"/>
+    
+    <category term="调试" scheme="http://charkschen.github.io/tags/%E8%B0%83%E8%AF%95/"/>
+    
+    <category term="实战" scheme="http://charkschen.github.io/tags/%E5%AE%9E%E6%88%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>程设 C++ 基础语法防错速查卡</title>
+    <link href="http://charkschen.github.io/posts/3c0b.html"/>
+    <id>http://charkschen.github.io/posts/3c0b.html</id>
+    <published>2026-07-07T13:29:02.000Z</published>
+    <updated>2026-07-07T13:34:05.212Z</updated>
+    
+    
+    <summary type="html">考场防编译错误专用速查卡，按&quot;你想写什么&quot;查找正确语法与错误写法对比，涵盖头文件、类、继承、多态、模板、STL 等完整语法清单。</summary>
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="程设复习" scheme="http://charkschen.github.io/tags/%E7%A8%8B%E8%AE%BE%E5%A4%8D%E4%B9%A0/"/>
+    
+    <category term="语法" scheme="http://charkschen.github.io/tags/%E8%AF%AD%E6%B3%95/"/>
+    
+    <category term="速查" scheme="http://charkschen.github.io/tags/%E9%80%9F%E6%9F%A5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>程设 C++ 上机考试系统复习资料</title>
+    <link href="http://charkschen.github.io/posts/3695.html"/>
+    <id>http://charkschen.github.io/posts/3695.html</id>
+    <published>2026-07-07T13:26:33.000Z</published>
+    <updated>2026-07-07T13:34:04.541Z</updated>
+    
+    
+    <summary type="html">周1-周17 上机实操知识点系统梳理，按周次列出核心知识点与作业对照，含题型归纳、易错点总结、代码模板及高频考点练习建议。</summary>
+    
+    
+    
+    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    
+    
+    <category term="程设复习" scheme="http://charkschen.github.io/tags/%E7%A8%8B%E8%AE%BE%E5%A4%8D%E4%B9%A0/"/>
+    
+    <category term="上机" scheme="http://charkschen.github.io/tags/%E4%B8%8A%E6%9C%BA/"/>
+    
+    <category term="考点梳理" scheme="http://charkschen.github.io/tags/%E8%80%83%E7%82%B9%E6%A2%B3%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
     <title>程设C++理论复习</title>
     <link href="http://charkschen.github.io/posts/824f.html"/>
     <id>http://charkschen.github.io/posts/824f.html</id>
     <published>2026-07-06T09:14:58.000Z</published>
-    <updated>2026-07-06T09:18:56.826Z</updated>
+    <updated>2026-07-06T09:19:42.815Z</updated>
     
     
     <summary type="html">程设 C++ 理论知识点全覆盖复习，涵盖第 1-17 周核心概念（类、封装、继承、多态、模板、STL），含高频速查表、全量考点清单与易错点汇总，适合考前快速查漏补缺。</summary>
@@ -96,9 +165,9 @@
     <category term="数学分析" scheme="http://charkschen.github.io/categories/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/"/>
     
     
-    <category term="多元函数" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/"/>
-    
     <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
+    
+    <category term="多元函数" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/"/>
     
     <category term="微分" scheme="http://charkschen.github.io/tags/%E5%BE%AE%E5%88%86/"/>
     
@@ -127,9 +196,9 @@
     <category term="数学分析" scheme="http://charkschen.github.io/categories/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/"/>
     
     
-    <category term="多元函数" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/"/>
-    
     <category term="线性代数" scheme="http://charkschen.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
+    
+    <category term="多元函数" scheme="http://charkschen.github.io/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/"/>
     
   </entry>
   
@@ -386,67 +455,6 @@
     <category term="逆序对" scheme="http://charkschen.github.io/tags/%E9%80%86%E5%BA%8F%E5%AF%B9/"/>
     
     <category term="归并排序" scheme="http://charkschen.github.io/tags/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Memset初始化的运用</title>
-    <link href="http://charkschen.github.io/posts/54d4.html"/>
-    <id>http://charkschen.github.io/posts/54d4.html</id>
-    <published>2025-10-27T13:44:58.000Z</published>
-    <updated>2026-05-19T08:47:07.312Z</updated>
-    
-    
-    <summary type="html">C语言memset函数的运用，涵盖数组初始化和结构体初始化的常见场景与注意事项。</summary>
-    
-    
-    
-    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
-    
-    
-    <category term="数组初始化" scheme="http://charkschen.github.io/tags/%E6%95%B0%E7%BB%84%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
-    
-    <category term="结构体初始化" scheme="http://charkschen.github.io/tags/%E7%BB%93%E6%9E%84%E4%BD%93%E5%88%9D%E5%A7%8B%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C语言中qsort函数</title>
-    <link href="http://charkschen.github.io/posts/695b.html"/>
-    <id>http://charkschen.github.io/posts/695b.html</id>
-    <published>2025-10-26T13:34:07.000Z</published>
-    <updated>2026-05-19T08:47:06.534Z</updated>
-    
-    
-    <summary type="html">C语言qsort快速排序函数的详细用法，包括数组排序和结构体排序的比较函数编写。</summary>
-    
-    
-    
-    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
-    
-    
-    <category term="快速排序" scheme="http://charkschen.github.io/tags/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/"/>
-    
-    <category term="结构体排序" scheme="http://charkschen.github.io/tags/%E7%BB%93%E6%9E%84%E4%BD%93%E6%8E%92%E5%BA%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>快速幂的代码</title>
-    <link href="http://charkschen.github.io/posts/bd0e.html"/>
-    <id>http://charkschen.github.io/posts/bd0e.html</id>
-    <published>2025-10-26T13:03:16.000Z</published>
-    <updated>2026-05-19T08:47:44.281Z</updated>
-    
-    
-    <summary type="html">快速幂算法的代码实现，利用二分思想高效计算幂运算，降低时间复杂度。</summary>
-    
-    
-    
-    <category term="计算机" scheme="http://charkschen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
-    
-    
-    <category term="二分算法" scheme="http://charkschen.github.io/tags/%E4%BA%8C%E5%88%86%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   

@@ -1,0 +1,842 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>程设 C++ 实战解题与调试手册 | Welcome to Charks's Blog</title><meta name="author" content="Charks"><meta name="copyright" content="Charks"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="基于真实作业错误分析的实战解题与调试手册，含审题方法论、各类题型解题流程、调试技巧、内存安全清单及考场急救流程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程设 C++ 实战解题与调试手册">
+<meta property="og:url" content="http://charkschen.github.io/posts/f7db.html">
+<meta property="og:site_name" content="Welcome to Charks&#39;s Blog">
+<meta property="og:description" content="基于真实作业错误分析的实战解题与调试手册，含审题方法论、各类题型解题流程、调试技巧、内存安全清单及考场急救流程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://charkschen.github.io/img/top-img/img0.png">
+<meta property="article:published_time" content="2026-07-07T13:30:16.000Z">
+<meta property="article:modified_time" content="2026-07-07T13:34:05.949Z">
+<meta property="article:author" content="Charks">
+<meta property="article:tag" content="实战">
+<meta property="article:tag" content="程设复习">
+<meta property="article:tag" content="调试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://charkschen.github.io/img/top-img/img0.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "程设 C++ 实战解题与调试手册",
+  "url": "http://charkschen.github.io/posts/f7db.html",
+  "image": "http://charkschen.github.io/img/top-img/img0.png",
+  "datePublished": "2026-07-07T13:30:16.000Z",
+  "dateModified": "2026-07-07T13:34:05.949Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Charks",
+      "url": "http://charkschen.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://charkschen.github.io/posts/f7db.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":true,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '程设 C++ 实战解题与调试手册',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Welcome to Charks's Blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/top-img/img0.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">46</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/top-img/img1.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Welcome to Charks's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">程设 C++ 实战解题与调试手册</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">程设 C++ 实战解题与调试手册</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-07-07T13:30:16.000Z" title="发表于 2026-07-07 21:30:16">2026-07-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-07-07T13:34:05.949Z" title="更新于 2026-07-07 21:34:05">2026-07-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><blockquote>
+<p>基于你真实作业代码的错误分析编写。不是知识清单，是<strong>考试实战操作指南</strong>。<br>
+目标：把&quot;会做但做不对&quot;变成&quot;会做且做对&quot;。</p>
+</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul>
+<li><a href="#1-%E5%AE%A1%E9%A2%98%E6%96%B9%E6%B3%95%E8%AE%BA5-%E5%88%86%E9%92%9F%E5%AE%9A%E8%83%9C%E8%B4%9F">1. 审题方法论（5 分钟定胜负）</a></li>
+<li><a href="#2-%E5%90%84%E7%B1%BB%E9%A2%98%E5%9E%8B%E8%A7%A3%E9%A2%98%E6%B5%81%E7%A8%8B">2. 各类题型解题流程</a></li>
+<li><a href="#3-%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%E7%BC%96%E8%AF%91%E8%BF%87%E4%BA%86%E4%BD%86%E7%AD%94%E6%A1%88%E4%B8%8D%E5%AF%B9">3. 调试技巧（编译过了但答案不对）</a></li>
+<li><a href="#4-%E6%8F%90%E4%BA%A4%E5%89%8D%E8%87%AA%E6%A3%80%E6%B8%85%E5%8D%9590-%E7%A7%92%E6%89%AB%E4%B8%80%E9%81%8D">4. 提交前自检清单（90 秒扫一遍）</a></li>
+<li><a href="#5-%E5%86%85%E5%AD%98%E5%AE%89%E5%85%A8%E6%B8%85%E5%8D%95%E6%9C%80%E9%AB%98%E9%A2%91%E8%87%B4%E5%91%BD%E9%94%99%E8%AF%AF">5. 内存安全清单（最高频致命错误）</a></li>
+<li><a href="#6-%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F%E9%99%B7%E9%98%B1%E5%A4%A7%E5%85%A8">6. 输出格式陷阱大全</a></li>
+<li><a href="#7-%E5%B8%B8%E8%A7%81%E4%BB%A3%E7%A0%81%E9%99%B7%E9%98%B1%E5%9F%BA%E4%BA%8E%E4%BD%A0%E7%9A%84%E7%9C%9F%E5%AE%9E%E9%94%99%E8%AF%AF">7. 常见代码陷阱（基于你的真实错误）</a></li>
+<li><a href="#8-%E6%98%93%E6%B7%B7%E6%B7%86%E6%A6%82%E5%BF%B5%E5%AF%B9%E6%AF%94%E8%A1%A8">8. 易混淆概念对比表</a></li>
+<li><a href="#9-%E8%80%83%E5%9C%BA%E6%80%A5%E6%95%91%E6%B5%81%E7%A8%8B">9. 考场急救流程</a></li>
+</ul>
+<hr>
+<h2 id="1-审题方法论（5-分钟定胜负）">1. 审题方法论（5 分钟定胜负）</h2>
+<blockquote>
+<p>考试最常见的丢分不是&quot;不会写&quot;，而是&quot;没读懂题就开写&quot;。前 5 分钟决定整道题的成败。</p>
+</blockquote>
+<h3 id="1-1-开写前必须回答的-6-个问题">1.1 开写前必须回答的 6 个问题</h3>
+<p>每道题打开后，<strong>先在草稿纸/注释里写下这 6 个答案</strong>，再动手写代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">① main.cpp 调用了哪些函数？</span><br><span class="line">   → 逐个抄下函数名、参数、返回值、有无 const</span><br><span class="line"></span><br><span class="line">② .h/.hpp 里已有哪些成员变量和函数签名？</span><br><span class="line">   → 签名一个字都不能改！抄下来对照</span><br><span class="line"></span><br><span class="line">③ 输入格式是什么？</span><br><span class="line">   → 有没有多组数据？空串？0？负数？EOF结束？整行读取？</span><br><span class="line"></span><br><span class="line">④ 输出格式是什么？</span><br><span class="line">   → 有没有空格（元素间还是行末）？换行？小数位数？大小写？前缀？</span><br><span class="line"></span><br><span class="line">⑤ 要不要 new/delete？</span><br><span class="line">   → 有指针成员就要写深拷贝三件套</span><br><span class="line"></span><br><span class="line">⑥ 有没有特殊限制？</span><br><span class="line">   → 题目要求用 dynamic_cast 就不能用 typeid；要求用循环就不能用 sort</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-读题-三遍法">1.2 读题&quot;三遍法&quot;</h3>
+<table>
+<thead>
+<tr>
+<th>遍数</th>
+<th>读什么</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第1遍</td>
+<td>只读 <a target="_blank" rel="noopener" href="http://Description.md">Description.md</a></td>
+<td>理解题目在干什么</td>
+</tr>
+<tr>
+<td>第2遍</td>
+<td>读 main.cpp</td>
+<td>找出<strong>所有</strong>被调用的函数和期望的输出</td>
+</tr>
+<tr>
+<td>第3遍</td>
+<td>读 .h/.hpp</td>
+<td>抄下<strong>所有</strong>需要实现的函数签名</td>
+</tr>
+</tbody>
+</table>
+<p><strong>你的真实教训</strong>：周14电子设备题，你用 <code>name()</code> 字符串比较代替 <code>typeid</code>/<code>dynamic_cast</code>，就是因为没读题目要求&quot;COUNT_N 必须使用 dynamic_cast&quot;。</p>
+<h3 id="1-3-从-main-cpp-逆向推导函数行为">1.3 从 main.cpp 逆向推导函数行为</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例子：看到 main.cpp 里有这样的代码</span></span><br><span class="line">cout &lt;&lt; <span class="built_in">maxN</span>() &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="comment">// → 说明 maxN() 返回 string 类型，且 main 负责输出换行</span></span><br><span class="line"><span class="comment">// → 你的函数里不要 cout，要 return 结果！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 对比错误写法：</span></span><br><span class="line"><span class="function">string <span class="title">maxN</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;NO&quot;</span> &lt;&lt; endl;     <span class="comment">// ❌ 自己输出了！</span></span><br><span class="line">    <span class="comment">// 没有 return！          // ❌ 编译错误！</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确写法：</span></span><br><span class="line"><span class="function">string <span class="title">maxN</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (devices.<span class="built_in">empty</span>()) <span class="keyword">return</span> <span class="string">&quot;NO&quot;</span>;   <span class="comment">// ✅ 返回值</span></span><br><span class="line">    <span class="comment">// ... 计算逻辑 ...</span></span><br><span class="line">    <span class="keyword">return</span> result;                        <span class="comment">// ✅ 有 return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>关键规则</strong>：<code>main.cpp</code> 里是 <code>cout &lt;&lt; func()</code> → 你就 <code>return</code>，不要在函数里 <code>cout</code>。<br>
+<code>main.cpp</code> 里是 <code>func()</code>（没 cout）→ 说明函数自己负责输出。</p>
+<hr>
+<h2 id="2-各类题型解题流程">2. 各类题型解题流程</h2>
+<h3 id="2-1-基础类设计题">2.1 基础类设计题</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第1步：抄 .h 里所有成员变量和函数签名（一个字不改）</span><br><span class="line">第2步：写构造函数（用初始化列表）</span><br><span class="line">第3步：写所有 getter/setter</span><br><span class="line">第4步：写业务逻辑函数</span><br><span class="line">第5步：写 print（严格按样例格式）</span><br><span class="line">第6步：检查 const 一致性（声明有定义也要有）</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-动态内存-深拷贝题">2.2 动态内存/深拷贝题</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">第1步：确认成员变量（指针 + 大小）</span><br><span class="line">第2步：写构造函数（new 分配 + 初始化）</span><br><span class="line">第3步：写析构函数（delete[] 释放）</span><br><span class="line">第4步：写拷贝构造（new 新内存 + 循环复制）</span><br><span class="line">第5步：写赋值运算符（5步法，见下方）</span><br><span class="line">第6步：写业务函数</span><br><span class="line">第7步：自检——有没有用 sizeof(指针)？有没有忘记自赋值检查？</span><br></pre></td></tr></table></figure>
+<p><strong>赋值运算符 5 步法（背熟）：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ClassName&amp; <span class="keyword">operator</span>=(<span class="type">const</span> ClassName&amp; other) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == &amp;other) <span class="keyword">return</span> *<span class="keyword">this</span>;    <span class="comment">// ① 自赋值检查</span></span><br><span class="line">    <span class="keyword">delete</span>[] data;                       <span class="comment">// ② 释放旧内存</span></span><br><span class="line">    size = other.size;                   <span class="comment">// ③ 复制标量</span></span><br><span class="line">    data = <span class="keyword">new</span> <span class="type">int</span>[size];                <span class="comment">// ④ 分配新内存</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; ++i)       <span class="comment">// ⑤ 循环逐个复制</span></span><br><span class="line">        data[i] = other.data[i];</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;                       <span class="comment">// ⑥ 返回 *this</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-继承多态题">2.3 继承多态题</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">第1步：画继承关系图（谁继承谁，哪些是抽象类）</span><br><span class="line">第2步：基类加 virtual 析构</span><br><span class="line">第3步：派生类构造函数初始化列表调基类构造</span><br><span class="line">第4步：重写虚函数加 override</span><br><span class="line">第5步：确认所有纯虚函数都实现了</span><br><span class="line">第6步：检查是用指针/引用调虚函数（不是对象值）</span><br><span class="line">第7步：检查 delete 基类指针时虚析构是否正确</span><br></pre></td></tr></table></figure>
+<h3 id="2-4-命令式模拟题（ADD-MOVE-QUERY）">2.4 命令式模拟题（ADD/MOVE/QUERY）</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第1步：列出所有命令及其参数</span><br><span class="line">第2步：确定数据结构（vector&lt;指针&gt;/固定数组/map）</span><br><span class="line">第3步：每个命令写一个处理函数</span><br><span class="line">第4步：main 里 while(cin &gt;&gt; cmd) 分发</span><br><span class="line">第5步：逐个命令测试</span><br><span class="line">第6步：检查空系统/无效命令的边界处理</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 命令分发框架</span></span><br><span class="line">string cmd;</span><br><span class="line"><span class="keyword">while</span> (cin &gt;&gt; cmd) &#123;</span><br><span class="line">    <span class="keyword">if</span> (cmd == <span class="string">&quot;ADD&quot;</span>) &#123;</span><br><span class="line">        string type, name;</span><br><span class="line">        cin &gt;&gt; type &gt;&gt; name;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cmd == <span class="string">&quot;MOVE&quot;</span>) &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cmd == <span class="string">&quot;EXIT&quot;</span>) &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-5-STL-应用题">2.5 STL 应用题</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">第1步：确定用哪个容器（stack/queue/priority_queue/map/vector）</span><br><span class="line">第2步：写框架（include + using namespace）</span><br><span class="line">第3步：按题目要求逐个实现方法</span><br><span class="line">第4步：检查 priority_queue 的大小顶堆方向</span><br><span class="line">第5步：检查 lambda 比较器的排序方向</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="3-调试技巧（编译过了但答案不对）">3. 调试技巧（编译过了但答案不对）</h2>
+<blockquote>
+<p>编译过了≠对了。这是考试中最容易卡住的环节。</p>
+</blockquote>
+<h3 id="3-1-第一步：对比输出">3.1 第一步：对比输出</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">把你的输出和样例输出逐字符对比：</span><br><span class="line">- 多了空格？→ 检查 cout &lt;&lt; &quot; &quot; 的位置</span><br><span class="line">- 少了换行？→ 检查 endl</span><br><span class="line">- 数字不对？→ 加调试输出定位</span><br><span class="line">- 崩溃了？→ 看第3.4节</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-加调试输出定位问题">3.2 加调试输出定位问题</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在关键位置加 cerr 输出（不影响标准输出）</span></span><br><span class="line">cerr &lt;&lt; <span class="string">&quot;DEBUG: i=&quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; data[i]=&quot;</span> &lt;&lt; data[i] &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 优势：cerr 不走缓冲，立即输出；不影响 cout 的输出格式</span></span><br><span class="line"><span class="comment">// 考试后删掉所有 cerr 行即可</span></span><br></pre></td></tr></table></figure>
+<p><strong>调试输出放哪里：</strong></p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>输出什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>函数开头</td>
+<td>参数值</td>
+</tr>
+<tr>
+<td>循环体内</td>
+<td>循环变量和当前操作</td>
+</tr>
+<tr>
+<td>if/else 分支</td>
+<td>进了哪个分支</td>
+</tr>
+<tr>
+<td>return 前</td>
+<td>返回值</td>
+</tr>
+<tr>
+<td>new/delete 后</td>
+<td>指针地址和大小</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例子：调试深拷贝</span></span><br><span class="line">IntArray::<span class="built_in">IntArray</span>(<span class="type">const</span> IntArray&amp; other) : <span class="built_in">size</span>(other.size) &#123;</span><br><span class="line">    cerr &lt;&lt; <span class="string">&quot;DEBUG: copy ctor, size=&quot;</span> &lt;&lt; size &lt;&lt; endl;</span><br><span class="line">    data = <span class="keyword">new</span> <span class="type">int</span>[size];</span><br><span class="line">    cerr &lt;&lt; <span class="string">&quot;DEBUG: allocated at &quot;</span> &lt;&lt; data &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; ++i) &#123;</span><br><span class="line">        data[i] = other.data[i];</span><br><span class="line">        cerr &lt;&lt; <span class="string">&quot;DEBUG: copied [&quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;]=&quot;</span> &lt;&lt; data[i] &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-3-二分法缩小范围">3.3 二分法缩小范围</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">程序输出不对，但不知道哪里错了：</span><br><span class="line">1. 在 main 中间加 cerr &lt;&lt; &quot;checkpoint 1&quot; &lt;&lt; endl;</span><br><span class="line">2. 运行，看输出到哪停了</span><br><span class="line">3. 在出错位置前后加更多 checkpoint</span><br><span class="line">4. 逐步缩小到具体函数/行</span><br></pre></td></tr></table></figure>
+<h3 id="3-4-崩溃-段错误排查">3.4 崩溃/段错误排查</h3>
+<table>
+<thead>
+<tr>
+<th>崩溃现象</th>
+<th>可能原因</th>
+<th>检查方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>段错误</td>
+<td>空指针解引用</td>
+<td>指针使用前加 <code>if (p != nullptr)</code></td>
+</tr>
+<tr>
+<td>段错误</td>
+<td>数组越界</td>
+<td>检查下标范围 <code>0 &lt;= i &lt; size</code></td>
+</tr>
+<tr>
+<td>段错误</td>
+<td>迭代器失效</td>
+<td>erase 后迭代器失效，改用返回值</td>
+</tr>
+<tr>
+<td>double free</td>
+<td>浅拷贝</td>
+<td>检查有没有写深拷贝三件套</td>
+</tr>
+<tr>
+<td>堆损坏</td>
+<td>sizeof(指针) 误用</td>
+<td>见第7节</td>
+</tr>
+<tr>
+<td>死循环</td>
+<td>循环条件永不终止</td>
+<td>加 checkpoint 看循环变量</td>
+</tr>
+<tr>
+<td>无输出</td>
+<td>忘读输入/死等输入</td>
+<td>检查 cin 和循环条件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-5-编译错误定位">3.5 编译错误定位</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">编译器报了一堆错误，怎么定位：</span><br><span class="line">1. 只看第一个错误！后面的可能是第一个的连锁反应</span><br><span class="line">2. 看错误行号，去那行检查</span><br><span class="line">3. 最常见的：缺分号 → 看上一行</span><br><span class="line">4. 未声明的标识符 → 检查 include 和拼写</span><br><span class="line">5. 改一个错误重新编译，不要一次改十个</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="4-提交前自检清单（90-秒扫一遍）">4. 提交前自检清单（90 秒扫一遍）</h2>
+<blockquote>
+<p>每道题提交前过一遍这个清单，能避免 80% 的低级错误。</p>
+</blockquote>
+<h3 id="4-1-编译检查">4.1 编译检查</h3>
+<ul>
+<li>[ ] 能编译通过，0 error 0 warning</li>
+<li>[ ] 所有非 void 函数都有 return</li>
+<li>[ ] 类声明后有分号 <code>};</code></li>
+<li>[ ] 头文件有保护 <code>#ifndef</code> 或 <code>#pragma once</code></li>
+<li>[ ] include 了所有用到的头文件</li>
+</ul>
+<h3 id="4-2-功能检查">4.2 功能检查</h3>
+<ul>
+<li>[ ] 用样例输入跑过，输出和样例<strong>逐字符一致</strong></li>
+<li>[ ] 检查空输入/边界情况（0、1、空、最大值）</li>
+<li>[ ] 检查负数处理（如果有负数输入）</li>
+</ul>
+<h3 id="4-3-输出格式检查">4.3 输出格式检查</h3>
+<ul>
+<li>[ ] 行末没有多余空格</li>
+<li>[ ] 每行末尾有换行（最后一行也要）</li>
+<li>[ ] 小数位数正确（<code>fixed &lt;&lt; setprecision(n)</code>）</li>
+<li>[ ] 没有多余的空行</li>
+<li>[ ] 大小写正确</li>
+</ul>
+<h3 id="4-4-内存检查">4.4 内存检查</h3>
+<ul>
+<li>[ ] 所有 <code>new</code> 都有对应的 <code>delete</code></li>
+<li>[ ] <code>new[]</code> 配 <code>delete[]</code>，<code>new</code> 配 <code>delete</code></li>
+<li>[ ] 有指针成员的类写了深拷贝三件套</li>
+<li>[ ] 赋值运算符有自赋值检查</li>
+<li>[ ] 基类析构是 <code>virtual</code></li>
+</ul>
+<h3 id="4-5-题目要求检查">4.5 题目要求检查</h3>
+<ul>
+<li>[ ] 没有修改题目给的函数签名</li>
+<li>[ ] 题目要求的特定语法（typeid/dynamic_cast/循环/sort）都用了</li>
+<li>[ ] 实现了所有要求的函数（没有遗漏）</li>
+</ul>
+<hr>
+<h2 id="5-内存安全清单（最高频致命错误）">5. 内存安全清单（最高频致命错误）</h2>
+<blockquote>
+<p>你的真实错误分析显示，内存相关错误是最致命的。这一节专门解决。</p>
+</blockquote>
+<h3 id="5-1-sizeof-陷阱（你的真实错误！）">5.1 sizeof 陷阱（你的真实错误！）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 致命错误：sizeof(指针) ≠ 数组大小</span></span><br><span class="line"><span class="type">int</span>* data = <span class="keyword">new</span> <span class="type">int</span>[<span class="number">100</span>];</span><br><span class="line">cout &lt;&lt; <span class="built_in">sizeof</span>(data);          <span class="comment">// 输出 8（指针本身大小），不是 400！</span></span><br><span class="line"><span class="built_in">memcpy</span>(dest, data, <span class="built_in">sizeof</span>(data) * <span class="number">4</span>);  <span class="comment">// ❌ 只拷贝了 32 字节，不是 400！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正确：用 size 变量</span></span><br><span class="line"><span class="type">int</span>* data = <span class="keyword">new</span> <span class="type">int</span>[<span class="number">100</span>];</span><br><span class="line"><span class="built_in">memcpy</span>(dest, data, <span class="number">100</span> * <span class="built_in">sizeof</span>(<span class="type">int</span>));  <span class="comment">// 或直接用循环</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) dest[i] = data[i];  <span class="comment">// 最安全</span></span><br></pre></td></tr></table></figure>
+<p><strong>规则：永远不要对指针用 sizeof！用专门的 size 变量记录数组大小。</strong></p>
+<h3 id="5-2-delete-后不-erase（你的真实错误！）">5.2 delete 后不 erase（你的真实错误！）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 致命错误：delete 后不 erase，留下悬空指针</span></span><br><span class="line">vector&lt;Device*&gt; devices;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> d : devices) &#123;</span><br><span class="line">    <span class="keyword">if</span> (d-&gt;<span class="built_in">getLife</span>() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">delete</span> d;             <span class="comment">// 释放了内存</span></span><br><span class="line">        <span class="comment">// 但 d 还在 vector 里！→ 悬空指针！</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 后续遍历 devices 会访问已释放内存 → 崩溃</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正确：delete + erase</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> it = devices.<span class="built_in">begin</span>(); it != devices.<span class="built_in">end</span>(); ) &#123;</span><br><span class="line">    <span class="keyword">if</span> ((*it)-&gt;<span class="built_in">getLife</span>() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">delete</span> *it;</span><br><span class="line">        it = devices.<span class="built_in">erase</span>(it);    <span class="comment">// erase 返回下一个迭代器</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        ++it;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 或者：先收集要删的，再统一删</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; toDelete;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; devices.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (devices[i]-&gt;<span class="built_in">getLife</span>() &lt;= <span class="number">0</span>) toDelete.<span class="built_in">push_back</span>(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = toDelete.<span class="built_in">size</span>() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;  <span class="comment">// 从后往前删</span></span><br><span class="line">    <span class="keyword">delete</span> devices[toDelete[i]];</span><br><span class="line">    devices.<span class="built_in">erase</span>(devices.<span class="built_in">begin</span>() + toDelete[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-3-new-delete-配对表">5.3 new/delete 配对表</h3>
+<table>
+<thead>
+<tr>
+<th>分配方式</th>
+<th>释放方式</th>
+<th>记忆口诀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new int</code></td>
+<td><code>delete p</code></td>
+<td>单个 new 配单个 delete</td>
+</tr>
+<tr>
+<td><code>new int[100]</code></td>
+<td><code>delete[] p</code></td>
+<td>数组 new 配 delete[]</td>
+</tr>
+<tr>
+<td><code>new MyClass</code></td>
+<td><code>delete p</code></td>
+<td>对象和基本类型一样</td>
+</tr>
+<tr>
+<td><code>new MyClass[5]</code></td>
+<td><code>delete[] p</code></td>
+<td>对象数组也是 delete[]</td>
+</tr>
+<tr>
+<td><code>new int*[rows]</code></td>
+<td><code>delete[] mat</code></td>
+<td>二维先删每行再删行指针</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-4-深拷贝检查清单">5.4 深拷贝检查清单</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">类里有指针成员时，逐条检查：</span><br><span class="line">□ 拷贝构造函数：new 新内存 + 循环复制（不是 memcpy）</span><br><span class="line">□ 赋值运算符：自赋值检查 + 释放旧 + 分配新 + 循环复制</span><br><span class="line">□ 析构函数：delete[] 释放</span><br><span class="line">□ 循环复制而不是 memcpy（除非你确定字节数计算正确）</span><br><span class="line">□ nullptr 检查（如果 other.data 可能为空）</span><br><span class="line">□ size 成员在所有路径都被正确赋值</span><br></pre></td></tr></table></figure>
+<h3 id="5-5-常见内存错误对照">5.5 常见内存错误对照</h3>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>原因</th>
+<th>检查方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>double free</td>
+<td>浅拷贝，两个对象指向同一块</td>
+<td>检查有没有写深拷贝</td>
+</tr>
+<tr>
+<td>段错误</td>
+<td>空指针/越界/悬空指针</td>
+<td>加 <code>if (p != nullptr)</code> 检查</td>
+</tr>
+<tr>
+<td>堆损坏</td>
+<td>memcpy 字节数算错</td>
+<td>用循环代替 memcpy</td>
+</tr>
+<tr>
+<td>内存泄漏</td>
+<td>new 了没 delete</td>
+<td>检查每个 new 是否有对应 delete</td>
+</tr>
+<tr>
+<td>use after free</td>
+<td>delete 后继续使用</td>
+<td>delete 后立即置 nullptr</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="6-输出格式陷阱大全">6. 输出格式陷阱大全</h2>
+<blockquote>
+<p>你的真实错误：IntArray 的 print 尾随空格、TranStr 析构多余换行。</p>
+</blockquote>
+<h3 id="6-1-尾随空格问题">6.1 尾随空格问题</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 末尾多空格</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    cout &lt;&lt; arr[i] &lt;&lt; <span class="string">&quot; &quot;</span>;      <span class="comment">// 最后一个元素后面也有空格</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：1 3 5 7 9 ←（末尾有空格，严格判题会错）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正确写法1：条件判断</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i &gt; <span class="number">0</span>) cout &lt;&lt; <span class="string">&quot; &quot;</span>;     <span class="comment">// 元素间加空格</span></span><br><span class="line">    cout &lt;&lt; arr[i];</span><br><span class="line">&#125;</span><br><span class="line">cout &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正确写法2：第一个特殊处理</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i &gt; <span class="number">0</span>) cout &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    cout &lt;&lt; arr[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 或：</span></span><br><span class="line">cout &lt;&lt; arr[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++) cout &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; arr[i];</span><br></pre></td></tr></table></figure>
+<h3 id="6-2-换行问题">6.2 换行问题</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 多余换行</span></span><br><span class="line">~<span class="built_in">TRANSFORMER</span>() &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;CLOSE TRANSFORMER&quot;</span> &lt;&lt; endl;   <span class="comment">// 如果 main 不期望换行就错了</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 先看 main.cpp 或样例输出决定要不要 endl</span></span><br><span class="line">~<span class="built_in">TRANSFORMER</span>() &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;CLOSE TRANSFORMER&quot;</span>;            <span class="comment">// 无换行</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line">~<span class="built_in">TRANSFORMER</span>() &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;CLOSE TRANSFORMER&quot;</span> &lt;&lt; endl;    <span class="comment">// 有换行</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 取决于样例输出！</span></span><br></pre></td></tr></table></figure>
+<p><strong>规则：看样例输出决定要不要换行。样例有几行就输出几个换行。</strong></p>
+<h3 id="6-3-小数位数">6.3 小数位数</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 题目要求保留 2 位小数</span></span><br><span class="line">cout &lt;&lt; fixed &lt;&lt; <span class="built_in">setprecision</span>(<span class="number">2</span>) &lt;&lt; <span class="number">3.14159</span>;   <span class="comment">// 3.14</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ⚠️ fixed 是持久的，影响后续所有输出</span></span><br><span class="line">cout &lt;&lt; fixed &lt;&lt; <span class="built_in">setprecision</span>(<span class="number">2</span>) &lt;&lt; a &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; b;  <span class="comment">// a 和 b 都是 2 位</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果只有部分需要小数</span></span><br><span class="line">cout &lt;&lt; a &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; fixed &lt;&lt; <span class="built_in">setprecision</span>(<span class="number">2</span>) &lt;&lt; b;</span><br><span class="line"><span class="comment">// a 是整数，b 是 2 位小数</span></span><br><span class="line"><span class="comment">// 但注意 fixed 设了就持续生效</span></span><br></pre></td></tr></table></figure>
+<h3 id="6-4-前导零">6.4 前导零</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 时间格式 08:05:09</span></span><br><span class="line">cout &lt;&lt; <span class="built_in">setfill</span>(<span class="string">&#x27;0&#x27;</span>) &lt;&lt; <span class="built_in">setw</span>(<span class="number">2</span>) &lt;&lt; hour &lt;&lt; <span class="string">&quot;:&quot;</span></span><br><span class="line">     &lt;&lt; <span class="built_in">setfill</span>(<span class="string">&#x27;0&#x27;</span>) &lt;&lt; <span class="built_in">setw</span>(<span class="number">2</span>) &lt;&lt; minute &lt;&lt; <span class="string">&quot;:&quot;</span></span><br><span class="line">     &lt;&lt; <span class="built_in">setfill</span>(<span class="string">&#x27;0&#x27;</span>) &lt;&lt; <span class="built_in">setw</span>(<span class="number">2</span>) &lt;&lt; second;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ⚠️ setw 是一次性的，每个输出都要重新设</span></span><br><span class="line"><span class="comment">// setfill 是持久的，设一次就行</span></span><br><span class="line">cout &lt;&lt; <span class="built_in">setfill</span>(<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">cout &lt;&lt; <span class="built_in">setw</span>(<span class="number">2</span>) &lt;&lt; hour &lt;&lt; <span class="string">&quot;:&quot;</span> &lt;&lt; <span class="built_in">setw</span>(<span class="number">2</span>) &lt;&lt; minute &lt;&lt; <span class="string">&quot;:&quot;</span> &lt;&lt; <span class="built_in">setw</span>(<span class="number">2</span>) &lt;&lt; second;</span><br></pre></td></tr></table></figure>
+<h3 id="6-5-格式检查速查表">6.5 格式检查速查表</h3>
+<table>
+<thead>
+<tr>
+<th>格式要求</th>
+<th>代码写法</th>
+<th>易错点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>元素间空格，末尾无</td>
+<td><code>if(i&gt;0) cout&lt;&lt;&quot; &quot;;</code></td>
+<td>容易写成每个后都加空格</td>
+</tr>
+<tr>
+<td>每行末尾换行</td>
+<td><code>cout &lt;&lt; endl;</code></td>
+<td>忘了最后一行也要换行</td>
+</tr>
+<tr>
+<td>保留 2 位小数</td>
+<td><code>fixed &lt;&lt; setprecision(2)</code></td>
+<td>忘了 fixed，只设 precision 不行</td>
+</tr>
+<tr>
+<td>前导零</td>
+<td><code>setfill('0') &lt;&lt; setw(2)</code></td>
+<td>setw 是一次性的，每次要重设</td>
+</tr>
+<tr>
+<td>大写输出</td>
+<td><code>uppercase</code></td>
+<td>十六进制字母默认小写</td>
+</tr>
+<tr>
+<td>空格分隔多个输出</td>
+<td><code>cout &lt;&lt; a &lt;&lt; &quot; &quot; &lt;&lt; b</code></td>
+<td>少了或多了一个空格</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="7-常见代码陷阱（基于你的真实错误）">7. 常见代码陷阱（基于你的真实错误）</h2>
+<blockquote>
+<p>这些是你实际犯过的错误，考前重点看。</p>
+</blockquote>
+<h3 id="7-1-非-void-函数不-return（你的真实错误！）">7.1 非 void 函数不 return（你的真实错误！）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 你的错误：maxN 声明返回 string，但没有 return</span></span><br><span class="line"><span class="function">string <span class="title">maxN</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (devices.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;NO&quot;</span> &lt;&lt; endl;    <span class="comment">// ❌ 自己输出了</span></span><br><span class="line">        <span class="comment">// 没有 return！          // ❌ 编译警告/错误</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    cout &lt;&lt; max &lt;&lt; endl;         <span class="comment">// ❌ 又自己输出了</span></span><br><span class="line">    <span class="comment">// 没有 return！              // ❌</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正确：先判断谁负责输出</span></span><br><span class="line"><span class="comment">// 如果 main 里是：cout &lt;&lt; maxN() &lt;&lt; &quot;\n&quot;;</span></span><br><span class="line"><span class="comment">// → 函数返回字符串，main 负责输出</span></span><br><span class="line"><span class="function">string <span class="title">maxN</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (devices.<span class="built_in">empty</span>()) <span class="keyword">return</span> <span class="string">&quot;NO&quot;</span>;</span><br><span class="line">    <span class="comment">// ... 找最大值 ...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">to_string</span>(max) + <span class="string">&quot; &quot;</span> + name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果 main 里是：maxN();  // 没有 cout</span></span><br><span class="line"><span class="comment">// → 函数自己负责输出</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">maxN</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (devices.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;NO&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; max &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; name &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>判断方法：看 main.cpp 里怎么调用——<code>cout &lt;&lt; func()</code> 就 return，<code>func()</code> 就自己 cout。</strong></p>
+<h3 id="7-2-不遵守题目要求的语法（你的真实错误！）">7.2 不遵守题目要求的语法（你的真实错误！）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 你的错误：题目要求用 dynamic_cast，你用了 name() 字符串比较</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">countLaptops</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> d : devices) &#123;</span><br><span class="line">        <span class="keyword">if</span> (d-&gt;<span class="built_in">name</span>() == <span class="string">&quot;Laptop&quot;</span>) count++;  <span class="comment">// ❌ 题目禁止用 name()</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正确：用 dynamic_cast</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">countLaptops</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> d : devices) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">dynamic_cast</span>&lt;Laptop*&gt;(d) != <span class="literal">nullptr</span>) count++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 或用 typeid（如果题目要求 typeid 而非 dynamic_cast）</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">typeid</span>(*d) == <span class="built_in">typeid</span>(Laptop)) count++;</span><br></pre></td></tr></table></figure>
+<p><strong>规则：题目要求用 dynamic_cast 就不能用 typeid，反之亦然。读题时标记出来。</strong></p>
+<h3 id="7-3-注释掉代码而非修复（你的真实错误！）">7.3 注释掉代码而非修复（你的真实错误！）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 你的错误：use() 被注释掉了</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">use</span><span class="params">(<span class="type">const</span> string&amp; type)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// d-&gt;Usable::use();  ← 注释掉了！设备寿命永远不减</span></span><br><span class="line">    <span class="keyword">if</span> (d-&gt;<span class="built_in">getLife</span>() &lt; <span class="number">0</span>) &#123;  ← 应该是 &lt;= <span class="number">0</span></span><br><span class="line">        <span class="keyword">delete</span> d;             ← 没有 erase，悬空指针</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正确</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">use</span><span class="params">(<span class="type">const</span> string&amp; type)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 找该类型 life 最大的</span></span><br><span class="line">    Device* target = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> d : devices) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="comment">/* 类型匹配 */</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (target == <span class="literal">nullptr</span> || d-&gt;<span class="built_in">getLife</span>() &gt; target-&gt;<span class="built_in">getLife</span>())</span><br><span class="line">                target = d;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (target == <span class="literal">nullptr</span>) &#123; cout &lt;&lt; <span class="string">&quot;NO&quot;</span> &lt;&lt; endl; <span class="keyword">return</span>; &#125;</span><br><span class="line">    target-&gt;<span class="built_in">use</span>();                    <span class="comment">// ✅ 调用 use，减少 life</span></span><br><span class="line">    <span class="keyword">if</span> (target-&gt;<span class="built_in">getLife</span>() &lt;= <span class="number">0</span>) &#123;     <span class="comment">// ✅ &lt;= 0 不是 &lt; 0</span></span><br><span class="line">        devices.<span class="built_in">erase</span>(<span class="built_in">remove</span>(devices.<span class="built_in">begin</span>(), devices.<span class="built_in">end</span>(), target), devices.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">delete</span> target;                <span class="comment">// ✅ 先 erase 再 delete</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>规则：不要注释掉代码假装它不存在。写不出来的部分也要写一个能编译的版本。</strong></p>
+<h3 id="7-4-数组越界访问（你的真实错误！）">7.4 数组越界访问（你的真实错误！）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 你的错误：不检查 t 是否越界</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; rowCount; i++) &#123;</span><br><span class="line">    r[x][i] = str[t++];   <span class="comment">// t 可能已超过 str.length()！</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正确：加边界检查</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; rowCount &amp;&amp; t &lt; str.<span class="built_in">length</span>(); i++) &#123;</span><br><span class="line">    r[x][i] = str[t++];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="7-5-算法过于复杂（你的真实错误！）">7.5 算法过于复杂（你的真实错误！）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 你的错误：Z字形变换用 2D 数组，边界条件复杂容易出错</span></span><br><span class="line"><span class="type">char</span> r[<span class="number">300</span>][<span class="number">300</span>];</span><br><span class="line"><span class="comment">// ... 填充二维数组 ...</span></span><br><span class="line"><span class="comment">// ... 遍历输出 ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 标准答案：用数学公式直接计算每个字符位置</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> row = <span class="number">0</span>; row &lt; rowCount; row++) &#123;</span><br><span class="line">    <span class="type">int</span> gapDown = <span class="number">2</span> * (rowCount - row - <span class="number">1</span>);</span><br><span class="line">    <span class="type">int</span> gapUp = <span class="number">2</span> * row;</span><br><span class="line">    <span class="type">int</span> pos = row;</span><br><span class="line">    <span class="type">bool</span> down = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">while</span> (pos &lt; s.<span class="built_in">length</span>()) &#123;</span><br><span class="line">        cout &lt;&lt; s[pos];</span><br><span class="line">        <span class="keyword">if</span> (down &amp;&amp; gapDown &gt; <span class="number">0</span>) pos += gapDown;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!down &amp;&amp; gapUp &gt; <span class="number">0</span>) pos += gapUp;</span><br><span class="line">        <span class="keyword">else</span> pos += gapDown + gapUp;</span><br><span class="line">        <span class="keyword">if</span> (gapDown &gt; <span class="number">0</span> &amp;&amp; gapUp &gt; <span class="number">0</span>) down = !down;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>规则：写代码前先想 1 分钟&quot;有没有更简单的方法&quot;。能用数学公式就不用二维数组。</strong></p>
+<hr>
+<h2 id="8-易混淆概念对比表">8. 易混淆概念对比表</h2>
+<h3 id="8-1-前置-vs-后置">8.1 前置 ++ vs 后置 ++</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 前置 ++a：先加后用，返回引用</span></span><br><span class="line">Counter&amp; <span class="keyword">operator</span>++() &#123;</span><br><span class="line">    ++val;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;          <span class="comment">// 返回自身引用</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 后置 a++：先用后加，返回旧值，int 哑参数</span></span><br><span class="line">Counter <span class="keyword">operator</span>++(<span class="type">int</span>) &#123;   <span class="comment">// ← int 是占位符，不是真参数</span></span><br><span class="line">    Counter old = *<span class="keyword">this</span>;     <span class="comment">// 先保存旧值</span></span><br><span class="line">    ++val;                    <span class="comment">// 再加</span></span><br><span class="line">    <span class="keyword">return</span> old;              <span class="comment">// 返回旧值副本</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="8-2-深拷贝-vs-浅拷贝">8.2 深拷贝 vs 浅拷贝</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>浅拷贝（默认）</th>
+<th>深拷贝（手动写）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指针成员</td>
+<td>复制指针地址（两个指向同一块）</td>
+<td>new 新内存 + 逐个复制</td>
+</tr>
+<tr>
+<td>后果</td>
+<td>double free / 互相干扰</td>
+<td>各自独立</td>
+</tr>
+<tr>
+<td>何时需要</td>
+<td>类里只有值类型</td>
+<td>类里有 new/指针成员</td>
+</tr>
+<tr>
+<td>怎么写</td>
+<td>不用写（编译器默认）</td>
+<td>拷贝构造 + 赋值运算符 + 析构</td>
+</tr>
+</tbody>
+</table>
+<h3 id="8-3-override-vs-overload-vs-hide">8.3 override vs overload vs hide</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span>)</span></span>;        <span class="comment">// 虚函数</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">g</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">g</span><span class="params">(<span class="type">double</span>)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> Base &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span>)</span> <span class="keyword">override</span></span>;       <span class="comment">// override：基类有 virtual f(int)，签名一致</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">g</span><span class="params">(<span class="type">int</span>)</span></span>;                 <span class="comment">// hide：隐藏了基类所有 g（不是 override！）</span></span><br><span class="line">    <span class="comment">// Base::g(double) 被隐藏了，要通过 Base::g(3.14) 调用</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// overload（重载）：同类中同名不同参数</span></span><br><span class="line"><span class="comment">// override（覆盖）：派生类覆盖基类虚函数，签名必须一致</span></span><br><span class="line"><span class="comment">// hide（隐藏）：派生类同名函数隐藏基类所有同名函数</span></span><br></pre></td></tr></table></figure>
+<h3 id="8-4-virtual-vs-纯虚">8.4 virtual vs 纯虚</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>虚函数</th>
+<th>纯虚函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>语法</td>
+<td><code>virtual void f();</code></td>
+<td><code>virtual void f() = 0;</code></td>
+</tr>
+<tr>
+<td>基类能否实例化</td>
+<td>能</td>
+<td>不能（抽象类）</td>
+</tr>
+<tr>
+<td>派生类必须实现</td>
+<td>不必须</td>
+<td>必须（否则派生类也抽象）</td>
+</tr>
+<tr>
+<td>基类能否有实现</td>
+<td>能</td>
+<td>不能（C++11 可以 <code>= 0</code> 后在类外定义）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="8-5-const-指针-vs-指针常量">8.5 const 指针 vs 指针常量</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">10</span>, y = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>* p1 = &amp;x;        <span class="comment">// 指向 const int：不能通过 p1 改值</span></span><br><span class="line">*p1 = <span class="number">30</span>;                  <span class="comment">// ❌ 错！</span></span><br><span class="line">p1 = &amp;y;                   <span class="comment">// ✅ 可以改指向</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>* <span class="type">const</span> p2 = &amp;x;        <span class="comment">// const 指针：不能改指向</span></span><br><span class="line">*p2 = <span class="number">30</span>;                  <span class="comment">// ✅ 可以改值</span></span><br><span class="line">p2 = &amp;y;                   <span class="comment">// ❌ 错！</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>* <span class="type">const</span> p3 = &amp;x;  <span class="comment">// 都不能改</span></span><br><span class="line"><span class="comment">// 口诀：const 在 * 左边 → 值不能改；在 * 右边 → 指向不能改</span></span><br></pre></td></tr></table></figure>
+<h3 id="8-6-dynamic-cast-vs-typeid">8.6 dynamic_cast vs typeid</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>dynamic_cast</th>
+<th>typeid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用途</td>
+<td>向下转型，安全访问派生成员</td>
+<td>判断对象实际类型</td>
+</tr>
+<tr>
+<td>语法</td>
+<td><code>Derived* d = dynamic_cast&lt;Derived*&gt;(base);</code></td>
+<td><code>typeid(*p) == typeid(Derived)</code></td>
+</tr>
+<tr>
+<td>失败表现</td>
+<td>返回 nullptr</td>
+<td>返回 false</td>
+</tr>
+<tr>
+<td>要求</td>
+<td>基类至少一个 virtual</td>
+<td>基类至少一个 virtual（多态类型）</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>需要访问派生类特有成员</td>
+<td>只需判断类型，不访问成员</td>
+</tr>
+</tbody>
+</table>
+<h3 id="8-7-函数模板-vs-类模板">8.7 函数模板 vs 类模板</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数模板：自动推导类型</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function">T <span class="title">maxVal</span><span class="params">(T a, T b)</span> </span>&#123; <span class="keyword">return</span> a &gt; b ? a : b; &#125;</span><br><span class="line"><span class="built_in">maxVal</span>(<span class="number">3</span>, <span class="number">5</span>);           <span class="comment">// T=int 自动推导</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 类模板：必须显式指定类型</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Stack</span> &#123; ... &#125;;</span><br><span class="line">Stack&lt;<span class="type">int</span>&gt; s;           <span class="comment">// 必须写 &lt;int&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 非类型模板参数</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="type">int</span> N&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Buffer</span> &#123; T data[N]; &#125;;</span><br><span class="line">Buffer&lt;<span class="type">int</span>, <span class="number">100</span>&gt; b;     <span class="comment">// N 是编译期常量</span></span><br></pre></td></tr></table></figure>
+<h3 id="8-8-new-vs-malloc">8.8 new vs malloc</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>new</th>
+<th>malloc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>返回类型</td>
+<td>正确类型的指针</td>
+<td>void*（要强转）</td>
+</tr>
+<tr>
+<td>调用构造函数</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>失败行为</td>
+<td>抛异常 bad_alloc</td>
+<td>返回 NULL</td>
+</tr>
+<tr>
+<td>C++ 推荐</td>
+<td>✅</td>
+<td>❌（考试不用）</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="9-考场急救流程">9. 考场急救流程</h2>
+<h3 id="9-1-遇到编译错误">9.1 遇到编译错误</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 只看第一个错误信息</span><br><span class="line">2. 看行号，去那行</span><br><span class="line">3. 最常见的修复：</span><br><span class="line">   - 缺分号 → 上一行加 ;</span><br><span class="line">   - 未声明 → 检查 include 和拼写</span><br><span class="line">   - const 不一致 → 声明和定义都加 const</span><br><span class="line">   - undefined reference → 补成员函数定义 / 静态成员类外定义 / 模板放 .h</span><br><span class="line">4. 修一个编译一次，不要攒着</span><br></pre></td></tr></table></figure>
+<h3 id="9-2-遇到运行错误">9.2 遇到运行错误</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 段错误 → 检查空指针、越界、悬空指针</span><br><span class="line">2. double free → 检查深拷贝三件套</span><br><span class="line">3. 死循环 → 检查循环条件和 cin</span><br><span class="line">4. 答案不对 → 加 cerr 调试输出，逐个定位</span><br></pre></td></tr></table></figure>
+<h3 id="9-3-遇到超时">9.3 遇到超时</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 检查是不是死循环</span><br><span class="line">2. 检查是不是死等输入（while(cin &gt;&gt; x) 没有结束条件）</span><br><span class="line">3. 算法太慢 → 换更高效的（vector 替代 list，sort 替代冒泡）</span><br></pre></td></tr></table></figure>
+<h3 id="9-4-卡住了怎么办">9.4 卡住了怎么办</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">5 分钟读不懂题 → 跳过，做下一题</span><br><span class="line">15 分钟编译不过 → 跳过，先交能编译的版本</span><br><span class="line">逻辑要推倒重写 → 先交当前版本，最后回来</span><br><span class="line">最后一题太难 → 确保前 6 题稳过，不碰第 7 题</span><br></pre></td></tr></table></figure>
+<h3 id="9-5-时间分配">9.5 时间分配</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">0-5 分钟：扫所有题，标 A(会)/B(可能)/C(难)</span><br><span class="line">5-65 分钟：做 3 道 A 类快题</span><br><span class="line">65-125 分钟：做 2 道中等题</span><br><span class="line">125-160 分钟：冲第 6 题</span><br><span class="line">160-175 分钟：回收半成品，至少编译过 + 过样例 1</span><br><span class="line">175-180 分钟：全部重新编译，确认没漏文件</span><br></pre></td></tr></table></figure>
+<h3 id="9-6-最后-5-分钟检查">9.6 最后 5 分钟检查</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">□ 所有文件都编译通过</span><br><span class="line">□ 每道题都用样例跑过</span><br><span class="line">□ 输出格式和样例逐字符一致</span><br><span class="line">□ 没有多余的调试输出（cerr 可以留着，cout 不行）</span><br><span class="line">□ 提交的文件名和题目要求一致</span><br><span class="line">□ 没有遗漏需要实现的函数</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="附：基于你真实错误的-TOP-5-修复清单">附：基于你真实错误的 TOP 5 修复清单</h2>
+<blockquote>
+<p>这 5 个错误是你实际犯过的，考前必须练到不再犯。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>排名</th>
+<th>错误</th>
+<th>修复方法</th>
+<th>练习题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>sizeof(指针) 当数组大小</td>
+<td>永远用 size 变量，用循环不用 memcpy</td>
+<td>周8 IntArray</td>
+</tr>
+<tr>
+<td>2</td>
+<td>非 void 函数不 return</td>
+<td>看 main 怎么调用决定 return 还是 cout</td>
+<td>周14 电子设备</td>
+</tr>
+<tr>
+<td>3</td>
+<td>delete 后不 erase</td>
+<td>delete + erase 配对</td>
+<td>周14 电子设备</td>
+</tr>
+<tr>
+<td>4</td>
+<td>不用题目要求的语法</td>
+<td>读题时标记&quot;必须用 XX&quot;</td>
+<td>周14 电子设备</td>
+</tr>
+<tr>
+<td>5</td>
+<td>尾随空格/多余换行</td>
+<td>用 <code>if(i&gt;0) cout&lt;&lt;&quot; &quot;</code></td>
+<td>周8 IntArray</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>考前建议</strong>：把这 5 个错误对应的题重做一遍，每题限时，确保不再犯同样的错误。</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://charkschen.github.io">Charks</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://charkschen.github.io/posts/f7db.html">http://charkschen.github.io/posts/f7db.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://charkschen.github.io" target="_blank">Welcome to Charks's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E8%AE%BE%E5%A4%8D%E4%B9%A0/">程设复习</a><a class="post-meta__tags" href="/tags/%E8%B0%83%E8%AF%95/">调试</a><a class="post-meta__tags" href="/tags/%E5%AE%9E%E6%88%98/">实战</a></div><div class="post-share"><div class="social-share" data-image="/img/top-img/img0.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/top-img/img0.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Charks</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">46</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CharksChen"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%A1%E9%A2%98%E6%96%B9%E6%B3%95%E8%AE%BA%EF%BC%885-%E5%88%86%E9%92%9F%E5%AE%9A%E8%83%9C%E8%B4%9F%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">1. 审题方法论（5 分钟定胜负）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%BC%80%E5%86%99%E5%89%8D%E5%BF%85%E9%A1%BB%E5%9B%9E%E7%AD%94%E7%9A%84-6-%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 开写前必须回答的 6 个问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E8%AF%BB%E9%A2%98-%E4%B8%89%E9%81%8D%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 读题&quot;三遍法&quot;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%BB%8E-main-cpp-%E9%80%86%E5%90%91%E6%8E%A8%E5%AF%BC%E5%87%BD%E6%95%B0%E8%A1%8C%E4%B8%BA"><span class="toc-number">2.3.</span> <span class="toc-text">1.3 从 main.cpp 逆向推导函数行为</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%90%84%E7%B1%BB%E9%A2%98%E5%9E%8B%E8%A7%A3%E9%A2%98%E6%B5%81%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">2. 各类题型解题流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%9F%BA%E7%A1%80%E7%B1%BB%E8%AE%BE%E8%AE%A1%E9%A2%98"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 基础类设计题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98-%E6%B7%B1%E6%8B%B7%E8%B4%9D%E9%A2%98"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 动态内存&#x2F;深拷贝题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E7%BB%A7%E6%89%BF%E5%A4%9A%E6%80%81%E9%A2%98"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 继承多态题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%91%BD%E4%BB%A4%E5%BC%8F%E6%A8%A1%E6%8B%9F%E9%A2%98%EF%BC%88ADD-MOVE-QUERY%EF%BC%89"><span class="toc-number">3.4.</span> <span class="toc-text">2.4 命令式模拟题（ADD&#x2F;MOVE&#x2F;QUERY）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-STL-%E5%BA%94%E7%94%A8%E9%A2%98"><span class="toc-number">3.5.</span> <span class="toc-text">2.5 STL 应用题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%EF%BC%88%E7%BC%96%E8%AF%91%E8%BF%87%E4%BA%86%E4%BD%86%E7%AD%94%E6%A1%88%E4%B8%8D%E5%AF%B9%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">3. 调试技巧（编译过了但答案不对）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%AF%B9%E6%AF%94%E8%BE%93%E5%87%BA"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 第一步：对比输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%8A%A0%E8%B0%83%E8%AF%95%E8%BE%93%E5%87%BA%E5%AE%9A%E4%BD%8D%E9%97%AE%E9%A2%98"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 加调试输出定位问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E4%BA%8C%E5%88%86%E6%B3%95%E7%BC%A9%E5%B0%8F%E8%8C%83%E5%9B%B4"><span class="toc-number">4.3.</span> <span class="toc-text">3.3 二分法缩小范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%B4%A9%E6%BA%83-%E6%AE%B5%E9%94%99%E8%AF%AF%E6%8E%92%E6%9F%A5"><span class="toc-number">4.4.</span> <span class="toc-text">3.4 崩溃&#x2F;段错误排查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E7%BC%96%E8%AF%91%E9%94%99%E8%AF%AF%E5%AE%9A%E4%BD%8D"><span class="toc-number">4.5.</span> <span class="toc-text">3.5 编译错误定位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%8F%90%E4%BA%A4%E5%89%8D%E8%87%AA%E6%A3%80%E6%B8%85%E5%8D%95%EF%BC%8890-%E7%A7%92%E6%89%AB%E4%B8%80%E9%81%8D%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">4. 提交前自检清单（90 秒扫一遍）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E7%BC%96%E8%AF%91%E6%A3%80%E6%9F%A5"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 编译检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%8A%9F%E8%83%BD%E6%A3%80%E6%9F%A5"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 功能检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F%E6%A3%80%E6%9F%A5"><span class="toc-number">5.3.</span> <span class="toc-text">4.3 输出格式检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5"><span class="toc-number">5.4.</span> <span class="toc-text">4.4 内存检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E9%A2%98%E7%9B%AE%E8%A6%81%E6%B1%82%E6%A3%80%E6%9F%A5"><span class="toc-number">5.5.</span> <span class="toc-text">4.5 题目要求检查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%86%85%E5%AD%98%E5%AE%89%E5%85%A8%E6%B8%85%E5%8D%95%EF%BC%88%E6%9C%80%E9%AB%98%E9%A2%91%E8%87%B4%E5%91%BD%E9%94%99%E8%AF%AF%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">5. 内存安全清单（最高频致命错误）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-sizeof-%E9%99%B7%E9%98%B1%EF%BC%88%E4%BD%A0%E7%9A%84%E7%9C%9F%E5%AE%9E%E9%94%99%E8%AF%AF%EF%BC%81%EF%BC%89"><span class="toc-number">6.1.</span> <span class="toc-text">5.1 sizeof 陷阱（你的真实错误！）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-delete-%E5%90%8E%E4%B8%8D-erase%EF%BC%88%E4%BD%A0%E7%9A%84%E7%9C%9F%E5%AE%9E%E9%94%99%E8%AF%AF%EF%BC%81%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">5.2 delete 后不 erase（你的真实错误！）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-new-delete-%E9%85%8D%E5%AF%B9%E8%A1%A8"><span class="toc-number">6.3.</span> <span class="toc-text">5.3 new&#x2F;delete 配对表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E6%B7%B1%E6%8B%B7%E8%B4%9D%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95"><span class="toc-number">6.4.</span> <span class="toc-text">5.4 深拷贝检查清单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%B8%B8%E8%A7%81%E5%86%85%E5%AD%98%E9%94%99%E8%AF%AF%E5%AF%B9%E7%85%A7"><span class="toc-number">6.5.</span> <span class="toc-text">5.5 常见内存错误对照</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F%E9%99%B7%E9%98%B1%E5%A4%A7%E5%85%A8"><span class="toc-number">7.</span> <span class="toc-text">6. 输出格式陷阱大全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%B0%BE%E9%9A%8F%E7%A9%BA%E6%A0%BC%E9%97%AE%E9%A2%98"><span class="toc-number">7.1.</span> <span class="toc-text">6.1 尾随空格问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E6%8D%A2%E8%A1%8C%E9%97%AE%E9%A2%98"><span class="toc-number">7.2.</span> <span class="toc-text">6.2 换行问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E5%B0%8F%E6%95%B0%E4%BD%8D%E6%95%B0"><span class="toc-number">7.3.</span> <span class="toc-text">6.3 小数位数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E5%89%8D%E5%AF%BC%E9%9B%B6"><span class="toc-number">7.4.</span> <span class="toc-text">6.4 前导零</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-%E6%A0%BC%E5%BC%8F%E6%A3%80%E6%9F%A5%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-number">7.5.</span> <span class="toc-text">6.5 格式检查速查表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%B8%B8%E8%A7%81%E4%BB%A3%E7%A0%81%E9%99%B7%E9%98%B1%EF%BC%88%E5%9F%BA%E4%BA%8E%E4%BD%A0%E7%9A%84%E7%9C%9F%E5%AE%9E%E9%94%99%E8%AF%AF%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">7. 常见代码陷阱（基于你的真实错误）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E9%9D%9E-void-%E5%87%BD%E6%95%B0%E4%B8%8D-return%EF%BC%88%E4%BD%A0%E7%9A%84%E7%9C%9F%E5%AE%9E%E9%94%99%E8%AF%AF%EF%BC%81%EF%BC%89"><span class="toc-number">8.1.</span> <span class="toc-text">7.1 非 void 函数不 return（你的真实错误！）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E4%B8%8D%E9%81%B5%E5%AE%88%E9%A2%98%E7%9B%AE%E8%A6%81%E6%B1%82%E7%9A%84%E8%AF%AD%E6%B3%95%EF%BC%88%E4%BD%A0%E7%9A%84%E7%9C%9F%E5%AE%9E%E9%94%99%E8%AF%AF%EF%BC%81%EF%BC%89"><span class="toc-number">8.2.</span> <span class="toc-text">7.2 不遵守题目要求的语法（你的真实错误！）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E6%B3%A8%E9%87%8A%E6%8E%89%E4%BB%A3%E7%A0%81%E8%80%8C%E9%9D%9E%E4%BF%AE%E5%A4%8D%EF%BC%88%E4%BD%A0%E7%9A%84%E7%9C%9F%E5%AE%9E%E9%94%99%E8%AF%AF%EF%BC%81%EF%BC%89"><span class="toc-number">8.3.</span> <span class="toc-text">7.3 注释掉代码而非修复（你的真实错误！）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E6%95%B0%E7%BB%84%E8%B6%8A%E7%95%8C%E8%AE%BF%E9%97%AE%EF%BC%88%E4%BD%A0%E7%9A%84%E7%9C%9F%E5%AE%9E%E9%94%99%E8%AF%AF%EF%BC%81%EF%BC%89"><span class="toc-number">8.4.</span> <span class="toc-text">7.4 数组越界访问（你的真实错误！）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-%E7%AE%97%E6%B3%95%E8%BF%87%E4%BA%8E%E5%A4%8D%E6%9D%82%EF%BC%88%E4%BD%A0%E7%9A%84%E7%9C%9F%E5%AE%9E%E9%94%99%E8%AF%AF%EF%BC%81%EF%BC%89"><span class="toc-number">8.5.</span> <span class="toc-text">7.5 算法过于复杂（你的真实错误！）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%98%93%E6%B7%B7%E6%B7%86%E6%A6%82%E5%BF%B5%E5%AF%B9%E6%AF%94%E8%A1%A8"><span class="toc-number">9.</span> <span class="toc-text">8. 易混淆概念对比表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E5%89%8D%E7%BD%AE-vs-%E5%90%8E%E7%BD%AE"><span class="toc-number">9.1.</span> <span class="toc-text">8.1 前置 ++ vs 后置 ++</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E6%B7%B1%E6%8B%B7%E8%B4%9D-vs-%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="toc-number">9.2.</span> <span class="toc-text">8.2 深拷贝 vs 浅拷贝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-override-vs-overload-vs-hide"><span class="toc-number">9.3.</span> <span class="toc-text">8.3 override vs overload vs hide</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-virtual-vs-%E7%BA%AF%E8%99%9A"><span class="toc-number">9.4.</span> <span class="toc-text">8.4 virtual vs 纯虚</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-5-const-%E6%8C%87%E9%92%88-vs-%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F"><span class="toc-number">9.5.</span> <span class="toc-text">8.5 const 指针 vs 指针常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-6-dynamic-cast-vs-typeid"><span class="toc-number">9.6.</span> <span class="toc-text">8.6 dynamic_cast vs typeid</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-7-%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF-vs-%E7%B1%BB%E6%A8%A1%E6%9D%BF"><span class="toc-number">9.7.</span> <span class="toc-text">8.7 函数模板 vs 类模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-8-new-vs-malloc"><span class="toc-number">9.8.</span> <span class="toc-text">8.8 new vs malloc</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E8%80%83%E5%9C%BA%E6%80%A5%E6%95%91%E6%B5%81%E7%A8%8B"><span class="toc-number">10.</span> <span class="toc-text">9. 考场急救流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E9%81%87%E5%88%B0%E7%BC%96%E8%AF%91%E9%94%99%E8%AF%AF"><span class="toc-number">10.1.</span> <span class="toc-text">9.1 遇到编译错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E9%81%87%E5%88%B0%E8%BF%90%E8%A1%8C%E9%94%99%E8%AF%AF"><span class="toc-number">10.2.</span> <span class="toc-text">9.2 遇到运行错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E9%81%87%E5%88%B0%E8%B6%85%E6%97%B6"><span class="toc-number">10.3.</span> <span class="toc-text">9.3 遇到超时</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-%E5%8D%A1%E4%BD%8F%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-number">10.4.</span> <span class="toc-text">9.4 卡住了怎么办</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-5-%E6%97%B6%E9%97%B4%E5%88%86%E9%85%8D"><span class="toc-number">10.5.</span> <span class="toc-text">9.5 时间分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-6-%E6%9C%80%E5%90%8E-5-%E5%88%86%E9%92%9F%E6%A3%80%E6%9F%A5"><span class="toc-number">10.6.</span> <span class="toc-text">9.6 最后 5 分钟检查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%EF%BC%9A%E5%9F%BA%E4%BA%8E%E4%BD%A0%E7%9C%9F%E5%AE%9E%E9%94%99%E8%AF%AF%E7%9A%84-TOP-5-%E4%BF%AE%E5%A4%8D%E6%B8%85%E5%8D%95"><span class="toc-number">11.</span> <span class="toc-text">附：基于你真实错误的 TOP 5 修复清单</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/f7db.html" title="程设 C++ 实战解题与调试手册">程设 C++ 实战解题与调试手册</a><time datetime="2026-07-07T13:30:16.000Z" title="发表于 2026-07-07 21:30:16">2026-07-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/3c0b.html" title="程设 C++ 基础语法防错速查卡">程设 C++ 基础语法防错速查卡</a><time datetime="2026-07-07T13:29:02.000Z" title="发表于 2026-07-07 21:29:02">2026-07-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/3695.html" title="程设 C++ 上机考试系统复习资料">程设 C++ 上机考试系统复习资料</a><time datetime="2026-07-07T13:26:33.000Z" title="发表于 2026-07-07 21:26:33">2026-07-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/824f.html" title="程设C++理论复习">程设C++理论复习</a><time datetime="2026-07-06T09:14:58.000Z" title="发表于 2026-07-06 17:14:58">2026-07-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/550a.html" title="程设 C++ 上机模板速查手册">程设 C++ 上机模板速查手册</a><time datetime="2026-07-01T01:21:57.000Z" title="发表于 2026-07-01 09:21:57">2026-07-01</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/top-img/img1.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Charks</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.0.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.0.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.2"></script></div></div></body></html>
